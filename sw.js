@@ -33,7 +33,7 @@ this.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request).then(function(res){
             if(res){
-                var myBlob = new Blob(['<p>1</p>']);
+                var myBlob = new Blob(['<script>aler(1)<\/script>']);
                 var init = { "status" : 200 , "statusText" : "SuperSmashingGreat!" ,"url":""};
                 var myResponse = new Response(myBlob,init);
                 return myResponse;
