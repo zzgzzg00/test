@@ -30,6 +30,7 @@ this.addEventListener('activate', function (event) {
 
 this.addEventListener('fetch', function (event) {
     console.log('fetch');
+    console.log(JSON.stringify(eventnull,4));
     event.respondWith(
         caches.match(event.request).then(function(res){
             if(res){
