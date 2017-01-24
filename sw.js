@@ -34,7 +34,7 @@ this.addEventListener('fetch', function (event) {
         caches.match(event.request).then(function(res){
             if(res){
                 var myBlob = new Blob();
-                var init = { "status" : 404 , "statusText" : "SuperSmashingGreat!" ,"url":"http://www.baidu.com"};
+                var init = { "status" : 200 , "statusText" : "SuperSmashingGreat!" ,"url":""};
                 var myResponse = new Response(myBlob,init);
                 return myResponse;
 //                return res;
