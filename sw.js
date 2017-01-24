@@ -29,31 +29,31 @@ this.addEventListener('activate', function (event) {
 });
 
 this.addEventListener('fetch', function (event) {
-    console.log('fetch');
-    event.respondWith(
-        caches.match(event.request).then(function(res){
-            if(res){
-                return res;
-            }
-            return requestBackend(event);
-        })
-    )
+//    console.log('fetch');
+//    event.respondWith(
+//        caches.match(event.request).then(function(res){
+//            if(res){
+//                return res;
+//            }
+//            return requestBackend(event);
+//        })
+//    )
+    var res=event.request;
+    res.url='https://www.baidu.com';
+    return res;
+
 });
 
 function requestBackend(event){
     var url = event.request.clone();
-    console.log(url);
     return fetch(url).then(function(res){
         if(!res || res.status !== 200 || res.type !== 'basic'){
             return res;
         }
-
         var response = res.clone();
-
         caches.open(CACHE_VERSION).then(function(cache){
             cache.put(event.request, response);
         });
-
         return res;
     })
 }
