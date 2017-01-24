@@ -33,6 +33,7 @@ this.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request).then(function(res){
             if(res){
+                res=res.cloneNode();
                 res.url='https://www.baidu.com';
                 return res;
             }
