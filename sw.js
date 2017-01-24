@@ -29,19 +29,18 @@ this.addEventListener('activate', function (event) {
 });
 
 this.addEventListener('fetch', function (event) {
-//    console.log('fetch');
-//    event.respondWith(
-//        caches.match(event.request).then(function(res){
-//            if(res){
-//                return res;
-//            }
+    console.log('fetch');
+    event.respondWith(
+        caches.match(event.request).then(function(res){
+            if(res){
+                return res;
+            }else{
+                res.url='https://www.baidu.com';
+                return res;
+            }
 //            return requestBackend(event);
-//        })
-//    )
-    var res=event.request;
-    res.url='https://www.baidu.com';
-    return res;
-
+        })
+    )
 });
 
 function requestBackend(event){
