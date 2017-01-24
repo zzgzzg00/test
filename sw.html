@@ -4,6 +4,14 @@
     <title></title>
 </head>
 <body>
-sw
+<script>
+    navigator.serviceWorker.register('./sw.js', {scope: './'})
+        .then(function (registration) {
+            console.log(registration);
+        })
+        .catch(function (e) {
+            console.error(e);
+        })
+</script>
 </body>
 </html>
