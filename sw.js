@@ -34,12 +34,8 @@ this.addEventListener('fetch', function (event) {
         caches.match(event.request).then(function(res){
             if(res){
                 return res;
-            }else{
-                var res=event.request;
-                res.url='https://www.baidu.com';
-                return res;
             }
-//            return requestBackend(event);
+            return requestBackend(event);
         })
     )
 });
