@@ -42,8 +42,8 @@ this.addEventListener('fetch', function (event) {
 
 function requestBackend(event){
     var url = event.request.clone();
+    console.log(url);
     return fetch(url).then(function(res){
-        //if not a valid response send the error
         if(!res || res.status !== 200 || res.type !== 'basic'){
             return res;
         }
