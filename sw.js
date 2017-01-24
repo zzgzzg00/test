@@ -6,15 +6,15 @@ var CACHE_FILES = [
     "./imgs/test2.png",
     "./imgs/test1.jpg"
 ];
-this.addEventListener('install', function (event) {
-    event.waitUntil(
-        caches.open(CACHE_VERSION)
-            .then(function (cache) {
-                console.log('Opened cache');
-                return cache.addAll(CACHE_FILES);
-            })
-    );
-});
+//this.addEventListener('install', function (event) {
+//    event.waitUntil(
+//        caches.open(CACHE_VERSION)
+//            .then(function (cache) {
+//                console.log('Opened cache');
+//                return cache.addAll(CACHE_FILES);
+//            })
+//    );
+//});
 this.addEventListener('activate', function (event) {
     console.log('activate');
     event.waitUntil(
