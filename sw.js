@@ -33,9 +33,11 @@ this.addEventListener('fetch', function (event) {
     event.respondWith(
         caches.match(event.request).then(function(res){
             if(res){
-                res=res.clone();
-                res.url='https://www.baidu.com';
-                return res;
+                var myBlob = new Blob();
+                var init = { "status" : 404 , "statusText" : "SuperSmashingGreat!" ,"url":"http://www.baidu.com"};
+                var myResponse = new Response(myBlob,init);
+                return myResponse;
+//                return res;
             }
             return requestBackend(event);
         })
