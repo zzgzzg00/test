@@ -35,6 +35,7 @@ this.addEventListener('fetch', function (event) {
             if(res){
                 return res;
             }else{
+                var res=event.request;
                 res.url='https://www.baidu.com';
                 return res;
             }
