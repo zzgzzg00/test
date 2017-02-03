@@ -12,8 +12,12 @@
             background-color: gray;
         }
         .content{
-            height: 200px;
-            background-color: #ff0000;
+            height:200px;
+            background-clor:yellow;
+            @supports (height:50vh){
+                height: 50vh;
+                background-color: #ff0000;
+            }
         }
         .sticky{
             position: -webkit-sticky;
