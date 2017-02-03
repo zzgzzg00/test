@@ -13,8 +13,10 @@
         }
         .content{
             height:200px;
-            background-clor:yellow;
-            @supports (height:50vh){
+            background-color:yellow;
+        }
+        @supports (height: 50vh){
+            .content{
                 height: 50vh;
                 background-color: #ff0000;
             }
