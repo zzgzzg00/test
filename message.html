@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<input type="button" />
+<script>
+    var index=0;
+    document.querySelector('input').onclick=function(){
+        window.top.postMessage({'index':index++},'*')
+    }
+    window.addEventListener('message',function(e){
+        alert(JSON.stringify(e.data));
+    },false);
+</script>
+</body>
+</html>
