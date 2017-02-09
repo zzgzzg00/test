@@ -10,14 +10,19 @@
     </style>
 </head>
 <body>
+<div></div>
 <input type="button" value="add"/>
 <script>
     var index=0;
+    var div=document.querySelector('div');
     document.querySelector('input').onclick=function(){
-        window.top.postMessage({'index':index++},'*')
+        window.setTimeout(function(){
+            window.top.postMessage({'index':index++},'*')
+        },2000);
+
     }
     window.addEventListener('message',function(e){
-        alert(JSON.stringify(e.data));
+        div.innerHTML='from:'+ e.origin+',value:'+ e.data;
     },false);
 </script>
 </body>
