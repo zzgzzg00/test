@@ -20,7 +20,7 @@
     var frame=document.querySelector('iframe');
     window.addEventListener('message',function(e){
         div.innerHTML= 'from:'+ e.origin+',value:'+JSON.stringify(e.data);
-        frame.contentWindow.postMessage(e.data.index,'http://train75.qunar.com');
+        frame.contentWindow.postMessage(e.data.index,'*');
     },false);
 </script>
 </body>
