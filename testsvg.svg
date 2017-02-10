@@ -3,7 +3,7 @@
     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
     xml:space="preserve">
     <rect x="0" y="0" width="30" height="30" id="rect" fill="none" stroke="red">
-        <animate attributeName="width" values="40 60" dur="1s" />
+        <animate attributeName="width" values="40,60" dur="3s" />
     </rect>
     <circle cx="50" cy="50" r="30" id="circle" fill="red" stroke="none" />
 </svg>
