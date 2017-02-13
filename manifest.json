@@ -6,8 +6,8 @@
         "sizes": "96x96",
         "type": "image/png"
     }],
-    "scope": "/sample/",
-    "start_url": "/sample/index.html",
+    "scope": "/",
+    "start_url": "/test.html",
     "display": "standalone",
     "orientation": "landscape",
     "theme_color": "#000",
