@@ -2,16 +2,23 @@
 <html>
 <head>
     <title></title>
-    <link rel="manifest" href="/manifest.json" />
-    <style>
-        div{
-            width: 200px;
-            height: 200px;
-            background-color: #ff0000;
-        }
-    </style>
 </head>
 <body>
-    <div></div>
+<script src="./sw.js"></script>
+<script>
+    const URL1='//touch.train.qunar.com/api/activity/test1',
+            URL2='//touch.train.qunar.com/api/activity/test2';
+    const request=new Request(URL,{
+        'mode':'no-cors'
+    })
+    function getData(url){
+        return fetch(url,request)
+                .then(response=>response.text())
+    .then(data=>alert(data))
+    .catch(err=>alert(err));
+    }
+    getData(URL1);
+    getData(URL2);
+</script>
 </body>
 </html>
