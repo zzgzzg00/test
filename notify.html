@@ -17,7 +17,9 @@
      *    dir:文本显示方向 [auto,rtl,ltr]
      * */
     var id=0;
-    alert(typeof Notification);
+    if(!Notification){
+        Notification=webkitNotification;
+    }
     document.querySelector('#test').onclick=function(){
         Notification.requestPermission(function (status) {
             var instance = new Notification("测试", {body: "通知栏测试",icon: "c3.png",tag:id++,dir:'ltr'});
