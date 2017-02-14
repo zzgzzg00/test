@@ -12,6 +12,7 @@ const _data={
 }
 const cacheName='v1',cacheList=[
     './imgs/test1.jpg',
+    './imgs/test2.png',
     '/test.html'
 ];
 this.addEventListener('install',function(e){
