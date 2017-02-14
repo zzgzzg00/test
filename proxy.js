@@ -26,7 +26,7 @@ this.addEventListener('activate',function(e){
     e.waitUntil(
         caches.keys().then(
             keys=>Promise.all(
-                keys.map(item=>item!='1'?
+                keys.map(item=>item!=cacheName?
                     caches.delete(item):item
                 )
             )
