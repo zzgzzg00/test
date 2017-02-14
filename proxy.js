@@ -4,7 +4,7 @@
 const init={
     "Content-Type":"text/javascript;charset=utf-8",
     "status" : 200 ,
-    "statusText" : "SuperSmashingGreat!"
+    "statusText" : "caches cached!"
 }
 const _data={
     'test1':{"name":"test_1"},

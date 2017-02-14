@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<input type="button" id="test" />
+<script>
+    /**
+     * new Notification(title, options)
+     *  title 标题
+     *  options
+     *    body:显示的征文
+     *    icon:图片
+     *    tag:标示
+     *    dir:文本显示方向 [auto,rtl,ltr]
+     * */
+    var id=0;
+    document.querySelector('#test').onclick=function(){
+        Notification.requestPermission(function (status) {
+            var instance = new Notification("测试", {body: "通知栏测试",icon: "c3.png",tag:id++,dir:'ltr'});
+            instance.onshow=function(){
+                console.log("%cshow"+this.tag,"background:linear-gradient(0deg,yellow,red)");
+            }
+            instance.onclose=function(){
+                console.log("%close"+this.tag,"background:linear-gradient(0deg,red,blue)");
+            }
+            instance.onclick=function(){
+                console.log("%click"+this.tag,"background:linear-gradient(0deg,blue,gray)");
+            }
+            instance.onerror=function(){
+                console.log("%error"+this.tag,"background:linear-gradient(0deg,gray,yellow)");
+            }
+        })
+    }
+</script>
+</body>
+</html>
