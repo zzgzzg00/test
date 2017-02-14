@@ -2,7 +2,7 @@
     "short_name":"Manifest Sample",
     "name": "Web Application Manifest Sample",
     "icons": [{
-        "src": "launcher-icon-2x.png",
+        "src": "https://zzgzzg00.github.io/imgs/test2.png",
         "sizes": "96x96",
         "type": "image/png"
     }],
