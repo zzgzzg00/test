@@ -11,7 +11,6 @@ const _data={
     'test2':{'name':'test_2'}
 }
 const cacheName='v1',cacheList=[
-    './imgs/test1.jpg',
     './imgs/test2.png',
     '/test.html'
 ];
@@ -41,5 +40,9 @@ this.addEventListener('fetch',function(events){
         let blob=new Blob([JSON.stringify(data)]);
         let response=new Response(blob,init);
         events.respondWith(response);
+    }else{
+        events.respondWith(
+            caches.match(events.request).then(response=>response);
+        )
     }
 })
