@@ -7,8 +7,8 @@ const init={
     "statusText" : "SuperSmashingGreat!"
 }
 const _data={
-    'test1':{"name":"test1"},
-    'test2':{'name':'test2'}
+    'test1':{"name":"test_1"},
+    'test2':{'name':'test_2'}
 }
 const cacheName='v1',cacheList=[
     './imgs/test1.jpg',
