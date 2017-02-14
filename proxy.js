@@ -17,7 +17,7 @@ const cacheName='v1',cacheList=[
 this.addEventListener('install',function(e){
     console.log('install');
     e.waitUntil(
-        cache.open(cacheName).then(cache=>cache.addAll(cacheList))
+        caches.open(cacheName).then(cache=>cache.addAll(cacheList))
     )
 })
 this.addEventListener('fetch',function(events){
