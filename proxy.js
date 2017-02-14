@@ -15,13 +15,13 @@ const cacheName='v1',cacheList=[
     '/test.html'
 ];
 this.addEventListener('install',function(e){
-    console.log('install');
+    alert('install');
     e.waitUntil(
         caches.open(cacheName).then(cache=>cache.addAll(cacheList))
     )
 });
 this.addEventListener('activate',function(e){
-    console.log('active');
+    alert('active');
 });
 this.addEventListener('fetch',function(events){
     let url=events.request.url;
