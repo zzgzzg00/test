@@ -23,6 +23,15 @@ this.addEventListener('install',function(e){
 });
 this.addEventListener('activate',function(e){
     console.log('active');
+    e.waitUntil(
+        caches.keys().then(
+            keys=>Promise.all(
+                keys.map(item=>item!=cacheName?
+                    caches.delete(item):item
+                )
+            )
+        )
+    );
 });
 this.addEventListener('fetch',function(events){
     let url=events.request.url;
