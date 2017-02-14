@@ -15,7 +15,7 @@ news
     function getData(url){
         return fetch(url,request)
                 .then(response=>response.text())
-    .then(data=>alert(data+'1'))
+    .then(data=>alert(data))
     .catch(err=>alert(err));
     }
     getData(URL1);
