@@ -10,6 +10,16 @@ const _data={
     'test1':{"name":"test11"},
     'test2':{'name':'test22'}
 }
+const cacheName='v1',cacheList=[
+    './imgs/test1.jpg',
+    '/test.html'
+];
+this.addEventListener('install',function(e){
+    console.log('install');
+    e.waitUntil(
+        cache.open(cacheName).then(cache=>cache.addAll(cacheList));
+    )
+})
 this.addEventListener('fetch',function(events){
     let url=events.request.url;
     url=url.substring(url.lastIndexOf('/')+1);
