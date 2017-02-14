@@ -42,7 +42,7 @@ this.addEventListener('fetch',function(events){
         events.respondWith(response);
     }else{
         events.respondWith(
-            caches.match(events.request).then(response=>response)
+            caches.match(events.request).then(response=>response||fetch(events.request))
         )
     }
 })
