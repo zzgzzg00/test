@@ -19,7 +19,10 @@ this.addEventListener('install',function(e){
     e.waitUntil(
         caches.open(cacheName).then(cache=>cache.addAll(cacheList))
     )
-})
+});
+this.addEventListener('activate',function(e){
+    console.log('active');
+});
 this.addEventListener('fetch',function(events){
     let url=events.request.url;
     url=url.substring(url.lastIndexOf('/')+1);
