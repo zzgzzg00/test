@@ -3,16 +3,31 @@
 <head>
     <title></title>
     <style>
-        div{
-            width: 200px;
-            height: 200px;
-            background-image: url('./testsvg.svg#rect');
-            background-size: cover;
+        @-webkit-keyframes move{
+            100%{
+                start-offset:100%
+            }
+        }
+        .path{
+            start-offset:10%;
+            animation:move 3s linear 0s infinite alternate;
         }
     </style>
 </head>
 <body>
-<div></div>
-<img src="./testsvg.svg#rect" />
+<svg x="0" y="0" width="150" height="150">
+    <defs>
+        <path id="path" d="
+            M 0 0,
+            50 50,
+            Q70 20 100 50
+            T 120 30
+        " />
+    </defs>
+    <text x="10" y="10">
+        <textPath  class="path" xlink:href="#path">测试</textPath>
+    </text>
+    <use x="10" y="10" xlink:href="#path" stroke="red" fill="none"/>
+</svg>
 </body>
 </html>
