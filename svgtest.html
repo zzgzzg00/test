@@ -25,5 +25,16 @@
     <use xlink:href="#path" stroke="red" fill="none"/>
     <use xlink:href="#circle" stroke="red" fill="none"/>
 </svg>
+<script>
+    function test(...arr){
+        return arr.reduce((a,b)=>a+b);
+    }
+    var p=new Proxy(test,{
+        apply(target,bindObj,args){
+            alert(target(...args));
+        }
+    });
+    p(1,2,3,4);
+</script>
 </body>
 </html>
