@@ -3,15 +3,6 @@
 <head>
     <title></title>
     <style>
-        @-webkit-keyframes move{
-            100%{
-                start-offset:100%
-            }
-        }
-        .path{
-            start-offset:10%;
-            animation:move 3s linear 0s infinite alternate;
-        }
     </style>
 </head>
 <body>
@@ -24,10 +15,15 @@
             T 120 30
         " />
     </defs>
-    <text x="10" y="10">
-        <textPath  class="path" xlink:href="#path">测试</textPath>
+    <text>
+        <textPath  startOffset="40%" xlink:href="#path">just a test</textPath>
     </text>
-    <use x="10" y="10" xlink:href="#path" stroke="red" fill="none"/>
+    <!--
+        dx dy可以设置多个值 对之后的元素有影响
+    -->
+    <text x="70" y="70">t<tspan dx="10 20" dy="-2 20">es</tspan>t</text>
+    <use xlink:href="#path" stroke="red" fill="none"/>
+    <use xlink:href="#circle" stroke="red" fill="none"/>
 </svg>
 </body>
 </html>
