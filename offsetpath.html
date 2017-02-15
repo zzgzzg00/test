@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        .cliptest{
+            width: 200px;
+            height: 200px;
+            background-color: yellow;
+            clip-path:url(#clip);
+        }
+        @-webkit-keyframes moves{
+            100%{
+                motion-offset: 100%;
+            }
+        }
+        .move{
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            offset-path: path("M0,0L100,100L150,50L0,0");
+            animation:moves 2s linear 0s infinite;
+        }
+    </style>
+</head>
+<body>
+<svg x="0" y="0" width="100" height="100" viewBox="0 0 100 100">
+    <defs>
+        <clipPath id="clip">
+            <path d="
+                M0 0,
+                50 50,
+                0 50
+            " />
+        </clipPath>
+    </defs>
+    <circle cx="50" cy="50" r="50" clip-path="url(#clip)" fill="red" stroke="red"/>
+</svg>
+<div class="cliptest"></div>
+<div class="move"></div>
+</body>
+</html>
