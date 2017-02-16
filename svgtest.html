@@ -23,8 +23,8 @@
             }
         }
         svg>circle{
-            stroke-dasharray:30;
-            stroke-dashoffset:30;
+            stroke-dasharray:314;
+            stroke-dashoffset:314;
             /*-webkit-animation:move 5s linear 0s infinite;*/
         }
     </style>
@@ -40,5 +40,12 @@
     </defs>
     <circle fill="none" cx="50" cy="50" r="48" stroke="url(#l1)" stroke-width="1"/>
 </svg>
+<script>
+    var c=document.querySelector('circle');
+    var i=314;
+    window.setInterval(function(){
+        c.style.strokeDashoffset=i--;
+    },30);
+</script>
 </body>
 </html>
