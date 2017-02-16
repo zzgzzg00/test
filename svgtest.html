@@ -3,38 +3,42 @@
 <head>
     <title></title>
     <style>
+        :root{
+            height: 100%;
+        }
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        svg{
+            position: absolute;
+            left: 0;
+            top: 0;
+            box-sizing: border-box;
+            transform:rotate(-90deg);
+        }
+        @-webkit-keyframes move{
+            100%{
+                stroke-dashoffset:0;
+            }
+        }
+        svg>circle{
+            stroke-dasharray:314;
+            stroke-dashoffset:314;
+            animation:move 5s linear 0s infinite;
+        }
     </style>
 </head>
 <body>
-<svg x="0" y="0" width="150" height="150">
+<svg width="100%" height="100%" viewBox="0 0 100 100">
     <defs>
-        <path id="path" d="
-            M 0 0,
-            50 50,
-            Q70 20 100 50
-            T 120 30
-        " />
+        <linearGradient id="l1">
+            <stop offset="0%" stop-color="red" />
+            <stop offset="50%" stop-color="yellow" />
+            <stop offset="100%" stop-color="blue" />
+        </linearGradient>
     </defs>
-    <text>
-        <textPath  startOffset="40%" xlink:href="#path">just a test</textPath>
-    </text>
-    <!--
-        dx dy可以设置多个值 对之后的元素有影响
-    -->
-    <text x="70" y="70">t<tspan dx="10 20" dy="-2 20">es</tspan>t</text>
-    <use xlink:href="#path" stroke="red" fill="none"/>
-    <use xlink:href="#circle" stroke="red" fill="none"/>
+    <circle fill="none" cx="50" cy="50" r="48" stroke="url(#l1)" stroke-width="1"/>
 </svg>
-<script>
-    function test(...arr){
-        return arr.reduce((a,b)=>a+b);
-    }
-    var p=new Proxy(test,{
-        apply(target,bindObj,args){
-            alert(target(...args));
-        }
-    });
-    p(1,2,3,4);
-</script>
 </body>
 </html>
