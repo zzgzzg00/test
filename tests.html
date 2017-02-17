@@ -10,7 +10,10 @@
             border: 1px solid red;
             box-sizing: border-box;
         }
-        div:after{
+        div:nth-of-type(2){
+            border-color: transparent ;
+        }
+        div:nth-of-type(2):after{
             box-sizing: border-box;
             content: '';
             position: absolute;
@@ -26,6 +29,7 @@
     </style>
 </head>
 <body>
+<div></div>
 <div></div>
 </body>
 </html>
