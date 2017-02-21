@@ -11,6 +11,7 @@
             color: #ffffff;
             font-size: 24px;
             background-color: rgba(255,0,0,.3);
+            cursor: none;
         }
         .bolder{
             text-shadow: 1px 1px 0 black,1px -1px 0 black,-1px 1px 0 black,-1px -1px 0 black;
@@ -18,7 +19,17 @@
         .lighter{
             transition:all .5s linear 0s;
             text-shadow: 0 0 0 #fff,0 0 0 #fff;
+            position: relative;
         }
+        .lighter:after{
+            position: absolute;
+            left: -50px;
+            top: -50px;
+            bottom: -50px;
+            right: -50px;
+            content: '';
+        }
+
         .lighter:hover{
             color: transparent;
             text-shadow: 0 0 .1em #fff,0 0 .3em #fff;
