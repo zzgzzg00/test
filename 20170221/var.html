@@ -4,6 +4,7 @@
     <title></title>
     <style>
         :root{
+            font-size: 15px;
             --color:black;
         }
         @media (max-width:600px){
@@ -34,10 +35,21 @@
             background-color: var(--color);
             border:var(--border);
         }
+
+        .hover{
+            /*--bg:red;*/
+            /*--width:2px;*/
+            width: calc(var(--width,100px) + 1rem);
+            background-color: var(--bg,blue);
+        }
+        .hover:hover{
+            --bg:yellow;
+        }
     </style>
 </head>
 <body>
     <div class="close open"></div>
+    <div class="hover">hover</div>
     <script>
         document.querySelector('div').onclick=function(){
             this.classList.toggle('open');

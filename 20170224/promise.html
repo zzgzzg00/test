@@ -5,16 +5,22 @@
 </head>
 <body>
 <script>
-    var index=0;
-    function createPromise(time,sign=`test${index++}`){
-        return new Promise(function(resolve,reject){
-            window.setTimeout(()=>resolve(sign),time*1000)
-        })
-    }
-    function test(data){
-        alert(data)
-    }
-    createPromise(3).then(test).then;
+//    var index=0;
+//    function createPromise(time,sign=`test${index++}`){
+//        return new Promise(function(resolve,reject){
+//            window.setTimeout(()=>resolve(sign),time*1000)
+//        })
+//    }
+//    function test(data){
+//        alert(data)
+//    }
+//    createPromise(3).then(test).then;
+
+
+    var reg=/\\c(?=[a-zA-Z])/g;
+    var x='\\cA\\c@\\cacv';
+    var y= x.replace(reg,'Control-');
+    console.log(y);
 </script>
 </body>
 </html>
