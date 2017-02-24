@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    var index=0;
+    function createPromise(time,sign=`test${index++}`){
+        return new Promise(function(resolve,reject){
+            window.setTimeout(()=>resolve(sign),time*1000)
+        })
+    }
+    function test(data){
+        alert(data)
+    }
+    createPromise(3).then(test).then;
+</script>
+</body>
+</html>
