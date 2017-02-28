@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+{
+    let r1=[1,2,3].map(function(){
+        return this.name;
+    },{name:1});
+    console.log(r1); //1 1 1
+    var a=[1,undefined,3,,2];
+    a.length=6;
+    let r2= a.map(item=>~~item);//1 0 3 2
+    console.log(r2);
+}
+</script>
+</body>
+</html>
