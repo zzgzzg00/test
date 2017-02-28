@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    class Sleep{
+        constructor(){
+            this._next=[];
+        }
+        next(){
+            let t=this._next.shift();
+            if(t){
+                if(typeof t=='function'){
+                    t();
+                    this.next();
+                }else{
+                    window.setTimeout(()=>this.next(),t);
+                }
+            }
+        }
+        sleep(time){
+            this._next.push(time*1000);
+            return this;
+        }
+        show(tip){
+            this._next.push(()=>console.log(tip));
+            return this;
+        }
+        run(){
+            this.next();
+        }
+    }
+//    let s=new Sleep();
+//    s.show(1).sleep(2).show(2).show(3).sleep(4).show(5).run();
+
+    class PSleep{
+        constructor(){
+            this.promise=Promise.resolve();
+        }
+        sleep(time){
+            this.promise=this.promise.then(()=>new Promise(resolve=>window.setTimeout(resolve,time*1000)))
+            return this;
+        }
+        show(tip){
+            this.promise=this.promise.then(()=>console.log(tip));
+            return this;
+        }
+    }
+    let s=new PSleep();
+    s.show(1).sleep(2).show(2).show(3).sleep(4).show(5);
+</script>
+</body>
+</html>
