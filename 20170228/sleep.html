@@ -7,12 +7,12 @@
 </head>
 <body>
 <input type="range" min="0" max="100" />
-<output></output>
+<div></div>
 <script>
     var input=document.querySelector('input'),
-            output=document.querySelector('output');
+            div=document.querySelector('div');
     input.oninput=function(){
-        output.innerHTML=this.value;
+        div.innerHTML=this.value;
     }
     class Sleep{
         constructor(){
