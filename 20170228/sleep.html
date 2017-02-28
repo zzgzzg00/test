@@ -3,14 +3,17 @@
 <head>
     <title></title>
     <style>
-        input{
-            background: red;
-        }
     </style>
 </head>
 <body>
 <input type="range" min="0" max="100" />
+<output></output>
 <script>
+    var input=document.querySelector('input'),
+            output=document.querySelector('output');
+    input.oninput=function(){
+        output.innerHTML=this.value;
+    }
     class Sleep{
         constructor(){
             this._next=[];
