@@ -6,6 +6,10 @@
 <body>
 <script>
 {
+    /**
+     * es5除了join多数方法会跳过空位数组项
+     * es6不会
+     * */
     let r1=[1,2,3].map(function(){
         return this.name;
     },{name:1});
