@@ -14,6 +14,12 @@
     a.length=6;
     let r2= a.map(item=>~~item);//1 0 3 2
     console.log(r2);
+
+    var lo={length:4};
+    var a= [].slice.call(lo).join('a');
+    console.log(a);
+    var b=Array.from(lo,x=>'b');
+    console.log(b);
 }
 </script>
 </body>

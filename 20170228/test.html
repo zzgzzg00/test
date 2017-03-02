@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function convertQueryToMap(query) {
+        const reg=/([a-z]+)(\.[a-z]+){2}=[a-z]+/gi;
+        const str='a.b.c=d';
+        const arr=reg.exec(str);
+        console.log(arr);
+    }
+    convertQueryToMap();
+</script>
+</body>
+</html>
