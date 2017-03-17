@@ -23,6 +23,9 @@
             line-height: 1.5;
             text-decoration: none;
         }
+        .invaild{
+            box-shadow: 0 0 5px red inset;
+        }
         :root{
             font-size: 100px;
             min-height: 100vh;
@@ -76,7 +79,7 @@
         .header .citylist>p{
             padding-left: .05rem;
             font-size: 12px;
-            line-height: 24px;
+            line-height: .24rem;
             text-align: left;
         }
         .header .citylist>p.active{
@@ -95,6 +98,19 @@
         .header .citylist>.error{
             color: #ff0000 !important;
         }
+        .header .search{
+            margin-left: .16rem;
+            height: .36rem;
+            line-height: .36rem;
+            width: 1.12rem;
+            background-color: #fc5830;
+            color: #fff;
+            font-size: 18px;
+            outline: 0;
+            border: 0;
+            cursor: pointer;
+            font-family: 'Microsoft YaHei';
+        }
     </style>
 </head>
 <body>
@@ -108,11 +124,13 @@
             到达<input data-station="to" data-role="input" type="text" name="end" placeholder="请输入到达城市"/>
             <div data-role="citylist" class="citylist hide"></div>
         </div>
+        <input type="button" value="搜索" data-role="search" class="search" />
     </div>
     <div class="list"></div>
     <script src="./Suggest.js"></script>
     <script>
     {
+        const listUrl='';
         function throwError(str=''){
             throw new Error(str);
         }
@@ -137,11 +155,32 @@
                 cityList.forEach(function(item,index){
                     if(!item.classList.contains('hide')){
                         let active=item.querySelector('.active');
-                        suggetInput[index].value=active.classList.contains('error')?
-                                '':active.innerHTML;
+                        if(!active.classList.contains('error')){
+                            suggetInput[index].value=active.innerHTML;
+                            suggetInput[index].parentNode.classList.remove('invaild');
+                        }else{
+                            suggetInput[index].value='';
+                        }
                         item.classList.add('hide');
                     }
                 });
+            }
+            document.querySelector('[data-role="search"]').onclick=function(e){
+                const params=[];
+                let flag=true;
+                suggetInput.forEach(function(item){
+                   if(!item.value){
+                       item.parentNode.classList.add('invaild');
+                       flag=false;
+                       return false;
+                   }
+                   params.push(`${item.getAttribute('name')}=${item.value}`);
+                });
+                if(flag){
+                    fetch(`${listUrl}?${params.join('&')}`)
+                        .then(response=>response.json())
+                        .then(data=>renderList(data));
+                }
             }
         }
 

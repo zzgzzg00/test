@@ -75,7 +75,13 @@
                 let target= e.target;
                 e.stopPropagation();
                 if(target.tagName.toLowerCase()=='p'){
-                    me.inputDom.value=target.classList.contains('error')?'':target.innerHTML;
+                    if(!target.classList.contains('error')){
+                        me.inputDom.value=target.innerHTML;
+                        me.inputDom.parentNode.classList.remove('invaild');
+                    }else{
+                        me.inputDom.value='';
+                    }
+
                     me.listDom.classList.add('hide');
                 }else if(target.classList.contains('js-page')){
                     let page=target.innerHTML-1;
