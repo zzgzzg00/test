@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -111,6 +111,31 @@
             cursor: pointer;
             font-family: 'Microsoft YaHei';
         }
+        .item{
+            display: flex;
+            font-size: 12px;
+            border-bottom: 1px #e0e0e0 solid;
+        }
+        .item .icon{
+            display: flex;
+            align-items:center;
+            justify-content:flex-end;
+            width: .5rem;
+            padding-right: .1rem;
+        }
+        .item .info{
+            flex:1;
+            align-items:center;
+            justify-content:center;
+            display: flex;
+        }
+        .item .price{
+            width: 1rem;
+            padding-right: .5rem;
+            display: flex;
+            align-items:center;
+            justify-content:center;
+        }
     </style>
 </head>
 <body>
@@ -126,7 +151,30 @@
         </div>
         <input type="button" value="搜索" data-role="search" class="search" />
     </div>
-    <div class="list"></div>
+    <div class="list">
+        <div class="container">
+            <div class="item">
+                <div class="icon">123</div>
+                <div class="info">
+                    <div class="from">
+                        <p class="time">14:41</p>
+                        <p class="city">乌鲁木齐</p>
+                    </div>
+                    <div class="time">
+                        <p class="usetime">1时55分</p>
+                        <p>K9785</p>
+                    </div>
+                    <div class="to">
+                        <p class="time">16:39</p>
+                        <p class="city">石河子</p>
+                    </div>
+                </div>
+                <div class="price">
+                    <span>&yen;</span>11.5
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="./Suggest.js"></script>
     <script>
     {
@@ -142,7 +190,20 @@
                 new Suggest(suggest,{cache});
             }
         }
+        function repeat(strArr,...params){
+            const arr=[];
+            for(let i of data){
+                arr.push(String.raw(strArr, i.name, i.age));
+            }
+            return arr.join('');
+        }
+        function renderItem(data){
+            let str=repeat`name=${1},age=${2}`;
+            alert(str);
+        }
+        function renderList(data){
 
+        }
         function bindEvents(){
             const suggetInput= [...document.querySelectorAll('[data-role="input"]')];
             const cityList= [...document.querySelectorAll('[data-role="citylist"]')];
@@ -187,6 +248,9 @@
         function init(){
             initSuggest();
             bindEvents();
+
+            let arr=Array.from({length:4},(item,index)=>({name:'x',age:index}));
+            renderItem(arr);
         }
         init();
     }
