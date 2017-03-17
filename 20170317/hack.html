@@ -2,13 +2,239 @@
 <html>
 <head>
     <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="apple-mobile-web-app-title" content="汽车票-qunar.com">
+    <meta name="full-screen" content="yes"/>
+    <meta name="browsermode" content="application"/>
+    <meta name="x5-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="x5-page-mode" content="app"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui" />
+    <meta name="keywords" content="火车票,火车票查询,列车时刻表,火车票预定" />
+    <meta name="description" content="去哪儿网(Qunar.com)火车票频道提供全国列车时刻表查询、火车票查询、火车票车次查询、火车票站站查询、高铁列车时刻表及价格查询。" />
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            line-height: 1.5;
+            text-decoration: none;
+        }
+        :root{
+            font-size: 100px;
+            min-height: 100vh;
+        }
+        .hide{
+            display: none;
+        }
+        .header{
+            --bgcolor:#3cb0d0;
+            height: .68rem;
+            background-color: var(--bgcolor);
+            width: 100%;
+            display: flex;
+            align-items:center;
+            justify-content:center;
+            --suggestheight:.34rem;
+        }
+        .header .suggest{
+            position: relative;
+            height: var(--suggestheight);
+            font-size: 14px;
+            background-color: #ffffff;
+            line-height: var(--suggestheight);
+            color: #888;
+            font-size: 12px;
+            padding-left: .1rem;
+        }
+        .header .suggest input{
+            margin: 0 .1rem 0 .1rem;
+            height: .22rem;
+            font-size: 14px;
+            border: none;
+            outline: none;
+        }
+        .header .exchange{
+            color: #fff;
+            font-size: 14px;
+            margin: 0 .2rem;
+        }
+        .header .citylist{
+            position: absolute;
+            top: .34rem;
+            left: 0;
+            right: 0;
+            border: 1px solid var(--bgcolor);
+            background-color: #ffffff;
+            text-align: center;
+            padding-bottom: .05rem;
+            z-index: 10;
+        }
+        .header .citylist>p{
+            padding-left: .05rem;
+            font-size: 12px;
+            line-height: 24px;
+            text-align: left;
+        }
+        .header .citylist>p.active{
+            background-color: var(--bgcolor);
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .header .citylist>a{
+            margin-right: .05rem;
+            padding: .02rem;
+            color: #5d9cec;
+        }
+        .header .citylist>.disabled{
+            color: #333;
+        }
+        .header .citylist>.error{
+            color: #ff0000 !important;
+        }
+    </style>
 </head>
 <body>
-<input type="text" list="test" autocomplete="true" />
-<datalist id="test">
-    <option value="test1">test1</option>
-    <option value="test2">test2</option>
-    <option value="test3">test3</option>
-</datalist>
+    <div class="header">
+        <div class="suggest" data-role="suggest">
+            出发<input data-station="from" data-role="input" type="text" name="start" placeholder="请输入出发城市"/>
+            <div data-role="citylist" class="citylist hide"></div>
+        </div>
+        <a href="#" class="exchange" action-type="exchange" tabindex="-1">一换一</a>
+        <div class="suggest" data-role="suggest">
+            到达<input data-station="to" data-role="input" type="text" name="end" placeholder="请输入到达城市"/>
+            <div data-role="citylist" class="citylist hide"></div>
+        </div>
+    </div>
+    <div class="list"></div>
+    <script>
+    {
+        const suggestUrl='http://train.qunar.com/qunar/chezhanSuggest.jsp';
+        const suggertErrorTip='<p class="active error">暂无收录</p>'
+        function throwError(str=''){
+            throw new Error(str);
+        }
+        class SuggestCache{
+            constructor(){
+                this.cache={};
+            }
+            put(key,value){
+                this.cache[key]=value;
+            }
+            get(key){
+                return this.cache[key];
+            }
+        }
+        class Suggest{
+            constructor(containerDom=throwError('containerDom is required'),{cache=new SuggestCache(),timeInterval=50,countPerAge=5}={}){
+                this.inputDom=containerDom.querySelector('[data-role="input"]');
+                this.station=this.inputDom.dataset.station;
+                this.listDom=containerDom.querySelector('[data-role="citylist"]');
+                this.cache=cache;
+                this.timeHandle=null;
+                this.timeInterval=timeInterval;
+                this.countPerAge=countPerAge;
+                this.bindEvents();
+            }
+            fetchData(v){
+                const me=this;
+                let value=this.cache.get(v);
+
+                //test code
+                value=v?Array.from({length:21},(item,index)=>`test${index}`):'';
+//                value=[];
+
+                if(value){
+                    return Promise.resolve(value);
+                }
+                return fetch(`${suggestUrl}?key=${v}&station=${me.station}`)
+                    .then(response=>response.json())
+                    .then(data=>{this.cache.put(data);return data});
+            }
+            createList(data=[],page=0){
+                const me=this;
+                const items=data.slice(page*me.countPerAge,(page+1)*me.countPerAge)
+                    .map((item,index)=>`<p class=${index==0?'active':''}>${item}</p>`)
+                    .join('');
+                const pages=Math.ceil(data.length/me.countPerAge);
+                const pagesStr=pages>1?
+                    Array.from({length:pages},(item,index)=>
+                        `<a href='javascript:void(0);' class=${index==page?'disabled':'js-page'}>${index+1}</a>`)
+                    .join(''):'';
+                this.listDom.classList.remove('hide');
+                this.listDom.innerHTML=items+pagesStr || suggertErrorTip;
+            }
+            renderList(v,page=0){
+                this.fetchData(v)
+                    .then(data=>this.createList(data,page))
+                    .catch(data=>this.listDom.innerHTML=suggertErrorTip)
+            }
+            bindEvents(){
+                const me=this;
+                const inputDom=this.inputDom,listDom=this.listDom;
+                inputDom.oninput=inputDom.onpropertychange=function(e){
+                    const v=this.value;
+                    if(me.timeHandle){
+                        window.clearTimeout(me.timeHandle);
+                    }
+                    me.timeHandle=window.setTimeout(me.renderList.bind(me,v),me.timeInterval);
+                }
+                listDom.onclick=function(e){
+                    let target= e.target;
+                    e.stopPropagation();
+                    if(target.tagName.toLowerCase()=='p'){
+                        me.inputDom.value=target.classList.contains('error')?'':target.innerHTML;
+                        me.listDom.classList.add('hide');
+                    }else if(target.classList.contains('js-page')){
+                        let page=target.innerHTML-1;
+                        me.renderList(inputDom.value,page);
+                    }
+                }
+                listDom.onmouseover=function(e){
+                    let target= e.target;
+                    if(target.tagName.toLowerCase()=='p'){
+                        [...this.querySelectorAll('p')].forEach(item=>item.classList.remove('active'));
+                        target.classList.add('active');
+                    }
+                }
+            }
+        }
+        function initSuggest(){
+            const suggests= [...document.querySelectorAll('[data-role="suggest"]')];
+            for(let suggest of suggests){
+                new Suggest(suggest);
+            }
+        }
+
+        function bindEvents(){
+            const suggetInput= [...document.querySelectorAll('[data-role="input"]')];
+            const cityList= [...document.querySelectorAll('[data-role="citylist"]')];
+            //换
+            document.querySelector('[action-type="exchange"]').onclick=function(e){
+                e.preventDefault();
+                [suggetInput[1].value,suggetInput[0].value]= [...suggetInput.map(item=>item.value)];
+            }
+            document.querySelector(':root').onclick=function(){
+                cityList.forEach(function(item,index){
+                    if(!item.classList.contains('hide')){
+                        let active=item.querySelector('.active');
+                        suggetInput[index].value=active.classList.contains('error')?
+                                '':active.innerHTML;
+                        item.classList.add('hide');
+                    }
+                });
+            }
+        }
+
+        function init(){
+            initSuggest();
+            bindEvents();
+        }
+        init();
+    }
+    </script>
 </body>
 </html>
