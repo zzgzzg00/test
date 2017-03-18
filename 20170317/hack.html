@@ -29,6 +29,7 @@
         :root{
             font-size: 100px;
             min-height: 100vh;
+            background-color: #e0e0e0;
         }
         .hide{
             display: none;
@@ -111,10 +112,15 @@
             cursor: pointer;
             font-family: 'Microsoft YaHei';
         }
+        .list .container{
+            background-color: #ffffff;
+            margin-bottom: .1rem;
+        }
         .item{
             display: flex;
             font-size: 12px;
             border-bottom: 1px #e0e0e0 solid;
+            height: 1rem;
         }
         .item .icon{
             display: flex;
@@ -136,6 +142,38 @@
             align-items:center;
             justify-content:center;
         }
+        .item :-webkit-any(.from,.during,.to){
+            margin-left: .1rem;
+        }
+        .item :-webkit-any(.from,.to) .time{
+            font-size: 20px;
+            font-weight: bolder;
+        }
+        .item :-webkit-any(.from,.to) .city{
+            font-size: 14px;
+        }
+        .item .during{
+            font-size: 12px;
+            text-align: center;
+        }
+        .item .during .usetime{
+            color: #888888;
+        }
+        .item .during .seperate{
+            --bcolor:#888;
+            line-height: .3;
+            border-bottom: 1px solid var(--bcolor);
+            position: relative;
+        }
+        .item .during .seperate:after{
+            content: '';
+            width: .05rem;
+            position: absolute;
+            border-bottom: 1px solid var(--bcolor);
+            right: 0;
+            top: -2px;
+            transform:rotate(45deg);
+        }
     </style>
 </head>
 <body>
@@ -151,37 +189,13 @@
         </div>
         <input type="button" value="搜索" data-role="search" class="search" />
     </div>
-    <div class="list">
-        <div class="container">
-            <div class="item">
-                <div class="icon">123</div>
-                <div class="info">
-                    <div class="from">
-                        <p class="time">14:41</p>
-                        <p class="city">乌鲁木齐</p>
-                    </div>
-                    <div class="time">
-                        <p class="usetime">1时55分</p>
-                        <p>K9785</p>
-                    </div>
-                    <div class="to">
-                        <p class="time">16:39</p>
-                        <p class="city">石河子</p>
-                    </div>
-                </div>
-                <div class="price">
-                    <span>&yen;</span>11.5
-                </div>
-            </div>
-        </div>
+    <div class="list" data-role="list">
+
     </div>
     <script src="./Suggest.js"></script>
     <script>
     {
         const listUrl='';
-        function throwError(str=''){
-            throw new Error(str);
-        }
         function initSuggest(){
             const suggests= [...document.querySelectorAll('[data-role="suggest"]')];
             //出发 到达用一个cache
@@ -190,19 +204,50 @@
                 new Suggest(suggest,{cache});
             }
         }
-        function repeat(strArr,...params){
-            const arr=[];
-            for(let i of data){
-                arr.push(String.raw(strArr, i.name, i.age));
+        function repeat(data){
+            let strArr=[];
+            return function(strs,...params){
+                for(let i of data){
+                    strArr.push(String.raw({raw:strs},...params.map(item=>i[item])));
+                }
+                return strArr.join('');
             }
-            return arr.join('');
         }
         function renderItem(data){
-            let str=repeat`name=${1},age=${2}`;
-            alert(str);
+            let str=repeat(data)`
+                <div class="item">
+                    <div class="icon">${'type'}</div>
+                    <div class="info">
+                        <div class="from">
+                            <p class="time">${'startTime'}</p>
+                            <p class="city">${'startCity'}</p>
+                        </div>
+                        <div class="during">
+                            <p class="usetime">${'duration'}</p>
+                            <p class="seperate"></p>
+                            <p>${'number'}</p>
+                        </div>
+                        <div class="to">
+                            <p class="time">${'arriveTime'}</p>
+                            <p class="city">${'arriveCity'}</p>
+                        </div>
+                    </div>
+                    <div class="price">
+                        <span>&yen;</span>${'price'}
+                    </div>
+                </div>`;
+            return str;
         }
         function renderList(data){
-
+            const arr=[];
+            for(let container of data){
+                let item=renderItem(container.items);
+                arr.push(`
+                    <div class='container'>
+                        ${item}
+                    </div>`);
+            }
+            document.querySelector('[data-role="list"]').innerHTML=arr.join('');
         }
         function bindEvents(){
             const suggetInput= [...document.querySelectorAll('[data-role="input"]')];
@@ -249,8 +294,79 @@
             initSuggest();
             bindEvents();
 
-            let arr=Array.from({length:4},(item,index)=>({name:'x',age:index}));
-            renderItem(arr);
+            //test code
+            renderList([
+                {
+                    'items':[{
+                        'type':'火车',
+                        'startTime':'11:44',
+                        'startCity':'北京',
+                        'duration':'22时44分',
+                        'number':'K44',
+                        'arriveTime':'02:23',
+                        'arriveCity':'乌鲁木齐',
+                        'price':'11.4'
+                    },{
+                        'type':'飞机',
+                        'startTime':'11:44',
+                        'startCity':'北京',
+                        'duration':'22时44分',
+                        'number':'K44',
+                        'arriveTime':'02:23',
+                        'arriveCity':'乌鲁木齐',
+                        'price':'12'
+                    },{
+                        'type':'轮船',
+                        'startTime':'11:44',
+                        'startCity':'北京',
+                        'duration':'22时44分',
+                        'number':'K44',
+                        'arriveTime':'02:23',
+                        'arriveCity':'乌鲁木齐',
+                        'price':'50'
+                    }]
+                },{
+                    'items':[{
+                        'type':'火车',
+                        'startTime':'11:44',
+                        'startCity':'北京',
+                        'duration':'22时44分',
+                        'number':'K44',
+                        'arriveTime':'02:23',
+                        'arriveCity':'乌鲁木齐',
+                        'price':'11.4'
+                    },{
+                        'type':'飞机',
+                        'startTime':'11:44',
+                        'startCity':'北京',
+                        'duration':'22时44分',
+                        'number':'K44',
+                        'arriveTime':'02:23',
+                        'arriveCity':'乌鲁木齐',
+                        'price':'12'
+                    }]
+                },{
+                    'items':[{
+                        'type':'火车',
+                        'startTime':'11:44',
+                        'startCity':'北京',
+                        'duration':'22时44分',
+                        'number':'K44',
+                        'arriveTime':'02:23',
+                        'arriveCity':'乌鲁木齐',
+                        'price':'11.4'
+                    },{
+                        'type':'飞机',
+                        'startTime':'11:44',
+                        'startCity':'北京',
+                        'duration':'22时44分',
+                        'number':'K44',
+                        'arriveTime':'02:23',
+                        'arriveCity':'乌鲁木齐',
+                        'price':'12'
+                    }]
+                }
+            ]);
         }
         init();
     }

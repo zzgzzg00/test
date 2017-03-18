@@ -4,6 +4,9 @@
 {
     const suggestUrl='http://train.qunar.com/qunar/chezhanSuggest.jsp';
     const suggertErrorTip='<p class="active error">暂无收录</p>';
+    function throwError(str=''){
+        throw new Error(str);
+    }
 
     class SuggestCache{
         constructor(){

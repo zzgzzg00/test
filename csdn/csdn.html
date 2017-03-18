@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+{
+    const data=[{
+        'name':'gjj',
+        'part':'qs',
+        'action':'t'
+    },{
+        'name':'hlp',
+        'part':'b',
+        'action':'t'
+    },{
+        'name':'lm',
+        'part':'rf',
+        'action':'t'
+    }];
+    function repeat(data){
+        return function(strArr,...params){
+            let str=[];
+            for(let i of data){
+                str.push(String.raw({raw:strArr},...params.map(item=>i[item])));
+            }
+            return str.join(';');
+        }
+    }
+    let str=repeat(data)`name:${'name'},part:${'part'},action:${'action'}`;
+    alert(str);
+}
+</script>
+</body>
+</html>
