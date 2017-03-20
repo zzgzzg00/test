@@ -37,6 +37,7 @@
         .header{
             --bgcolor:#3cb0d0;
             height: .68rem;
+            background-color: #3cb0d0;
             background-color: var(--bgcolor);
             width: 100%;
             display: flex;
@@ -46,9 +47,11 @@
         }
         .header .suggest{
             position: relative;
+            height:.34rem;
             height: var(--suggestheight);
             font-size: 14px;
             background-color: #ffffff;
+            line-height: .34rem;
             line-height: var(--suggestheight);
             color: #888;
             font-size: 12px;
@@ -71,6 +74,7 @@
             top: .34rem;
             left: 0;
             right: 0;
+            border: 1px solid #3cb0d0;
             border: 1px solid var(--bgcolor);
             background-color: #ffffff;
             text-align: center;
@@ -84,6 +88,7 @@
             text-align: left;
         }
         .header .citylist>p.active{
+            background-color: #3cb0d0;
             background-color: var(--bgcolor);
             color: #ffffff;
             cursor: pointer;
@@ -117,28 +122,43 @@
             margin-bottom: .1rem;
         }
         .item{
+            display: -webkit-box;
+            display: -webkit-flex;
             display: flex;
             font-size: 12px;
             border-bottom: 1px #e0e0e0 solid;
             height: 1rem;
         }
         .item .icon{
+            display: -webkit-box;
+            display: -webkit-flex;
             display: flex;
+            -webkit-align-items:center;
+            -webkit-justify-content:flex-end;
             align-items:center;
             justify-content:flex-end;
             width: .5rem;
             padding-right: .1rem;
         }
         .item .info{
+            -webkit-flex:1;
+            -webkit-align-items:center;
+            -webkit-justify-content:center;
             flex:1;
             align-items:center;
             justify-content:center;
+            display: -webkit-box;
+            display: -webkit-flex;
             display: flex;
         }
         .item .price{
             width: 1rem;
             padding-right: .5rem;
+            display: -webkit-box;
+            display: -webkit-flex;
             display: flex;
+            -webkit-align-items:center;
+            -webkit-justify-content:center;
             align-items:center;
             justify-content:center;
         }
@@ -172,6 +192,7 @@
         .item .during .seperate{
             --bcolor:#888;
             line-height: .3;
+            border-bottom: 1px solid #888;
             border-bottom: 1px solid var(--bcolor);
             position: relative;
         }
@@ -179,6 +200,7 @@
             content: '';
             width: .05rem;
             position: absolute;
+            border-bottom: 1px solid #888;
             border-bottom: 1px solid var(--bcolor);
             right: 0;
             top: -2px;
