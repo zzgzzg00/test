@@ -6,7 +6,7 @@
     const map=new Map([
         ['飞机','&#xf010;'],
         ['火车','&#xf014;'],
-        ['汽车','&#xf1f3;'],
+        ['汽车','&#xf1eb;'],
         ['轮船','&#xf466;']
     ]);
     function initSuggest(){
