@@ -3,7 +3,7 @@
  */
 {
     const listUrl='/search/joint.do';
-    const map=new Map([
+    const iconMap=new Map([
         ['飞机','&#xf010;'],
         ['火车','&#xf014;'],
         ['汽车','&#xf1eb;'],
@@ -19,7 +19,7 @@
     }
     function changeToIcon(data){
         for(let i of data){
-            i.icon=map.get(i.type);
+            i.icon=iconMap.get(i.type);
         }
     }
     function repeat(data){
