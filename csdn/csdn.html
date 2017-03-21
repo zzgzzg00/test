@@ -5,32 +5,27 @@
 </head>
 <body>
 <script>
-{
-    const data=[{
-        'name':'gjj',
-        'part':'qs',
-        'action':'t'
-    },{
-        'name':'hlp',
-        'part':'b',
-        'action':'t'
-    },{
-        'name':'lm',
-        'part':'rf',
-        'action':'t'
-    }];
-    function repeat(data){
-        return function(strArr,...params){
-            let str=[];
-            for(let i of data){
-                str.push(String.raw({raw:strArr},...params.map(item=>i[item])));
+    var nodes = [
+        {"id":9,"title":"第一级","parentid":null},
+        {"id":2,"title":"第二级","parentid":1},
+        {"id":3,"title":"第二级","parentid":1},
+        {"id":4,"title":"第二级","parentid":1},
+        {"id":5,"title":"第二级","parentid":2},
+        {"id":6,"title":"第三级","parentid":3},
+        {"id":7,"title":"第三级","parentid":4},
+        {"id":8,"title":"第三级","parentid":3}
+    ];
+    var arr=[];
+    function find(id){
+        nodes.forEach(function(item){
+            if(item.parentid==id){
+                arr.push(item);
+                find(item.id);
             }
-            return str.join(';');
-        }
+        })
     }
-    let str=repeat(data)`name:${'name'},part:${'part'},action:${'action'}`;
-    alert(str);
-}
+    find();
+    console.log(JSON.stringify(arr,null,4));
 </script>
 </body>
 </html>

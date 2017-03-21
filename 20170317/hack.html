@@ -75,6 +75,12 @@
             font-size: 14px;
             margin: 0 .2rem;
         }
+        .header .join-type{
+            margin-left: .1rem;
+            width: 1rem;
+            padding-left: .1rem;
+            display: none;
+        }
         .header .citylist{
             position: absolute;
             top: .34rem;
@@ -217,22 +223,30 @@
 <body>
     <div class="header">
         <div class="suggest" data-role="suggest">
-            出发<input data-station="from" data-role="input" type="text" name="start" placeholder="请输入出发城市"/>
+            出发<input data-station="from" data-role="input" type="text" name="dpt" placeholder="请输入出发站"/>
             <div data-role="citylist" class="citylist hide"></div>
         </div>
         <a href="#" class="exchange" action-type="exchange" tabindex="-1">一换一</a>
         <div class="suggest" data-role="suggest">
-            到达<input data-station="to" data-role="input" type="text" name="end" placeholder="请输入到达城市"/>
+            到达<input data-station="to" data-role="input" type="text" name="arr" placeholder="请输入到达站"/>
             <div data-role="citylist" class="citylist hide"></div>
         </div>
+        <select class="join-type" multiple data-role="jointType" name="jointType" size="2">
+            <option value="0">大交通</option>
+            <option value="1">机票</option>
+            <option value="2">火车票</option>
+            <option value="3">汽车票</option>
+            <option value="4">船票</option>
+        </select>
         <input type="button" value="搜索" data-role="search" class="search" />
     </div>
     <div class="list" data-role="list">
 
     </div>
-    <script src="es5/Suggest.js"></script>
-    <script src="es5/logic.js"></script>
-    <!--<script src="./Suggest.js"></script>-->
-    <!--<script src="./logic.js"></script>-->
+    <!--<script src="es5/patch.js"></script>-->
+    <!--<script src="es5/Suggest.js"></script>-->
+    <!--<script src="es5/logic.js"></script>-->
+    <script src="./Suggest.js"></script>
+    <script src="./logic.js"></script>
 </body>
 </html>

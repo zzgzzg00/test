@@ -2,7 +2,7 @@
  * Created by zhigang.zhang on 17-3-17.
  */
 {
-    const suggestUrl='http://train.qunar.com/qunar/chezhanSuggest.jsp';
+    const suggestUrl='/search/suggest.do';
     const suggertErrorTip='<p class="active error">暂无收录</p>';
     function throwError(str=''){
         throw new Error(str);
@@ -36,20 +36,49 @@
             let value=this.cache.get(v);
 
             //test code
-            value=v?Array.from({length:21},(item,index)=>`test${index}`):'';
+//            value=v?Array.from({length:21},(item,index)=>`test${index}`):'';
         //  value=[];
+            value=[
+                {
+                    "name": "北京西",
+                    "ename": "BeiJing West",
+                    "city": "北京",
+                    "simplePy": "bj",
+                    "fullPy": "beijing",
+                    "nodeType": 2,
+                    "clusterNodeName": "北京"
+                },
+                {
+                    "name": "北京T2航空楼",
+                    "ename": "BeiJing T2 Air Port",
+                    "city": "北京",
+                    "simplePy": "bjt2hkl",
+                    "fullPy": "beijingt2hangkonglou",
+                    "nodeType": 1,
+                    "clusterNodeName": "北京"
+                },
+                {
+                    "name": "北京公主坟汽车站",
+                    "ename": "BeiJing GongZhuFen Coach Station",
+                    "city": "北京",
+                    "simplePy": "bjgzfqcz",
+                    "fullPy": "beijinggongzhufenqichezhan",
+                    "nodeType": 3,
+                    "clusterNodeName": "北京"
+                }
+            ];
 
             if(value){
                 return Promise.resolve(value);
             }
-            return fetch(`${suggestUrl}?key=${v}&station=${me.station}`)
+            return fetch(`${suggestUrl}?q=${v}&station=${me.station}&lat=''&lgt=''`)
                 .then(response=>response.json())
-                .then(data=>{this.cache.put(data);return data});
+                .then(data=>{this.cache.put(data.data.nodes);return data.data.nodes});
         }
         createList(data=[],page=0){
             const me=this;
             const items=data.slice(page*me.countPerAge,(page+1)*me.countPerAge)
-                .map((item,index)=>`<p class=${index==0?'active':''}>${item}</p>`)
+                .map((item,index)=>`<p class=${index==0?'active':''}>${item.name}</p>`)
                 .join('');
             const pages=Math.ceil(data.length/me.countPerAge);
             const pagesStr=pages>1?

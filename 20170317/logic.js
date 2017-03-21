@@ -2,7 +2,7 @@
  * Created by zhigang.zhang on 17-3-20.
  */
 {
-    const listUrl='';
+    const listUrl='/search/joint.do';
     function initSuggest(){
         const suggests= [...document.querySelectorAll('[data-role="suggest"]')];
         //出发 到达用一个cache
@@ -58,6 +58,7 @@
     }
     function bindEvents(){
         const suggetInput= [...document.querySelectorAll('[data-role="input"]')];
+//        const jointType=document.querySelector('[data-role="jointType"]');
         const cityList= [...document.querySelectorAll('[data-role="citylist"]')];
         //换
         document.querySelector('[action-type="exchange"]').onclick=function(e){
@@ -89,8 +90,14 @@
                 }
                 params.push(`${item.getAttribute('name')}=${item.value}`);
             });
+//            const joinTypeArr=[];
+//            for(let i=0;i<jointType.length;i++){
+//                if(jointType[i].selected){
+//                    joinTypeArr.push(jointType[i].value);
+//                }
+//            }
             if(flag){
-                fetch(`${listUrl}?${params.join('&')}`)
+                fetch(`${listUrl}?${params.join('&')}&jointType=${'0'}`)
             .then(response=>response.json())
             .then(data=>renderList(data));
             }
