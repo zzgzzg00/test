@@ -3,12 +3,7 @@
  */
 {
     const listUrl='/search/joint.do';
-    const iconMap=new Map([
-        ['飞机','&#xf010;'],
-        ['火车','&#xf014;'],
-        ['汽车','&#xf1eb;'],
-        ['轮船','&#xf466;']
-    ]);
+    const icons=['','&#xf010;','&#xf014;','&#xf1eb;','&#xf466;'];
     function initSuggest(){
         const suggests= [...document.querySelectorAll('[data-role="suggest"]')];
         //出发 到达用一个cache
@@ -19,7 +14,7 @@
     }
     function translateData(data){
         for(let i of data){
-            i.icon=iconMap.get(i.type);
+            i.icon=icons[i.lineType];
             i.price= parseFloat(i.price).toFixed(2);
         }
     }
@@ -39,17 +34,17 @@
                     <div class="icon">${'icon'}</div>
                     <div class="info">
                         <div class="from">
-                            <p class="time">${'startTime'}</p>
-                            <p class="city">${'startCity'}</p>
+                            <p class="time">${'dptTime'}</p>
+                            <p class="city">${'dpt'}</p>
                         </div>
                         <div class="during">
-                            <p class="usetime">${'duration'}</p>
+                            <p class="usetime">${'intervalTimeDesc'}</p>
                             <p class="seperate"></p>
-                            <p>${'number'}</p>
+                            <p>${'lineNo'}</p>
                         </div>
                         <div class="to">
-                            <p class="time">${'arriveTime'}</p>
-                            <p class="city">${'arriveCity'}</p>
+                            <p class="time">${'arrTime'}</p>
+                            <p class="city">${'arr'}</p>
                         </div>
                     </div>
                     <div class="price">
@@ -58,10 +53,10 @@
                 </div>`;
         return str;
     }
-    function renderList(data){
+    function renderList(data=[]){
         const arr=[];
         for(let container of data){
-            let item=renderItem(container.items);
+            let item=renderItem(container.transLineList);
             arr.push(`
                     <div class='container'>
                     ${item}
@@ -111,8 +106,8 @@
 //            }
             if(flag){
                 fetch(`${listUrl}?${params.join('&')}&jointType=${'0'}`)
-            .then(response=>response.json())
-            .then(data=>renderList(data));
+                    .then(response=>response.json())
+                    .then(data=>renderList(data.solutionList));
             }
         }
     }
@@ -122,87 +117,94 @@
         bindEvents();
 
         //test code
-        renderList([
-            {
-                'items':[{
-                    'type':'火车',
-                    'startTime':'11:44',
-                    'startCity':'北京',
-                    'duration':'22时44分',
-                    'number':'K44',
-                    'arriveTime':'02:23',
-                    'arriveCity':'乌鲁木齐',
-                    'price':'11.4'
-                },{
-                    'type':'飞机',
-                    'startTime':'11:44',
-                    'startCity':'北京',
-                    'duration':'22时44分',
-                    'number':'K44',
-                    'arriveTime':'02:23',
-                    'arriveCity':'乌鲁木齐',
-                    'price':'1222.4'
-                },{
-                    'type':'轮船',
-                    'startTime':'11:44',
-                    'startCity':'北京',
-                    'duration':'22时44分',
-                    'number':'K44',
-                    'arriveTime':'02:23',
-                    'arriveCity':'乌鲁木齐',
-                    'price':'50'
-                },{
-                    'type':'汽车',
-                    'startTime':'11:44',
-                    'startCity':'北京',
-                    'duration':'22时44分',
-                    'number':'K44',
-                    'arriveTime':'02:23',
-                    'arriveCity':'乌鲁木齐',
-                    'price':'50'
-                }]
-            },{
-                'items':[{
-                    'type':'火车',
-                    'startTime':'11:44',
-                    'startCity':'北京',
-                    'duration':'22时44分',
-                    'number':'K44',
-                    'arriveTime':'02:23',
-                    'arriveCity':'乌鲁木齐',
-                    'price':'11.4'
-                },{
-                    'type':'飞机',
-                    'startTime':'11:44',
-                    'startCity':'北京',
-                    'duration':'22时44分',
-                    'number':'K44',
-                    'arriveTime':'02:23',
-                    'arriveCity':'乌鲁木齐',
-                    'price':'12'
-                }]
-            },{
-                'items':[{
-                    'type':'火车',
-                    'startTime':'11:44',
-                    'startCity':'北京',
-                    'duration':'22时44分',
-                    'number':'K44',
-                    'arriveTime':'02:23',
-                    'arriveCity':'乌鲁木齐',
-                    'price':'11.4'
-                },{
-                    'type':'飞机',
-                    'startTime':'11:44',
-                    'startCity':'北京',
-                    'duration':'22时44分',
-                    'number':'K44',
-                    'arriveTime':'02:23',
-                    'arriveCity':'乌鲁木齐',
-                    'price':'12'
-                }]
-            }
-        ]);
+        const testData={
+            "ret": true,
+            "solutionList": [
+                {
+                    "transLineList": [
+                        {
+                            "dpt": "北京",
+                            "arr": "南京",
+                            "dptTime": "10:01",
+                            "arrTime": "12:11",
+                            "lineNo": "G12321",
+                            "price": "2311",
+                            "lineType": 1,
+                            "nodeTypeDesc": "飞机",
+                            "intervalTimeDesc": "02时10分",
+                            "intervalMileageDesc": "2312公里"
+                        },
+                        {
+                            "dpt": "南京",
+                            "arr": "甘肃",
+                            "dptTime": "12:21",
+                            "arrTime": "18:11",
+                            "lineNo": "K9878",
+                            "price": "131",
+                            "lineType": 2,
+                            "nodeTypeDesc": "火车",
+                            "intervalTimeDesc": "05时50分",
+                            "intervalMileageDesc": "312公里"
+                        },
+                        {
+                            "dpt": "甘肃",
+                            "arr": "石河子",
+                            "dptTime": "18:21",
+                            "arrTime": "20:11",
+                            "lineNo": "",
+                            "price": "26",
+                            "lineType": 3,
+                            "nodeTypeDesc": "汽车",
+                            "intervalTimeDesc": "02时10分",
+                            "intervalMileageDesc": "120公里"
+                        }
+                    ]
+                },
+                {
+                    "transLineList": [
+                        {
+                            "dpt": "大连",
+                            "arr": "上海",
+                            "dptTime": "10:11",
+                            "arrTime": "12:11",
+                            "lineNo": "G12321",
+                            "price": "2311",
+                            "lineType": 4,
+                            "nodeTypeDesc": "轮船",
+                            "intervalTimeDesc": "02时10分",
+                            "intervalMileageDesc": "1312公里"
+                        },
+                        {
+                            "dpt": "上海",
+                            "arr": "南京",
+                            "dptTime": "12:11",
+                            "arrTime": "18:11",
+                            "lineNo": "K9878",
+                            "price": "131",
+                            "lineType": 2,
+                            "nodeTypeDesc": "火车",
+                            "intervalTimeDesc": "05时50分",
+                            "intervalMileageDesc": "312公里"
+                        },
+                        {
+                            "dpt": "甘肃",
+                            "arr": "石河子",
+                            "dptTime": "18:21",
+                            "arrTime": "20:11",
+                            "lineNo": "G81273",
+                            "price": "26",
+                            "lineType": 1,
+                            "nodeTypeDesc": "飞机",
+                            "intervalTimeDesc": "02时10分",
+                            "intervalMileageDesc": "120公里"
+                        }
+                    ]
+                }
+            ],
+            "errmsg": "无误",
+            "errcode": -1
+        };
+        renderList(testData.solutionList);
     }
     init();
 }

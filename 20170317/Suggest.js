@@ -73,7 +73,7 @@
             }
             return fetch(`${suggestUrl}?q=${v}&station=${me.station}&lat=''&lgt=''`)
                 .then(response=>response.json())
-                .then(data=>{this.cache.put(data.data.nodes);return data.data.nodes});
+                .then(data=>{this.cache.put(data.nodes);return data.nodes});
         }
         createList(data=[],page=0){
             const me=this;
