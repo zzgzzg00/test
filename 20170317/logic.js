@@ -17,9 +17,10 @@
             new Suggest(suggest,{cache});
         }
     }
-    function changeToIcon(data){
+    function translateData(data){
         for(let i of data){
             i.icon=iconMap.get(i.type);
+            i.price= parseFloat(i.price).toFixed(2);
         }
     }
     function repeat(data){
@@ -32,7 +33,7 @@
         }
     }
     function renderItem(data){
-        changeToIcon(data);
+        translateData(data);
         let str=repeat(data)`
                 <div class="item">
                     <div class="icon">${'icon'}</div>
@@ -140,7 +141,7 @@
                     'number':'K44',
                     'arriveTime':'02:23',
                     'arriveCity':'乌鲁木齐',
-                    'price':'12'
+                    'price':'1222.4'
                 },{
                     'type':'轮船',
                     'startTime':'11:44',
