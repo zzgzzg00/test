@@ -55,12 +55,16 @@
     }
     function renderList(data=[]){
         const arr=[];
-        for(let container of data){
-            let item=renderItem(container.transLineList);
-            arr.push(`
-                    <div class='container'>
-                    ${item}
-                    </div>`);
+        if(data.length){
+            for(let container of data){
+                let item=renderItem(container.transLineList);
+                arr.push(`
+                        <div class='container'>
+                        ${item}
+                        </div>`);
+            }
+        }else{
+            arr.push('<p class="noresult"><span>&#xe148;</span>没有可查询的数据</p>');
         }
         document.querySelector('[data-role="list"]').innerHTML=arr.join('');
     }
