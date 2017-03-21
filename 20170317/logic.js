@@ -3,12 +3,23 @@
  */
 {
     const listUrl='/search/joint.do';
+    const map=new Map([
+        ['飞机','&#xf010;'],
+        ['火车','&#xf014;'],
+        ['汽车','&#xf1f3;'],
+        ['轮船','&#xf466;']
+    ]);
     function initSuggest(){
         const suggests= [...document.querySelectorAll('[data-role="suggest"]')];
         //出发 到达用一个cache
         const cache= new SuggestCache();
         for(let suggest of suggests){
             new Suggest(suggest,{cache});
+        }
+    }
+    function changeToIcon(data){
+        for(let i of data){
+            i.icon=map.get(i.type);
         }
     }
     function repeat(data){
@@ -21,9 +32,10 @@
         }
     }
     function renderItem(data){
+        changeToIcon(data);
         let str=repeat(data)`
                 <div class="item">
-                    <div class="icon">${'type'}</div>
+                    <div class="icon">${'icon'}</div>
                     <div class="info">
                         <div class="from">
                             <p class="time">${'startTime'}</p>
@@ -131,6 +143,15 @@
                     'price':'12'
                 },{
                     'type':'轮船',
+                    'startTime':'11:44',
+                    'startCity':'北京',
+                    'duration':'22时44分',
+                    'number':'K44',
+                    'arriveTime':'02:23',
+                    'arriveCity':'乌鲁木齐',
+                    'price':'50'
+                },{
+                    'type':'汽车',
                     'startTime':'11:44',
                     'startCity':'北京',
                     'duration':'22时44分',
