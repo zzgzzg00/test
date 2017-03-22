@@ -3,7 +3,7 @@
  */
 {
     const listUrl='/search/joint.do';
-    const icons=['','&#xf010;','&#xf014;','&#xf1eb;','&#xf466;'];
+//    const icons=['','&#xf010;','&#xf014;','&#xf1eb;','&#xf466;'];
     function initSuggest(){
         const suggests= [...document.querySelectorAll('[data-role="suggest"]')];
         //出发 到达用一个cache
@@ -82,7 +82,7 @@
                 if(!item.classList.contains('hide')){
                     let active=item.querySelector('.active');
                     if(!active.classList.contains('error')){
-                        suggetInput[index].value=active.innerHTML;
+                        suggetInput[index].value=active.dataset.content;
                         suggetInput[index].parentNode.classList.remove('invaild');
                     }else{
                         suggetInput[index].value='';

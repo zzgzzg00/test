@@ -4,6 +4,7 @@
 {
     const suggestUrl='/search/suggest.do';
     const suggertErrorTip='<p class="active error">暂无收录</p>';
+    const icons=['','&#xf010;','&#xf014;','&#xf1eb;','&#xf466;'];
     function throwError(str=''){
         throw new Error(str);
     }
@@ -78,7 +79,7 @@
         createList(data=[],page=0){
             const me=this;
             const items=data.slice(page*me.countPerAge,(page+1)*me.countPerAge)
-                .map((item,index)=>`<p class=${index==0?'active':''}>${item.name}</p>`)
+                .map((item,index)=>`<p data-content=${item.name} class=${index==0?'active':''}>${item.name}<span class='suggest-icon'>${icons[item.nodeType]}</span></p>`)
                 .join('');
             const pages=Math.ceil(data.length/me.countPerAge);
             const pagesStr=pages>1?
@@ -108,7 +109,7 @@
                 e.stopPropagation();
                 if(target.tagName.toLowerCase()=='p'){
                     if(!target.classList.contains('error')){
-                        me.inputDom.value=target.innerHTML;
+                        me.inputDom.value=target.dataset.content;
                         me.inputDom.parentNode.classList.remove('invaild');
                     }else{
                         me.inputDom.value='';
@@ -131,4 +132,5 @@
     }
     window.SuggestCache=SuggestCache;
     window.Suggest=Suggest;
+    window.icons=icons;
 }
