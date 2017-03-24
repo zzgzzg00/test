@@ -121,94 +121,94 @@
         bindEvents();
 
         //test code
-        const testData={
-            "ret": true,
-            "solutionList": [
-                {
-                    "transLineList": [
-                        {
-                            "dpt": "北京",
-                            "arr": "南京",
-                            "dptTime": "10:01",
-                            "arrTime": "12:11",
-                            "lineNo": "G12321",
-                            "price": "2311",
-                            "lineType": 1,
-                            "nodeTypeDesc": "飞机",
-                            "intervalTimeDesc": "02时10分",
-                            "intervalMileageDesc": "2312公里"
-                        },
-                        {
-                            "dpt": "南京",
-                            "arr": "甘肃",
-                            "dptTime": "12:21",
-                            "arrTime": "18:11",
-                            "lineNo": "K9878",
-                            "price": "131",
-                            "lineType": 2,
-                            "nodeTypeDesc": "火车",
-                            "intervalTimeDesc": "05时50分",
-                            "intervalMileageDesc": "312公里"
-                        },
-                        {
-                            "dpt": "甘肃",
-                            "arr": "石河子",
-                            "dptTime": "18:21",
-                            "arrTime": "20:11",
-                            "lineNo": "",
-                            "price": "26",
-                            "lineType": 3,
-                            "nodeTypeDesc": "汽车",
-                            "intervalTimeDesc": "02时10分",
-                            "intervalMileageDesc": "120公里"
-                        }
-                    ]
-                },
-                {
-                    "transLineList": [
-                        {
-                            "dpt": "大连",
-                            "arr": "上海",
-                            "dptTime": "10:11",
-                            "arrTime": "12:11",
-                            "lineNo": "G12321",
-                            "price": "2311",
-                            "lineType": 4,
-                            "nodeTypeDesc": "轮船",
-                            "intervalTimeDesc": "02时10分",
-                            "intervalMileageDesc": "1312公里"
-                        },
-                        {
-                            "dpt": "上海",
-                            "arr": "南京",
-                            "dptTime": "12:11",
-                            "arrTime": "18:11",
-                            "lineNo": "K9878",
-                            "price": "131",
-                            "lineType": 2,
-                            "nodeTypeDesc": "火车",
-                            "intervalTimeDesc": "05时50分",
-                            "intervalMileageDesc": "312公里"
-                        },
-                        {
-                            "dpt": "甘肃",
-                            "arr": "石河子",
-                            "dptTime": "18:21",
-                            "arrTime": "20:11",
-                            "lineNo": "G81273",
-                            "price": "26",
-                            "lineType": 1,
-                            "nodeTypeDesc": "飞机",
-                            "intervalTimeDesc": "02时10分",
-                            "intervalMileageDesc": "120公里"
-                        }
-                    ]
-                }
-            ],
-            "errmsg": "无误",
-            "errcode": -1
-        };
-        renderList(testData.solutionList);
+//        const testData={
+//            "ret": true,
+//            "solutionList": [
+//                {
+//                    "transLineList": [
+//                        {
+//                            "dpt": "北京",
+//                            "arr": "南京",
+//                            "dptTime": "10:01",
+//                            "arrTime": "12:11",
+//                            "lineNo": "G12321",
+//                            "price": "2311",
+//                            "lineType": 1,
+//                            "nodeTypeDesc": "飞机",
+//                            "intervalTimeDesc": "02时10分",
+//                            "intervalMileageDesc": "2312公里"
+//                        },
+//                        {
+//                            "dpt": "南京",
+//                            "arr": "甘肃",
+//                            "dptTime": "12:21",
+//                            "arrTime": "18:11",
+//                            "lineNo": "K9878",
+//                            "price": "131",
+//                            "lineType": 2,
+//                            "nodeTypeDesc": "火车",
+//                            "intervalTimeDesc": "05时50分",
+//                            "intervalMileageDesc": "312公里"
+//                        },
+//                        {
+//                            "dpt": "甘肃",
+//                            "arr": "石河子",
+//                            "dptTime": "18:21",
+//                            "arrTime": "20:11",
+//                            "lineNo": "",
+//                            "price": "26",
+//                            "lineType": 3,
+//                            "nodeTypeDesc": "汽车",
+//                            "intervalTimeDesc": "02时10分",
+//                            "intervalMileageDesc": "120公里"
+//                        }
+//                    ]
+//                },
+//                {
+//                    "transLineList": [
+//                        {
+//                            "dpt": "大连",
+//                            "arr": "上海",
+//                            "dptTime": "10:11",
+//                            "arrTime": "12:11",
+//                            "lineNo": "G12321",
+//                            "price": "2311",
+//                            "lineType": 4,
+//                            "nodeTypeDesc": "轮船",
+//                            "intervalTimeDesc": "02时10分",
+//                            "intervalMileageDesc": "1312公里"
+//                        },
+//                        {
+//                            "dpt": "上海",
+//                            "arr": "南京",
+//                            "dptTime": "12:11",
+//                            "arrTime": "18:11",
+//                            "lineNo": "K9878",
+//                            "price": "131",
+//                            "lineType": 2,
+//                            "nodeTypeDesc": "火车",
+//                            "intervalTimeDesc": "05时50分",
+//                            "intervalMileageDesc": "312公里"
+//                        },
+//                        {
+//                            "dpt": "甘肃",
+//                            "arr": "石河子",
+//                            "dptTime": "18:21",
+//                            "arrTime": "20:11",
+//                            "lineNo": "G81273",
+//                            "price": "26",
+//                            "lineType": 1,
+//                            "nodeTypeDesc": "飞机",
+//                            "intervalTimeDesc": "02时10分",
+//                            "intervalMileageDesc": "120公里"
+//                        }
+//                    ]
+//                }
+//            ],
+//            "errmsg": "无误",
+//            "errcode": -1
+//        };
+//        renderList(testData.solutionList);
     }
     init();
 }
