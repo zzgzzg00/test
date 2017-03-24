@@ -2,14 +2,25 @@
 <html>
 <head>
     <title></title>
+    <style>
+    </style>
 </head>
 <body>
-<input type="checkbox" value="1" />
-<input type="checkbox" value="2" class="aaa"/>
-<input type="checkbox" value="3" />
-<input type="checkbox" value="4" class="aaa"/>
 <script>
-
+    var name='window';
+    class Test{
+        constructor(){
+            this.name='test';
+        }
+        show(){
+            return (s)=>{
+                alert(this.name);
+                alert(s);
+            }
+        }
+    }
+    var t=new Test();
+    t.show().bind(window,11)();
 </script>
 </body>
 </html>
