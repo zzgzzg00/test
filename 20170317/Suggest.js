@@ -6,6 +6,7 @@
     const suggertErrorTip='<p class="active error">暂无收录</p>';
     const icons=['','&#xf010;','&#xf014;','&#xf1eb;','&#xf466;'];
     function translateIcons(str){
+        str=str+'';
         const arr=str.split(',');
         return arr.map(item=>icons[item<<0]).join('');
     }
