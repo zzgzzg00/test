@@ -51,7 +51,7 @@
                     "city": "北京",
                     "simplePy": "bj",
                     "fullPy": "beijing",
-                    "nodeType": '12',
+                    "nodeType": '1,2',
                     "clusterNodeName": "北京"
                 },
                 {
@@ -60,7 +60,7 @@
                     "city": "北京",
                     "simplePy": "bjt2hkl",
                     "fullPy": "beijingt2hangkonglou",
-                    "nodeType": '23',
+                    "nodeType": '2,3',
                     "clusterNodeName": "北京"
                 },
                 {
@@ -69,7 +69,7 @@
                     "city": "北京",
                     "simplePy": "bjgzfqcz",
                     "fullPy": "beijinggongzhufenqichezhan",
-                    "nodeType": '123',
+                    "nodeType": '1,2,3',
                     "clusterNodeName": "北京"
                 }
             ];
