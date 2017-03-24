@@ -5,6 +5,10 @@
     const suggestUrl='/search/suggest.do';
     const suggertErrorTip='<p class="active error">暂无收录</p>';
     const icons=['','&#xf010;','&#xf014;','&#xf1eb;','&#xf466;'];
+    function translateIcons(str){
+        const arr=str.split(',');
+        return arr.map(item=>icons[item<<0]).join('');
+    }
     function throwError(str=''){
         throw new Error(str);
     }
@@ -39,35 +43,35 @@
             //test code
 //            value=v?Array.from({length:21},(item,index)=>`test${index}`):'';
         //  value=[];
-//            value=[
-//                {
-//                    "name": "北京西",
-//                    "ename": "BeiJing West",
-//                    "city": "北京",
-//                    "simplePy": "bj",
-//                    "fullPy": "beijing",
-//                    "nodeType": 2,
-//                    "clusterNodeName": "北京"
-//                },
-//                {
-//                    "name": "北京T2航空楼",
-//                    "ename": "BeiJing T2 Air Port",
-//                    "city": "北京",
-//                    "simplePy": "bjt2hkl",
-//                    "fullPy": "beijingt2hangkonglou",
-//                    "nodeType": 1,
-//                    "clusterNodeName": "北京"
-//                },
-//                {
-//                    "name": "北京公主坟汽车站",
-//                    "ename": "BeiJing GongZhuFen Coach Station",
-//                    "city": "北京",
-//                    "simplePy": "bjgzfqcz",
-//                    "fullPy": "beijinggongzhufenqichezhan",
-//                    "nodeType": 3,
-//                    "clusterNodeName": "北京"
-//                }
-//            ];
+            value=[
+                {
+                    "name": "北京西",
+                    "ename": "BeiJing West",
+                    "city": "北京",
+                    "simplePy": "bj",
+                    "fullPy": "beijing",
+                    "nodeType": 2,
+                    "clusterNodeName": "北京"
+                },
+                {
+                    "name": "北京T2航空楼",
+                    "ename": "BeiJing T2 Air Port",
+                    "city": "北京",
+                    "simplePy": "bjt2hkl",
+                    "fullPy": "beijingt2hangkonglou",
+                    "nodeType": 1,
+                    "clusterNodeName": "北京"
+                },
+                {
+                    "name": "北京公主坟汽车站",
+                    "ename": "BeiJing GongZhuFen Coach Station",
+                    "city": "北京",
+                    "simplePy": "bjgzfqcz",
+                    "fullPy": "beijinggongzhufenqichezhan",
+                    "nodeType": 123,
+                    "clusterNodeName": "北京"
+                }
+            ];
 
             if(value){
                 return Promise.resolve(value);
@@ -79,7 +83,7 @@
         createList(data=[],page=0){
             const me=this;
             const items=data.slice(page*me.countPerAge,(page+1)*me.countPerAge)
-                .map((item,index)=>`<p data-content=${item.name} class=${index==0?'active':''}>${item.name}<span class='suggest-icon'>${icons[item.nodeType]}</span></p>`)
+                .map((item,index)=>`<p data-content=${item.name} class=${index==0?'active':''}>${item.name}<span class='suggest-icon'>${translateIcons(item.nodeType)}</span></p>`)
                 .join('');
             const pages=Math.ceil(data.length/me.countPerAge);
             const pagesStr=pages>1?
