@@ -44,35 +44,35 @@
             //test code
 //            value=v?Array.from({length:21},(item,index)=>`test${index}`):'';
         //  value=[];
-//            value=[
-//                {
-//                    "name": "北京西",
-//                    "ename": "BeiJing West",
-//                    "city": "北京",
-//                    "simplePy": "bj",
-//                    "fullPy": "beijing",
-//                    "nodeType": '1,2',
-//                    "clusterNodeName": "北京"
-//                },
-//                {
-//                    "name": "北京T2航空楼",
-//                    "ename": "BeiJing T2 Air Port",
-//                    "city": "北京",
-//                    "simplePy": "bjt2hkl",
-//                    "fullPy": "beijingt2hangkonglou",
-//                    "nodeType": '2,3',
-//                    "clusterNodeName": "北京"
-//                },
-//                {
-//                    "name": "北京公主坟汽车站",
-//                    "ename": "BeiJing GongZhuFen Coach Station",
-//                    "city": "北京",
-//                    "simplePy": "bjgzfqcz",
-//                    "fullPy": "beijinggongzhufenqichezhan",
-//                    "nodeType": '1,2,3',
-//                    "clusterNodeName": "北京"
-//                }
-//            ];
+            value=[
+                {
+                    "name": "北京西",
+                    "ename": "BeiJing West",
+                    "city": "北京",
+                    "simplePy": "bj",
+                    "fullPy": "beijing",
+                    "nodeType": '1,2',
+                    "clusterNodeName": "北京"
+                },
+                {
+                    "name": "北京T2航空楼",
+                    "ename": "BeiJing T2 Air Port",
+                    "city": "北京",
+                    "simplePy": "bjt2hkl",
+                    "fullPy": "beijingt2hangkonglou",
+                    "nodeType": '2,3',
+                    "clusterNodeName": "北京"
+                },
+                {
+                    "name": "北京公主坟汽车站",
+                    "ename": "BeiJing GongZhuFen Coach Station",
+                    "city": "北京",
+                    "simplePy": "bjgzfqcz",
+                    "fullPy": "beijinggongzhufenqichezhan",
+                    "nodeType": '1,2,3',
+                    "clusterNodeName": "北京"
+                }
+            ];
 
             if(value){
                 return Promise.resolve(value);

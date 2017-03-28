@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+    </style>
+</head>
+<body>
+<div>123</div>
+<script>
+    Function.prototype.binds=function(scope,...args){
+        const me=this;
+        return function(e){
+            return me.call(scope,...args,e);
+        }
+    }
+    var o={
+        name:1
+    }
+    function test(a,e){
+        alert(this.name+'|'+a+'|'+ e.target.tagName);
+    }
+    document.querySelector('div').onclick=test.binds(o,1);
+</script>
+</body>
+</html>
