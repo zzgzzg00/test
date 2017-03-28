@@ -4,6 +4,73 @@
     <title></title>
 </head>
 <body>
-
+<div class="title"></div>
+<div class="content"></div>
+<script>
+    function createStorage(reducer){
+        let state,newState;
+        const listeners=[];
+        const getState=()=>state;
+        const describe=(fun)=>listeners.push(fun);
+        const dispatch=function(action){
+            newState=reducer(state,action);
+            for(let i of listeners){
+                i(state,newState);
+            }
+            state=newState;
+            newState=null;
+        }
+        dispatch({});
+        return {getState,describe,dispatch};
+    }
+    function reducer(state,action){
+        if(!state){
+            return {
+                'title':'title',
+                'content':'content'
+            }
+        }
+        let newState=JSON.parse(JSON.stringify(state));
+        switch(action.type){
+            case 'title':
+                newState.title=action.text;
+                break;
+            case 'content':
+                newState.content=action.text;
+                break;
+            default :
+                newState=state;
+                break;
+        }
+        return newState;
+    }
+    function render(oldObj,newObj){
+        if(oldObj==newObj){
+            return;
+        }
+        console.log('render');
+        renderTitle(oldObj.title,newObj.title);
+        renderContent(oldObj.content,newObj.content);
+    }
+    function renderTitle(oldValue,newValue){
+        if(oldValue==newValue){
+            return;
+        }
+        console.log('renderTitle');
+        document.querySelector('.title').innerHTML=newValue;
+    }
+    function renderContent(oldValue,newValue){
+        if(oldValue==newValue){
+            return;
+        }
+        console.log('renderContent');
+        document.querySelector('.content').innerHTML=newValue;
+    }
+    const {getState,describe,dispatch}=createStorage(reducer);
+    describe(render);
+    dispatch({'type':'title','text':'title2'});
+    dispatch({'type':'content','text':'content2'});
+    dispatch({'type':'title','text':'title2'});
+</script>
 </body>
 </html>
