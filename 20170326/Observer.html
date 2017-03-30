@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+{
+    class Observer{
+        constructor(obj){
+            this.channel={};
+            this.obj=obj;
+            this.observeKeys();
+        }
+        observeKey(key){
+            const me=this;
+            let value=me.obj[key];
+            Object.defineProperty(me.obj,key,{
+                get(){
+                    return value;
+                },
+                set(newValue){
+                    value=newValue;
+                    me.notify(key,newValue);
+                }
+            })
+        }
+        describe(key,callback){
+            this.channel[key]=this.channel[key]||[];
+            this.channel[key].push(callback);
+        }
+        notify(key,value){
+            const arr=this.channel[key]||[];
+            for(let funs of arr){
+                funs(key,value);
+            }
+        }
+        observeKeys(){
+            const me=this;
+            const keys=Object.keys(me.obj);
+            for(let key of keys){
+                me.observeKey(key)
+            }
+        }
+    }
+    var o={
+        'a':'a',
+        'b':'b',
+        'c':'c'
+    }
+    const observer=new Observer(o);
+    observer.describe('a',(key,value)=>alert(`1-${key}:${value}`));
+    observer.describe('b',(key,value)=>alert(`2-${key}:${value}`));
+    observer.describe('b',(key,value)=>alert(`21-${key}:${value}`));
+    observer.describe('c',(key,value)=>alert(`3-${key}:${value}`));
+    o.b='x';
+    o.b='b';
+}
+</script>
+</body>
+</html>
