@@ -23,5 +23,26 @@
 <body>
 <div>测试</div>
 <div>测试2</div>
+<script>
+    class Deferred{
+        constructor(){
+            const me=this;
+            this.promise=new Promise(function(res,rej){
+                me.res=res;
+                me.rej=rej;
+            });
+            this.promise.then(data=>alert(`r${data}`))
+                .catch(data=>alert(`c${data}`));
+        }
+        resolve(data){
+            this.res(data);
+        }
+        reject(err){
+            this.rej(err);
+        }
+    }
+    var d=new Deferred();
+    window.setTimeout((data)=>d.reject(data),2000,123);
+</script>
 </body>
 </html>

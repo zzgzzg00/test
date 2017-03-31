@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    //race失败不会终止成功的then的执行
+    function createResolve(){
+        return new Promise(function(resolve,reject){
+            window.setTimeout(resolve,2000,'resolve');
+        }).then(data=>alert(data));
+    }
+
+    function createReject(){
+        return new Promise(function(resolve,reject){
+            window.setTimeout(reject,1000,'reject');
+        });
+    }
+
+    Promise.race([createResolve(),createReject()])
+        .then(data=>alert(`race_t_${data}`))
+        .catch(data=>alert(`race_c_${data}`));
+</script>
+</body>
+</html>
