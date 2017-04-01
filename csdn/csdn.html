@@ -24,25 +24,17 @@
 <div>测试</div>
 <div>测试2</div>
 <script>
-    class Deferred{
-        constructor(){
-            const me=this;
-            this.promise=new Promise(function(res,rej){
-                me.res=res;
-                me.rej=rej;
-            });
-            this.promise.then(data=>alert(`r${data}`))
-                .catch(data=>alert(`c${data}`));
-        }
-        resolve(data){
-            this.res(data);
-        }
-        reject(err){
-            this.rej(err);
-        }
+    function displayDate(){
+        var date=new Date();
+
+
+        date.setYear('2017');
+        date.setMonth('02')
+        date.setDate('31')
+        alert(date.getMonth())
+
     }
-    var d=new Deferred();
-    window.setTimeout((data)=>d.reject(data),2000,123);
+    displayDate();
 </script>
 </body>
 </html>
