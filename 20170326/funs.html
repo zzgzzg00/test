@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    const [add,min,mul,div]=[
+        (a,b)=>a+b,
+        (a,b)=>a-b,
+        (a,b)=>a*b,
+        (a,b)=>a/b
+    ];
+    /**
+     *
+     * 多个函数共用的逻辑可写到高界函数里
+     * 类似装饰器
+     * */
+    const dulp=function(fun){
+        let dul=localStorage.getItem('dul');
+        if(!dul){
+            localStorage.setItem('dul',2);
+            dul=2;
+        }
+        return function(a,b){
+            return dul*fun(a,b);
+        }
+    }
+    const [dadd,dmin,dmul,ddiv]=[dulp(add),dulp(min),dulp(mul),dulp(div)];
+    alert(dmin(1,4));
+
+</script>
+</body>
+</html>

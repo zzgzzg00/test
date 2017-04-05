@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function* test1(){
+        yield 1;
+        yield 2;
+        return 3;
+        yield 4;
+    }
+    const arr= [...test1()];
+    console.log(arr.join(','));//1,2
+
+    function* test2(){
+        yield 5;
+        let c=yield *test1();
+        console.log(c);
+        yield 6;
+    }
+    const arr2= [...test2()];
+    console.log(arr2.join(','));//3  \ 5,1,2,6
+</script>
+</body>
+</html>

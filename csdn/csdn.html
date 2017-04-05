@@ -3,38 +3,22 @@
 <head>
     <title></title>
     <style>
-        @font-face {
-            font-family: test;
-            src: local('SimSun');
-        }
-        @font-face {
-            font-family: test2;
-            src: local('SimHei');
-        }
-        div:nth-of-type(1){
-            font-family: test;
-        }
 
-        div:nth-of-type(2){
-            font-family: test2;
-        }
     </style>
 </head>
 <body>
-<div>测试</div>
-<div>测试2</div>
 <script>
-    function displayDate(){
-        var date=new Date();
-
-
-        date.setYear('2017');
-        date.setMonth('02')
-        date.setDate('31')
-        alert(date.getMonth())
-
-    }
-    displayDate();
+    var arr1 = [1,2,3];
+    const INIT='$scope.parent[0]';
+    arr2=arr1.map(function(item,index){
+        var init=INIT;
+        for(var i=1;i<=index+1;i++){
+            init+=`.children[${i}]`;
+        }
+        return init;
+    });
+    arr2.unshift(INIT);
+    console.log(arr2);
 </script>
 </body>
 </html>
