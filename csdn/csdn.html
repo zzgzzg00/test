@@ -8,17 +8,6 @@
 </head>
 <body>
 <script>
-    var arr1 = [1,2,3];
-    const INIT='$scope.parent[0]';
-    arr2=arr1.map(function(item,index){
-        var init=INIT;
-        for(var i=1;i<=index+1;i++){
-            init+=`.children[${i}]`;
-        }
-        return init;
-    });
-    arr2.unshift(INIT);
-    console.log(arr2);
 </script>
 </body>
 </html>

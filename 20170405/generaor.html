@@ -22,6 +22,17 @@
     }
     const arr2= [...test2()];
     console.log(arr2.join(','));//3  \ 5,1,2,6
+
+    const generatorName='test'
+    class Test{
+        * [generatorName](){
+           yield* [1,2,3];
+        }
+    }
+    const t=new Test();
+    for(let i of t.test()){
+        console.log(i);
+    }
 </script>
 </body>
 </html>
