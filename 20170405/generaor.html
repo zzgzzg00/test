@@ -33,6 +33,36 @@
     for(let i of t.test()){
         console.log(i);
     }
+
+    function* test(){
+        yield 1;
+        yield 2;
+        return 3;
+    }
+    const arr3=Array.from(test());
+    console.log(arr3);//1 2
+
+    let iterator=test();
+    let {value}=iterator.next();
+    console.log(value);//1
+
+    function* functioncall(){
+        yield (yield (yield 1)())
+    }
+    const iteratorcall=functioncall();
+    const arr4=[
+        iteratorcall.next().value,
+        iteratorcall.next(()=>2).value,
+        iteratorcall.next(3).value
+    ];
+    console.log(arr4);//1 2 3
+
+    function* returnYield(){
+        return (yield 1);
+    }
+    const iy=returnYield();
+    const arr5=[iy.next().value,iy.next(2).value];
+    console.log(arr5);//1 2
 </script>
 </body>
 </html>
