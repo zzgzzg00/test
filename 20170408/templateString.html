@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    //换行后行首前边的空白会被当做空字符串
+    const str=`aa
+bb`;
+    console.log(str);//aa\nbb
+
+    const str2=`aa
+    bb`;
+    console.log(str2);//aa\n    bb
+</script>
+</body>
+</html>
