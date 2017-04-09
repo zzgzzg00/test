@@ -8,6 +8,9 @@
 </head>
 <body>
     <script>
+        const o={
+            a:2
+        }
         const p=new Proxy(o,{
             set(target,key,value){
                 console.log('set');
@@ -18,7 +21,6 @@
                 return Reflect.get(target,key);
             }
         });
-        p.a=1;
         console.log(p.a);
     </script>
 </body>
