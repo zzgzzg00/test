@@ -8,20 +8,24 @@
 </head>
 <body>
     <script>
-        const o={
-            a:2
-        }
-        const p=new Proxy(o,{
-            set(target,key,value){
-                console.log('set');
-                return Reflect.set(target,key,value);
-            },
-            get(target,key){
-                console.log('get');
-                return Reflect.get(target,key);
+        var arr = [
+            { a : 1 , b : 1},
+            { a : 2 , b : 1},
+            { a : 3 , b : 3},
+            { a : 1 , b : 1},
+            { a : 5 , b : 5}
+        ];
+        arr=arr.map(function(item,index,arr){
+           const i=arr.find(_item=>item.b===_item.b);
+            if(i!==item){
+                i.a.push(item.a);
+                return undefined;
+            }else{
+                i.a=[i.a];
+                return i;
             }
-        });
-        console.log(p.a);
+        }).filter(item=>item!==undefined);
+        console.log(arr);
     </script>
 </body>
 </html>
