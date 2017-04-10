@@ -7,11 +7,15 @@
 <script>
     var o={
         get test(){
-            return 1;
+            return {
+                get test(){
+                    return 1;
+                }
+            };
         }
     }
     o.test=2;
-    alert(o.test);
+    alert(o.test.test);
 </script>
 </body>
 </html>
