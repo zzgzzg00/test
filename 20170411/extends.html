@@ -34,6 +34,15 @@
                 }
             }
         }
+
+        class NoPrototype3{
+            constructor(obj,NoPrototypeClass){
+                Object.assign(this,obj);
+                if(new.target===NoPrototypeClass){
+                    return Object.assign({},this);
+                }
+            }
+        }
         class Sun1 extends NotPrototype1{
             constructor(){
                 super(new Base(testData));
@@ -43,10 +52,20 @@
         class Sun2 extends (new NotPrototype2(new Base(testData))){
 
         }
+
+        class Sun3 extends NoPrototype3{
+            constructor(obj,NoPropertyClass){
+                super(obj,NoPropertyClass);
+            }
+        }
+
         const s1=new Sun1();
         console.log(JSON.stringify(s1,null,4));
         const s2=new Sun2();
         console.log(JSON.stringify(s2,null,4));
+        const s3=new Sun3(testData,Sun3);
+        console.log(JSON.stringify(s3,null,4));
+//            s3.show();
 //        s1.show();
 //        s2.show();
     </script>

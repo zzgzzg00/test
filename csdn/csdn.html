@@ -8,49 +8,23 @@
 </head>
 <body>
     <script>
-        const testData={
-            'a':'a',
-            'b':'b'
-        }
-        class Base{
-            constructor(ops){
-                Object.assign(this,ops);
-            }
-            show(){
-                alert(JSON.stringify(this,null,4));
-            }
-        }
-
-        class NotPrototype1{
-            constructor(obj){
-                Object.assign(this,obj);
-            }
-        }
-
-        class NotPrototype2{
-            constructor(obj){
-                return class{
-                    constructor(){
-                        Object.assign(this,obj);
-                    }
+        class Test{
+            constructor(SubClass){
+                this.a=1;
+                if(new.target==SubClass){
+                    return Object.assign({},this);
                 }
             }
-        }
-        class Sun1 extends NotPrototype1{
-            constructor(){
-                super(new Base(testData));
+            show(){
+                alert(this.a);
             }
         }
-
-        class Sun2 extends (new NotPrototype2(new Base(testData))){
+        class M extends Test{
 
         }
-        const s1=new Sun1();
-        console.log(JSON.stringify(s1,null,4));
-        const s2=new Sun2();
-        console.log(JSON.stringify(s2,null,4));
-//        s1.show();
-//        s2.show();
+        let t=new M(M);
+        alert(t.a);
+        t.show();
     </script>
 </body>
 </html>
