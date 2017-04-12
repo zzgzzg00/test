@@ -8,23 +8,12 @@
 </head>
 <body>
     <script>
-        class Test{
-            constructor(SubClass){
-                this.a=1;
-                if(new.target==SubClass){
-                    return Object.assign({},this);
-                }
-            }
-            show(){
-                alert(this.a);
-            }
-        }
-        class M extends Test{
-
-        }
-        let t=new M(M);
-        alert(t.a);
-        t.show();
+        var a=6;
+        window.setTimeout(function(){
+            alert(a);
+            a=666;
+        },1000);
+        a=66;
     </script>
 </body>
 </html>

@@ -38,6 +38,7 @@
         class NoPrototype3{
             constructor(obj,NoPrototypeClass){
                 Object.assign(this,obj);
+                //new.target只能用在构造函数中
                 if(new.target===NoPrototypeClass){
                     return Object.assign({},this);
                 }
