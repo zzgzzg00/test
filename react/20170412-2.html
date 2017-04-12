@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    const Content=React.createClass({
+        render(){
+            return <p style={this.props.show?{display:''}:{display:'none'}}>{this.props.content}</p>
+        }
+    });
+
+    const Container=React.createClass({
+        getInitialState(){
+            return {
+                num:0
+            }
+        },
+        clickHandle(){
+            let num=(this.state.num+1)%3;
+            this.setState({num});
+        },
+        render(){
+            return (
+                <div onClick={this.clickHandle.bind(this)}>
+                    <Content show={this.state.num==0} content='test1'/>
+                    <Content show={this.state.num==1} content='test2'/>
+                    <Content show={this.state.num==2} content='test3'/>
+                </div>
+            )
+        }
+    });
+
+    React.render(<Container />,document.body);
+</script>
+</body>
+</html>
