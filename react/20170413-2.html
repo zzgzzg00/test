@@ -7,21 +7,23 @@
 <script src="./common/react.js"></script>
 <script src="./common/JSXTransformer.js"></script>
 <script type="text/jsx">
-    function addState(Component,num){
+    const {Component,PropTypes}=React;
+
+    function addState(_Component,num){
         function* add(num){
             while(1){
                 yield* [1,2,3,4].map(item=>`test${num+item}`);
             }
         }
         const iterator=add(num);
-        return class extends React.Component{
+        return class extends Component{
             render(){
-                return <Component iterator={iterator} />
+                return <_Component iterator={iterator} />
             }
         }
     }
 
-    class Item extends React.Component{
+    class Item extends Component{
         componentWillMount(){
             console.log(1);
         }
@@ -30,11 +32,25 @@
         }
     }
 
-    class Container extends React.Component{
+    class Container extends Component{
         constructor(){
             super();
             this.state={
                 test:''
+            }
+        }
+        static get propTypes(){
+            return {
+                iterator:PropTypes.object,
+                content:PropTypes.oneOfType([
+                    PropTypes.object,
+                    PropTypes.string
+                ])
+            }
+        }
+        static get defaultProps(){
+            return {
+                'content':'content'
             }
         }
         componentWillMount(){
@@ -47,10 +63,17 @@
             const test=this.props.iterator.next().value;
             this.setState({test})
         }
+        renderItem(){
+            return <Item item={this.state.test} />
+        }
+        renderContent(){
+            return <p>{this.props.content}</p>
+        }
         render(){
             return (
                 <div onClick={this.clickHandle.bind(this)}>
-                    <Item item={this.state.test} />
+                    {this.renderContent()}
+                    {this.renderItem()}
                 </div>
             )
         }
