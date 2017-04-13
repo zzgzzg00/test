@@ -3,16 +3,46 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
-    <style>
-        div{
-            width: 50px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-    </style>
 </head>
 <body>
-    <div>测试是是是是死或死是</div>
+    <form method="get" action="/" target="_blank" id="form">
+        <span class="wt130">
+            退票手续费：<input type="text" name="claimMoneys">
+            理赔：<input type="checkbox" name="proposalNos" value="">
+        </span>
+        <span class="wt130">
+            退票手续费：<input type="text" name="claimMoneys">
+            理赔：<input type="checkbox" name="proposalNos" value="">
+        </span>
+        <span class="wt130">
+            退票手续费：<input type="text" name="claimMoneys">
+            理赔：<input type="checkbox" name="proposalNos" value="">
+        </span>
+        <input type="submit" value="提交"/>
+    </form>
+    <script>
+        document.getElementById('form').onsubmit=function(){
+            var inputs=document.getElementsByTagName('input');
+            var checkbox=[],texts=[];
+            for(var i=0;i<inputs.length;i++){
+                if(inputs[i].name=='proposalNos'){
+                    checkbox.push(inputs[i]);
+                }else if(inputs[i].name=='claimMoneys'){
+                    texts.push(inputs[i]);
+                }
+            }
+            for(var i=0;i<checkbox.length;i++){
+                if(!checkbox[i].checked){
+                    texts[i].disabled=true;
+                }
+            }
+            this.submit();
+            window.setTimeout(function(){
+                for(var i=0;i<checkbox.length;i++){
+                    texts[i].disabled=false;
+                }
+            },1);
+        }
+    </script>
 </body>
 </html>

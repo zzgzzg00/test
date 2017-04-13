@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    function addState(Component,num){
+        function* add(num){
+            while(1){
+                yield* [1,2,3,4].map(item=>`test${num+item}`);
+            }
+        }
+        const iterator=add(num);
+        return class extends React.Component{
+            render(){
+                return <Component iterator={iterator} />
+            }
+        }
+    }
+
+    class Item extends React.Component{
+        componentWillMount(){
+            console.log(1);
+        }
+        render(){
+            return <p>{this.props.item}</p>
+        }
+    }
+
+    class Container extends React.Component{
+        constructor(){
+            super();
+            this.state={
+                test:''
+            }
+        }
+        componentWillMount(){
+            const me=this;
+            this.setState({
+                test:me.props.iterator.next().value
+            });
+        }
+        clickHandle(){
+            const test=this.props.iterator.next().value;
+            this.setState({test})
+        }
+        render(){
+            return (
+                <div onClick={this.clickHandle.bind(this)}>
+                    <Item item={this.state.test} />
+                </div>
+            )
+        }
+    }
+
+    Container=addState(Container,0);
+
+    React.render(<Container />,document.body);
+</script>
+</body>
+</html>
