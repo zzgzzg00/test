@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    const container=document.body;
+    class Test extends React.Component{
+        constructor(){
+            super();
+            this.state={
+                'value':'value'
+            }
+        }
+        static get defaultProps(){
+            return {
+                style:{
+                    'color':'red',
+                    'fontSize':'14px'
+                }
+            }
+        }
+        render(){
+            return (
+                <input value={this.state.value}
+                    style={this.props.style}
+                />
+            )
+        }
+    }
+    /*
+    Test.defaultProps={
+        style:{
+            'color':'red',
+            'fontSize':'14px'
+        }
+    }
+    */
+    React.render(<Test />,document.body);
+</script>
+</body>
+</html>

@@ -4,14 +4,15 @@
     <title></title>
     <meta charset="utf-8" />
     <style>
+        div{
+            width: 50px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 <body>
-    <script>
-        for (var i = 0; i < 10; i++) {
-            console.log("hi:"+i);
-            setTimeout(function() {console.log(i); }, 3000 * (i+10));
-        }
-    </script>
+    <div>测试是是是是死或死是</div>
 </body>
 </html>
