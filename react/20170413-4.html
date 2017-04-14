@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    const {Component,PropTypes}=React;
+
+    class Item1 extends Component{
+        render(){
+            return <p>item1{this.props.name}</p>
+        }
+    }
+
+    class Item2 extends Component{
+        render(){
+            return <p>item2{this.props.name}</p>
+        }
+    }
+
+    class Test extends Component{
+        static get propTypes(){
+            return {
+                name:PropTypes.string
+            }
+        }
+        static get defaultProps(){
+            return {
+                name:'111'
+            }
+        }
+        clickHandle(){
+            this.setState(preState=>({name:preState.name+1}))
+        }
+        constructor(){
+            super();
+            this.state={
+                'name':'test'
+            }
+        }
+        render(){
+            let message;
+            if(this.state.name.length%2==0){
+                message=<Item1 name={this.state.name} />;
+            }else{
+                message=<Item2 name={this.state.name} />
+            }
+            return (
+                <div>
+                    <p onClick={this.clickHandle.bind(this)}>{this.state.name}</p>
+                    {message}
+                </div>
+            )
+        }
+    }
+
+    React.render(<Test />,document.body);
+</script>
+</body>
+</html>
