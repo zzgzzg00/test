@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="container1"></div>
+<div id="container2"></div>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    const {Component}=React;
+    class Test extends Component{
+        componentWillMount(){
+            console.log(1);
+        }
+        render(){
+            return (
+                <p>{this.props.time}</p>
+            )
+        }
+    }
+    let index=0;
+    window.setInterval(function(){
+        React.render(<Test time={index++} />,document.querySelector('#container1'));
+    },500);
+
+</script>
+</body>
+</html>
