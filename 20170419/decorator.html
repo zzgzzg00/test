@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function addPrice(price){
+        return function(TargetClass){
+            const t=Reflect.construct(TargetClass,[price]);
+            return class{
+                constructor(price){
+                    this.t=t;
+                    this.price=price;
+                }
+                getPrice(){
+                    return this.t.getPrice()+this.price;
+                }
+            }
+        }
+    }
+
+    @addPrice(10)
+    class Test{
+        constructor(price){
+            this.price=price;
+        }
+        getPrice(){
+            return this.price;
+        }
+    }
+
+    const t=new Test(100);
+    console.log(t.getPrice());
+
+    function addPrice2(TargetClass){
+        return class extends TargetClass{
+            constructor(price){
+                super(price);
+            }
+            getPrice(){
+                return super.getPrice()+10;
+            }
+        }
+    }
+
+    @addPrice2
+    class Test2{
+        constructor(price){
+            this.price=price;
+        }
+        getPrice(){
+            return this.price;
+        }
+    }
+
+    const t2=new Test2(100);
+    console.log(t2.getPrice());
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    const o={
+        'a':1
+    };
+    function fun(key){
+        alert(this[key]);
+    }
+    const handle={
+        apply(target,ctx,args){
+            return Reflect.apply(target,ctx,args);
+        }
+    }
+    const {proxy,revoke}=Proxy.revocable(fun,handle);
+    proxy.call(o,'a');
+    revoke();
+    proxy.call(o,'a');
+</script>
+</body>
+</html>
