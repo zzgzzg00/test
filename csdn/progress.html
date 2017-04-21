@@ -33,13 +33,24 @@
             interval:30
         }];
         this.controllerLength=this.speendController.length;
+        this.rato=2;
+        this.setRato();
+    }
+    ProgressBar.prototype.setRato=function(){
+        var div=document.createElement('div');
+        div.style.cssText='background: linear-gradient(45deg,#33cccc 0%,#33cccc 50%,rgba(0,0,0,0) 0);';
+        document.body.appendChild(div);
+        if(div.style.cssText.length<1){
+            this.rato=1;
+        }
+        document.body.removeChild(div);
     }
     ProgressBar.prototype.finish=function(){
         this.stop();
         this.dom.style.width=this.progress+'%';
     }
     ProgressBar.prototype.stop=function(){
-        this.progress=200;
+        this.progress=100*this.rato;
         if(this.timeHandle){
             window.clearTimeout(this.timeHandle);
         }
@@ -47,7 +58,7 @@
     ProgressBar.prototype.setInterval=function(){
         for(var i=0;i<this.controllerLength;i++){
             var item=this.speendController[i];
-            if(this.progress<=item.progress*2){
+            if(this.progress<=item.progress*this.rato){
                 this.interval=item.interval;
                 return;
             }
@@ -56,7 +67,7 @@
     ProgressBar.prototype.start=function(){
         var me=this;
         this.setInterval();
-        if(this.progress<200){
+        if(this.progress<100*this.rato){
             this.dom.style.width=(++this.progress)+'%';
             this.timeHandle=window.setTimeout(function(){
                 me.start();
