@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    var a=[1,2,3,9],b=[4,5,6,7],c=[7,8,9];
+    function merge(a,b){
+        var l=Math.min(a.length, b.length),arr=[];
+        for(var i=0;i<l;i++){
+            [].push.call(arr,a[i],b[i]);
+        }
+        var n= a.length> b.length?a:b;
+        [].push.apply(arr, n.slice(i));
+        return arr;
+    }
+    console.log(merge(a,b));
+</script>
+</body>
+</html>
