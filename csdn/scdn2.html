@@ -6,13 +6,51 @@
 <body>
 
 <script>
-    const arr = ['one'];
-    arr[2] = 'three';
-    const secondValue = arr.entries();
-    for(let i of secondValue){
-        console.log(i);
+    var arr=[
+        [1,2,3],
+        ['a','c','d'],
+        ['X','Y','Z']
+    ];
+    function test(arr){
+        if(arr.length>=2){
+            var item1=arr[0],item2=arr[1];
+            var a=[];
+            for(var i=0;i<item1.length;i++){
+                for(var j=0;j<item2.length;j++){
+                    a.push(item1[i]+item2[j]);
+                }
+            }
+            var x=arr.slice(2);
+            x.unshift(a);
+            return test(x);
+        }
+        return arr;
     }
-    console.log(secondValue);
+    var o=test(arr);
+    console.log(o);
+
+    var x=arr.reduce(function(item1,item2){
+       var a=[];
+        for(var i=0;i<item1.length;i++){
+            for(var j=0;j<item2.length;j++){
+                a.push(item1[i]+item2[j]);
+            }
+        }
+        return a;
+    });
+    console.log(x)
+
+    var a=[1,2,3,4];
+    function add(arr){
+        if(arr.length==1){
+            return arr[0];
+        }
+        var a=arr[0]+arr[1];
+        var x=arr.slice(2);
+        x.unshift(a);
+        return add(x);
+    }
+    console.log(add(a));
 </script>
 </body>
 </html>
