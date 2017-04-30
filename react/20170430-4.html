@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    const {Component}=React;
+    class Test extends Component{
+        render(){
+            const {name,age,sex}=this.props;
+            return (
+                <p>{name},{age},{sex}</p>
+            )
+        }
+    }
+    const data={
+        name:'测试啊',
+        age:32
+    }
+    //并非es7的对象扩展，不支持{...data,sex}这种形式
+    React.render(<Test {...data} />,document.body);
+</script>
+</body>
+</html>

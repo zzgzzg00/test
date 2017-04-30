@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    const {Component,PropTypes}=React;
+    class Test1 extends Component{
+        static get defaultProps(){
+            return{
+                style:{
+                    color:'red',
+                    backgroundColor:'green'
+                }
+            }
+        }
+        render(){
+            return (
+                <p style={this.props.style}>{this.props.content}</p>
+            )
+        }
+    }
+
+    class Test2 extends Component{
+        static get defaultProps(){
+            return {
+                style:{
+                    color:'green',
+                    backgroundColor:'red'
+                }
+            }
+        }
+        render(){
+            return (<p style={this.props.style}>{this.props.content}</p>);
+        }
+    }
+
+    class Container extends Component{
+        render(){
+            const {type,content,types}=this.props;
+            //动态指定组件时必须存放到一个变量里
+            //不能直接<types[type] />
+            const Type=types[type];
+            return (
+                <Type content={content} />
+            )
+        }
+    }
+    const types={
+        'n1':Test1,
+        'n2':Test2
+    }
+    React.render(<Container
+        types={types}
+        type={'n2'}
+        content={'n2'}
+    />,document.body);
+</script>
+</body>
+</html>
