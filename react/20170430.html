@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="container"></div>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    const {Component,PropTypes}=React;
+
+    class SearchBox extends Component{
+        static get propTypes(){
+            return{
+                searchValue:PropTypes.string,
+                changeHandle:PropTypes.func.isRequired
+            }
+        }
+        constructor(props){
+            super(props);
+        }
+        render(){
+            return (
+                <div>
+                    <input
+                        type={'text'}
+                        value={this.props.searchValue}
+                        onChange={this.props.changeHandle}
+                    />
+                </div>
+            )
+        }
+    }
+
+    class Title extends Component{
+        static get propTypes(){
+            return {
+                title:PropTypes.string.isRequired
+            }
+        }
+        static get defaultProps(){
+            return {
+                styles:{color:'red'}
+            }
+        }
+        render(){
+            return (<p style={this.props.styles}>{this.props.title}</p>)
+        }
+    }
+
+    class Item extends Component{
+        static get propTypes(){
+            return {
+                item:PropTypes.string.isRequired
+            }
+        }
+        render(){
+            return (<p>{this.props.item}</p>);
+        }
+    }
+
+    class ItemRows extends Component{
+        static get propTypes(){
+            return {
+                title:PropTypes.string,
+                items:PropTypes.array
+            }
+        }
+        render(){
+            const arr=this.props.items.map((item,index)=>(<Item item={item} key={index} />));
+            return (
+                <div>
+                    <Title title={this.props.title} />
+                    {arr}
+                </div>
+            )
+        }
+    }
+
+    class DataList extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                searchValue:props.searchValue,
+            }
+        }
+        get changeHandle(){
+            return e=>{
+                this.setState({searchValue:e.target.value});
+            };
+        }
+        render(){
+            const key=this.state.searchValue;
+            const arr=this.props.lists.filter(item=>item.title.toLowerCase()==key.toLowerCase());
+            const items={};
+            arr.forEach(function(item){
+                const title=item.title.toUpperCase();
+                if(!items[title]){
+                    items[title]=[];
+                }
+                items[title].push(item.item);
+            });
+            const _items=Object.keys(items).map((item,index)=>
+                <ItemRows title={item} key={index} items={items[item]} />
+            )
+            return (
+                <div>
+                    <SearchBox
+                        searchValue={this.state.searchValue}
+                        changeHandle={this.changeHandle}
+                    />
+                    {_items}
+                </div>
+            )
+        }
+    }
+    const lists=[{
+        title:'A',
+        item:'aa'
+    },{
+        title:'A',
+        item:'ab'
+    },{
+        title:'B',
+        item:'bc'
+    },{
+        title:'B',
+        item:'bd'
+    },{
+        title:'C',
+        item:'cf'
+    },{
+        title:'D',
+        item:'dm'
+    }]
+    React.render(<DataList
+        searchValue={'D'}
+        lists={lists}
+    />,document.getElementById('container'))
+</script>
+</body>
+</html>
