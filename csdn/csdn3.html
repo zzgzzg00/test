@@ -3,32 +3,14 @@
 <head>
     <title></title>
     <style>
-
     </style>
 </head>
 <body>
+    <input type="text" id="test"/>
     <script>
-        var arr=[1,2,5,0,4,47,33,98,100,99,4];
-        function findMin(arr,index){
-            var temp=arr[index],_i=index;
-            for(var i=index+1;i<arr.length;i++){
-                if(temp>arr[i]){
-                    temp=arr[i];
-                    _i=i;
-                }
-            }
-            return {temp,_i};
+        document.getElementById('test').oninput=function(){
+
         }
-        function sort(arr){
-            var len=arr.length;
-            for(var i=0;i<len;i++){
-                var {temp,_i}=findMin(arr,i);
-                arr[_i]=arr[i];
-                arr[i]=temp;
-            }
-        }
-        sort(arr)
-        console.log(arr);
     </script>
 </body>
 </html>

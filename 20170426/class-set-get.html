@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    var scope='window';
+    class Test{
+        constructor(){
+            this.scope='test';
+        }
+        //静态方法
+        static getByFun(){
+            return 'static';
+        }
+        //静态属性
+        static get getByAttr(){
+            return 'static';
+        }
+        showScopeByFun(){
+            return console.log(this.scope);
+        }
+        //定义对象的箭头方法
+        get showScopeByAttr(){
+            return ()=>console.log(this.scope);
+        }
+    }
+    console.log(Test.getByFun());
+    console.log(Test.getByAttr);
+    var t=new Test();
+    let [s1,s2]=[t.showScopeByFun, t.showScopeByAttr];
+//    s1();
+    s2();
+</script>
+</body>
+</html>

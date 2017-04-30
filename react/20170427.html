@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="container"></div>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    const {Component,PropTypes}=React;
+    class Test extends Component{
+        constructor(props){
+            super(props);
+        }
+        static get propTypes(){
+            return {
+                rot:PropTypes.string
+            }
+        }
+        get show(){
+            return ()=>alert(this.props.rot);
+        }
+        render(){
+            const t=this.props.rot==1?(<div>1</div>):(<div>2</div>)
+            return(
+                <div onClick={this.show}>{t}</div>
+            )
+        }
+    }
+    React.render(<Test rot={'2'}/>,document.getElementById('container'))
+</script>
+</body>
+</html>
