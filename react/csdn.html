@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    const {Component,PropTypes}=React;
+    class Test extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                content:'是'
+            }
+        }
+        get changeHandle(){
+            return e=>{
+                const v=e.target.value;
+                if(v=='是' || v=='否'){
+                    this.setState({'content':v});
+                }
+            }
+        }
+        render(){
+            return (
+                <input
+                    type={'text'}
+                    value={this.state.content}
+                    onChange={this.changeHandle}
+                />
+            )
+        }
+    }
+    React.render(<Test />,document.body);
+</script>
+</body>
+</html>
