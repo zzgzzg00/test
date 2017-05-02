@@ -5,84 +5,9 @@
     <meta charset="utf-8" />
 </head>
 <body>
-    <script src="../react/common/react.js"></script>
-    <script src="../react/common/JSXTransformer.js"></script>
-    <script type="text/jsx">
-        const {Component,PropTypes}=React;
-        class Test extends Component{
-            static get propTypes(){
-                return {
-                    sel1:PropTypes.array,
-                    sel2:PropTypes.array,
-                }
-            }
-            static get defaultProps(){
-                return {
-                    sel1:Array.from({length:4},(item,index)=>`left_${index}`),
-                    sel2:Array.from({length:3},(item,index)=>`right_${index}`)
-                }
-            }
-            constructor(props){
-                super(props);
-                this.state={
-                    text:'left_0,test,right_0',
-                    sel1:['left_0'],
-                    sel2:['right_0']
-                }
-            }
-            changeHandle(key,e){
-                let value;
-                switch(key){
-                    case 'sel1':
-                    case 'sel2':
-                        value=this.state[key];
-                        value.length=0;
-                        for(let i of [...e.target.querySelectorAll('option')]){
-                            if(i.selected){
-                                value.push(i.value);
-                            }
-                        }
-                        break;
-                    case 'text':
-                        value=e.target.value;
-                        break;
-                }
-                this.setState({[key]:value});
-                const [s1,text,s2]=[this.state.sel1,this.state.text,this.state.sel2];
-                //this.setState({
-                    //'text':[s1,text,...s2].join(',')
-                //});
-            }
-            render(){
-                let {sel1,sel2}=this.props;
-                [sel1,sel2]=[
-                    sel1.map(item=><option value={item}>{item}</option>),
-                    sel2.map(item=><option value={item}>{item}</option>)
-                ];
-                return (
-                    <div>
-                        <select
-                            value={this.state.sel1}
-                            multiple={'multiple'}
-                            size={this.props.sel1.length}
-                            onChange={this.changeHandle.bind(this,'sel1')}
-                        >{sel1}</select>
-                        <input
-                            type={'text'}
-                            value={this.state.text}
-                            onChange={this.changeHandle.bind(this,'text')}
-                        />
-                        <select
-                            value={this.state.sel2}
-                            multiple={'multiple'}
-                            size={this.props.sel2.length}
-                            onChange={this.changeHandle.bind(this,'sel2')}
-                        >{sel2}</select>
-                    </div>
-                )
-            }
-        }
-        React.render(<Test />,document.body);
+    <div id="test"><div>
+    <script>
+        window.open("csdn3.html","newwindow","height=300,width=400,top=200,left=500, toolbar=no, scrollbars=yes");
     </script>
 </body>
 </html>

@@ -6,10 +6,13 @@
     </style>
 </head>
 <body>
-    <input type="text" id="test"/>
+    <input type="text" id="test" value="1"/>
+    <input type="button" value="close" id="close"/>
     <script>
-        document.getElementById('test').oninput=function(){
-
+        document.getElementById('close').onclick=function(){
+            var v=document.getElementById('test').value;
+            window.opener.document.getElementById('test').innerHTML=v;
+            self.close();
         }
     </script>
 </body>
