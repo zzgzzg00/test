@@ -4,20 +4,24 @@
     <title></title>
 </head>
 <body>
+<form action = "#">
+    <p><textarea id = "textarea" rows = "5" cols = "30"></textarea></p>
+    <input type = "submit" value = "Add some text to the page">
+</form>
 <script>
-    var o={
-        a:1
+    window.onload = initAll;
+    function initAll() {
+        document.getElementsByTagName("form")[0].onsubmit = addNode;
     }
-    function test(){
-        alert(this.a);
+    function addNode() {
+        var inText = document.getElementById("textarea").value;
+        var newText = document.createTextNode(inText);
+        var newGraf = document.createElement("p");
+        newGraf.appendChild(newText);
+        var docBody = document.getElementsByTagName("body")[0];
+        docBody.appendChild(newGraf);
+        return false;
     }
-    Function.prototype.call2=function(context){
-        var f=this.toString();
-        f= f.replace(/^[\s\S]+\{/,'').replace(/\}$/,'').replace('this.','context.');
-        f=new Function('context',f);
-        f(context);
-    }
-    test.call2(o);
 </script>
 </body>
 </html>

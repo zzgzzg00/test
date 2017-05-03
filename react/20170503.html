@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/redux.js"></script>
+<script>
+    const {createStore,combineReducers}=Redux;
+    const initialData={
+        title:'title',
+        content:[{
+            id:1,
+            context:'test1'
+        }]
+    }
+    function titleReducer(state='title',action){
+        switch(action.type){
+            case 'rename':
+                return action.title;
+            default:
+                return state;
+        }
+    }
+    function contentReducer(state=[],action){
+        switch(action.type){
+            case 'add':
+                return [...state,action.context];
+            case 'remove':
+                return state.filter((item,index)=>index!=action.index);
+            default :
+                return state;
+        }
+    }
+//    function reducer(state=initialData,action){
+//        return{
+//            title:titleReducer(state.title,action),
+//            content:contentReducer(state.content,action)
+//        }
+//    }
+    const reducer=combineReducers({
+        title:titleReducer,
+        content:contentReducer
+    });
+    const store=createStore(reducer,initialData);
+    store.subscribe(()=>console.log(store.getState()));
+    store.dispatch({type:'rename',title:'title2'});
+    store.dispatch({type:'add',context:{id:2,context:'test2'}});
+    store.dispatch({type:'remove',index:0});
+</script>
+</body>
+</html>
