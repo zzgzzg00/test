@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function add(m){
+        if(m<=1){
+            return m;
+        }
+        return m+add(m-1);
+    }
+    console.log(add(1000));
+
+    function add2(index,total=1){
+        if(index<=1){
+            return total;
+        }
+        return add2(index-1,total+index);
+    }
+    console.log(add2(1000));
+</script>
+</body>
+</html>

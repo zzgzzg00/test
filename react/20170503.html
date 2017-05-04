@@ -43,10 +43,13 @@
         content:contentReducer
     });
     const store=createStore(reducer,initialData);
-    store.subscribe(()=>console.log(store.getState()));
+    const unsubscribe=store.subscribe(()=>console.log(store.getState()));
+    const unsubscribe2=store.subscribe(()=>console.log('1/'+(store.getState())));
     store.dispatch({type:'rename',title:'title2'});
     store.dispatch({type:'add',context:{id:2,context:'test2'}});
     store.dispatch({type:'remove',index:0});
+    unsubscribe2();
+    store.dispatch({type:'rename',title:'title3'});
 </script>
 </body>
 </html>

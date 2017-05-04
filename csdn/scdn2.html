@@ -4,24 +4,8 @@
     <title></title>
 </head>
 <body>
-<form action = "#">
-    <p><textarea id = "textarea" rows = "5" cols = "30"></textarea></p>
-    <input type = "submit" value = "Add some text to the page">
-</form>
 <script>
-    window.onload = initAll;
-    function initAll() {
-        document.getElementsByTagName("form")[0].onsubmit = addNode;
-    }
-    function addNode() {
-        var inText = document.getElementById("textarea").value;
-        var newText = document.createTextNode(inText);
-        var newGraf = document.createElement("p");
-        newGraf.appendChild(newText);
-        var docBody = document.getElementsByTagName("body")[0];
-        docBody.appendChild(newGraf);
-        return false;
-    }
+
 </script>
 </body>
 </html>
