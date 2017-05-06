@@ -20,6 +20,16 @@
         'subtitle':function(title){
             console.log(`%c ${title}`,`${STYLES.subtitle}`);
         },
+        equal:function(a,b){
+            if(a!=b){
+                throw new Error(`${a} not equal ${b}`);
+            }
+        },
+        ok:function(result){
+            if(!result){
+                throw new Error(`${result} is not true`)
+            }
+        },
         errorRun:function(fun,callback){
             try{
                 fun();
