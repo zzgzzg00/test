@@ -19,6 +19,13 @@
         },
         'subtitle':function(title){
             console.log(`%c ${title}`,`${STYLES.subtitle}`);
+        },
+        errorRun:function(fun,callback){
+            try{
+                fun();
+            }catch (e){
+                callback();
+            }
         }
     });
 }
