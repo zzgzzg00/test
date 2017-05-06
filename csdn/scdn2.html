@@ -5,7 +5,18 @@
 </head>
 <body>
 <script>
+    function Test(){
 
+    }
+    var t1=new Test();
+    Object.assign(Test.prototype,{
+        show(){
+        alert(1);
+    }
+    })
+    var t2=new Test();
+    t1.show();
+    t2.show();
 </script>
 </body>
 </html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div></div>
+<script src="./common/react.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script src="./common/react-redux.js"></script>
+<script src="./common/redux.js"></script>
+<script type="text/jsx">
+    const {Component,PropTypes}=React;
+    const {Provider,connect}=ReactRedux;
+    const {createStore}=Redux;
+    class TestList extends Component{
+        constructor(props){
+            super(props);
+        }
+        static get propTypes(){
+            return {
+                lists:PropTypes.array.isRequired,
+                clickHandle:PropTypes.func.isRequired
+            }
+        }
+        render(){
+            const lis=this.props.lists.map((item,index)=>
+                (<li
+                    onClick={this.props.clickHandle}
+                    key={index}
+                >{item}</li>)
+            );
+            return(
+                <ul>{lis}</ul>
+            )
+        }
+    }
+
+    const data={
+        lists:[1,2,3,4],
+        clickHandle(e){
+            alert(e.target.innerHTML)
+        }
+    }
+    const mapStateToProps=state=>{
+        return {lists:state.lists};
+    };
+    const mapDispatchToProps=dispatch=>({
+        onClick(){
+            dispatch({type:'add',item:'x'})
+        }
+    });
+    const TestListContainer=connect(mapStateToProps,mapDispatchToProps)(TestList);
+
+    class App extends Component{
+        render(){
+            return (
+                <TestListContainer />
+            )
+        }
+    }
+
+    const reducer=function(state=[],action){
+        switch(action.type){
+            case 'add':
+                return [...state].push(action.item);
+            default:
+                return state;
+        }
+    }
+    const store=createStore(reducer,data);
+    React.render(<Provider store={store}>
+        <App />
+    </Provider>,document.querySelector('div'));
+</script>
+</body>
+</html>
