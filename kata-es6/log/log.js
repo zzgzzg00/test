@@ -43,6 +43,15 @@
             }catch (e){
                 callback();
             }
+        },
+        generator:function(iterator){
+            if(!iterator || !('next' in iterator) || typeof iterator.next !='function'){
+                throw new Error('not a genertor');
+            }
+            const keys=Object.keys(iterator.next());
+            if(keys.indexOf('value')==-1 || keys.indexOf('done')==-1){
+                throw new Error('not a genertor');
+            }
         }
     });
 }
