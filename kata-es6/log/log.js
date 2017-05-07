@@ -30,6 +30,13 @@
                 throw new Error(`${result} is not true`)
             }
         },
+        deepEqual:function(a,b){
+            a=JSON.stringify(a);
+            b=JSON.stringify(b);
+            if(a!=b){
+                throw new Error(`${a} not deep equal ${b}`);
+            }
+        },
         errorRun:function(fun,callback){
             try{
                 fun();
