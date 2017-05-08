@@ -3,17 +3,15 @@
 <head>
     <title></title>
     <style>
+        .outer>div:nth-of-type(n+2):nth-last-of-type(n+2){
+            color: #ff0000;
+        }
     </style>
 </head>
 <body>
-    <input type="text" id="test" value="1"/>
-    <input type="button" value="close" id="close"/>
-    <script>
-        document.getElementById('close').onclick=function(){
-            var v=document.getElementById('test').value;
-            window.opener.document.getElementById('test').innerHTML=v;
-            self.close();
-        }
-    </script>
+    <div class="outer">
+        <div>1</div>
+
+    </div>
 </body>
 </html>
