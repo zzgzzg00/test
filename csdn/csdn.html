@@ -5,9 +5,12 @@
     <meta charset="utf-8" />
 </head>
 <body>
-    <div id="test"><div>
-    <script>
-        window.open("csdn3.html","newwindow","height=300,width=400,top=200,left=500, toolbar=no, scrollbars=yes");
-    </script>
+<script>
+    var arr=[ ';U89789','广东;','广东;U0983'];
+    arr=arr.map(function(item){
+        return item.replace(/(^;)|(;$)/,'');
+    });
+    console.log(arr);
+</script>
 </body>
 </html>
