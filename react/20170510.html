@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/react15.js"></script>
+<script src="./common/react-dom15.js"></script>
+<script src="./common/JSXTransformer.js"></script>
+<script src="./common/redux.js"></script>
+<script src="./common/react-redux.js"></script>
+<script type="text/jsx">
+{
+    const {Component,PropTypes}=React;
+    const {combineReducers,createStore}=Redux;
+    const {Provider,connect}=ReactRedux;
+    const dataArrs=[
+        'as',
+        'ad',
+        'bc',
+        'bd',
+        'be',
+        'cdad',
+        'dwadaw'
+    ];
+    const defaultState={
+        input:'',
+        list:[]
+    }
+    const inputReducer=function(state='',action){
+        const {type,content}=action;
+        switch(type){
+            case 'input':
+                return content;
+            default:
+                return state;
+        }
+    }
+    const listReducer=function(list=[],action){
+        const {type,content}=action;
+        switch(type){
+            case 'input':
+                return dataArrs.filter(item=>item.startsWith(content));
+            default:
+                return list;
+        }
+    }
+    const inputAction=(content)=>({type:'input',content});
+    const reducer=combineReducers({
+        input:inputReducer,
+        list:listReducer
+    });
+    const store=createStore(reducer,defaultState);
+    //store.subscribe(()=>console.log(store.getState()));
+    //store.dispatch(inputAction('a'));
+    //store.dispatch(inputAction('b'));
+    class Input extends Component{
+        static get propTypes(){
+            return{
+                value:PropTypes.string,
+                changeHandle:PropTypes.func.isRequired
+            }
+        }
+        render(){
+            return(
+                <input
+                    type={'text'}
+                    value={this.props.value}
+                    onChange={this.props.changeHandle}
+                />
+            )
+        }
+    }
+    class Lists extends Component{
+        static get propsTypes(){
+            return {
+                lists:PropTypes.array.isRequired
+            }
+        }
+        render(){
+            const arr=this.props.lists.map(item=>(<li>{item}</li>));
+            return(
+                <ul>
+                    {arr}
+                </ul>
+            )
+        }
+    }
+    const inputStateMapToProps=function(state){
+        return {
+            value:state.input
+        }
+    }
+    const inputDispatchMapToProps=function(dispatch){
+        return{
+            changeHandle(e){
+                dispatch(inputAction(e.target.value));
+            }
+        }
+    }
+    const listsStateMapToProps=function(state){
+        return {
+            lists:state.list
+        }
+    }
+    const InputContainer=connect(inputStateMapToProps,inputDispatchMapToProps)(Input);
+    const ListsContainer=connect(listsStateMapToProps)(Lists);
+    class App extends Component{
+        render(){
+            return(
+                <Provider store={store}>
+                    <div>
+                        <InputContainer />
+                        <ListsContainer />
+                    </div>
+                </Provider>
+            )
+        }
+    }
+    ReactDOM.render(<App />,document.body);
+}
+</script>
+</body>
+</html>
