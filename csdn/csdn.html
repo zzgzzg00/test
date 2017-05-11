@@ -1,53 +1,365 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
-    <meta charset="utf-8" />
-    <style>
-        #haha{ width:500px; height:400px; margin:auto; margin-top:100px;position:absolute; background:#CCC; cursor:pointer}
-        .heihei{ width:15px; height:15px; position:absolute; top:0px; right:0px; z-index:1; background:#00C}
-        .hehe{width:200px; height:100px; position:absolute; top:100px; margin-left:150px; text-align:center; line-height:100px; font-size:30px; background: #F60}
+    <title>订单统计</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link type="text/css" rel="stylesheet"
+          href="http://qunarzz.com/train_tts/prd/styles/admin/common@dev.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="http://qunarzz.com/train_tts/prd/styles/admin/ui_admin@dev.css"/>
+    <link type="text/css" rel="stylesheet"
+          href="http://qunarzz.com/train_tts/prd/styles/admin/qdatepicker@dev.css"/>
+    <link type="text/css" rel="stylesheet"
+           href="http://l-trainhcs.qm1.t.cn6.qunar.com:9001/resources/css/jquery-ui-1.8.13.custom.css"/>
+    <style type="text/css">
+        .content {
+            float: none;
+            clear: both;
+            width: 98%;
+            margin: 5px;
+            background: none;
+        }
+
+        .content .gray_box {
+            background: #e7f5fe;
+            border-top: #cae4f7 1px solid;
+            border-bottom: #cae4f7 1px solid;
+        }
+
+        .order_list .gay_bg {
+            background: #ecf7fe;
+        }
+
+        .title h3 {
+            border: #cae4f7 1px solid;
+            border-top: 0px;
+            color: #077AC7;
+        }
+
+        .content .white_box {
+            border: #cae4f7 1px solid;
+        }
+
+        .order_list {
+            border: #cae4f7 1px solid;
+        }
+
+        .order_list td {
+            border-top: #cae4f7 1px solid;
+            border-bottom: #cae4f7 1px solid;
+        }
+
+        .order_list .c1 {
+            width: 185px;
+            text-align: center;
+        }
+
+        .order_list .c2 {
+            width: 64px;
+        }
+
+        .order_list .c3 {
+            width: 95px;
+        }
+
+        .order_list .c4 {
+            width: 64px;
+        }
+
+        .order_list .c5 {
+            width: 102px;
+        }
+
+        .order_list .c6 {
+            width: 110px;
+        }
+        .oderAdmin{
+            margin:18px 32px 0;
+        }
+        .checks input{
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
-<div id="haha">
-    <div style="position:relative; z-index:1;">
-        <div class="heihei">X</div>
+<div class="content">
+    <div class="gray_box">
+        <div class="title">
+            <h3>订单统计</h3>
+        </div>
+        <div class="white_box">
+            <form method="post" id="orderForm" action="${PATH}stat/robIndex.htm">
+                <table cellspacing="0" cellpadding="0" class="oderAdmin">
+                    <tbody>
+                    <tr style="position:relative; z-index:10;">
+                        <td class="c1">开始时间：</td>
+                        <td class="c2">
+                            <input
+                                id="startTime"
+                                name="startTime"
+                                type="text"
+                                class="textInputN"
+                                value="2017-05-10"
+                            />
+                        </td>
+                        <td class="c1">结束时间：</td>
+                        <td colspan="3" class="c2">
+                            <input
+                                id="endTime"
+                                name="endTime"
+                                type="text"
+                                class="textInputN"
+                                value="2017-05-11"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="c1">业务类型：</td>
+                        <td colspan="3" class="c2 checks">
+                            <input
+                                type="checkbox"
+                                name="busstype"
+                                value="hascount"
+                                id="hascount"
+                                checked
+                            />
+                            <label for="hascount">有账号</label>
+                            <input
+                                type="checkbox"
+                                name="busstype"
+                                value="nocount"
+                                id="nocount"
+                                checked
+                            />
+                            <label for="nocount">无账号</label>
+                            <input
+                                type="checkbox"
+                                name="busstype"
+                                value="manydate"
+                                id="manydate"
+                                checked
+                            />
+                            <label for="manydate">多日期</label>
+                            <input
+                                type="checkbox"
+                                name="busstype"
+                                value="manycar"
+                                id="manycar"
+                                checked
+                            />
+                            <label for="manycar">多车次</label>
+                            <input
+                                type="checkbox"
+                                name="busstype"
+                                value="manysear"
+                                id="manysear"
+                                checked
+                            />
+                            <label for="manysear">多坐席</label>
+                            <input
+                                type="checkbox"
+                                name="busstype"
+                                value="rob"
+                                id="rob"
+                                checked
+                            />
+                            <label for="rob">信用抢</label>
+                        </td>
+                    <tr>
+                        <td class="c1">统计周期：</td>
+                        <td>
+                            <select name="count">
+                                <option value="day">天</option>
+                                <option value="week">周</option>
+                                <option value="month" >月</option>
+                            </select>
+                        </td>
+                        <td class="c1">统计维度：</td>
+                        <td>
+                            <select name="count">
+                                <option value="day">发车时间</option>
+                                <option value="week">订单时间</option>
+                            </select>
+                        </td>
+                        <td class="c1">统计渠道：</td>
+                        <td>
+                            <select name="count">
+                                <option value="day">全球</option>
+                                <option value="week">去哪儿</option>
+                                <option value="week">携程</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input style="margin-left: 10px" type="email" placeholder="请输入邮箱"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="c1"></td>
+                        <td class="c2"></td>
+                        <td class="c1"></td>
+                        <td class="c2">
+                            <button
+                                style="float: right; margin-right: 5px"
+                                type="button"
+                                id="search">
+                                    <em><em>搜索</em></em>
+                            </button>
+                        </td>
+                        <td class="c1">
+                            <button
+                                style="float: left; margin-left: 5px;"
+                                type="button"
+                                id="export">
+                                    <em><em>导出</em></em>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </form>
+            <table cellspacing="0" cellpadding="0" class="oderAdmin">
+
+            </table>
+        </div>
     </div>
-    <div id="hehe" class="hehe">
-        QQ登录界面
+
+    <div class="gray_box mt10">
+        <div class="title">
+            <h3>订单时间</h3>
+        </div>
+        <table border="0" cellspacing="0" cellpadding="0" class="order_list" id="tb">
+            <tr role="head">
+                <th class="c2" sort="true">日期</th>
+                <th class="c2" sort="true">星期</th>
+                <th class="c2" sort="true">代理商</th>
+                <th class="c2" sort="true">12306生单</th>
+                <th class="c2" sort="true">12306支付</th>
+                <th class="c2" sort="true">12306占座成功</th>
+                <th class="c2" sort="true">12306占座成功率</th>
+                <th class="c2" sort="true">无账号生单</th>
+                <th class="c2" sort="true">无账号支付</th>
+                <th class="c2" sort="true">无账号占座成功</th>
+                <th class="c2" sort="true">无账号核验不通过量</th>
+                <th class="c2" sort="true">无账号占座成功率</th>
+                <th class="c2" sort="true">系统取消订单量</th>
+            </tr>
+            <tr>
+                <td colspan="17">
+                    没有符合条件的记录
+                </td>
+            </tr>
+            <tr class="gay_bg">
+                <td class="c2">2017-05-11</td>
+                <td class="c2">星期四}</td>
+                <td class="c2">测试</td>
+                <td class="c2">test12306count</td>
+                <td class="c2">testpaycount</td>
+                <td class="c2">test12306GrabCount</td>
+                <td class="c2">testaccount12306Rate</td>
+                <td class="c2">testnoAccountCount</td>
+                <td class="c2">testnoAccountPayCount</td>
+                <td class="c2">testnoAccountGrabCount</td>
+                <td class="c2">testnoAccountVerifyFailCount</td>
+                <td class="c2">testnoAccountRate</td>
+                <td class="c2">testsystemCancelCount</td>
+            </tr>
+        </table>
     </div>
+
+    <div class="gray_box mt10">
+        <div class="title">
+            <h3>发车时间</h3>
+        </div>
+        <table border="0" cellspacing="0" cellpadding="0" class="order_list" id="tb">
+            <tr role="head">
+                <th class="c2" sort="true">日期</th>
+                <th class="c2" sort="true">星期</th>
+                <th class="c2" sort="true">代理商</th>
+                <th class="c2" sort="true">12306支付</th>
+                <th class="c2" sort="true">12306占座成功</th>
+                <th class="c2" sort="true">12306占座成功率</th>
+                <th class="c2" sort="true">无账号支付</th>
+                <th class="c2" sort="true">无账号占座成功</th>
+                <th class="c2" sort="true">无账号核验不通过量</th>
+                <th class="c2" sort="true">无账号占座成功率</th>
+                <th class="c2" sort="true">系统取消订单量</th>
+            </tr>
+            <tr>
+                <td colspan="17">
+                    没有符合条件的记录
+                </td>
+            </tr>
+            <tr class="gay_bg">
+                <td class="c2">2017-05-11</td>
+                <td class="c2">星期$四</td>
+                <td class="c2">testagentName</td>
+                <td class="c2">testaccount12306PayCount</td>
+                <td class="c2">testaccount12306GrabCount</td>
+                <td class="c2">testaccount12306Rate</td>
+                <td class="c2">testnoAccountPayCount</td>
+                <td class="c2">testnoAccountGrabCount</td>
+                <td class="c2">testnoAccountVerifyFailCount</td>
+                <td class="c2">testnoAccountRate</td>
+                <td class="c2">testsystemCancelCount</td>
+            </tr>
+        </table>
+    </div>
+
 </div>
+<script src="http://qunarzz.com/js/jquery/build/jquery-1.5.2.min.js"></script>
+<script src="http://l-trainhcs.qm1.t.cn6.qunar.com:9001/resources/js/plugins/jquery-ui.js"></script>
 <script>
-    function getcls(cls,fuqin){
-        var op=fuqin?document.getElementById(fuqin):document,
-                ele=[],
-                elements = op.getElementsByTagName('*');
-        for(var i=0; i<elements.length; i++){
-            if(elements[i].className==cls){
-                ele.push(elements[i]);
+    var CONFIG={
+        'duration':60
+    }
+</script>
+<script>
+    $(function () {
+        var ONE_DAY_MILL=24*3600*1000;
+        var maxDay=new Date((new Date()-ONE_DAY_MILL));
+        var minDay=new Date(maxDay-CONFIG.duration*ONE_DAY_MILL);
+        var dateSet={
+            dateFormat:'yy-mm-dd',
+            minDate:minDay,
+            maxDate:maxDay
+        }
+        $("#startTime").datepicker(dateSet);
+        $("#endTime").datepicker(dateSet);
+//        $("#tb").sorttable();
+        $("#submitButton").click(function () {
+            if (check()) {
+
+                $("#submitButton").attr("disabled", true);
+                $("#orderForm").submit();
             }
-        }
-        return ele;
+        })
+
+    });
+
+    if (!String.prototype.trim)
+        String.prototype.trim = function () {
+            return this.replace(/^\s+|\s+$/g, '')
+        };
+
+    var parseDate = function (x) {  //# zlp: 返回 null 则表明格式错误
+        x = x.trim();
+        if (x = x.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))
+            return new Date(x[1], x[2] - 1, x[3]);
+        if (/^\d{8,14}$/.test(x))
+            return new Date(x.slice(0, 4), x.slice(4, 6) - 1, x.slice(6, 8));
+        return null;
     }
-    var oface=getcls('hehe','haha')[0];
-    oface.onmousedown=down;
-    function down(event){
-        event = event ||window.event;
-        var Div=document.getElementById('haha'),
-                mx=event.clientX-Div.offsetLeft,
-                my=event.clientY-Div.offsetTop;
-        document.onmousemove=function (event){
-            event=event ||window.event;
-            move(event,mx,my);
+    function check() {
+
+        var end = parseDate($('#endTime').val()), start = parseDate($('#startTime').val());
+
+        if (start && end && end - start.setMonth(start.getMonth() + 1) > 0) {
+            alert('搜索时长不能超过一个月');
+            return false;
+        } else {
+            return true;
         }
-    }
-    function move(e,pp,qq){
-        var Div=document.getElementById('haha'),
-                l=e.clientX-pp,
-                t=e.clientY-qq;
-        Div.style.left=l+'px';
-        Div.style.top=t+'px';
     }
 </script>
 </body>
