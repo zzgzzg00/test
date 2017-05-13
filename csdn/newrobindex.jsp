@@ -1,8 +1,24 @@
+<%@ page import="com.qunar.common.admin.constant.WebConstants" %>
+<%@ page import="com.qunar.train.hcs.qm.constant.RobAgentEnum" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>订单统计</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <% final String PATH = WebConstants.PATH; %>
+    <c:set var="PATH" value="<%=PATH%>"/>
+    <link type="text/css" rel="stylesheet"
+        href="http://qunarzz.com/train_tts/prd/styles/admin/common@<jsp:include page="/ver/styles/admin/common.css.ver" flush="true"/>.css"/>
+    <link type="text/css" rel="stylesheet"
+        href="http://qunarzz.com/train_tts/prd/styles/admin/ui_admin@<jsp:include page="/ver/styles/admin/ui_admin.css.ver" flush="true"/>.css"/>
+    <link type="text/css" rel="stylesheet"
+        href="http://qunarzz.com/train_tts/prd/styles/admin/qdatepicker@<jsp:include page="/ver/styles/admin/qdatepicker.css.ver" flush="true"/>.css"/>
+    <link type="text/css" rel="stylesheet"
+        href="${PATH}resources/css/jquery-ui-1.8.13.custom.css"/>
+    <!--
     <link type="text/css" rel="stylesheet"
           href="http://qunarzz.com/train_tts/prd/styles/admin/common@dev.css"/>
     <link type="text/css" rel="stylesheet"
@@ -11,6 +27,7 @@
           href="http://qunarzz.com/train_tts/prd/styles/admin/qdatepicker@dev.css"/>
     <link type="text/css" rel="stylesheet"
            href="http://l-trainhcs.qm1.t.cn6.qunar.com:9001/resources/css/jquery-ui-1.8.13.custom.css"/>
+    -->
     <style type="text/css">
         .content {
             float: none;

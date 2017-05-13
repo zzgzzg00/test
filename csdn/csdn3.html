@@ -3,18 +3,21 @@
 <head>
     <title></title>
     <style>
-        .outer>div:nth-of-type(n+2):nth-last-of-type(n+2){
-            color: #ff0000;
-        }
+
     </style>
 </head>
 <body>
-    <div class="outer">
-        <div>1</div>
-        <div>1</div>
-        <div>1</div>
-        <div>1</div>
-        <div>1</div>
-    </div>
+    <script>
+        var reg=/(?:^\d(?=.*[a-z].*$)[a-z\d]{5,17}$)|(?:^[a-z](?=.*\d.*$)\d{5,17}$)/i;
+        var arr=[
+            '123456',
+            'a12345678',
+            '1235a555',
+            'aaaaaaa'
+        ];
+        for(let i of arr){
+            console.log(`${i}:${reg.test(i)}`);
+        }
+    </script>
 </body>
 </html>
