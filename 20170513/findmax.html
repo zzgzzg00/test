@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    var arr=['abced','adw','abcdefght','xxxxx'];
+    function findMaxByReduce(arr){
+        return arr.reduce((a,b)=> a.length> b.length?a:b);
+    }
+    console.log(`findMaxByReduce:${findMaxByReduce(arr)}`);
+
+    function findMaxByRecursion(arr,item,index){
+        if(item===undefined){
+            return findMaxByRecursion(arr,arr[0],1);
+        }
+        if(index>=arr.length){
+            return item;
+        }
+        item=item.length>arr[index].length?item:arr[index];
+        return findMaxByRecursion(arr,item,++index);
+    }
+    console.log(`findMaxByRecursion:${findMaxByRecursion(arr)}`);
+</script>
+</body>
+</html>
