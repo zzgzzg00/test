@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    //字母数字组合
+    const reg1=/^(?!\d+$)(?![a-z]+$)[\da-z]{3}$/i;
+    const reg2=/(?:^\d(?=.*[a-z])[a-z\d]{2}$)|(?:^[a-z](?=.*\d)[a-z\d]{2}$)/i;
+    const testArr=['abv','123','a11','1aa','1234','11a','a1a'];
+    for(let i of testArr){
+        console.log(`reg1-${i}:${reg1.test(i)}`);
+    }
+    for(let i of testArr){
+        console.log(`reg2-${i}:${reg2.test(i)}`);
+    }
+
+    //3位数字不能都是0
+    const reg3=/^(?!0+$)\d{3}$/;
+    const numArr=['000','123','001','1234'];
+    for(let i of numArr){
+        console.log(`reg3-${i}:${reg3.test(i)}`);
+    }
+</script>
+</body>
+</html>
