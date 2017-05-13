@@ -3,20 +3,37 @@
 <head>
     <title></title>
     <style>
-
+        div{
+            --size:200px;
+            width: var(--size);
+            height: var(--size);
+            border-radius: 50%;
+            background-color: rgba(255,0,0,.4);
+        }
+        #nouse{
+            border: 1px solid rgba(255,0,0,.4);
+            border-radius: 0;
+            background-color: rgba(0,0,0,0);
+        }
     </style>
 </head>
 <body>
+    <div draggable="true" id="test"></div>
+    <div draggable="true" id="nouse"></div>
     <script>
-        var reg=/(?:^\d(?=.*[a-z].*$)[a-z\d]{5,17}$)|(?:^[a-z](?=.*\d.*$)\d{5,17}$)/i;
-        var arr=[
-            '123456',
-            'a12345678',
-            '1235a555',
-            'aaaaaaa'
-        ];
-        for(let i of arr){
-            console.log(`${i}:${reg.test(i)}`);
+        const nouse=document.getElementById('nouse');
+        const div=document.getElementById('test');
+        nouse.ondragover=function(e){
+            e.preventDefault();
+        }
+        div.ondragstart=function(e){
+            e.dataTransfer.setData('test','test');
+        }
+        nouse.ondrop=function(e){
+            e.preventDefault();
+            const data= e.dataTransfer.getData('test');
+            const div=document.getElementById(data);
+            this.appendChild(div);
         }
     </script>
 </body>
