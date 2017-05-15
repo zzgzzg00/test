@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <style>
+        :root{
+            /*background-color: rgba(0,0,0,.7);*/
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        @-webkit-keyframes checked{
+            0%{
+                stroke-dashoffset:100
+            }
+            100%{
+                stroke-dashoffset:0
+            }
+        }
+        li{
+            list-style: none;
+        }
+
+        .qn_checkinfo{
+            background-color: #FFFFFF;
+            border-radius: 14px;
+            width: 80%;
+            margin: 0 auto;
+            padding: 45px 45px 45px 34px;
+        }
+        .qn_checkinfo .title{
+            font-size: 24px;
+            color: #616161;
+            text-align: center;
+        }
+        .qn_checkinfo svg{
+            width: 34px;
+            height: 34px;
+            vertical-align: middle;
+        }
+        circle{
+            stroke-dasharray:250 30;
+            stroke-dashoffset:30;
+        }
+        polyline{
+            stroke-dasharray:100 100;
+            stroke-dashoffset:100;
+            animation:checked 1s ease-in 0s forwards;
+        }
+        .qn_checkinfo li:nth-of-type(2) polyline{
+            animation:checked 1s ease-in 0s forwards;
+        }
+        .qn_checkinfo li:nth-of-type(3) polyline{
+            animation:checked 1s ease-in 1s forwards;
+        }
+    </style>
+</head>
+<body>
+<!--
+<svg width="100" height="100" viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
+    <circle cx="50" cy="50"  r="40" stroke-dasharray="250 30" stroke-dashoffset="30"/>
+    <polyline points="30 40,50 65,100 20" stroke-dasharray="100 100" stroke-dashoffset="50"/>
+</svg>-->
+<div class="qn_checkinfo">
+    <p class="title">请核对您的车票信息</p>
+    <ul>
+        <li><span>孙家-哈尔滨</span></li>
+        <li>
+            <span class="icon"></span>
+            <span class="content">5月26日 周五</span>
+            <svg viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
+                <circle cx="50" cy="50"  r="40" />
+                <polyline points="30 40,50 65,100 20" />
+            </svg>
+        </li>
+        <li>
+            <span class="icon"></span>
+            <span class="content">硬座 &yen;1</span>
+            <svg viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
+                <circle cx="50" cy="50"  r="40" />
+                <polyline points="30 40,50 65,100 20" />
+            </svg>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
