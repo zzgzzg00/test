@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <style>
         :root{
-            /*background-color: rgba(0,0,0,.7);*/
+            background-color: rgba(0,0,0,.7);
         }
         *{
             margin: 0;
@@ -28,7 +28,10 @@
             border-radius: 14px;
             width: 80%;
             margin: 0 auto;
-            padding: 45px 45px 45px 34px;
+            padding-top: 45px;
+        }
+        .qn_checkinfo ul{
+            padding: 45px;
         }
         .qn_checkinfo .title{
             font-size: 24px;
@@ -40,20 +43,55 @@
             height: 34px;
             vertical-align: middle;
         }
-        circle{
+        .qn_checkinfo circle{
             stroke-dasharray:250 30;
             stroke-dashoffset:30;
         }
-        polyline{
+        .qn_checkinfo polyline{
             stroke-dasharray:100 100;
             stroke-dashoffset:100;
             animation:checked 1s ease-in 0s forwards;
         }
+        .qn_checkinfo li{
+            color: #212121;
+            display: flex;
+        }
+        .qn_checkinfo li:nth-of-type(1){
+            font-size: 32px;
+        }
+        .qn_checkinfo li:nth-of-type(n+2){
+            font-size: 24px;
+        }
+        .qn_checkinfo li:nth-last-of-type(n+2){
+            margin-bottom: 22px;
+        }
         .qn_checkinfo li:nth-of-type(2) polyline{
-            animation:checked 1s ease-in 0s forwards;
+            -webkit-animation:checked 1s ease-in 0s forwards;
         }
         .qn_checkinfo li:nth-of-type(3) polyline{
-            animation:checked 1s ease-in 1s forwards;
+            -webkit-animation:checked 1s ease-in 1s forwards;
+        }
+        .qn_checkinfo li:nth-of-type(4) polyline{
+            -webkit-animation:checked 1s ease-in 2s forwards;
+        }
+        .qn_checkinfo li span{
+            display: inline-block;
+        }
+        .qn_checkinfo .icon{
+            width: 50px;
+        }
+        .qn_checkinfo .content{
+            flex:1;
+        }
+        .qn_checkinfo .footer{
+            background-color: #e8fafc;
+            padding: 20px 0 34px 0;
+            border-radius: 0 0 14px 14px;
+        }
+        .qn_checkinfo .footer p{
+            text-align: center;
+            font-size: 22px;
+            color: #0089a1;
         }
     </style>
 </head>
@@ -68,7 +106,7 @@
     <ul>
         <li><span>孙家-哈尔滨</span></li>
         <li>
-            <span class="icon"></span>
+            <span class="icon">B</span>
             <span class="content">5月26日 周五</span>
             <svg viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
                 <circle cx="50" cy="50"  r="40" />
@@ -76,14 +114,26 @@
             </svg>
         </li>
         <li>
-            <span class="icon"></span>
+            <span class="icon">A</span>
             <span class="content">硬座 &yen;1</span>
             <svg viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
                 <circle cx="50" cy="50"  r="40" />
                 <polyline points="30 40,50 65,100 20" />
             </svg>
         </li>
+        <li>
+            <span class="icon">C</span>
+            <span class="content">露露</span>
+            <svg viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
+                <circle cx="50" cy="50"  r="40" />
+                <polyline points="30 40,50 65,100 20" />
+            </svg>
+        </li>
     </ul>
+    <div class="footer">
+        <p>正在为您抢票中，请耐心等待</p>
+        <div class="progress"></div>
+    </div>
 </div>
 </body>
 </html>
