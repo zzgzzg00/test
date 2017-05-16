@@ -22,6 +22,14 @@
                 stroke-dashoffset:0
             }
         }
+        @-webkit-keyframes showinfo{
+            0%{
+                transform:translate(-120%);
+            }
+            100%{
+                transform:translate(0%);
+            }
+        }
         @-webkit-keyframes progress{
             0%{
                 width: 0%;
@@ -43,6 +51,7 @@
         }
         .qn_checkinfo ul{
             padding: .45rem;
+            overflow: hidden;
         }
         .qn_checkinfo .title{
             font-size: .24rem;
@@ -68,6 +77,7 @@
             display: -webkit-box;
             display: -webkit-flex;
             display: flex;
+            transform:translateX(-120%);
         }
         .qn_checkinfo li:nth-of-type(1){
             font-size: .32rem;
@@ -78,14 +88,26 @@
         .qn_checkinfo li:nth-last-of-type(n+2){
             margin-bottom: .22rem;
         }
+        .qn_checkinfo li:nth-of-type(1){
+            animation:showinfo 1s cubic-bezier(0.01, 0.88, 0.61, 1.68) 0.5s forwards;
+        }
+        .qn_checkinfo li:nth-of-type(2){
+            animation:showinfo 1s cubic-bezier(0.01, 0.88, 0.61, 1.68) 1.5s forwards;
+        }
+        .qn_checkinfo li:nth-of-type(3){
+            animation:showinfo 1s cubic-bezier(0.01, 0.88, 0.61, 1.68) 2.5s forwards;
+        }
+        .qn_checkinfo li:nth-of-type(4){
+            animation:showinfo 1s cubic-bezier(0.01, 0.88, 0.61, 1.68) 3.5s forwards;
+        }
         .qn_checkinfo li:nth-of-type(2) polyline{
-            -webkit-animation:checked 1s ease-in 0s forwards;
+            -webkit-animation:checked .5s ease-in 2.5s forwards;
         }
         .qn_checkinfo li:nth-of-type(3) polyline{
-            -webkit-animation:checked 1s ease-in 1s forwards;
+            -webkit-animation:checked .5s ease-in 3.5s forwards;
         }
         .qn_checkinfo li:nth-of-type(4) polyline{
-            -webkit-animation:checked 1s ease-in 2s forwards;
+            -webkit-animation:checked .5s ease-in 4.5s forwards;
         }
         .qn_checkinfo li span{
             display: inline-block;
@@ -119,8 +141,9 @@
             width: 0%;
             height: 100%;
             border-radius: .12rem;
+            background: -webkit-repeating-linear-gradient(-45deg,#57dce5 0px,#57dce5 10px,#7be0e7 0,#7be0e7 20px);
             background: repeating-linear-gradient(-45deg,#57dce5 0px,#57dce5 10px,#7be0e7 0,#7be0e7 20px);
-            -webkit-animation:progress 5s linear 0s forwards;
+            -webkit-animation:progress 5s linear 0s infinite;
         }
     </style>
 </head>
@@ -162,7 +185,7 @@
     <div class="footer">
         <p>正在为您抢票中，请耐心等待</p>
         <div class="progress">
-            <div></div>
+            <div class="js_progress"></div>
         </div>
     </div>
 </div>
