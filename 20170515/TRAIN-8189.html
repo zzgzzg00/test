@@ -22,6 +22,14 @@
                 stroke-dashoffset:0
             }
         }
+        @-webkit-keyframes progress{
+            0%{
+                width: 0%;
+            }
+            100%{
+                width: 100%;
+            }
+        }
         li{
             list-style: none;
         }
@@ -108,10 +116,11 @@
             margin: .22rem auto 0 auto;
         }
         .qn_checkinfo .progress>div{
-            width: 50%;
+            width: 0%;
             height: 100%;
             border-radius: .12rem;
             background: repeating-linear-gradient(-45deg,#57dce5 0px,#57dce5 10px,#7be0e7 0,#7be0e7 20px);
+            -webkit-animation:progress 5s linear 0s forwards;
         }
     </style>
 </head>
