@@ -13,6 +13,7 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 @-webkit-keyframes checked{
     0%{
@@ -44,6 +45,14 @@
     }
     100%{
         -webkit-transform:translateX(0%);
+    }
+}
+@-webkit-keyframes scale{
+    0%{
+        -webkit-transform:scale(.1);
+    }
+    100%{
+        -webkit-transform:scale(1);
     }
 }
 @-webkit-keyframes progress{
@@ -207,17 +216,43 @@ li{
     fill:rgba(0,0,0,0);
     stroke:#ffffff;
     position: absolute;
-    left: .34rem;
-    top: .52rem;
+    left: .09rem;
+    top: .2rem;
 }
 .qn_locktip .sign{
     width: 1.8rem;
     height: 1.8rem;
     border-radius: 50%;
     margin: 0 auto;
+    background-color: #e8fbfc;
+    padding-top: .16rem;
+    -webkit-transform:scale(.1);
+    -webkit-animation:scale 1s cubic-bezier(0.01, 0.88, 0.61, 1.68) 0s forwards;
+    /*background: -webkit-radial-gradient(#00d8e5 0%,#00d8e5 50%,*/
+    /*#a9f0f5 0,#a9f0f5 60%,#e8fbfc 0,#e8fbfc 70%);*/
+}
+.qn_locktip .sign>div{
+    width: 1.48rem;
+    height: 1.48rem;
+    border-radius: 50%;
+    margin: 0 auto;
     position: relative;
-    background: -webkit-radial-gradient(#00d8e5 0%,#00d8e5 50%,
-    #a9f0f5 0,#a9f0f5 60%,#e8fbfc 0,#e8fbfc 70%);
+    background-color: #a9f0f5;
+    padding-top: .13rem;
+    -webkit-transform:scale(.1);
+    -webkit-animation:scale 1s cubic-bezier(0.01, 0.88, 0.61, 1.68) 0.1s forwards;
+}
+.qn_locktip .sign>div>div{
+    width: 1.22rem;
+    height: 1.22rem;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    background-color: #00d8e5;
+    line-height: 1.22rem;
+    position: relative;
+    -webkit-transform:scale(.1);
+    -webkit-animation:scale 1s cubic-bezier(0.01, 0.88, 0.61, 1.68) 0.2s forwards;
 }
 .qn_locktip polyline{
     stroke-dasharray:100 100;
@@ -279,9 +314,13 @@ li{
 </div>
 <div class="qn_locktip">
     <div class="sign">
-        <svg viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
-            <polyline points="30 40,50 65,100 20" />
-        </svg>
+        <div>
+            <div>
+                <svg viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
+                    <polyline points="30 40,50 65,100 20" />
+                </svg>
+            </div>
+        </div>
     </div>
 </div>
 </body>
