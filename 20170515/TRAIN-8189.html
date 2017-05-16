@@ -8,7 +8,7 @@
     <style>
         :root{
             background-color: rgba(0,0,0,.7);
-            font-size: 50px;
+            font-size: 100px;
         }
         *{
             margin: 0;
@@ -100,6 +100,19 @@
             font-size: .22rem;
             color: #0089a1;
         }
+        .qn_checkinfo .progress{
+            width: 80%;
+            height: .22rem;
+            border-radius: .12rem;
+            background-color: #e1ecee;
+            margin: .22rem auto 0 auto;
+        }
+        .qn_checkinfo .progress>div{
+            width: 50%;
+            height: 100%;
+            border-radius: .12rem;
+            background: repeating-linear-gradient(-45deg,#57dce5 0px,#57dce5 10px,#7be0e7 0,#7be0e7 20px);
+        }
     </style>
 </head>
 <body>
@@ -139,7 +152,9 @@
     </ul>
     <div class="footer">
         <p>正在为您抢票中，请耐心等待</p>
-        <div class="progress"></div>
+        <div class="progress">
+            <div></div>
+        </div>
     </div>
 </div>
 </body>
