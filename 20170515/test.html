@@ -25,9 +25,11 @@
 
 @-webkit-keyframes checked{
     0%{
+        opacity: 100;
         stroke-dashoffset:100
     }
     100%{
+        opacity: 100;
         stroke-dashoffset:0
     }
 }
@@ -270,7 +272,8 @@ li{
 }
 .qn_locktip polyline{
     stroke-dasharray:100 100;
-    stroke-dashoffset:100;
+    stroke-dashoffset:0;
+    opacity: 0;
     -webkit-animation:checked .5s ease-in 1s forwards;
 }
 </style>
@@ -331,11 +334,14 @@ li{
         <div class="outer">
             <div class="inner">
                 <svg viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
-                    <polyline points="30 40,50 65,100 20" />
+                    <polyline points="30 40,50 65,100 20"/>
                 </svg>
             </div>
         </div>
     </div>
 </div>
+<script>
+
+</script>
 </body>
 </html>
