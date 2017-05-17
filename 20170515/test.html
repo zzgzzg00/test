@@ -22,7 +22,9 @@
     url('./icon/iconfont.ttf') format('truetype'),
     url('./icon/iconfont.svg#iconfont') format('svg');
 }
-
+/**
+  不支持svg动画的浏览器只控制透明度
+*/
 @-webkit-keyframes checked{
     0%{
         opacity: 100;
