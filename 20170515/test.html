@@ -35,9 +35,11 @@
 }
 @-webkit-keyframes checkedoutline{
     0%{
+        opacity: 100;
         stroke-dashoffset:252;
     }
     100%{
+        opacity: 100;
         stroke-dashoffset:30;
     }
 }
@@ -103,11 +105,13 @@ li{
 }
 .qn_checkinfo circle{
     stroke-dasharray:252 252;
-    stroke-dashoffset:252;
+    stroke-dashoffset:0;
+    opacity: 0;
 }
 .qn_checkinfo polyline{
     stroke-dasharray:100 100;
-    stroke-dashoffset:100;
+    stroke-dashoffset:0;
+    opacity: 0;
     animation:checked 1s ease-in 0s forwards;
 }
 .qn_checkinfo li{
