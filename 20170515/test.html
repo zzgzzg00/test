@@ -245,7 +245,7 @@ li{
     /*background: -webkit-radial-gradient(#00d8e5 0%,#00d8e5 50%,*/
     /*#a9f0f5 0,#a9f0f5 60%,#e8fbfc 0,#e8fbfc 70%);*/
 }
-.qn_locktip .sign>div{
+.qn_locktip .sign .outer{
     width: 74px;
     height: 74px;
     border-radius: 50%;
@@ -256,7 +256,7 @@ li{
     -webkit-transform:scale(.1);
     -webkit-animation:scale 1s cubic-bezier(0.01, 0.88, 0.61, 1.2) 0.1s forwards;
 }
-.qn_locktip .sign>div>div{
+.qn_locktip .sign .inner{
     width: 61px;
     height: 61px;
     border-radius: 50%;
@@ -268,8 +268,8 @@ li{
     -webkit-animation:scale 1s cubic-bezier(0.01, 0.88, 0.61, 1.5) 0.2s forwards;
 }
 .qn_locktip polyline{
-    stroke-dasharray:100 100;
-    stroke-dashoffset:100;
+    /*stroke-dasharray:100 100;*/
+    /*stroke-dashoffset:100;*/
     -webkit-animation:checked .5s ease-in 1s forwards;
 }
 </style>
@@ -327,8 +327,8 @@ li{
 </div>
 <div class="qn_locktip">
     <div class="sign">
-        <div>
-            <div>
+        <div class="outer">
+            <div class="inner">
                 <svg viewBox="0 0 100 100" fill="#ffffff" stroke="#00bcd4" stroke-width="2">
                     <polyline points="30 40,50 65,100 20" />
                 </svg>
