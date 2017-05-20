@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="container">
+    <p :id="id" @click="changeMe">{{message}}-{{computedMessage}}</p>
+    <input type="text" v-model="input" />
+</div>
+<script src="./common/vue@2.3.3.js"></script>
+<script>
+    /**
+     * 元素属性通过v-bind:name='xxx' 或者 :name='xxx'形式绑定
+     * 元素事件通过v-on:click='xxx'  或者 @click='xxx'形式绑定
+     * */
+    const vm=new Vue({
+        el:'#container',
+        data:{
+            'id':'p',
+            'message':'message',
+            'type':'text',
+            'input':''
+        },
+        computed:{
+            computedMessage:function(){
+                return this.message.toUpperCase();
+            }
+        },
+        methods:{
+            changeMe:function(){
+                this.message='test'
+            }
+        },
+        watch:{
+            'input':function(){
+                var me=this;
+                console.log(me.input);
+            }
+        }
+    });
+</script>
+</body>
+</html>
