@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <style>
+        :root{
+            font-size: 100px;
+        }
+        @-webkit-keyframes move{
+            0%{
+                -webkit-transform:translateX(100%);
+            }
+            100%{
+                -webkit-transform:translate(0%);
+            }
+        }
+        @-webkit-keyframes show{
+            0%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 100;
+            }
+        }
+        div{
+            --size:1rem;
+            --duration:1s;
+            text-align: center;
+            height: var(--size);
+            line-height: var(--size);
+            border: 1px solid #ff0000;
+            font-size: 16px;
+            width: var(--size);
+            opacity: 0;
+            -webkit-transform:translateX(var(--size));
+            -webkit-animation:move var(--duration) cubic-bezier(0.01, 0.88, 0.61, 1.68) calc(0.5 * var(--duration)) forwards,
+                                show var(--duration) linear calc(0.5 * var(--duration)) forwards;
+        }
+    </style>
+</head>
+<body>
+<div>回弹测试</div>
+</body>
+</html>

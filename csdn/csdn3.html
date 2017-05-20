@@ -2,93 +2,27 @@
 <html>
 <head>
     <title></title>
-    <style>
-
-    </style>
 </head>
 <body>
+    <form target="_blank" id="test" method="post" action="http://wechatuser.corp.qunar.com/api/wechat/getImage.do">
+        <input type="submit" value="submit" />
+    </form>
     <script>
-        var frame = document.getElementById('mobileIframe');
-        var enforceAndroid = '$!{android}';		// android 是否强制跳touch
-        var enforceIos = '$!{ios}';
-        var goStore = '$!{goStore}';
-
-        window.onload = function() {
-            var ua = navigator.userAgent,
-                    isAndroid = /android/ig.test(ua),
-                    isIos = /iphone|ipod/ig.test(ua),
-                    isMicroMessenger = /MicroMessenger/ig.test(ua),
-                    qn_header = $('.qn_header'),
-                    qn_success = $('.qn_success'),
-                    qn_footer = $('.qn_footer'),
-                    microMessage = $('#microMessage');
-
-            function openDPUrl() {
-                if(isMicroMessenger && (isAndroid || isIos)) {
-                    microMessageTip();
-                } else {
-                    //调起ipohnepro
-                    if(isIos) {
-                        $('<a href="$!{goiPhone}"></a>').trigger('click');
-                        //frame.src = "$!{goiPhonePro}";
-                        setTimeout(function(){
-                            if(!window.document.webkitHidden) {
-                                if(goStore == 'true'){
-                                    location.href = '$!{goOther}';
-                                } else if(enforceIos == '1') {  //强制跳下载
-                                    location.href = '$!{goOther}';
-                                } else {
-                                    location.href = '$!{goTouch}';
-                                }
-                            } else {
-                                self.close();
-                            }
-                        },100);
-                    } else {
-                        window.location = "$!{goTouch}";
-                    }
-                }
-            }
-
-            function microMessageTip() {
-                qn_header.hide();
-                qn_success.hide();
-                qn_footer.hide();
-                if (isAndroid) {
-                    microMessage.html('<img src="//simg1.qunarzz.com/site/images/wap/touch/images/v2/zhuanti/wx_downloadView/android_download2.jpg" alt="点击右上方下载">');
-                    microMessage.show();
-                }
-                if (isIos) {
-                    microMessage.html('<img src="//simg1.qunarzz.com/site/images/wap/touch/images/v2/zhuanti/wx_downloadView/ios_download2.jpg" alt="点击右上方下载">');
-                    microMessage.show();
-                }
-            }
-            if(isIos){
-                $('<a href="$!{goiPhone}"></a>').trigger('click');
-                // frame.src = "$!{goiPhone}";
-                if(goStore == 'true'){
-                    location.href = '$!{goOther}';
-                }
-            } else if(isAndroid) {
-                if(enforceAndroid != '1') {
-                    $('<a href="$!{goAndroid}"></a>').trigger('click');
-                    //frame.src = "$!{goAndroid}";
-                }
-                if(goStore == 'true'){
-                    location.href = '$!{goOther}';
-                }
-            } else {		// 其余手机跳转一个固定url
-                var jumpUrl = "$!{goOther}";
-                if(goStore == 'false'){
-                    jumpUrl = "$!{goTouch}";
-                }
-                location.href = jumpUrl;
-            }
-
-            setTimeout(function(){
-                !window.document.webkitHidden ? setTimeout(openDPUrl, 2000) : self.close();
-            },100);
+        var obj={
+            platform:'wechat$$$small',
+            source:'hc',
+            outPic:false,
+            'imageList[0][fileName]':'abc.jpg',
+            'imageList[0][path]':'pages/home/index?bd_origin=pc_sogouinput',
+            'imageList[0][width]':'800',
+            'imageList[0][qcodeType]':2
         };
+        var keys=Object.keys(obj);
+        var form=document.getElementById('test');
+        for(let i of keys){
+            var str=`<input type='text' name='${i}' value='${obj[i]}'/>`
+            form.insertAdjacentHTML('beforeend',str);
+        }
     </script>
 </body>
 </html>
