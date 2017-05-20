@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="conatiner" v-bind:title="title">
+    {{message}}
+    <input type="text" v-model="message" />
+    <p v-if="seen">seen</p>
+    <ul>
+        <li v-for="list in lists">{{list}}</li>
+    </ul>
+    <input type="button" value="change" v-on:click="change"/>
+</div>
+<script src="./common/vue@2.3.3.js"></script>
+<script src="../react/common/redux.js"></script>
+<script>
+    const data={
+        message:'just a test',
+        title:'test',
+        seen:false,
+        lists:Array.from({length:4},(item,index)=>`test-${index}`)
+    };
+    const app=new Vue({
+        'el':'#conatiner',
+        data,
+        methods:{
+            change:function(){
+                this.seen=!this.seen;
+            }
+        }
+    });
+</script>
+</body>
+</html>
