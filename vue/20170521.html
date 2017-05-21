@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="test">
+    <zzg-test :clickhandle="clickhandle" message="message"></zzg-test>
+</div>
+<script src="./common/vue@2.3.3.js"></script>
+<script>
+    Vue.component('zzg-test',{
+        props:['clickhandle','message'],
+        template:'<div @click="clickhandle">{{message}}</div>'
+    });
+    const vm=new Vue({
+        el:'#test',
+        data:{
+            message:'zzg test'
+        },
+        methods:{
+            clickhandle:function(){
+                alert(this.message);
+            }
+        }
+    });
+</script>
+</body>
+</html>
