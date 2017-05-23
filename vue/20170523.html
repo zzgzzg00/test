@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        .a{
+            color: #ff0000;
+        }
+        .b{
+            background-color: yellow;
+        }
+        .c{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <p :class="classObj" class="c">classObj</p>
+    <p :style="styleObj">styleObj</p>
+    <zzg-test :con="con" :class="classObj"></zzg-test>
+    <template v-if="con==1">
+        text:<input placeholder="text" key="text"/>
+    </template>
+    <template v-else-if="con==2">
+        email:<input placeholder="email" key="email"/>
+    </template>
+    <template v-else>
+        xyz:<input placeholder="xyz" key="xyz"/>
+    </template>
+    <input type="button" @click="change" value="change" />
+</div>
+<script src="./common/vue@2.3.3.js"></script>
+<script>
+    Vue.component('zzg-test',{
+        props:['con'],
+        template:'<p class="a">{{con}}</p>'
+    });
+    var vm=new Vue({
+        el:'#container',
+        data:{
+            con:2,
+            classObj:{
+                b:true,
+                a:false
+            },
+            styleObj:{
+                color:'yellow',
+                backgroundColor:'red'
+            }
+        },
+        methods:{
+            change:function(){
+                this.con=this.con==1?2:this.con==2?3:1;
+            }
+        }
+    });
+</script>
+</body>
+</html>
