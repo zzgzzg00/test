@@ -6,10 +6,29 @@
 </head>
 <body>
 <script>
-    var str='http://192.168.0.168/CGI_BIN/download/ch001.jpg';
-    var reg=/\/([^/]+?)$/;
-    str=str.match(reg);
-    alert(str[1]);
+    function selectAll(obj){
+        var items=[].slice.call(document.querySelectorAll('[ids="cb1"]'));
+        if(obj.checked){
+            for(var i=0;i<items.length;i++){
+                items[i].checked=true;
+            }
+        }else{
+            for(var i=0;i<items.length;i++){
+                items[i].checked=false;
+            }
+        }
+    }
 </script>
+</head>
+
+<p>吃饭<input type="checkbox" ids="cb1" /></p>
+<p>睡觉<input type="checkbox" ids="cb1" /></p>
+<p>录音<input type="checkbox" ids="cb1" /></p>
+<p>动漫<input type="checkbox" ids="cb1" /></p>
+<p>音乐<input type="checkbox" ids="cb1" /></p>
+<p>旅游<input type="checkbox" ids="cb1" /></p>
+<p>弹琴<input type="checkbox" ids="cb1" /></p>
+<p>喝水<input type="checkbox" ids="cb1" /></p><br /><br /><br />
+全选<input type="checkbox"  name="checebox" id="cb2" onclick="selectAll(this)" />
 </body>
 </html>
