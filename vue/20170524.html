@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="container">
+    <input type="radio" value="1" v-model="radio" name="radio" />
+    <input type="radio" value="2" v-model="radio" name="radio" />
+    <input type="checkbox" value="3" v-model="checkbox" name="checkbox" />
+    <input type="checkbox" value="4" v-model="checkbox" name="checkbox" />
+    <select name="select" v-model="select">
+        <option value="5">5</option>
+        <option value="6">6</option>
+    </select>
+</div>
+<script src="./common/vue@2.3.3.js"></script>
+<script>
+    new Vue({
+        el:'#container',
+        data:{
+            radio:2,
+            checkbox:[4],
+            select:6
+        },
+        watch:{
+            radio:function(v){
+                console.log(`radio:${v}`)
+            },
+            checkbox:function(v){
+                console.log(`checkbox:${v}`)
+            },
+            select:function(v){
+                console.log(`select:${v}`)
+            }
+        }
+    });
+</script>
+</body>
+</html>
