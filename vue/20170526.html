@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <div is="zzg-test" :msg="msg"></div>
+</div>
+<script src="./common/vue@2.3.3.js"></script>
+<script>
+    new Vue({
+        el:'div',
+        data:{
+            msg:'msg'
+        },
+        components:{
+            'zzg-test':{
+                props:['msg'],
+                template:'<p :style="styleObj">{{msg}}</p>',
+                data:function(){
+                    return {
+                        styleObj:{
+                            color:'red'
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
