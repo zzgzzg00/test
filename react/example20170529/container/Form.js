@@ -3,7 +3,7 @@
  */
 {
     const {connect}=ReactRedux;
-    const {FromInput,ToInput,DateInput,Submit}=window.example;
+    const {FromInput,ToInput,DateInput,SubmitContainer}=window.example;
     const Form=props=>(
         <form
             method="post"
@@ -12,7 +12,7 @@
             <FromInput />
             <ToInput />
             <DateInput />
-            <Submit value="提交" />
+            <SubmitContainer value="提交" />
         </form>
     );
     window.example.Form=Form;
