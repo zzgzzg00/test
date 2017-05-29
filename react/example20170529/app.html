@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="../common/react15.js"></script>
+<script src="../common/react-dom15.js"></script>
+<script src="../common/JSXTransformer.js"></script>
+<script src="../common/redux.js"></script>
+<script src="../common/react-redux.js"></script>
+<script>
+    window.example={};
+</script>
+<script src="./initState.js" type="text/jsx"></script>
+<script src="./reduce/input.js" type="text/jsx"></script>
+<script src="./store.js" type="text/jsx"></script>
+<script src="./actioncreator/input.js" type="text/jsx"></script>
+<script src="./components/Input.js" type="text/jsx"></script>
+<script src="./components/Submit.js" type="text/jsx"></script>
+<script src="./container/FromInput.js" type="text/jsx"></script>
+<script src="./container/ToInput.js" type="text/jsx"></script>
+<script src="./container/DateInput.js" type="text/jsx"></script>
+<script src="./container/Form.js" type="text/jsx"></script>
+<script type="text/jsx">
+    const {store,Form}=window.example;
+    const {Provider}=ReactRedux;
+    const App=props=>(
+        <Provider store={store}>
+            <Form />
+        </Provider>
+    )
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
