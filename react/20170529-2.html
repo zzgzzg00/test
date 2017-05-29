@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<div id="container"></div>
+<script src="./common/JSXTransformer.js"></script>
+<script src="./common/react15.js"></script>
+<script src="./common/react-dom15.js"></script>
+<script src="./common/redux.js"></script>
+<script src="./common/react-redux.js"></script>
+<script src="./common/react-router.js"></script>
+<script type="text/jsx">
+    const {Component,PropTypes}=React;
+    const {Router,Route,hashHistory}=ReactRouter;
+    class Test1 extends Component{
+        render(){
+            return (
+                <p>{props.msg}</p>
+            );
+        }
+    }
+    class RouterTest extends Component{
+        render(){
+            return (
+                <Router history={hashHistory}>
+                    <Route path="/" component={Test1} />
+                </Router>
+            )
+        }
+    };
+
+    ReactDOM.render(<RouterTest />,document.querySelector('#container'));
+</script>
+</body>
+</html>
