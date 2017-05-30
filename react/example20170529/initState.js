@@ -22,7 +22,10 @@
         styleObj:{
             search:{display:'block'},
             list:{display:'none'}
-        }
+        },
+        addStyle:{display:'none'},
+        newUrl:'',
+        newName:''
     }
     window.example.initState=initState;
 }

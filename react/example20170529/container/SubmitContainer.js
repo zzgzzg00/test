@@ -3,14 +3,18 @@
  */
 {
     const {connect}=ReactRedux;
-    const {store,Submit,styleObjCreator,showListCreator}=window.example;
+    const {store,Submit,styleObjCreator,showListCreator,newListCreator}=window.example;
     const stateMapToProps=state=>({
 
     });
     const dispatchMapToProps=dispatch=>({
         submitHandle(e){
             e.preventDefault();
-            dispatch(styleObjCreator('showList'));
+            Promise.resolve()
+            .then(function(){
+                dispatch(styleObjCreator('showList'));
+                dispatch(newListCreator());
+            });
         }
     });
     const SubmitContainer=connect(stateMapToProps,dispatchMapToProps)(Submit);
