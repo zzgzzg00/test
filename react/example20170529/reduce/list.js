@@ -8,7 +8,7 @@
             case 'show':
                 return state;
             case 'new':
-                return list;
+                return state;
             case 'add':
                 return state.concat(list);
             case 'del':
