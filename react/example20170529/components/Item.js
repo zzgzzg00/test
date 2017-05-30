@@ -8,7 +8,14 @@
             const arrs=this.props.lists;
             const lists=arrs.map(item=>(<li><a href={item.url}>{item.name}</a></li>));
             return (
-                <ul style={this.props.style}>{lists}</ul>
+                <div style={this.props.style}>
+                    <ul>{lists}</ul>
+                    <input
+                        type={'button'}
+                        value={'back'}
+                        onClick={this.props.clickHandle}
+                    />
+                </div>
             )
         }
     }

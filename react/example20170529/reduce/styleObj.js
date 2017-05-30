@@ -6,9 +6,9 @@
         const {type}=action;
         switch (type){
             case 'showSearch':
-                return {search:{display:'block'},list:{dispaly:'none'}};
+                return {search:{display:'block'},list:{display:'none'}};
             case 'showList':
-                return {search:{display:'none'},list:{dispaly:'block'}};
+                return {search:{display:'none'},list:{display:'block'}};
             default :
                 return state;
         }
