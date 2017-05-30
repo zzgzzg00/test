@@ -6,6 +6,7 @@
     const {FromInput,ToInput,DateInput,SubmitContainer}=window.example;
     const Form=props=>(
         <form
+            style={props.style}
             method="post"
             action='/'
         >
@@ -15,5 +16,10 @@
             <SubmitContainer value="提交" />
         </form>
     );
-    window.example.Form=Form;
+    const stateMapToProps=state=>({
+        style:state.styleObj.search
+    });
+    const dispatchMapToProps=dispatch=>({});
+    const FormContainer=connect(stateMapToProps,dispatchMapToProps)(Form);
+    Object.assign(window.example,{FormContainer});
 }

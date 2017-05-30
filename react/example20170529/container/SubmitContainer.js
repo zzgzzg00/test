@@ -3,14 +3,14 @@
  */
 {
     const {connect}=ReactRedux;
-    const {store,Submit}=window.example;
+    const {store,Submit,styleObjCreator,showListCreator}=window.example;
     const stateMapToProps=state=>({
 
     });
     const dispatchMapToProps=dispatch=>({
         submitHandle(e){
             e.preventDefault();
-            console.log(store.getState());
+            dispatch(styleObjCreator('showList'));
         }
     });
     const SubmitContainer=connect(stateMapToProps,dispatchMapToProps)(Submit);
