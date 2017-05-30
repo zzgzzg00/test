@@ -11,6 +11,10 @@
                 return list;
             case 'add':
                 return state.concat(list);
+            case 'del':
+                var lists=state.slice(0);
+                lists.splice(list,1);
+                return lists;
             default :
                 return state;
         }

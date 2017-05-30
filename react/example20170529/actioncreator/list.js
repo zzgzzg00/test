@@ -17,7 +17,8 @@
         name:'lprf'
     }]});
     const addListCreator=(list)=>({type:'add',list});
+    const delListCreator=(list)=>({type:'del',list});
     const showAddStyle=()=>({type:'show_add_style'});
     const hideAddStyle=()=>({type:'hide_add_style'});
-    Object.assign(window.example,{showListCreator,newListCreator,showAddStyle,hideAddStyle,addListCreator});
+    Object.assign(window.example,{delListCreator,showListCreator,newListCreator,showAddStyle,hideAddStyle,addListCreator});
 }

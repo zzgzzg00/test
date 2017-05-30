@@ -2,7 +2,7 @@
  * Created by zhigang.zhang on 17-5-30.
  */
 {
-    const {Item,styleObjCreator,hideAddStyle,showAddStyle,urlCreator,nameCreator,addListCreator,store}=window.example;
+    const {delListCreator,Item,styleObjCreator,hideAddStyle,showAddStyle,urlCreator,nameCreator,addListCreator,store}=window.example;
     const {connect}=ReactRedux;
     const stateMapToProps=state=>({
         lists:state.lists,
@@ -33,6 +33,9 @@
         addNameHandle(e){
             let v= e.target.value;
             dispatch(nameCreator(v));
+        },
+        delHandle(index,e){
+            dispatch(delListCreator(index));
         }
     });
     const ListItem=connect(stateMapToProps,dispatchMapToProps)(Item);

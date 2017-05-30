@@ -6,7 +6,14 @@
     class Item extends Component{
         render(){
             const arrs=this.props.lists;
-            const lists=arrs.map(item=>(<li><a href={item.url}>{item.name}</a></li>));
+            const lists=arrs.map((item,index)=>(
+                <li>
+                    <a href={item.url}>{item.name}</a>
+                    <a href={'javascript:void(0)'}
+                        onClick={this.props.delHandle.bind(null,index)}>删除</a>
+                </li>
+                )
+            );
             return (
                 <div style={this.props.style}>
                     <ul>{lists}</ul>
