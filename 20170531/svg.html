@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        @-webkit-keyframes show{
+            0%{
+                stroke-dashoffset:283;
+            }
+            100%{
+                stroke-dashoffset:546;
+            }
+        }
+        @-webkit-keyframes checked{
+            0%{
+                stroke-dashoffset:100
+            }
+            100%{
+                stroke-dashoffset:0
+            }
+        }
+        svg{
+            width: 100px;
+            height: 100px;
+            stroke:red;
+            stroke-width:4px;
+            fill:#fff;
+        }
+        circle{
+            transform-origin:50px 50px;
+            transform:rotate(320deg);
+            stroke-dasharray:283 283;
+            stroke-dashoffset:283;
+            animation:show 1s linear 0s forwards;
+        }
+        polyline{
+            stroke-dasharray:100 100;
+            stroke-dashoffset:100;
+            -webkit-animation:checked 1s ease-in 1s forwards;
+        }
+    </style>
+</head>
+<body>
+<svg viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="45" />
+    <polyline points="30 40,50 65,100 20" />
+</svg>
+</body>
+</html>
