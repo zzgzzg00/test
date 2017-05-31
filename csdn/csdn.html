@@ -6,30 +6,11 @@
 </head>
 <body>
 <script>
-    window.onload=function(){
-        function first(){
-            this.firstV=1;
-        };
-        first.prototype.getFirstVal=function(){
-            return this.firstV;
-        };
-        function second(){
-            this.secondV=2;
-        }
-        second.prototype=new first();
-
-        second.prototype.getSecondVal=function(){
-            return this.secondV;
-        }
-        function third(){
-            this.thirdV=3;
-        }
-        third.prototype=new second();
-        third.prototype.getThirdVal=function(){
-            return this.thirdV;
-        }
-        alert(second.prototype.getSecondVal());
-    }
+    var a = {n:1};
+    var b = a;
+    a.x = a = {n:2};
+    console.log(a.x);
+    console.log(b.x);
 </script>
 </body>
 </html>
