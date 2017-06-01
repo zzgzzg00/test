@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function test(obj){
+        return new Proxy(obj,{
+           get(target,key){
+               return function(promise){
+                   Promise.resolve(promise).then(data=>
+                       Reflect.apply(target[key],target,data)
+                   )
+               }
+           }
+        });
+    }
+    var p=test(console);
+    var promise=new Promise(resolve=>setTimeout(()=>resolve([1,2,3]),2000));
+    p.log(promise);
+</script>
+</body>
+</html>
