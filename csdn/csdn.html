@@ -5,75 +5,21 @@
     <meta charset="utf-8" />
 </head>
 <body>
+<div id="test">test</div>
 <script>
-    window.onload=function ()
-    {
-        var oBtn=document.getElementById('btn1');
-        var oTable=document.getElementById('tab1');
-        var arr=[];
-        oBtn.onclick=function()//需求是点击按钮后，按照ID大小顺序，对单元格进行重新排列
-        {
-            for(var i=0;i<oTable.tBodies[0].rows.length;i++){//遍历表格的行数，把tr添加到数组里
-                arr[i]=oTable.tBodies[0].rows[i];
-            }
-            arr.sort(function(tr1,tr2){//对数组里的内容按照ID顺序排列
-                return parseInt(tr1.cells[0].innerHTML)-parseInt(tr2.cells[0].innerHTML)
-            });
-            for(var i=0;i<arr.length;i++)//遍历数组，重新排列
-            {
-//                oTable.tBodies[0].rows[i].innerHTML=arr[i].innerHTML;//这里出现问题，如果没有这段代码，console出来的arr是按ID大小从1~6按顺序排列。加入这段代码后，console出来的arr会发生变化。但是这段代码似乎没有对arr数组进行赋值修改，为什么arr会变？并且出现重复的内容？
-                oTable.appendChild(arr[i]);
-                console.log(arr[i].innerHTML);
-            }
+    class Test{
+        constructor(){
+            this.name='aaa';
+        }
+        get test(){
+            return ()=>alert(this.name);
+        }
+        test2(){
+            return alert(this.name);
         }
     }
+    const t=new Test();
+    document.getElementById('test').onclick= t.test2;
 </script>
-<input id="btn1" type="button" value="排序" />
-<table id="tab1" border="1" width="500">
-    <thead>
-    <td>ID</td>
-    <td>姓名</td>
-    <td>年龄</td>
-    <td>操作</td>
-    </thead>
-    <tbody>
-    <tr>
-        <td>2</td>
-        <td>张三</td>
-        <td>23</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>6</td>
-        <td>王四</td>
-        <td>24</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>王五</td>
-        <td>27</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>5</td>
-        <td>张四</td>
-        <td>24</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>3</td>
-        <td>李四</td>
-        <td>28</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>4</td>
-        <td>王八</td>
-        <td>25</td>
-        <td></td>
-    </tr>
-    </tbody>
-</table>
 </body>
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div id="test"></div>
+<script src="./common/JSXTransformer.js"></script>
+<script src="./common/react15.js"></script>
+<script src="./common/react-dom15.js"></script>
+<script type="text/jsx">
+    const {Component}=React;
+    class Test extends Component{
+        constructor(props){
+            super(props);
+        }
+        render(){
+            return(
+                <p>{this.props.date}</p>
+            )
+        }
+        componentDidMount(){
+            console.log('didmount');
+        }
+    }
+    class Test2 extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                date:1
+            }
+        }
+        componentDidMount(){
+            window.setInterval(()=>this.setState({date:Math.random()}),1000)
+        }
+        render(){
+            return(
+                <Test date={this.state.date}/>
+            )
+        }
+    }
+    ReactDOM.render(<Test2 />,document.getElementById('test'));
+</script>
+</body>
+</html>
