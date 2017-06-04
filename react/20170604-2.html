@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+<script src="./common/JSXTransformer.js"></script>
+<script src="./common/react15.js"></script>
+<script src="./common/react-dom15.js"></script>
+<script type="text/jsx">
+    const {Component}=React;
+    class Test extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                'name':'',
+                'active':''
+            }
+            this.nameIndex=0;
+            this.activeIndex=0;
+        }
+        static get defaultProps(){
+            return {
+                names:['jj','yn','py','lm'],
+                actives:['tqs','mrf','dpg']
+            }
+        }
+        get changeNameHandle(){
+            return e=>{
+                let index=(++this.nameIndex)%this.props.names.length;
+                let name=this.props.names[index]
+                console.log(name);
+                this.setState({name});
+            }
+        }
+        get changeActiveHandle(){
+            return e=>{
+                let index=(++this.activeIndex)%this.props.actives.length;
+                let active=this.props.actives[index]
+                this.setState({active});
+            }
+        }
+        shouldComponentUpdate(nextProps,nextState){
+            if(nextState.name=='jj'){
+                return false;
+            }
+            return true;
+        }
+        render(){
+            return(
+                <div>
+                    <p>{this.state.name}-{this.state.active}</p>
+                    <input type={'button'} value={'name'} onClick={this.changeNameHandle} />
+                    <input type={'button'} value={'active'} onClick={this.changeActiveHandle} />
+                </div>
+            );
+        }
+    }
+    ReactDOM.render(<Test />,document.body);
+</script>
+</body>
+</html>
