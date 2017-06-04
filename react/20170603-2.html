@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="./common/JSXTransformer.js"></script>
+<script src="./common/react15.js"></script>
+<script src="./common/react-dom15.js"></script>
+<script type="text/jsx">
+    const Repeat=props=>{
+        const arr=[];
+        for(let i=1;i<=props.num;i++){
+            arr.push(props.children(i));
+        }
+        return (<div>{arr}</div>);
+    }
+    const App=()=>(
+        <Repeat num={10}>
+            {i=><div>{i}</div>}
+        </Repeat>
+    )
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
