@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<script>
+    const arr='测试'.split('');
+    const codes=arr.map(item=>item.charCodeAt(0));
+    const key=1234;
+    const en=codes.map(item=>item^key);
+    const de=en.map(item=>item^key);
+    console.log(String.fromCharCode(...de));
+</script>
+</body>
+</html>

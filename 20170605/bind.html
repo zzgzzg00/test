@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function test(...args){
+        console.log(args);
+    }
+    test=test.bind(null,1);
+    test=test.bind(null,2);
+    test(3);
+</script>
+</body>
+</html>

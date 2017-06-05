@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function add(callback,...args){
+        const sum=args.reduce((a,b)=>a+b);
+        new Promise(r=>setTimeout(r,2000)).then(()=>callback(sum));
+    }
+    function thunk(f){
+        return function(...args){
+            return function(callback){
+                return f(callback,...args);
+            }
+        }
+    }
+    const f=thunk(add);
+    function* test(){
+        let f1=yield f(1,2,3);
+        let f2=yield f(f1,2,3);
+        let f3=yield f(f2,2,3);
+    }
+    const g=test();
+    function next(...args){
+        const [g,result]=args;
+        console.log(result);
+        const {value,done}=g.next(result);
+        if(!done){
+            value(next);
+        }
+    }
+    next=next.bind(null,g)
+    next();
+</script>
+</body>
+</html>
