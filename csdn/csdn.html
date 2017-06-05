@@ -3,23 +3,21 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            background-color: #ff0000;
+            -webkit-clip-path:polygon(0px 0px,200px 0px,40px 100px);
+        }
+        div:hover{
+            background-color: yellow;
+        }
+    </style>
 </head>
 <body>
-<div id="test">test</div>
+<div></div>
 <script>
-    class Test{
-        constructor(){
-            this.name='aaa';
-        }
-        get test(){
-            return ()=>alert(this.name);
-        }
-        test2(){
-            return alert(this.name);
-        }
-    }
-    const t=new Test();
-    document.getElementById('test').onclick= t.test2;
 </script>
 </body>
 </html>
