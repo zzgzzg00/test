@@ -1,0 +1,5 @@
+C:\Programming\Controls\DemoIndexDB\DemoIndexDB\bin\DemoIndexDB.dll
+C:\Programming\Controls\DemoIndexDB\DemoIndexDB\bin\DemoIndexDB.pdb
+C:\Programming\Controls\DemoIndexDB\DemoIndexDB\obj\Debug\DemoIndexDB.csprojResolveAssemblyReference.cache
+C:\Programming\Controls\DemoIndexDB\DemoIndexDB\obj\Debug\DemoIndexDB.dll
+C:\Programming\Controls\DemoIndexDB\DemoIndexDB\obj\Debug\DemoIndexDB.pdb
