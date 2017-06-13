@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+{
+    function addData(db){
+        const data=[
+            {id:4,name:'a4',age:10,sex:1},
+            {id:8,name:'b4',age:20,sex:1},
+            {id:9,name:'c4',age:30,sex:2}
+        ];
+        const trans=db.transaction(['testdb'],'readwrite');
+        const store=trans.objectStore('testdb');
+        for(let i of data){
+            const result=store.add(i);
+            result.onerror=function(e){
+                console.log(e.target.error.message);
+            }
+        }
+    }
+    function findByKey(db,index){
+        const trans=db.transaction(['testdb'],'readwrite');
+        const store=trans.objectStore('testdb');
+        const result=store.get(index);
+        result.onsuccess=function(e){
+            const result= e.target.result;
+            result.name='xx';
+            store.put(result);
+            console.log(result);
+        }
+    }
+    function deleteByKey(db,index){
+        const trans=db.transaction(['testdb'],'readwrite');
+        const store=trans.objectStore('testdb');
+        const result=store.delete(index);
+        result.onsuccess=function(e){
+            console.log('delete');
+        }
+    }
+    const request=indexedDB.open('test',3);
+    request.onsuccess=function(e){
+        var db= e.target.result;
+        addData(db);
+        findByKey(db,3);
+        deleteByKey(db,5);
+    }
+    request.onupgradeneeded=function(e){
+        var db= e.target.result;
+        if(!db.objectStoreNames.contains('testdb')){
+            const objectStore=db.createObjectStore('testdb',{keyPath:'id'});
+            objectStore.createIndex('name','name',{unique:true});
+            objectStore.createIndex('age','age',{unique:false});
+            objectStore.createIndex('sex','sex',{unique:false});
+        }
+    }
+}
+</script>
+</body>
+</html>
