@@ -3,53 +3,38 @@
 <head>
     <title></title>
     <meta charset="utf-8" />
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
 </head>
 <body>
-<section class="banner">
-    <img class="img-responsive" src="img/home_banner_02.jpg" alt=""/>
-    <ul class="about">
-        <li :class="{active:isActive}" @click="changeClass">关于公司</li>
-        <li :class="{active:!isActive}" @click="changeClass">点击下载APP</li>
-        <li class="bg" :class="{active:!isActive}"><b></b><b style="float:right"></b></li>
-    </ul>
-    <!--下载部分-->
-    <div id="download"  :class="{show:isShow}" @click="hide">
-    <img class="img-responsive" src="img/download.png"/>
-    <ul>
-        <li @click="jump(111)"><div><i class="icon">&#xe61a;</i>Android版下载</div></li>
-        <li @click="jump(111)"><div><i class="icon">&#xe61b;</i>IOS版下载</div></li>
-    </ul>
-    p>
-    </div>
-</section>
+
 <script src="./common/vue@2.3.3.js"></script>
+<div id="app">
+    <table>
+        <tr>
+            <td v-for="(item,index) in head" @click="change(index)" :class="{active:item.active}"
+            >{{item.name}}
+            </td>
+        </tr>
+    </table>
+</div>
 <script>
-    var about=new Vue({
-        el:".banner",
-        data:{
-            isActive:true,
-            isShow:false
+    new Vue({
+        el: '#app',
+        data: {
+            head: [{
+                name: 'name'
+            }, {
+                name: 'age'
+            }]
         },
-        methods:{
-            changeClass: function () {
-                if(this.isActive){this.isActive=false;}
-                else{this.isActive=true;}
-            },
-            hide: function () {
-                this.isShow=false;
-            },
-            jump: function (url) {
-                location.replace(url)
+        methods: {
+            change: function (index) {
+                this.head[index].active = true;
             }
-        }
-    })
-    about.$watch("isActive",function(){
-        if(!this.isActive){
-//            this.isShow=true;
-            var me=this;
-            setTimeout(function () {
-              return  me.isShow=true;
-            },350)
         }
     })
 </script>

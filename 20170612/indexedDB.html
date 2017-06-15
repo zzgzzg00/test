@@ -32,6 +32,20 @@
             console.log(result);
         }
     }
+    function findByName(db,name){
+        const trans=db.transaction(['testdb'],'readwrite');
+        const store=trans.objectStore('testdb');
+        var range = IDBKeyRange.lowerBound("a",true);
+        var index = store.index("name");
+        console.log('find by name');
+        index.openCursor(range).onsuccess = function (e){
+            var cursor= e.target.result;
+            if(cursor){
+                console.log(cursor.value);
+                cursor.continue();
+            }
+        }
+    }
     function deleteByKey(db,index){
         const trans=db.transaction(['testdb'],'readwrite');
         const store=trans.objectStore('testdb');
@@ -42,12 +56,15 @@
     }
     const request=indexedDB.open('test',3);
     request.onsuccess=function(e){
+        alert(2);
         var db= e.target.result;
         addData(db);
         findByKey(db,3);
         deleteByKey(db,5);
+        findByName(db,'a');
     }
     request.onupgradeneeded=function(e){
+        alert(1);
         var db= e.target.result;
         if(!db.objectStoreNames.contains('testdb')){
             const objectStore=db.createObjectStore('testdb',{keyPath:'id'});

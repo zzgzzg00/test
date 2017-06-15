@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        .container{
+            display: flex;
+        }
+        .container>div:first-child{
+            z-index: 2;
+        }
+        .container>div:last-child{
+            margin-left: auto;
+        }
+        .ab{
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: red;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div>1</div><div>2</div>
+</div>
+<div class="ab"></div>
+</body>
+</html>
