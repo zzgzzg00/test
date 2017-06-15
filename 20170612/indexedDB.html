@@ -15,7 +15,7 @@
         const trans=db.transaction(['testdb'],'readwrite');
         const store=trans.objectStore('testdb');
         data.forEach(function(item){
-            const result=store.add(i);
+            const result=store.add(item);
             result.onerror=function(e){
                 console.log(e.target.error.message);
             }
