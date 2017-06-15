@@ -28,7 +28,7 @@
         const result=store.get(index);
         alert(2);
         result.onsuccess=function(e){
-            alert(JSON.stringify(result));
+            alert(JSON.stringify(e));
             const result= e.target.result;
             result.name='xx';
             store.put(result);
