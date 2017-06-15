@@ -22,6 +22,7 @@
         }
     }
     function findByKey(db,index){
+        alert(index);
         const trans=db.transaction(['testdb'],'readwrite');
         const store=trans.objectStore('testdb');
         const result=store.get(index);
