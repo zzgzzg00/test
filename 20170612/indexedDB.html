@@ -26,6 +26,7 @@
         const trans=db.transaction(['testdb'],'readwrite');
         const store=trans.objectStore('testdb');
         const result=store.get(index);
+        alert(2);
         result.onsuccess=function(e){
             alert(JSON.stringify(result));
             const result= e.target.result;
