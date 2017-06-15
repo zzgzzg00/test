@@ -29,7 +29,7 @@
             const result= e.target.result;
             result.name='xx';
             store.put(result);
-            console.log(result);
+            alert(JSON.stringify(result));
         }
     }
     function findByName(db,name){
@@ -56,7 +56,6 @@
     }
     const request=indexedDB.open('test',3);
     request.onsuccess=function(e){
-        alert(2);
         var db= e.target.result;
         addData(db);
         findByKey(db,3);
@@ -64,7 +63,6 @@
         findByName(db,'a');
     }
     request.onupgradeneeded=function(e){
-        alert(1);
         var db= e.target.result;
         if(!db.objectStoreNames.contains('testdb')){
             const objectStore=db.createObjectStore('testdb',{keyPath:'id'});
