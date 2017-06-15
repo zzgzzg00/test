@@ -14,12 +14,12 @@
         ];
         const trans=db.transaction(['testdb'],'readwrite');
         const store=trans.objectStore('testdb');
-        for(let i of data){
-            const result=store.add(i);
-            result.onerror=function(e){
-                console.log(e.target.error.message);
-            }
-        }
+//        for(let i of data){
+//            const result=store.add(i);
+//            result.onerror=function(e){
+//                console.log(e.target.error.message);
+//            }
+//        }
     }
     function findByKey(db,index){
         alert(index);
