@@ -70,6 +70,10 @@
         const db=await openDataBase(dbName,version,opts);
         return db;
     }
+    async function createDB(dbName,version,opts){
+        const db=await openDataBase(dbName,version,opts);
+        return db;
+    }
     async function addData(dbName,version,storeName,datas){
         const db=await openDataBase(dbName,version);
         const transaction=getTransaction(db,storeName,'readwrite');
@@ -97,10 +101,129 @@
         add();
         await Promise.all([promise,watchPromise]);
     }
+    async function findByKey(dbName,version,storeName,key){
+        const db=await openDataBase(dbName,version);
+        const transaction=getTransaction(db,storeName,'readonly');
+        const watchPromise=watchTransactionResult(transaction);
+        const objectStore=transaction.objectStore(storeName);
+        const result=objectStore.get(key);
+        const {res,rej,promise}=createPromise();
+        result.onsuccess=function(e){
+            res(e.target.result);
+        }
+        result.onerror=function(e){
+            rej(e);
+        }
+        const [data]=await Promise.all([promise,watchPromise]);
+        return data;
+    }
+    async function findAll(dbName,version,storeName){
+        const db=await openDataBase(dbName,version);
+        const transaction=getTransaction(db,storeName,'readonly');
+        const watchPromise=watchTransactionResult(transaction);
+        const store=transaction.objectStore(storeName);
+        const result=store.openCursor();
+        const arr=[];
+        const {res,rej,promise}=createPromise();
+        result.onsuccess=function(e){
+            const cursor= e.target.result;
+            if(cursor){
+                arr.push(cursor.value);
+                cursor.continue();
+            }
+            res(arr);
+        }
+        result.onerror=function(e){
+            rej(e);
+        }
+        const [data]=await Promise.all([promise,watchPromise]);
+        return data;
+    }
+    /**
+     * Range	                  Code
+     All keys ≤ x	             IDBKeyRange.upperBound(x)
+     All keys < x	             IDBKeyRange.upperBound(x, true)
+     All keys ≥ y	             IDBKeyRange.lowerBound(y)
+     All keys > y	             IDBKeyRange.lowerBound(y, true)
+     All keys ≥ x && ≤ y	     IDBKeyRange.bound(x, y)
+     All keys > x &&< y	         IDBKeyRange.bound(x, y, true, true)
+     All keys > x && ≤ y	     IDBKeyRange.bound(x, y, true, false)
+     All keys ≥ x &&< y	     IDBKeyRange.bound(x, y, false, true)
+     The key = z	            IDBKeyRange.only(z)
+     * */
+    async function findByIndexRange(dbName,version,storeName,rangeObj){
+        const db=await openDataBase(dbName,version);
+        const transaction=getTransaction(db,storeName,'readonly');
+        const watchPromise=watchTransactionResult(transaction);
+        const store=transaction.objectStore(storeName);
+        const {rangeType,isContain,key,index}=rangeObj;
+        const indexStore=store.index(index);
+        const range=IDBKeyRange[rangeType](key,isContain);
+        const result=indexStore.openCursor(range);
+        const {res,rej,promise}=createPromise();
+        const arr=[];
+        result.onsuccess=function(e){
+            const cursor= e.target.result;
+            if(cursor){
+                arr.push(cursor.value);
+                cursor.continue();
+            }
+            res(arr);
+        }
+        result.onerror=function(e){
+            rej(e);
+        }
+        const [data]=await Promise.all([promise,watchPromise]);
+        return data;
+    }
+    async function updateItem(dbName,version,storeName,newObj){
+        const db=await openDataBase(dbName,version);
+        const transaction=getTransaction(db,storeName,'readwrite');
+        const watchPromise=watchTransactionResult(transaction);
+        const store=transaction.objectStore(storeName);
+        const key=store.keyPath;
+        const result=store.get(newObj[key]);
+        const {res,rej,promise}=createPromise();
+        result.onsuccess=function(e){
+            const result= e.target.result;
+            if(result){
+                Object.assign(result,newObj);
+                const putresult=store.put(result);
+                putresult.onsuccess=function(){
+                    res(0);
+                }
+                putresult.onerror=function(e){
+                    rej(e);
+                }
+            }else{
+                rej(1);
+            }
+        }
+        result.onerror=function(e){
+            rej(e);
+        }
+        await Promise.all([promise,watchPromise]);
+    }
+    async function deleteItem(dbName,version,storeName,obj){
+        const db=await openDataBase(dbName,version);
+        const transaction=getTransaction(db,storeName,'readwrite');
+        const watchPromise=watchTransactionResult(transaction);
+        const store=transaction.objectStore(storeName);
+        const key=store.keyPath;
+        const {res,rej,promise}=createPromise();
+        const result=store.delete(obj[key]);
+        result.onsuccess=function(e){
+            res(0);
+        }
+        result.onerror=function(e){
+            rej(e);
+        }
+        await Promise.all([promise,watchPromise]);
+    }
     function test(){
         const storeInfo={
             storeName:'zzgstore',
-//            keyPath:'id',
+            keyPath:'id',
             indexes:[{
                 'indexName':'name',
                 'objKey':'name',
@@ -119,23 +242,92 @@
                 'unique':false
             }]
         };
+        const storeInfo2={
+            storeName:'zzgstore2',
+            keyPath:'id',
+            indexes:[{
+                'indexName':'name',
+                'objKey':'name',
+                'unique':true
+            },{
+                'indexName':'age',
+                'objKey':'age',
+                'unique':false
+            },{
+                'indexName':'sex',
+                'objKey':'sex',
+                'unique':false
+            },{
+                'indexName':'action',
+                'objKey':'doAction',
+                'unique':false
+            }]
+        };
+        const storeInfo3={
+            storeName:'zzgstore2',
+            isAddColumn:true,
+            addColumns:[{
+                'indexName':'nickname',
+                'objKey':'name',
+                'unique':false
+            },{
+                'indexName':'newaction',
+                'objKey':'doAction',
+                'unique':false
+            }]
+        };
         const datas=[{
+            'id':10,
             'name':'jj',
             'age':30,
             'sex':1,
             'doAction':'gb,tqs,mrf'
         },{
+            'id':12,
             'name':'m',
             'age':30,
             'sex':1,
             'doAction':'trf,zb'
         },{
+            'id':13,
             'name':'lp',
             'age':22,
             'sex':1,
             'doAction':'xr'
+        },{
+            'id':14,
+            'name':'yn',
+            'age':22,
+            'sex':1,
+            'doAction':'mrf'
+        },{
+                'id':15,
+                'name':'cc',
+                'age':22,
+                'sex':1,
+                'doAction':'gb'
         }];
+        const range1={
+            rangeType:'upperBound',
+            isContain:false,
+            key:'jj',
+            index:'name'
+        };
+        const range2={
+            rangeType:'only',
+            isContain:false,
+            key:'jj',
+            index:'name'
+        };
+        const newObj={
+            'id':12,
+            'name':'m',
+            'age':30,
+            'sex':1,
+            'doAction':'tj'
+        }
 
+        const [dbName,version,storeName]=['zzgdb',1,'zzgstore'];
 //        openDataBase('zzgdb',1)
 //                .then(data=>console.log('open success'))
 //                .catch(e=>console.log(e));
@@ -150,6 +342,30 @@
 //        addData('zzgdb',1,'zzgstore',datas)
 //                .then(data=>console.log('add success'))
 //                .catch(e=>console.log(e));
+//        findByKey(dbName,version,storeName,12)
+//                    .then(data=>console.log(data))
+//                    .catch(e=>console.log(e));
+//        findAll(dbName,version,storeName)
+//                .then(console.log)
+//                .catch(e=>console.log(e));
+//        findByIndexRange(dbName,version,storeName,range2)
+//                .then(console.log)
+//                .catch(console.log);
+//        updateItem(dbName,version,storeName,newObj)
+//                .then(data=>console.log('update success'))
+//                .catch(console.log);
+//        deleteItem(dbName,version,storeName,newObj)
+//                .then(data=>console.log('delete success'))
+//                .catch(console.log)
+//        createDB(dbName,2,storeInfo2)
+//                .then(db=>addData(dbName,2,'zzgstore2',datas))
+//                .then(data=>console.log('add success'))
+//                .catch(console.log);
+        //open的版本不能低于当前版本 否则会报错
+//        openDataBase(dbName,1);
+        createDB(dbName,4,storeInfo3)
+            .then(data=>console.log('add column success'))
+//            .catch(console.log);
     }
     test();
 </script>
