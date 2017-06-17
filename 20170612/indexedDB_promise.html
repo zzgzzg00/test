@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function createPromise(){
+        let res,rej;
+        const promise=new Promise(function(resolve,reject){
+            res=resolve;
+            rej=reject;
+        });
+        return {res,rej,promise};
+    }
+    function openDataBase(dbName,version,opts){
+        const {promise,res,rej}=createPromise();
+        const database=indexedDB.open(dbName,version);
+        database.onsuccess=function(e){
+            res(e.target.result);
+        }
+        database.onerror=function(e){
+            rej(e);
+        }
+        if(opts){
+            const {storeName,keyPath,indexes}=opts;
+            database.onupgradeneeded=function(e){
+                const db= e.target.result;
+                if(!db.objectStoreNames.contains(storeName)){
+                    const storeObj=keyPath?{keyPath}:{autoIncrement:true};
+                    const store=db.createObjectStore(storeName,storeObj);
+                    for(let item of indexes){
+                        store.createIndex(item.indexName,item.objKey,{unique:item.unique});
+                    }
+                }
+            }
+        }
+        return promise;
+    }
+    function deleteDataBase(dbName){
+        const {promise,res,rej}=createPromise();
+        const db=indexedDB.deleteDatabase(dbName);
+        db.onsuccess=function(e){
+            res(e.target.result);
+        }
+        db.onerror=function(e){
+            rej(e);
+        }
+        return promise;
+    }
+    function getTransaction(db,storeName,type){
+        const transaction=db.transaction(storeName,type);
+        return transaction;
+    }
+    function watchTransactionResult(transaction){
+        const {promise,res,rej}=createPromise();
+        transaction.oncomplete=function(){
+            res(0);
+        }
+        transaction.ontimeout=function(){
+            rej(1);
+        }
+        transaction.onabort=function(){
+            rej(2);
+        }
+        return promise;
+    }
+    async function forceCreateDB(dbName,version,opts){
+        await deleteDataBase(dbName);
+        const db=await openDataBase(dbName,version,opts);
+        return db;
+    }
+    async function addData(dbName,version,storeName,datas){
+        const db=await openDataBase(dbName,version);
+        const transaction=getTransaction(db,storeName,'readwrite');
+        const watchPromise=watchTransactionResult(transaction);
+        const {promise,res,rej}=createPromise();
+        const store=transaction.objectStore(storeName);
+        function add(){
+            try{
+                var data=datas.shift();
+                if(data){
+                    const result=store.add(data);
+                    result.onsuccess=function(){
+                        add();
+                    }
+                    result.onerror=function(e){
+                        rej(e);
+                    }
+                }else{
+                    res(0);
+                }
+            }catch(e){
+                rej(e);
+            }
+        }
+        add();
+        await Promise.all([promise,watchPromise]);
+    }
+    function test(){
+        const storeInfo={
+            storeName:'zzgstore',
+//            keyPath:'id',
+            indexes:[{
+                'indexName':'name',
+                'objKey':'name',
+                'unique':true
+            },{
+                'indexName':'age',
+                'objKey':'age',
+                'unique':false
+            },{
+                'indexName':'sex',
+                'objKey':'sex',
+                'unique':false
+            },{
+                'indexName':'action',
+                'objKey':'doAction',
+                'unique':false
+            }]
+        };
+        const datas=[{
+            'name':'jj',
+            'age':30,
+            'sex':1,
+            'doAction':'gb,tqs,mrf'
+        },{
+            'name':'m',
+            'age':30,
+            'sex':1,
+            'doAction':'trf,zb'
+        },{
+            'name':'lp',
+            'age':22,
+            'sex':1,
+            'doAction':'xr'
+        }];
+
+//        openDataBase('zzgdb',1)
+//                .then(data=>console.log('open success'))
+//                .catch(e=>console.log(e));
+//        deleteDataBase('zzgdb')
+//                .then(data=>console.log('delete success'))
+//                .catch(e=>console.log(e));
+//        forceCreateDB('zzgdb',1,storeInfo)
+//                .then(data=>console.log('forceCreateDB success'))
+//                .then(()=>addData('zzgdb',1,'zzgstore',datas))
+//                .then(data=>console.log('add success'))
+//                .catch(e=>console.log(e));
+//        addData('zzgdb',1,'zzgstore',datas)
+//                .then(data=>console.log('add success'))
+//                .catch(e=>console.log(e));
+    }
+    test();
+</script>
+</body>
+</html>
