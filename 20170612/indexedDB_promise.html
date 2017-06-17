@@ -263,19 +263,6 @@
                 'unique':false
             }]
         };
-        const storeInfo3={
-            storeName:'zzgstore2',
-            isAddColumn:true,
-            addColumns:[{
-                'indexName':'nickname',
-                'objKey':'name',
-                'unique':false
-            },{
-                'indexName':'newaction',
-                'objKey':'doAction',
-                'unique':false
-            }]
-        };
         const datas=[{
             'id':10,
             'name':'jj',
@@ -363,9 +350,7 @@
 //                .catch(console.log);
         //open的版本不能低于当前版本 否则会报错
 //        openDataBase(dbName,1);
-        createDB(dbName,4,storeInfo3)
-            .then(data=>console.log('add column success'))
-//            .catch(console.log);
+
     }
     test();
 </script>
