@@ -22,17 +22,13 @@
         });
     }
     function findByKey(db,index){
-        alert(index);
         const trans=db.transaction(['testdb'],'readwrite');
         const store=trans.objectStore('testdb');
         const result=store.get(index);
-        alert(2);
         result.onsuccess=function(e){
-            alert(JSON.stringify(e));
             const result= e.target.result;
             result.name='xx';
             store.put(result);
-            alert(JSON.stringify(result));
         }
     }
     function findByName(db,name){
@@ -57,21 +53,21 @@
             console.log('delete');
         }
     }
-    const request=indexedDB.open('test',3);
+    const request=indexedDB.open('test',4);
     request.onsuccess=function(e){
         var db= e.target.result;
         addData(db);
-        findByKey(db,4);
-        deleteByKey(db,5);
-        findByName(db,'a');
+//        findByKey(db,4);
+//        deleteByKey(db,5);
+//        findByName(db,'a');
     }
     request.onupgradeneeded=function(e){
         var db= e.target.result;
         if(!db.objectStoreNames.contains('testdb')){
             const objectStore=db.createObjectStore('testdb',{keyPath:'id'});
-            objectStore.createIndex('name','name',{unique:true});
+//            objectStore.createIndex('name','name',{unique:true});
             objectStore.createIndex('age','age',{unique:false});
-            objectStore.createIndex('sex','sex',{unique:false});
+            objectStore.createIndex('sex2','sex',{unique:false});
         }
     }
 }
