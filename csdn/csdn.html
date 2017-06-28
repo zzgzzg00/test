@@ -6,10 +6,14 @@
 </head>
 <body>
 <script>
-    function b(){
-
-    }
-    console.log(b);
+    function* test(){
+        for(var i of [1,2,3,4,5]){
+            yield i;
+        }
+    };
+    const x=test();
+    const [a,b,...c,d]=x;
+    console.log(c);
 </script>
 </body>
 </html>
