@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
     <title></title>
 </head>
 <body>
-<a href="javascript:alert(1)">1</a>
 <script>
     function createArray(){
         return new Proxy([],{
@@ -24,6 +22,10 @@
         })
     }
     var o=createArray();
+    o[0]=1;
+    o.push(1,2,3,4);
+    o.length=2;
+    o.concat([1,2,3]);
 </script>
 </body>
 </html>
