@@ -2,19 +2,17 @@
 <html>
 <head>
     <title></title>
-    <meta charset="utf-8">
-    <style>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 
-    </style>
+    <meta content="always" name="referrer">
+
+    <meta name="theme-color" content="#2932e1">
 </head>
 <body>
-<input type="text" />
 <script>
-    document.querySelector('input').onchange=function(){
-        var v=this.value;
-        var result=v.replace(/[\u4e00-\u9fa5]/g,'aa').length>10?false:true;
-        alert(result);
-    }
+    document.querySelector('meta').insertAdjacentHTML('afterend','<a href="http://www.baidu.com">百度</a>');
+    document.querySelector('head').style.display='block';
 </script>
 </body>
 </html>
