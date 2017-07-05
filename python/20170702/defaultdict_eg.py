@@ -9,6 +9,6 @@ class Test(object):
     def adds(self,list):
         self.list.extend(list)
 
-list=defaultdict(Test)
-list[0].adds([1,2,3])
-print(list[0].list)
+map=defaultdict(Test)
+map['a'].adds([1,2,3])
+print(map['a'].list)
