@@ -1,6 +1,5 @@
 import os
-res=(i for i in dir(os) if not i.startswith('_'))
-for i in res:
-    print(i)
-
-print(os.listdir('d://'))
+path=os.path.join('d://','workspace','open_m_train')
+print(path)
+print(os.path.isdir(path),os.path.isfile(path),os.path.exists(path),sep='|')
+print(os.listdir(path))
