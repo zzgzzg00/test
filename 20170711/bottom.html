@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        :root{
+            height: 100%;
+            overflow: auto;
+        }
+        body{
+            display: -webkit-box;
+            display: box;
+            display: flex;
+            -webkit-box-orient:vertical;
+            box-orient:vertical;
+            flex-direction:column;
+            min-height: 100%;
+            height: 100%;
+        }
+        div{
+            width: 100%;
+        }
+        .content{
+            -webkit-box-flex:1;
+            box-flex:1;
+            flex:1;
+            height: 150vh;
+            background-color: #ffff00;
+        }
+        .button{
+            height: 100px;
+            background-color: red;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="content"></div>
+<div class="button"></div>
+</body>
+</html>
