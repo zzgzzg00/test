@@ -10,18 +10,25 @@
         *{
             padding: 0;
             margin: 0;
-            box-sizing: border-box;
         }
         div{
-            height: 16px;
-            line-height: 16px;
             border: 1px solid #808080;
             font-size: 9px;
             text-align: center;
+            margin-bottom: 10px;
+            height: 16px;
+        }
+        div:nth-of-type(1){
+            line-height: 16px;
+            box-sizing: border-box;
+        }
+        div:nth-of-type(2){
+            line-height: 14px;
+            font-size: 9px;
         }
     </style>
 </head>
 <body>
-<div>测试啊</div>
+<div>测试box-sizing</div>
 </body>
 </html>
