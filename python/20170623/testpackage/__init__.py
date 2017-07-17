@@ -1,3 +1,3 @@
-#from testpackage.testx import manage
+from .testx import manage
 print('init')
-#print(manage)
+print(manage)
