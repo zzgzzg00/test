@@ -1,87 +1,20 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <script type="text/javascript">document.domain="qunar.com";document.write=function(){};var top=parent;</script>
 </head>
 <body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
 <script>
-    var Current_ad_id = "homeadSy";
-    document.write('<div site=\"qunar\" style=\"display:none\">&nbsp;</div>');
-
+    var p=new CustomEvent('test');
+    var divs=document.getElementsByTagName('div');
+    for(let i of divs){
+        divs.addEventListener('test',()=>this.innerHTML=1);
+    }
+    window.setInterval(p.emit(1),1000);
 </script>
-<script>
-    var Current_ad_id = "indexTopBanner";
-    document.write('');
-    ;(function(){
-        try{
-            var ad_type="base";
-            var css = '',
-                    html = '<scr_ipt type="text/javascr_ipt">  \n\tvar _bidrequest = { \n\t\t\t "imp": [{"tagid": "1000376","width":728,"height":90,"bidfloor":6.00,"mediaId":800026,"mediaName":"qunar","resourcesType":1,"istest":"false","renderType":3}]  \n\t\t\t };  \n\n\t </scr_ipt>  \n\t <scr_ipt type="text/javascr_ipt" src="https://img2.rgyun.com/js/u_20170109.js"></scr_ipt>',
-                    jsCode = '',
-                    jsrc = '',
-                    run = '0';
-            if( css || html || jsCode || jsrc ){
-                top.QNR.AD.run_in_content( Current_ad_id , css , html , jsCode  , jsrc , run);
-            }
-        } catch(e){
-            if( window['console'] ){ console.log( e ); }
-        }
-    })();
-    document.write('');
-
-</script>
-<script>
-    var Current_ad_id = "dlad_right";
-    document.write('<div style=\"display:none\">&nbsp;</div>');
-
-</script>
-<script>
-    var Current_ad_id = "indexRightMiddleBannerSuper";
-    document.write('<div style=\"display:none\">&nbsp;</div>');
-
-</script>
-<script>
-    var Current_ad_id = "indexBottomBanner";
-    document.write('<div site=\"qunar\" style=\"display:none\">&nbsp;</div>');
-
-</script>
-<script>
-    var Current_ad_id = "indexRightTopBanner";
-    document.write('<div style=\"display:none\">&nbsp;</div>');
-
-</script>
-<script>
-    var Current_ad_id = "home_active_dynamic";
-    document.write('<div style=\"display:none\">&nbsp;</div>');
-
-</script>
-<script>
-    var Current_ad_id = "topAD";
-    document.write('');
-    ;(function(){
-        try{
-            var ad_type="base";
-            var css = '',
-                    html = '<scr_ipt>;(function(){\n    try{\n        var ad_type="flash_hotel_focus_map";\n        var css = \'\',\n            html = \'\',\n            jsCode = \';(function(){\\n    var config  = {\\n            //焦点flash地址\\n            swf_click : "" || "javascr_ipt:void(0)",\\n            swf_img_src : "",\\n            //底图JPG地址\\n            bottom_img : "//source.qunarzz.com/site/images/wns/20170525_train_1600x336_weixin_8079.jpg",\\n            //底图链接\\n            bottom_img_url : "" || "javascr_ipt:void(0)",\\n\\n            // 垫底图底纹jpg地址\\n            diandi_bottom_img : "//source.qunarzz.com/site/images/wns/20170525_train_1600x336_weixin_8079.jpg",\\n            // 垫底图焦点图jpg地址\\n            diandi_jiaodianIMG : "",\\n            // 垫底图点击链接\\n            diandi_img_url : "" || "javascr_ipt:void(0)",\\n            name : "flashad",\\n            width : 464,\\n            height : 320,\\n            str : "",\\n            center_width : "",\\n            margin_left : "",\\n            params : {\\n                quality: "autohigh",\\n                wmode: "transparent"\\n            }\\n    }\\nvar clickTag = encodeURIComponent(config.swf_click);\\nvar attributes = { \\n    id: config.name, \\n    name: config.name,\\n    data: config.swf_img_src + "?clickTag=" + clickTag,\\n    width: config.width,\\n    height: config.height\\n}\\nvar container = parent.QNR.AD.create_div_container( Current_ad_id );\\nvar key = Current_ad_id + \\\'_flash\\\';\\n\\nvar page = {\\n    init : function (){\\n        var $self = this;\\n        $self.init_config();\\n        $self.init_dom();\\n    },\\n    init_config : function (){\\n        if(config.swf_img_src){\\n            if(config.swf_img_src.indexOf(".swf")!=-1){\\n                config.str = \\\'<div id="center_width" class="banner-allshow"><div id="margin_left" class="search-right-banner"><a href="\\\'+config.swf_click+\\\'"><div id="\\\'+ key +\\\'"></div></a></div></div>\\\';\\n            }else{\\n                config.str = \\\'<div id="center_width" class="banner-allshow"><div id="margin_left" class="search-right-banner"><a href="\\\'+config.swf_click+\\\'"><img style="display: block;" height="\\\'+config.height+\\\'" width="\\\'+ config.width +\\\'" src="\\\'+ config.swf_img_src +\\\'"/></a></div></div>\\\';\\n            }\\n        }\\n    },\\n    init_dom : function(){\\n         container.innerHTML = \\\'<div id="js_bannerContent" class="banner-content"><div class="search-rbg"> <div class="search-banner-bg" style="background-image: url(\\\'+config.bottom_img+\\\');"><a class="banner-bglink" id="banner-camel"  href="\\\'+config.bottom_img_url+\\\'"></a></div></div>\\\'+config.str+\\\'</div>\\\';\\n        if(!$inject_flash( key , parent , attributes, config.params)){\\n            if(config.diandi_jiaodianIMG){\\n                container.innerHTML = \\\'<div id="js_bannerContent" class="banner-content"><div class="search-rbg"> <div class="search-banner-bg" style="background-image: url(\\\'+config.diandi_bottom_img+\\\');"><a class="banner-bglink" id="banner-camel" href="\\\'+config.diandi_img_url+\\\'"></a></div></div><div id="center_width" class="banner-allshow"><div id="margin_left" class="search-right-banner"><a href="\\\'+config.diandi_img_url+\\\'"><img style="display: block;" height="\\\'+config.height+\\\'" width="\\\'+ config.width +\\\'" src="\\\'+ config.diandi_jiaodianIMG +\\\'"/></a></div></div></div>\\\';\\n            }else{\\n                container.innerHTML = \\\'<div id="js_bannerContent" class="banner-content"><div class="search-rbg"> <div class="search-banner-bg" style="background-image: url(\\\'+config.diandi_bottom_img+\\\');"><a class="banner-bglink"  id="banner-camel" href="\\\'+config.diandi_img_url+\\\'"></a></div></div></div>\\\';\\n            }\\n        }   \\n    }\\n}\\npage.init();\\n\\n    ;(function($dom,_width,_needResize,lorR) {\\n        var cssCode = \\\'.ad_canmle{background: url("//source.qunarzz.com/package/i/ad_camel.png") no-repeat 50%; width: 22px; height: 16px; float: left; }\\\';\\n        cssCode += \\\'.ad_text{font-size: 12px; float: right; white-space: nowrap; width: 28px; height: 15px; color: #c4d0d6; text-align: center; line-height: 15px; }\\\';\\n        var util = {\\n            isDom: function(obj) {\\n                return obj && typeof obj === \\\'object\\\' && obj.nodeType === 1 && typeof obj.nodeName === \\\'string\\\';\\n            },\\n            createElement: function() {\\n                var p = this.p = parent.document.createElement("div");\\n                p.style.cssText = "position: absolute; width: 23px; height: 16px; background: #2d5f72;z-index:1; opacity: 0.7; bottom: 0; border-top-right-radius: 4px; overflow: hidden; filter:alpha(opacity=70);";\\n                p.innerHTML = \\\'<p class="ad_canmle"></p><p class="ad_text">\\\\u5e7f\\\\u544a</p><style>\\\'+ cssCode +\\\'</style>\\\';\\n                return p;\\n            },\\n            set: function() {\\n                var p = this.createElement();\\n                p.onmouseover = function() {\\n                    this.style.width = "50px";\\n                }\\n                p.onmouseout = function() {\\n                    this.style.width = "23px";\\n                }\\n                $dom.insertBefore(p,$dom.childNodes[0]);\\n            },\\n            resetbtn: function(){\\n                var wh = this.getpos();\\n                var lf = (wh.width - _width) / 2;\\n                if( wh.width < _width ){\\n                    lf = 0;\\n                }\\n                this.p.style[lorR] = lf +"px";\\n            },\\n            getpos  : function(){\\n                var pDoc = parent.document,\\n                docElemPropHeight = pDoc.documentElement.clientHeight,\\n                docElemPropWidth = pDoc.documentElement.clientWidth;\\n\\n                if(pDoc.compatMode === "CSS1Compat"){\\n                    return {\\n                        height : docElemPropHeight,\\n                        width  : docElemPropWidth\\n                    };\\n                }else{\\n                    return {\\n                        width : pDoc.body.clientWidth,\\n                        height : pDoc.body.clientHeight\\n                    };\\n                }\\n            }\\n        }        \\n        if (util.isDom($dom)) {\\n            util.set();\\n            var styleObj = $dom.currentStyle ? $dom.currentStyle : parent.window.getComputedStyle($dom, null);\\n            var currPosition = styleObj.position;\\n            if (currPosition == "static" || currPosition === "") {\\n                $dom.style.position = "relative";\\n            }\\n            util.resetbtn();\\n            var resizeTimer = null;\\n            if(_needResize){\\n                parent.window.onresize = function(){\\n                    clearTimeout( resizeTimer );\\n                    resizeTimer = setTimeout(function(){\\n                       util.resetbtn();\\n                    },100);\\n                }\\n            }\\n        }\\n    })(parent.document.getElementById("js_bannerContent"),1600,true,"left");\\n})();\',\n            jsrc = \'\',\n            run = \'1\';\n        if( css || html || jsCode || jsrc ){\n            top.QNR.AD.run_in_content( Current_ad_id , css , html , jsCode  , jsrc , run);\n        }\n    } catch(e){\n        if( window[\'console\'] ){ console.log( e ); }\n    }\n})();</scr_ipt>',
-                    jsCode = '',
-                    jsrc = '',
-                    run = '0';
-            if( css || html || jsCode || jsrc ){
-                top.QNR.AD.run_in_content( Current_ad_id , css , html , jsCode  , jsrc , run);
-            }
-        } catch(e){
-            if( window['console'] ){ console.log( e ); }
-        }
-    })();
-    document.write('');
-
-</script>
-<script>
-    var Current_ad_id = "home_top";
-    document.write('<div site=\"qunar\" style=\"display:none\">&nbsp;</div>');
-
-</script>
-<script>parent.QNR.AD.run_queue_list();</script>
 </body>
 </html>
