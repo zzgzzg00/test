@@ -16,5 +16,14 @@ def instance():
 
 print('use')
 
+def test():
+    class T(object):
+        def show(self):
+            print(self)
+
+    def show():
+        print('show')
+    return T,show
+
 if(__name__ == 'main'):
     instance()

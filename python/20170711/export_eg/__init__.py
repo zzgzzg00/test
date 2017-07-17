@@ -1,1 +1,1 @@
-from .lazyrun_eg import instance
+from .lazyrun_eg import instance,test
