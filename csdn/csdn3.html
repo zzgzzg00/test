@@ -4,24 +4,10 @@
     <title></title>
 </head>
 <body>
-    <form target="_blank" id="test" method="post" action="http://wechatuser.corp.qunar.com/api/wechat/getImage.do">
-        <input type="submit" value="submit" />
-    </form>
+    <input type="range" max="100" min="1" step="1"/><output />
     <script>
-        var obj={
-            platform:'wechat$$$small',
-            source:'hc',
-            outPic:false,
-            'imageList[0][fileName]':'abc.jpg',
-            'imageList[0][path]':'pages/home/index?bd_origin=pc_sogouinput',
-            'imageList[0][width]':'800',
-            'imageList[0][qcodeType]':2
-        };
-        var keys=Object.keys(obj);
-        var form=document.getElementById('test');
-        for(let i of keys){
-            var str=`<input type='text' name='${i}' value='${obj[i]}'/>`
-            form.insertAdjacentHTML('beforeend',str);
+        document.querySelector('input').oninput=function(){
+            document.querySelector('output').value=this.valueAsNumber;
         }
     </script>
 </body>
