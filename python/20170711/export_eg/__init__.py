@@ -1,0 +1,1 @@
+from .lazyrun_eg import instance
