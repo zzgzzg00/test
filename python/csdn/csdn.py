@@ -1,48 +1,27 @@
-import urllib
-import urllib.request as reqlib
-import re
+import csv,pickle
+def formatToDict(li):
+    return {
+        'name':li[0],
+        li[1]:li[2],
+        li[3]:li[4]
+    }
+def read():
+    li=[]
+    f=open('d://test.csv','r')
+    t=csv.reader(f)
+    for row in t:
+        li.append(formatToDict(row))
+    f.close()
+    return li
 
-class simpleException(Exception):
-    def __init__(self,msg):
-        Exception(self)
-        self.msg = msg
+def write():
+    with open('d://test.txt','wb') as f:
+        pickle.dump(read(),f)
 
-def GetProvinceUrl():
-    try:
-        print('Getting province main page...')
-        req = reqlib.urlopen('http://www.weather.com.cn/textFC/hb.shtml')
-        # TODO: 解析网页编码
-        resp = req.read().decode('utf-8')
-        print(resp)
-        req.close()
-    except:
-        raise(simpleException('Fail to get province info.'))
-    try:
-        print('Parsing province HTML...')
-        prvDiv = re.search(r'''(?is)<div.*?class=["']lqcontentBoxheader["'].*?>(.*?)</div>''',resp).group(1)
-        prvLi = re.findall(r'(?is)<li.*?>(.*?)</li>',prvDiv)
-        # print(prvDiv, prvLi) # and NOTHING printed
-        prvDict = {}
-        for li in prvLi:
-            # 获得超链接和名称
-            info = re.search(r'''<a.*?href=['"](.*?)['"].*?>(.*?)</a>''',li)
-            prvDict.setdefault(info.group(2),info.group(1))
-            print(info.group(2),info.group(1))
-    except:
-        raise(simpleException('Fail to parse HTML about provinces.'))
-    # 补全短连接
-    for prv in prvDict:
-        if prvDict[prv][0] == r'/':
-            prvDict[prv] = r'http://www.weather.com.cn'+prvDict[prv]
-        elif re.match(r'https?://*',prvDict[prv]) == None:
-            prvDict[prv] = r'http://'+prvDict[prv];
-    return prvDict
+def load():
+    with open('d://test.txt','rb') as f:
+        result=pickle.load(f)
+    return result
 
-
-def GetCityCodes():
-    pass
-
-try:
-    print(GetProvinceUrl())
-except simpleException as e:
-    print(e.msg)
+write()
+print(load())
