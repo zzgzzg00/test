@@ -19,6 +19,9 @@
             position: relative;
             overflow: hidden;
         }
+        .qn_banner .interactive{
+            transition:none !important;
+        }
         .qn_banner li{
             position: absolute;
             top: 0;
@@ -43,12 +46,13 @@
 </head>
 <body>
 <script>
-    function Banner(imgsrcs,container,rato,dur){
+    function Banner(imgsrcs,container,rato,dur,isInteractive){
         var me=this;
         this.index=0;
         this.dur=dur;
         this.length=imgsrcs.length;
         this.runHandle=null;
+        this.moveTrack=[];
         this.lis=imgsrcs.map(function(item,index){
             var li=document.createElement('li'),
                 img=document.createElement('img');
@@ -62,12 +66,14 @@
             img.onclick=function(){
                 window.location.href=this.getAttribute('skip');
             }
-            img.addEventListener('touchmove',function(e){
-                me.move();
-            },false);
-            img.addEventListener('touchend',function(e){
-                me.start(2*me.dur);
-            },false);
+            if(isInteractive){
+                li.addEventListener('touchmove',function(e){
+                    me.move(e);
+                },false);
+                li.addEventListener('touchend',function(e){
+                    me.start(2*me.dur);
+                },false);
+            }
             img.setAttribute('index',index);
             li.appendChild(img);
             return li;
@@ -77,6 +83,7 @@
         var width=window.innerWidth
                     || (document.documentElement && document.documentElement.clientWidth)
                     || document.body.clientWidth;
+        this.width=width;
         ul.style.height=width*(1/rato)+'px'
         this.lis.forEach(function(item){
             ul.appendChild(item);
@@ -113,9 +120,18 @@
         }
         return index%this.length;
     }
-    Banner.prototype.move=function(){
-        var me=this;
-        me.stop();
+    Banner.prototype.move=function(e){
+        this.stop();
+        this.pushTrack(e);
+        this.moveItem();
+    }
+    Banner.prototype.moveItem=function(){
+        var li=this.lis[this.index];
+        li.className='interactive';
+        var trackLen=this.moveTrack.length,
+            offset=this.moveTrack[trackLen-1]-this.moveTrack[0],
+            percent=offset/this.width*100;
+        li.style.WebkitTransform='translateX('+percent+'%)';
     }
     Banner.prototype.run=function(){
         var me=this;
@@ -128,6 +144,12 @@
             me.start(me.dur-500);
         },500)
     }
+    Banner.prototype.pushTrack=function(e){
+        this.moveTrack.push(e.touches[0].clientX);
+    }
+    Banner.prototype.clearTrack=function(){
+        this.moveTrack.length=0;
+    }
     var arr=[{
         url:'20161214-3.jpg'
     },{
@@ -139,7 +161,7 @@
         item.url= 'https://s.qunarzz.com/open_m_train/active/discovery/'+item.url;
         item.skip='http://www.baidu.com'
     })
-    new Banner(arr,document.body,641/341,2000);
+    new Banner(arr,document.body,641/341,2000,true);
 </script>
 </body>
 </html>
