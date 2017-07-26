@@ -6,9 +6,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no" />
     <meta name="format-detection"content="telephone=no"/>
     <meta charset="utf-8" />
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        li{
+            list-style: none;
+        }
+        .qn_banner{
+            position: relative;
+            overflow: hidden;
+        }
+        .qn_banner li{
+            position: absolute;
+            top: 0;
+            z-index: 1;
+            height: 100%;
+            -webkit-transform:translateX(100%);
+            transition:-webkit-transform .5s ease-in 0s;
+            background: #fbfbfb url(//simg2.qunarzz.com/hotel/homesearch/Camal_walk_loading.gif) no-repeat center center;
+        }
+        .qn_banner .active{
+            -webkit-transform:translateX(0);
+            z-index: 3;
+        }
+        .qn_banner .afteractive{
+            z-index: 2;
+            -webkit-transform:translateX(-100%);
+        }
+        .qn_banner li img{
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 <script>
+    function Banner(imgsrcs,container,rato,dur){
+        var me=this;
+        me.index=0;
+        me.dur=dur;
+        this.lis=imgsrcs.map(function(item,index){
+            var li=document.createElement('li'),
+                img=document.createElement('img');
+            if(index == 0){
+                li.className='active'
+            }
+            img.style.visibility='hidden';
+            img.onload=me.show.bind(me,img);
+            img.src=item.url;
+            img.setAttribute('skip',item.skip);
+            img.setAttribute('index',index);
+            li.appendChild(img);
+            return li;
+        });
+        var ul=document.createElement('ul');
+        ul.className='qn_banner';
+        var width=window.innerWidth
+                    || (document.documentElement && document.documentElement.clientWidth)
+                    || document.body.clientWidth;
+        ul.style.height=width*(1/rato)+'px'
+        this.lis.forEach(function(item){
+            ul.appendChild(item);
+        });
+        container.appendChild(ul);
+        window.setInterval(function(){
+            me.run();
+        },dur);
+    }
+    Banner.prototype.show=function(img){
+        img.style.visibility='visible';
+    }
+    Banner.prototype.run=function(){
+        var me=this;
+        this.index%=this.lis.length;
+        this.lis[this.index].className='afteractive';
+        var afteractive=this.lis[this.index];
+        this.index++;
+        this.index%=this.lis.length;
+        this.lis[this.index].className='active';
+        window.setTimeout(function(){
+            afteractive.className='';
+        },me.dur)
+    }
+    var arr=[{
+        url:'20161214-3.jpg'
+    },{
+        url:'20170603-3.jpg'
+    },{
+        url:'leshi_header.jpg'
+    }];
+    arr.forEach(function(item){
+        item.url= 'https://s.qunarzz.com/open_m_train/active/discovery/'+item.url;
+        item.skip='http://www.baidu.com'
+    })
+    new Banner(arr,document.body,641/341,1000);
 </script>
 </body>
 </html>
