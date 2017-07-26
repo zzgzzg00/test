@@ -57,6 +57,9 @@
             img.onload=me.show.bind(me,img);
             img.src=item.url;
             img.setAttribute('skip',item.skip);
+            img.onclick=function(){
+                window.location.href=this.getAttribute('skip');
+            }
             img.setAttribute('index',index);
             li.appendChild(img);
             return li;
@@ -101,7 +104,7 @@
         item.url= 'https://s.qunarzz.com/open_m_train/active/discovery/'+item.url;
         item.skip='http://www.baidu.com'
     })
-    new Banner(arr,document.body,641/341,1000);
+    new Banner(arr,document.body,641/341,5000);
 </script>
 </body>
 </html>
