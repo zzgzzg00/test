@@ -45,8 +45,10 @@
 <script>
     function Banner(imgsrcs,container,rato,dur){
         var me=this;
-        me.index=0;
-        me.dur=dur;
+        this.index=0;
+        this.dur=dur;
+        this.length=imgsrcs.length;
+        this.runHandle=null;
         this.lis=imgsrcs.map(function(item,index){
             var li=document.createElement('li'),
                 img=document.createElement('img');
@@ -60,6 +62,12 @@
             img.onclick=function(){
                 window.location.href=this.getAttribute('skip');
             }
+            img.addEventListener('touchmove',function(e){
+                me.move();
+            },false);
+            img.addEventListener('touchend',function(e){
+                me.start(2*me.dur);
+            },false);
             img.setAttribute('index',index);
             li.appendChild(img);
             return li;
@@ -74,28 +82,50 @@
             ul.appendChild(item);
         });
         container.appendChild(ul);
-        if(me.lis.length==1){
+        if(me.length==1){
             return;
         }
-        window.setTimeout(function(){
+        this.start(dur);
+    }
+    Banner.prototype.start=function(dur){
+        var me=this;
+        this.runHandle=window.setTimeout(function(){
             me.run();
         },dur);
     }
+    Banner.prototype.stop=function(){
+        var me=this;
+        if(me.runHandle){
+            window.clearTimeout(me.runHandle);
+            me.runHandle=null;
+        }
+    }
     Banner.prototype.show=function(img){
         img.style.visibility='visible';
+    }
+    Banner.prototype.findNextIndex=function(){
+        return (this.index+1)%this.length;
+    }
+    Banner.prototype.findPreviousIndex=function(){
+        var index=this.index-1;
+        if(index<0){
+            index+=this.length
+        }
+        return index%this.length;
+    }
+    Banner.prototype.move=function(){
+        var me=this;
+        me.stop();
     }
     Banner.prototype.run=function(){
         var me=this;
         this.lis[this.index].className='afteractive';
         var afteractive=this.lis[this.index];
-        this.index++;
-        this.index%=this.lis.length;
+        this.index=this.findNextIndex();
         this.lis[this.index].className='active';
         window.setTimeout(function(){
             afteractive.className='';
-            window.setTimeout(function(){
-                me.run();
-            },me.dur-500);
+            me.start(me.dur-500);
         },500)
     }
     var arr=[{
@@ -109,7 +139,7 @@
         item.url= 'https://s.qunarzz.com/open_m_train/active/discovery/'+item.url;
         item.skip='http://www.baidu.com'
     })
-    new Banner(arr,document.body,641/341,3000);
+    new Banner(arr,document.body,641/341,2000);
 </script>
 </body>
 </html>
