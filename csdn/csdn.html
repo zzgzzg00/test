@@ -46,6 +46,7 @@
     function Banner(imgsrcs,container,rato,dur){
         var me=this;
         me.index=0;
+        me.dur=dur;
         this.lis=imgsrcs.map(function(item,index){
             var li=document.createElement('li'),
                 img=document.createElement('img');
@@ -76,9 +77,9 @@
         if(me.lis.length==1){
             return;
         }
-        window.setInterval(function(){
+        window.setTimeout(function(){
             me.run();
-        },dur+500);
+        },dur);
     }
     Banner.prototype.show=function(img){
         img.style.visibility='visible';
@@ -92,6 +93,9 @@
         this.lis[this.index].className='active';
         window.setTimeout(function(){
             afteractive.className='';
+            window.setTimeout(function(){
+                me.run();
+            },me.dur-500);
         },500)
     }
     var arr=[{
@@ -105,7 +109,7 @@
         item.url= 'https://s.qunarzz.com/open_m_train/active/discovery/'+item.url;
         item.skip='http://www.baidu.com'
     })
-    new Banner(arr,document.body,641/341,1000);
+    new Banner(arr,document.body,641/341,3000);
 </script>
 </body>
 </html>
