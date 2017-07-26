@@ -136,6 +136,19 @@
         li.className='interactive';
         var percent=this.calcMovePercent();
         li.style.WebkitTransform='translateX('+percent+'%)';
+        if(percent>0){
+            var previousIndex=this.findPreviousIndex();
+            var pli=this.lis[previousIndex];
+            pli.className='interactive';
+            pli.style.left='-100%';
+            pli.style.WebkitTransform='translateX('+percent+'%)';
+        }else{
+            var nextIndex=this.findNextIndex();
+            var nli=this.lis[nextIndex];
+            nli.className='interactive';
+            nli.style.left='100%';
+            nli.style.WebkitTransform='translateX('+percent+'%)';
+        }
     }
     Banner.prototype.run=function(){
         var me=this;
