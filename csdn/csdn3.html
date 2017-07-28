@@ -2,14 +2,32 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        div{
+            height: 200px;
+        }
+        .container{
+            display: flex;
+        }
+        .container div:nth-of-type(2){
+            flex:1;
+        }
+        .container div:first-child,.container :last-child{
+            width: 60px;
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
-<script src="http://q.qunarzz.com/jquery/prd/jquery-1.7.2.min.js"></script>
-<script>
-    function add(){
-        return '<img src="" onerror=alert(document.cookie)>'.replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    }
-    document.body.innerHTML='<span>'+add()+"</span>";
-</script>
+<div class="container">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
 </body>
 </html>
