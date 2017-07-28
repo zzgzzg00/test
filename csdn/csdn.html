@@ -53,6 +53,7 @@
         this.length=imgsrcs.length;
         this.runHandle=null;
         this.moveTrack=[];
+        this.startPosition=0;
         this.lis=imgsrcs.map(function(item,index){
             var li=document.createElement('li'),
                 img=document.createElement('img');
@@ -71,7 +72,10 @@
                     me.move(e);
                 },false);
                 li.addEventListener('touchend',function(e){
-                    me.interactiveStart();
+                    if(me.moveTrack.length>0){
+                        me.clearTrack();
+                        me.interactiveStart();
+                    }
                 },false);
             }
             img.setAttribute('index',index);
@@ -142,6 +146,7 @@
             pli.className='interactive';
             pli.style.left='-100%';
             pli.style.WebkitTransform='translateX('+percent+'%)';
+            console.log(percent);
         }else{
             var nextIndex=this.findNextIndex();
             var nli=this.lis[nextIndex];
