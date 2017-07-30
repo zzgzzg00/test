@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+{
+    class StatusInterface{
+        constructor(){
+            if(new.target===StatusInterface){
+                throw new Error('StatusInterface must be implemented');
+            }
+        }
+        doAction(){
+            throw new Error('the method doAction of StatusInterface must be implemented')
+        }
+    }
+
+    class BeginStatus extends StatusInterface{
+        doAction(num){
+            console.log('BeginStatus',num);
+            return new Promise.resolve(Math.floor(num/2))
+        }
+    }
+
+    class EvenStatus extends StatusInterface{
+        doAction(num){
+            console.log('EvenStatus',num);
+            return Promise.resolve(Math.floor(num/3))
+        }
+    }
+
+    class OddStatus extends StatusInterface{
+        doAction(num){
+            console.log('OddStatus',num);
+            return Promise.resolve(Math.floor(num/4))
+        }
+    }
+
+    class EndStatus extends StatusInterface{
+        doAction(num){
+            console.log('EndStatus',num);
+            return Promise.resolve(0)
+        }
+    }
+
+    class Manager{
+        constructor(num,beginStatus,evenStatus,oddStatus,endStatus){
+            this.status=null;
+            Object.assign(this,{num,beginStatus,evenStatus,oddStatus,endStatus});
+        }
+        setStatus(status){
+            this.status=status;
+        }
+        doAction(num){
+            const me=this;
+            if(!this.status){
+                this.setStatus(beginStatus)
+            }
+            num=num===undefined?me.num:num;
+            this.status.doAction(num).then(function(data){
+                if(me.status == endStatus){
+                    console.log('end',me.num);
+                    return false;
+                }
+                if(data == 0){
+                    me.setStatus(endStatus);
+                }else if(data % 2 == 1){
+                    me.setStatus(evenStatus);
+                }else if(data % 2 == 0){
+                    me.setStatus(oddStatus);
+                }
+                me.doAction(data);
+            });
+        }
+    }
+    const [beginStatus,evenStatus,oddStatus,endStatus]=[
+        new BeginStatus(),new EvenStatus(),new OddStatus(),new EndStatus()
+    ];
+    const manager=new Manager(200,beginStatus,evenStatus,oddStatus,endStatus);
+    manager.doAction();
+}
+</script>
+</body>
+</html>
