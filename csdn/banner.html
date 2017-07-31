@@ -53,7 +53,6 @@
         this.length=imgsrcs.length;
         this.runHandle=null;
         this.moveTrack=[];
-        this.startPosition=0;
         this.lis=imgsrcs.map(function(item,index){
             var li=document.createElement('li'),
                 img=document.createElement('img');
@@ -65,9 +64,9 @@
             img.src=item.url;
             img.setAttribute('skip',item.skip);
             img.onclick=function(){
-//                window.location.href=this.getAttribute('skip');
+                window.location.href=this.getAttribute('skip');
             }
-            if(isInteractive){
+            if(isInteractive && me.length>2){
                 li.addEventListener('touchmove',function(e){
                     me.move(e);
                 },false);
@@ -209,6 +208,10 @@
         url:'20170603-3.jpg'
     },{
         url:'leshi_header.jpg'
+    },{
+        url:'bupiao.jpg'
+    },{
+        url:'market711.jpg'
     }];
     arr.forEach(function(item){
         item.url= 'https://s.qunarzz.com/open_m_train/active/discovery/'+item.url;
