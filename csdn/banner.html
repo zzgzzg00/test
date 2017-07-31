@@ -48,6 +48,7 @@
 <script>
     function Banner(imgsrcs,container,rato,dur,isInteractive){
         var me=this;
+        this.anidur=500;
         this.index=0;
         this.dur=dur;
         this.length=imgsrcs.length;
@@ -57,7 +58,7 @@
             var li=document.createElement('li'),
                 img=document.createElement('img');
             if(index == 0){
-                li.className='active'
+                me.setActive(li);
             }
             img.style.visibility='hidden';
             img.onload=me.show.bind(me,img);
@@ -135,30 +136,49 @@
                 percent=offset/this.width*100;
         return percent;
     }
+    Banner.prototype.removeAnimation=function(dom){
+        dom.className='interactive';
+    }
+    Banner.prototype.setTranslate=function(dom,percent){
+        dom.style.WebkitTransform='translateX('+percent+'%)';
+    }
+    Banner.prototype.touchMove=function(dom,percent){
+        this.removeAnimation(dom);
+        this.setTranslate(dom,percent);
+    }
+    Banner.prototype.setActive=function(dom){
+        dom.className='active';
+    }
+    Banner.prototype.setAfterActive=function(dom){
+        dom.className='afteractive';
+    }
+    Banner.prototype.setInitAction=function(dom){
+        dom.className='';
+    }
+    Banner.prototype.clearStyle=function(dom){
+        dom.style.cssText='';
+    }
     Banner.prototype.moveItem=function(){
         var li=this.lis[this.index];
         var percent=this.calcMovePercent();
-        li.style.WebkitTransform='translateX('+percent+'%)';
-        li.className='interactive';
+        this.touchMove(li,percent);
         var previousIndex=this.findPreviousIndex();
         var pli=this.lis[previousIndex];
-        pli.className='interactive';
-        pli.style.WebkitTransform='translateX('+(-100+percent)+'%)';
+        this.touchMove(pli,-100+percent);
         var nextIndex=this.findNextIndex();
         var nli=this.lis[nextIndex];
-        nli.className='interactive';
-        nli.style.WebkitTransform='translateX('+(100+percent)+'%)';
+        this.touchMove(nli,100+percent);
     }
     Banner.prototype.run=function(){
         var me=this;
-        this.lis[this.index].className='afteractive';
+        this.setAfterActive(this.lis[this.index]);
         var afteractive=this.lis[this.index];
         this.index=this.findNextIndex();
-        this.lis[this.index].className='active';
+        this.setActive(this.lis[this.index]);
         window.setTimeout(function(){
-            afteractive.className='';
+            me.setInitAction(afteractive);
             me.start(me.dur);
-        },500)
+        },me.anidur)
     }
     Banner.prototype.interactiveStart=function(){
         var me=this;
@@ -168,29 +188,29 @@
         var pli=this.lis[previousIndex];
         var nextIndex=this.findNextIndex();
         var nli=this.lis[nextIndex];
-        li.style.cssText='';
-        nli.style.cssText='';
-        pli.style.cssText='';
+        this.clearStyle(li);
+        this.clearStyle(nli);
+        this.clearStyle(pli);
         if(!isAfter){
-            li.className='afteractive';
-            nli.className='active';
-            pli.className='';
+            this.setAfterActive(li);
+            this.setActive(nli);
+            me.setInitAction(pli);
             this.index=this.findNextIndex();
         }else{
-            li.className='';
-            nli.className='';
-            pli.className='active';
+            this.setInitAction(li);
+            this.setInitAction(nli);
+            this.setActive(pli);
             this.index=this.findPreviousIndex();
             window.setTimeout(function(){
-                me.lis[me.findPreviousIndex()].className='afteractive';
-            },500);
+                me.setActive(me.lis[me.findPreviousIndex()]);
+            },me.anidur);
         }
         window.setTimeout(function(){
             for(var i=0;i<me.lis.length;i++){
                 if(i==me.index){
-                    me.lis[i].className='active';
+                    me.setActive(me.lis[i]);
                 }else{
-                    me.lis[i].className='';
+                    me.setInitAction(me.lis[i]);
                 }
             }
         },me.dur);
