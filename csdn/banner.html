@@ -15,6 +15,9 @@
         li{
             list-style: none;
         }
+        .qn_banner_container{
+            position: relative;
+        }
         .qn_banner{
             position: relative;
             overflow: hidden;
@@ -42,6 +45,22 @@
         .qn_banner li img{
             width: 100%;
         }
+        .qn_banner_container .mapcontainer{
+            position: absolute;
+            bottom: 0;
+            height: 15px;
+            display: flex;
+            width: 100%;
+            background-color: red;
+            z-index: 4;
+        }
+        .mapcontainer>span{
+            flex:1;
+            background-color: rgba(255,255,255,.5);
+        }
+        .mapcontainer .mapactive{
+            background-color: rgba(255,255,255,1);
+        }
     </style>
 </head>
 <body>
@@ -55,9 +74,18 @@
         this.runHandle=null;
         this.moveTrack=[];
         this.interactiveHandle=null;
+        container.className='qn_banner_container';
+        var div=document.createElement('div');
+        div.className='mapcontainer';
+        var html=imgsrcs.map(function(item,index){
+            return '<span></span>'
+        });
+        div.innerHTML=html.join('');
+        this.maps=[].slice.call(div.querySelectorAll('span'));
         this.lis=imgsrcs.map(function(item,index){
             var li=document.createElement('li'),
                 img=document.createElement('img');
+            li.setAttribute('index',index);
             if(index == 0){
                 me.setActive(li);
             }
@@ -80,7 +108,6 @@
                     }
                 },false);
             }
-            img.setAttribute('index',index);
             li.appendChild(img);
             return li;
         });
@@ -91,7 +118,10 @@
         this.lis.forEach(function(item){
             ul.appendChild(item);
         });
-        container.appendChild(ul);
+        var fragment=document.createDocumentFragment();
+        fragment.appendChild(ul);
+        fragment.appendChild(div);
+        container.appendChild(fragment);
         if(me.length==1){
             return;
         }
@@ -152,6 +182,7 @@
     }
     Banner.prototype.setActive=function(dom){
         dom.className='active';
+        this.setMapActive(dom.getAttribute('index'));
     }
     Banner.prototype.setAfterActive=function(dom){
         dom.className='afteractive';
@@ -161,6 +192,12 @@
     }
     Banner.prototype.clearStyle=function(dom){
         dom.style.cssText='';
+    }
+    Banner.prototype.setMapActive=function(num){
+        this.maps.forEach(function(item){
+            item.className='';
+        });
+        this.maps[num].className='mapactive';
     }
     Banner.prototype.moveItem=function(){
         var li=this.lis[this.index];
