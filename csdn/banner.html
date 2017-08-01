@@ -28,13 +28,12 @@
             z-index: 1;
             height: 100%;
             -webkit-transform:translateX(100%);
-            transform:translateX(100%)
-            transition:-webkit-transform .5s ease-out 0s,transform .5s ease-out 0s;
+            -webkit-transition:-webkit-transform .5s ease-out 0s;
+            transition:-webkit-transform .5s ease-out 0s;
             background: #fbfbfb url(//simg2.qunarzz.com/hotel/homesearch/Camal_walk_loading.gif) no-repeat center center;
         }
         .qn_banner .active{
             -webkit-transform:translateX(0);
-            transform:translateX(0);
             z-index: 3;
         }
         .qn_banner .interactive{
@@ -43,7 +42,6 @@
         .qn_banner .afteractive{
             z-index: 2;
             -webkit-transform:translateX(-100%);
-            transform:translateX(-100%)
         }
         .qn_banner li img{
             width: 100%;
@@ -74,7 +72,7 @@
 </head>
 <body>
 <script>
-    alert('x');
+    alert('y');
     function Banner(imgsrcs,container,rato,dur,isInteractive){
         var me=this;
         this.anidur=500;
@@ -185,7 +183,6 @@
     }
     Banner.prototype.setTranslate=function(dom,percent){
         dom.style.WebkitTransform='translateX('+percent+'%)';
-        dom.style.transform='translateX('+percent+'%)';
     }
     Banner.prototype.touchMove=function(dom,percent){
         this.removeAnimation(dom);
