@@ -66,7 +66,7 @@
             img.src=item.url;
             img.setAttribute('skip',item.skip);
             img.onclick=function(){
-//                window.location.href=this.getAttribute('skip');
+                window.location.href=this.getAttribute('skip');
             }
             if(isInteractive && me.length>2){
                 li.addEventListener('touchmove',function(e){
