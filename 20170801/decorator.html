@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    class Test{
+        doAction(){
+            console.log('test')
+        }
+    }
+    class A{
+        constructor(obj){
+            this.obj=obj;
+        }
+        doAction(){
+            console.log('a');
+            this.obj.doAction();
+        }
+    }
+    class B{
+        constructor(obj){
+            this.obj=obj;
+        }
+        doAction(){
+            console.log('b');
+            this.obj.doAction();
+        }
+    }
+    const t=new B(new A(new Test()));
+    t.doAction();
+</script>
+</body>
+</html>
