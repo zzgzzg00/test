@@ -198,18 +198,19 @@
         this.clearStyle(li);
         this.clearStyle(nli);
         this.clearStyle(pli);
+        console.log(isAfter);
         if(!isAfter){
             this.setAfterActive(li);
             this.setActive(nli);
             me.setInitAction(pli);
             this.index=this.findNextIndex();
         }else{
+            this.setActive(pli);
             this.setInitAction(li);
             this.setInitAction(nli);
-            this.setActive(pli);
             this.index=this.findPreviousIndex();
             window.setTimeout(function(){
-                me.setActive(me.lis[me.findPreviousIndex()]);
+                me.setAfterActive(me.lis[me.findPreviousIndex()]);
             },me.anidur);
         }
         this.interactiveHandle=window.setTimeout(function(){
