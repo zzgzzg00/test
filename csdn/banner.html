@@ -129,6 +129,7 @@
         return index%this.length;
     }
     Banner.prototype.move=function(e){
+        e.preventDefault();
         this.stop();
         this.pushTrack(e);
         this.moveItem();
