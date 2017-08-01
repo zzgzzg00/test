@@ -54,6 +54,7 @@
         this.length=imgsrcs.length;
         this.runHandle=null;
         this.moveTrack=[];
+        this.interactiveHandle=null;
         this.lis=imgsrcs.map(function(item,index){
             var li=document.createElement('li'),
                 img=document.createElement('img');
@@ -184,6 +185,9 @@
     }
     Banner.prototype.interactiveStart=function(){
         var me=this;
+        if(this.interactiveHandle){
+            window.clearTimeout(me.interactiveHandle);
+        }
         var isAfter=this.calcMovePercent()>=0?true:false;
         var li=this.lis[this.index];
         var previousIndex=this.findPreviousIndex();
@@ -207,7 +211,7 @@
                 me.setActive(me.lis[me.findPreviousIndex()]);
             },me.anidur);
         }
-        window.setTimeout(function(){
+        this.interactiveHandle=window.setTimeout(function(){
             for(var i=0;i<me.lis.length;i++){
                 if(i==me.index){
                     me.setActive(me.lis[i]);
