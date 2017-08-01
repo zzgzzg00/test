@@ -65,13 +65,13 @@
             img.src=item.url;
             img.setAttribute('skip',item.skip);
             img.onclick=function(){
-                window.location.href=this.getAttribute('skip');
+//                window.location.href=this.getAttribute('skip');
             }
             if(isInteractive && me.length>2){
                 li.addEventListener('touchmove',function(e){
                     me.move(e);
                 },false);
-                li.style.width=window.innerWidth;
+                li.style.width=me.getWidth()+'px';
                 li.addEventListener('touchend',function(e){
                     if(me.moveTrack.length>0){
                         me.interactiveStart();
@@ -85,11 +85,8 @@
         });
         var ul=document.createElement('ul');
         ul.className='qn_banner';
-        var width=window.innerWidth
-                    || (document.documentElement && document.documentElement.clientWidth)
-                    || document.body.clientWidth;
-        this.width=width;
-        ul.style.height=width*(1/rato)+'px'
+        this.width=this.getWidth();
+        ul.style.height=this.width*(1/rato)+'px'
         this.lis.forEach(function(item){
             ul.appendChild(item);
         });
@@ -98,6 +95,11 @@
             return;
         }
         this.start(dur);
+    }
+    Banner.prototype.getWidth=function(){
+        return window.innerWidth
+                || (document.documentElement && document.documentElement.clientWidth)
+                || document.body.clientWidth;
     }
     Banner.prototype.start=function(dur){
         var me=this;
@@ -228,11 +230,11 @@
         url:'20170603-3.jpg'
     },{
         url:'leshi_header.jpg'
-    },{
+    }/*,{
         url:'bupiao.jpg'
     },{
         url:'market711.jpg'
-    }];
+    }*/];
     arr.forEach(function(item){
         item.url= 'https://s.qunarzz.com/open_m_train/active/discovery/'+item.url;
         item.skip='http://www.baidu.com'
