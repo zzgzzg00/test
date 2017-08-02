@@ -15,10 +15,10 @@
         li{
             list-style: none;
         }
-        .qn_banner_container{
+        .qn_banner{
             position: relative;
         }
-        .qn_banner{
+        .qn_banner ul{
             position: relative;
             overflow: hidden;
         }
@@ -46,7 +46,7 @@
         .qn_banner li img{
             width: 100%;
         }
-        .qn_banner_container .mapcontainer{
+        .qn_banner .mapcontainer{
             position: absolute;
             bottom: 0;
             height: 5px;
@@ -57,7 +57,7 @@
             background-color: #808080;
             z-index: 4;
         }
-        .mapcontainer>span{
+        .qn_banner .mapcontainer>span{
             -webkit-box-flex:1;
             -webkit-flex:1;
             flex:1;
@@ -65,7 +65,7 @@
             height: 100%;
             background-color: rgba(0,0,0,0);
         }
-        .mapcontainer .mapactive{
+        .qn_banner .mapcontainer .mapactive{
             background-color: #40affe;
         }
     </style>
@@ -81,7 +81,6 @@
         this.runHandle=null;
         this.moveTrack=[];
         this.interactiveHandle=null;
-        container.className='qn_banner_container';
         var div=document.createElement('div');
         div.className='mapcontainer';
         var html=imgsrcs.map(function(item,index){
@@ -119,16 +118,16 @@
             return li;
         });
         var ul=document.createElement('ul');
-        ul.className='qn_banner';
         this.width=this.getWidth();
         ul.style.height=this.width*(1/rato)+'px'
         this.lis.forEach(function(item){
             ul.appendChild(item);
         });
-        var fragment=document.createDocumentFragment();
-        fragment.appendChild(ul);
-        fragment.appendChild(div);
-        container.appendChild(fragment);
+        var bannerContainer=document.createElement('div');
+        bannerContainer.appendChild(ul);
+        bannerContainer.appendChild(div);
+        bannerContainer.className='qn_banner';
+        container.appendChild(bannerContainer);
         if(me.length==1){
             return;
         }
