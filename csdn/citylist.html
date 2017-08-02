@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no" />
+    <meta name="format-detection"content="telephone=no"/>
+    <meta charset="utf-8" />
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        li{
+            list-style: none;
+        }
+        .qn_citylist .cities{
+            margin-right: 30px;
+        }
+        .qn_citylist .charcter_index{
+            width: 30px;
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction:column;
+            text-align: center;
+        }
+        .qn_citylist .title{
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+            background-color: #f2f8fb;
+            padding: 0 15px;
+            margin-left: 0;
+            position: sticky;
+            top: -1px;
+        }
+        .qn_citylist li{
+            display: block;
+            height: 44px;
+            line-height: 44px;
+            padding-left: 25px;
+            border-bottom: 1px solid #e3e6e9;
+            margin-left: 15px;
+        }
+        .qn_citylist .charcter_index a{
+            flex:1;
+            text-decoration: none;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+<script>
+    function CityList(container,data,indexarr){
+        var data=[{
+            'title':'A',
+            'lists':['安慰','达瓦啊']
+        },{
+            'title':'B',
+            'lists':['八万多','八大','把我']
+        },{
+            'title':'C',
+            'lists':['安慰','达瓦啊','八万多','八大','把我','安慰','达瓦啊','八万多','八大','把我','安慰','达瓦啊','八万多','八大','把我']
+        }]
+        this.container=container;
+        var div=document.createElement('div');
+        div.className='qn_citylist';
+        div.appendChild(this.addCharacterIndex(indexarr));
+        div.appendChild(this.addCityLists(data));
+        container.appendChild(div);
+    }
+    /**
+     * [{
+     *  title:'A',
+     *  lists:['A1','A2']
+     * }]
+     * */
+    CityList.prototype.addCityLists=function(data){
+        var _data=data.map(function(item){
+            return '<ul><li class="title">'+item.title+'</li>'+item.lists.map(function(_item){
+                return '<li>'+_item+'</li>'
+            }).join('')+'</ul>';
+        });
+        var div=document.createElement('div');
+        div.innerHTML=_data.join('');
+        div.className='cities';
+        return div;
+    }
+    CityList.prototype.addCharacterIndex=function(indexarr){
+        for(var i='A'.charCodeAt(0);i<='Z'.charCodeAt(0);i++){
+            indexarr.push(String.fromCharCode(i));
+        }
+        var container=this.characterContainer=document.createElement('div');
+        container.className='charcter_index';
+        indexarr=indexarr.map(function(item){
+            return '<a href="#'+item+'">'+item+'</a>'
+        });
+        container.innerHTML=indexarr.join('');
+        return container;
+    }
+    new CityList(document.body,[],['最近','热门城市']);
+</script>
+</body>
+</html>
