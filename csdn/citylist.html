@@ -68,7 +68,6 @@
     window.onerror=function(e){
         alert(e);
     }
-    alert(1);
     function CityList(container,data,indexarr){
         var data=[{
             'title':'A',
@@ -112,7 +111,7 @@
         var container=this.characterContainer=document.createElement('div');
         container.className='charcter_index';
         indexarr=indexarr.map(function(item){
-            return '<a data-href="list_'+item+'">'+item+'</a>'
+            return '<a href="#" data-href="list_'+item+'">'+item+'</a>'
         });
         container.innerHTML=indexarr.join('');
         return container;
@@ -127,7 +126,7 @@
     CityList.prototype.bindEvents=function(){
         var me=this;
         this.container.onclick=function(e){
-            alert(2);
+            e.preventDefault();
             var target= e.target;
             var href=target.getAttribute('data-href');
             if(href){
