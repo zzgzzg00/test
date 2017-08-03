@@ -15,6 +15,9 @@
         li{
             list-style: none;
         }
+        .qn_citylist{
+            cursor: pointer;
+        }
         .qn_citylist .cities,.qn_citylist .selections{
             margin-right: 30px;
         }
@@ -167,7 +170,7 @@
     }
     CityList.prototype.bindEvents=function(){
         var me=this;
-        this.container.addEventListener('touchend',function(e){
+        this.container.addEventListener('click',function(e){
             e.preventDefault();
             var target= e.target;
             var href=target.getAttribute('data-href');
