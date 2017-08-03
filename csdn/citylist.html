@@ -68,6 +68,7 @@
     window.onerror=function(e){
         alert(e);
     }
+    alert(1);
     function CityList(container,data,indexarr){
         var data=[{
             'title':'A',
@@ -126,6 +127,7 @@
     CityList.prototype.bindEvents=function(){
         var me=this;
         this.container.onclick=function(e){
+            alert(2);
             var target= e.target;
             var href=target.getAttribute('data-href');
             if(href){
