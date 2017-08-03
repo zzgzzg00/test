@@ -32,7 +32,7 @@
             flex-direction:column;
             text-align: center;
         }
-        .qn_citylist .title{
+        .qn_citylist ul li:first-child{
             height: 30px;
             line-height: 30px;
             font-size: 12px;
@@ -58,6 +58,9 @@
             text-decoration: none;
             font-size: 10px;
         }
+        .qn_citylist ul li.target{
+            position: relative;
+        }
     </style>
 </head>
 <body>
@@ -79,6 +82,7 @@
         div.appendChild(this.addCharacterIndex(indexarr));
         div.appendChild(this.addCityLists(data));
         container.appendChild(div);
+        this.bindEvents();
     }
     /**
      * [{
@@ -88,7 +92,7 @@
      * */
     CityList.prototype.addCityLists=function(data){
         var _data=data.map(function(item){
-            return '<ul><li class="title">'+item.title+'</li>'+item.lists.map(function(_item){
+            return '<ul><li data-id="list_'+item.title+'">'+item.title+'</li>'+item.lists.map(function(_item){
                 return '<li>'+_item+'</li>'
             }).join('')+'</ul>';
         });
@@ -104,10 +108,28 @@
         var container=this.characterContainer=document.createElement('div');
         container.className='charcter_index';
         indexarr=indexarr.map(function(item){
-            return '<a href="#'+item+'">'+item+'</a>'
+            return '<a data-href="list_'+item+'">'+item+'</a>'
         });
         container.innerHTML=indexarr.join('');
         return container;
+    }
+    CityList.prototype.scrollToView=function(dom){
+        if(dom){;
+            dom.className='target';
+            dom.scrollIntoView();
+            dom.className='';
+        }
+    }
+    CityList.prototype.bindEvents=function(){
+        var me=this;
+        this.container.onclick=function(e){
+            var target= e.target;
+            var href=target.getAttribute('data-href');
+            if(href){
+                me.scrollToView(document.querySelector('[data-id="'+href+'"]'));
+            }
+
+        }
     }
     new CityList(document.body,[],['最近','热门城市']);
 </script>
