@@ -168,7 +168,7 @@
     CityList.prototype.bindEvents=function(){
         var me=this;
         this.container.onclick=function(e){
-            e.preventDefault();
+            e.preventDefault && e.preventDefault();
             var target= e.target;
             var href=target.getAttribute('data-href');
             alert(href);
