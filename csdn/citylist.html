@@ -171,11 +171,13 @@
             e.preventDefault();
             var target= e.target;
             var href=target.getAttribute('data-href');
+            alert(href);
             if(href){
                 me.scrollToView(document.querySelector('[data-id="'+href+'"]'));
                 return;
             }
             var city=target.getAttribute('data-city');
+            alert(city);
             if(city){
                 me.hide(city);
                 return;
