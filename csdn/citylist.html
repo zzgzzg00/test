@@ -65,6 +65,9 @@
 </head>
 <body>
 <script>
+    window.onerror=function(e){
+        alert(e);
+    }
     function CityList(container,data,indexarr){
         var data=[{
             'title':'A',
@@ -114,9 +117,8 @@
         return container;
     }
     CityList.prototype.scrollToView=function(dom){
-        if(dom){;
+        if(dom){
             dom.className='target';
-            alert(1);
             dom.scrollIntoView();
             dom.className='';
         }
