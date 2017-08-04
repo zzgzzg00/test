@@ -82,7 +82,7 @@
 </head>
 <body>
 <script>
-    function CityList(container,cityDataArray,selectionDataArray){
+    function CityList(container,cityDataArray,selectionDataArray,isNeededIndex){
         var cityDataArray=[{
             'title':'A',
             'lists':['安慰','达瓦啊']
@@ -106,12 +106,24 @@
         div.className='qn_citylist';
         div.appendChild(this.addSelectionLists(selectionDataArray));
         div.appendChild(this.addCityLists(cityDataArray));
-        var selectionTitle=selectionDataArray.map(function(item){
-            return item.title;
-        })
-        div.appendChild(this.addCharacterIndex(selectionTitle));
+        var characterIndexes=[];
+        [].push.apply(characterIndexes,this.getTitles(selectionDataArray))
+        if(isNeededIndex){
+            [].push.apply(characterIndexes,this.getTitles(cityDataArray));
+        }else{
+            for(var i='A'.charCodeAt(0);i<='Z'.charCodeAt(0);i++){
+                characterIndexes.push(String.fromCharCode(i));
+            }
+        }
+        div.appendChild(this.addCharacterIndex(characterIndexes));
         container.appendChild(div);
         this.bindEvents();
+    }
+    CityList.prototype.getTitles=function(dataArr){
+        dataArr=dataArr || [];
+        return dataArr.map(function(item){
+            return item.title;
+        });
     }
     CityList.prototype.createListsContainer=function(data){
         var div=document.createElement('div');
@@ -148,11 +160,7 @@
         div.className='cities';
         return div;
     }
-    CityList.prototype.addCharacterIndex=function(indexarr){
-        indexarr=indexarr || [];
-        for(var i='A'.charCodeAt(0);i<='Z'.charCodeAt(0);i++){
-            indexarr.push(String.fromCharCode(i));
-        }
+    CityList.prototype.addCharacterIndex=function(indexarr,isNeededIndex){
         var container=this.characterContainer=document.createElement('div');
         container.className='charcter_index';
         indexarr=indexarr.map(function(item){
@@ -195,7 +203,7 @@
         this.container.style.display='none';
         this.citySelectedCallback && this.citySelectedCallback(selectedCity);
     }
-    new CityList(document.body,[],['最近','热门城市']);
+    new CityList(document.body,[],[],true);
 </script>
 </body>
 </html>
