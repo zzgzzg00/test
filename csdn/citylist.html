@@ -83,23 +83,6 @@
 <body>
 <script>
     function CityList(container,cityDataArray,selectionDataArray,isNeededIndex){
-        var cityDataArray=[{
-            'title':'A',
-            'lists':['安慰','达瓦啊']
-        },{
-            'title':'B',
-            'lists':['八万多','八大','把我']
-        },{
-            'title':'C',
-            'lists':['安慰','达瓦啊','八万多','八大','把我','安慰','达瓦啊','八万多','八大','把我','安慰','达瓦啊','八万多','八大','把我']
-        }];
-        var selectionDataArray=[{
-            title:'最近搜索',
-            lists:['北京','上海','北京','上海','北京','上海','北京','上海']
-        },{
-           title:'热门',
-           lists:['北京','上海','广州','深圳','北京','上海','广州','深圳','北京','上海','广州','深圳']
-        }];
         this.container=container;
         this.citySelectedCallback;
         var div=document.createElement('div');
@@ -203,7 +186,27 @@
         this.container.style.display='none';
         this.citySelectedCallback && this.citySelectedCallback(selectedCity);
     }
-    new CityList(document.body,[],[],true);
+
+
+    var cityDataArray=[{
+        'title':'A',
+        'lists':['安慰','达瓦啊']
+    },{
+        'title':'B',
+        'lists':['八万多','八大','把我']
+    },{
+        'title':'C',
+        'lists':['安慰','达瓦啊','八万多','八大','把我','安慰','达瓦啊','八万多','八大','把我','安慰','达瓦啊','八万多','八大','把我']
+    }];
+    var selectionDataArray=[{
+        title:'最近搜索',
+        lists:['北京','上海','北京','上海','北京','上海','北京','上海']
+    },{
+        title:'热门',
+        lists:['北京','上海','广州','深圳','北京','上海','广州','深圳','北京','上海','广州','深圳']
+    }];
+    var isNeedIndex=true;
+    new CityList(document.body,cityDataArray,selectionDataArray,isNeedIndex);
 </script>
 </body>
 </html>
