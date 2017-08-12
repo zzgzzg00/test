@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    /**
+     * eval(..) 函数如果接受了含有一个或多个声明的代码，就会修改其所处的词法作用域，而
+     with 声明实际上是根据你传递给它的对象凭空创建了一个全新的词法作用域。
+     * */
+    var b=1;
+    function test1(){
+        eval('var b=2');//会改变当前词法作用域
+        console.log(b);//2
+    }
+    function test2(){
+        'use strict';
+        eval('var b=2');//严格模式不会改变当前词法作用域
+        console.log(b);//1
+    }
+    test1();//2
+    test2();//1
+
+    /**
+     * 尽管with 块可以将一个对象处理为词法作用域，但是这个块内部正常的var
+     声明并不会被限制在这个块的作用域中，而是被添加到with 所处的函数作
+     用域中
+     * */
+    function withTest(){
+        console.log(a);
+    }
+    with(withTest){
+        var a=10;
+    }
+    withTest();//10
+
+    var o1={
+        'a':1
+    };
+    var o2={
+        'b':1
+    }
+    with(o1){
+        a=2;//在o1的词法作用域中找到了a 对a重新赋值
+    }
+    with(o2){
+        a=2;//在o2词法作用域中未找到a 重新定义了一个全局变量
+        var c=10;//函数内的变量
+    }
+    console.log(o1.a,o2.a,a,o2.c);//2 undefined 2 undefined
+
+    var createfun=new Function('a,b=2','return a+b');
+    console.log(createfun(1));//3
+</script>
+</body>
+</html>

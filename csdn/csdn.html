@@ -8,12 +8,17 @@
     <meta charset="utf-8" />
 </head>
 <body>
+
 <script>
-    function bouncer(arr) {
-        var un = new Set([false,null,0,"",undefined,NaN]);
-        return arr.filter(item=>!un.has(item));
+    var b=10;
+    function test(){
+        alert(b);
     }
-    console.log(bouncer([1, null, NaN, 2, undefined]));
+    function xx(){
+        var b=11;
+        test();
+    }
+    xx();
 </script>
 </body>
 </html>

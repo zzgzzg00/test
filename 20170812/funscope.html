@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    var test=function foo(){
+        //foo 只能函数内部访问
+        console.log(typeof foo);
+    }
+    test();//function
+    console.log(test.name);//foo
+    //foo();//error
+
+    var outer=1;
+    (function foo(){
+        console.log(outer);
+        if(++outer<5){
+            foo();
+        }
+        //及可以递归调用又不新加全局变量
+    })();
+    console.log(typeof foo);//undefined
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    var e=1;
+    try{
+        throw undefined;
+    }catch(e){
+        e=2;
+        console.log(e);//2
+    }
+    console.log(e);//1
+</script>
+</body>
+</html>
