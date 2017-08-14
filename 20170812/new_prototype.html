@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    var o={
+        'a':1
+    }
+    var test=Object.create(o);
+    console.log(test.hasOwnProperty('a'));//false
+    /**
+     * 等同于test.a=test.a+1 所以会在对象本身上新建a属性
+     * 如果原型上的属性设置了writable=false或者setter 则不会在对象本身上新建属性
+     * */
+    test.a++;
+    console.log(test.hasOwnProperty('a'));//true
+    Object.defineProperty(test.__proto__,'x',{
+        writable:false,
+        value:1
+    })
+    console.log(test.x);//1
+    test.x=2;
+    console.log(test.x,test.hasOwnProperty('x'));//1 false
+
+</script>
+</body>
+</html>
