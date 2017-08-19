@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    
+     let a={
+        d:{
+            x:()=>this===window
+        },
+        a:1,
+        b:()=>this===window,
+        m(){
+            return ()=>this===window
+        }
+    }
+
+    a.c=()=>this===window;
+
+    console.log(a.b(), a.c(), a.d.x(), a.m()());//true true true false
+
+    function Test(){};
+    Test.prototype.a=()=>this===window;
+    Test.prototype.s=function(){
+        return ()=>this===window;
+    }
+    var t=new Test();
+    console.log(t.a(), t.s()());//true false
+</script>
+</body>
+</html>

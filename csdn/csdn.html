@@ -8,17 +8,21 @@
     <meta charset="utf-8" />
 </head>
 <body>
-
 <script>
-    var b=10;
-    function test(){
-        alert(b);
+    var checkNeedSource=function(needSourceLists,callback){
+        var obj={};
+        return function(sourceName){
+            obj[sourceName]=1;
+            var keys=Object.keys(obj);
+            var result=needSourceLists.filter(function(item){
+                return keys.indexOf(item)==-1;
+            });
+            if(result.length == 0){
+                callback(needSourceLists);
+            }
+            return result;
+        }
     }
-    function xx(){
-        var b=11;
-        test();
-    }
-    xx();
 </script>
 </body>
 </html>
