@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    Function.prototype.bind=function(){
+        var context=arguments[0],
+            args=[].slice.call(arguments,1),
+            me=this;
+        function fn(){
+            var arr=[].slice.call(arguments);
+            [].unshift.apply(arr,args);
+            context=this instanceof fn?this:context;
+            return me.apply(context,arr);
+        }
+        fn.prototype=Object.create(me.prototype);
+        return fn;
+    }
+    var test='window';
+    var obj={
+        test:'obj'
+    };
+    function testfn(){
+        console.log(this.test,[].slice.call(arguments));
+    }
+    testfn(1,2,3);
+    testfn.bind(obj)(1,2,3);
+
+    function Test(a,b){
+        Object.assign(this,{a,b});
+    }
+    Test.prototype.show=function(){
+        const {a,b}=this;
+        console.log(a,b);
+    }
+    var T=Test.bind(obj,1);
+    var t=new T(2);
+    t.show();
+</script>
+</body>
+</html>
