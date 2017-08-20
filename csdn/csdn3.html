@@ -5,7 +5,12 @@
 </head>
 <body>
 <script>
-    document.body.innerHTML='\u003cimg src="" onerror="alert(1)" /\u003e';
+    var obj={
+        then(a,b){
+            b(1)
+        }
+    }
+    Promise.resolve(obj).catch(data=>console.log(data))
 </script>
 </body>
 </html>
