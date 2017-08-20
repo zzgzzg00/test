@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    var o1={
+        then(){
+
+        }
+    };
+    var o2={
+        then(a,b){
+            //a(1);
+            b(2);
+        }
+    };
+    var o3={};
+    Promise.resolve(o2).then(console.log).catch(console.log);
+    //o1的then由于没调用对应的回调导致promise永远被挂起
+    Promise.resolve(o1).then(console.log).catch(console.log);
+    Promise.resolve(o3).then(console.log).catch(console.log);
+</script>
+</body>
+</html>
