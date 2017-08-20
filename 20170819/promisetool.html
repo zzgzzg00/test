@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function reject(msg,time){
+        return new Promise(function(resolve,reject){
+            setTimeout(reject,time,msg);
+        });
+    }
+    function resolve(msg,time){
+        return new Promise(function(resolve,reject){
+            setTimeout(resolve,time,msg);
+        });
+    }
+    var promiseTools={
+        _last:function(index,len,arr,resolve){
+            if(index >= len){
+                resolve(arr.pop());
+            }
+        },
+        first:function (ps){
+            return new Promise(function(resolve,reject){
+                ps.forEach(function(item,index){
+                    Promise.resolve(item)
+                        .then(resolve)
+                        .catch(function(){
+
+                        });
+                });
+            });
+        },
+        last:function(ps){
+            return new Promise(function(resolve,reject){
+                var arr=[],index=0,len=ps.length;
+                ps.forEach(function(item){
+                    Promise.resolve(item)
+                        .then(function(data){
+                            index++;
+                            arr.push(data);
+                            promiseTools._last(index,len,arr,resolve);
+                        })
+                        .catch(function(){
+                            index++;
+                            promiseTools._last(index,len,arr,resolve);
+                        })
+
+                })
+            });
+        }
+    }
+    promiseTools.first([reject(1,100),resolve(2,300),resolve(3,200)]).then(console.log)
+    promiseTools.last([reject(1,100),resolve(2,300),resolve(3,200),reject(4,500)]).then(console.log)
+</script>
+</body>
+</html>
