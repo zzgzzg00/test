@@ -8,7 +8,7 @@
 <script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
 <script src="//api.map.baidu.com/api?v=1.4&ak=h7KwRB1TZEHVaspIMtQr6fj1&s=1" type="text/javascript"></script>
 <script>
-    function getCity(defaultCity){
+    function getCity(){
         var d= $.Deferred();
         var handle=window.setTimeout(function(){
             d.reject({
@@ -16,7 +16,7 @@
                 msg:'定位超时'
             })
         },3000);
-        function resolveDeferred(d,type,data,handle){
+        function resolveDeferred(d,handle,data){
             if(!resolveDeferred.hasDeferred){
                 handle && clearTimeout(handle);
                 d.resolve(data);
@@ -26,9 +26,9 @@
         }
         getLocation()
             .then(getCityByBaiduMap)
-            .then(resolveDeferred.bind(null,d),getCityByServer)
-            .then(resolveDeferred.bind(null,d),getCityByIp)
-            .then(resolveDeferred.bind(null,d))
+            .then(resolveDeferred.bind(null,d,handle),getCityByServer)
+            .then(resolveDeferred.bind(null,d,handle),getCityByIp)
+            .then(resolveDeferred.bind(null,d,handle))
             .fail(function(){
                 d.reject({
                     status:1,
@@ -39,6 +39,12 @@
     }
     function getLocation(){
         var d= $.Deferred();
+        window.setTimeout(function(){
+            d.reject({
+                status:-6,
+                msg:'获取经纬度超时'
+            });
+        },1000);
         if(navigator.geolocation && navigator.geolocation.getCurrentPosition){
             navigator.geolocation.getCurrentPosition(function(position){
                 var lat = position.coords.latitude,
@@ -85,6 +91,7 @@
             var addComp = rs.addressComponents;
             d.resolve({
                 'status':0,
+                'from':'baidu',
                 'province':addComp.province,
                 'city':addComp.city&&addComp.city.replace(/市$/,''),
                 'district':addComp.district,
@@ -114,6 +121,7 @@
             success: function(res) {
                 d.resolve({
                     status:0,
+                    from:'server',
                     city:res.city
                 });
             }
@@ -131,6 +139,7 @@
             success: function(res) {
                 d.resolve({
                     status:0,
+                    from:'ip',
                     city:res.city
                 });
             }
@@ -140,10 +149,10 @@
 
     getCity()
         .then(function(data){
-            console.log(JSON.stringify(data,null,4))
+            alert(JSON.stringify(data,null,4))
         })
         .fail(function(data){
-            console.log(JSON.stringify(data,null,4))
+            alert(JSON.stringify(data,null,4))
         })
 </script>
 </body>
