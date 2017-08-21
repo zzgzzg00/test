@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
+<script src="//api.map.baidu.com/api?v=1.4&ak=h7KwRB1TZEHVaspIMtQr6fj1&s=1" type="text/javascript"></script>
+<script>
+    function getCity(defaultCity){
+        var d= $.Deferred();
+        var handle=window.setTimeout(function(){
+            d.reject({
+                status:2,
+                msg:'定位超时'
+            })
+        },3000);
+        function resolveDeferred(d,type,data,handle){
+            if(!resolveDeferred.hasDeferred){
+                handle && clearTimeout(handle);
+                d.resolve(data);
+                resolveDeferred.hasDeferred=1;
+            }
+            return d;
+        }
+        getLocation()
+            .then(getCityByBaiduMap)
+            .then(resolveDeferred.bind(null,d),getCityByServer)
+            .then(resolveDeferred.bind(null,d),getCityByIp)
+            .then(resolveDeferred.bind(null,d))
+            .fail(function(){
+                d.reject({
+                    status:1,
+                    msg:'定位失败'
+                })
+            })
+        return d;
+    }
+    function getLocation(){
+        var d= $.Deferred();
+        if(navigator.geolocation && navigator.geolocation.getCurrentPosition){
+            navigator.geolocation.getCurrentPosition(function(position){
+                var lat = position.coords.latitude,
+                    lon = position.coords.longitude;
+                d.resolve({
+                    status:0,
+                    lat:lat,
+                    lon:lon
+                });
+            });
+        }else{
+            d.reject({
+               status:-1,
+               msg:'location error'
+            });
+        }
+        return d;
+    }
+    function checkLocation(data){
+        if(data.lat == undefined || data.lon == undefined){
+            return false;
+        }
+        return true;
+    }
+    function getCityByBaiduMap(data){
+        var d= $.Deferred();
+        if(!window.BMap){
+            d.reject({
+                'status':-2,
+                'msg':'缺少依赖库'
+            });
+            return d;
+        }
+        if(!checkLocation(data)){
+            d.reject({
+                status:-5,
+                msg:'参数缺失'
+            });
+            return d;
+        }
+        var point = new BMap.Point(data.lon, data.lat),
+            gc = new BMap.Geocoder();
+        gc.getLocation(point, function (rs) {
+            var addComp = rs.addressComponents;
+            d.resolve({
+                'status':0,
+                'province':addComp.province,
+                'city':addComp.city&&addComp.city.replace(/市$/,''),
+                'district':addComp.district,
+                'street':addComp.street,
+                'streetNumber':addComp.streetNumber
+            });
+        });
+        return d;
+    }
+    function getCityByServer(data){
+        var d= $.Deferred();
+        if(!checkLocation(data)){
+            d.reject({
+                status:-5,
+                msg:'参数缺失'
+            });
+            return d;
+        }
+        $.ajax({
+            url: "/",
+            data: {
+                lon:data.lon,
+                lat:data.lat,
+                _t: +new Date()
+            },
+            dataType: "jsonp",
+            success: function(res) {
+                d.resolve({
+                    status:0,
+                    city:res.city
+                });
+            }
+        });
+        return d;
+    }
+    function getCityByIp(){
+        var d= $.Deferred();
+        $.ajax({
+            url: "https://api.qunar.com/ips.jcp",
+            data: {
+                '_t': +new Date()
+            },
+            dataType: "jsonp",
+            success: function(res) {
+                d.resolve({
+                    status:0,
+                    city:res.city
+                });
+            }
+        });
+        return d;
+    }
+
+    getCity()
+        .then(function(data){
+            console.log(JSON.stringify(data,null,4))
+        })
+        .fail(function(data){
+            console.log(JSON.stringify(data,null,4))
+        })
+</script>
+</body>
+</html>

@@ -8,21 +8,10 @@
     <meta charset="utf-8" />
 </head>
 <body>
+<script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
+<script src="//api.map.baidu.com/api?v=1.4&ak=h7KwRB1TZEHVaspIMtQr6fj1&s=1" type="text/javascript"></script>
 <script>
-    var checkNeedSource=function(needSourceLists,callback){
-        var obj={};
-        return function(sourceName){
-            obj[sourceName]=1;
-            var keys=Object.keys(obj);
-            var result=needSourceLists.filter(function(item){
-                return keys.indexOf(item)==-1;
-            });
-            if(result.length == 0){
-                callback(needSourceLists);
-            }
-            return result;
-        }
-    }
+
 </script>
 </body>
 </html>
