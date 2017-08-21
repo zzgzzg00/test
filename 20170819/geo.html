@@ -39,12 +39,6 @@
     }
     function getLocation(){
         var d= $.Deferred();
-        window.setTimeout(function(){
-            d.reject({
-                status:-6,
-                msg:'获取经纬度超时'
-            });
-        },1000);
         if(navigator.geolocation && navigator.geolocation.getCurrentPosition){
             navigator.geolocation.getCurrentPosition(function(position){
                 var lat = position.coords.latitude,
