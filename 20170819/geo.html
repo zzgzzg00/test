@@ -39,10 +39,17 @@
     }
     function getLocation(){
         var d= $.Deferred();
+        var handle=window.setTimeout(function(){
+            d.reject({
+                status:-6,
+                msg:'获取经纬度失败'
+            });
+        },2000);
         if(navigator.geolocation && navigator.geolocation.getCurrentPosition){
             navigator.geolocation.getCurrentPosition(function(position){
                 var lat = position.coords.latitude,
                     lon = position.coords.longitude;
+                handle && clearTimeout(handle);
                 d.resolve({
                     status:0,
                     lat:lat,
