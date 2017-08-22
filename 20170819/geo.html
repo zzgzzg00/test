@@ -25,19 +25,27 @@
             return d;
         }
         getLocation()
-            .then(getCityByBaiduMap)
-            .then(resolveDeferred.bind(null,d,handle),getCityByServer)
-            .then(resolveDeferred.bind(null,d,handle),getCityByIp)
-            .then(resolveDeferred.bind(null,d,handle))
-            .fail(function(){
-                d.reject({
-                    status:1,
-                    msg:'定位失败'
-                })
+            .then(function(data){
+                return firstResolve([getCityByBaiduMap(data),getCityByServer(data)])
+            })
+            .then(function(data){
+                resolveDeferred(d,handle,data)
+            })
+            .fail(function(data){
+                getCityByIp()
+                    .then(function(data){
+                        resolveDeferred(d,handle,data);
+                    },function(){
+                        d.reject({
+                            status:1,
+                            msg:'定位失败'
+                        });
+                    })
             })
         return d;
     }
     function getLocation(){
+        console.log('getLocation');
         var d= $.Deferred();
         var handle=window.setTimeout(function(){
             d.reject({
@@ -62,6 +70,13 @@
                msg:'location error'
             });
         }
+
+//        d.resolve({
+//            status:0,
+//            lat:0,
+//            lon:10
+//        });
+
         return d;
     }
     function checkLocation(data){
@@ -70,7 +85,34 @@
         }
         return true;
     }
+    function firstResolve(deferredarr,timeout){
+        var d= $.Deferred();
+        timeout=timeout*1000 || 5000;
+        var len=deferredarr.length,failReason=[],index= 0,handle;
+        handle=setTimeout(function(){
+            d.reject({
+                status:-7,
+                msg:'等待超时'
+            });
+        },timeout);
+        deferredarr.forEach(function(item,_index){
+            item
+                .then(function(data){
+                    handle && clearTimeout(handle);
+                    d.resolve(data);
+                }).fail(function(data){
+                    failReason[index]=data;
+                    index++;
+                    if(index >= len){
+                        handle && clearTimeout(handle);
+                        d.reject(failReason);
+                    }
+                })
+        })
+        return d;
+    }
     function getCityByBaiduMap(data){
+        console.log('getCityByBaiduMap');
         var d= $.Deferred();
         if(!window.BMap){
             d.reject({
@@ -100,9 +142,17 @@
                 'streetNumber':addComp.streetNumber
             });
         });
+
+//        window.setTimeout(function(){
+//            d.resolve({
+//                'city':'百度'
+//            });
+//        },500);
+
         return d;
     }
     function getCityByServer(data){
+        console.log('getCityByServer');
         var d= $.Deferred();
         if(!checkLocation(data)){
             d.reject({
@@ -127,9 +177,17 @@
                 });
             }
         });
+
+//        window.setTimeout(function(){
+//            d.resolve({
+//                'city':'server'
+//            });
+//        },700);
+
         return d;
     }
     function getCityByIp(){
+        console.log('getCityByIp');
         var d= $.Deferred();
         $.ajax({
             url: "https://api.qunar.com/ips.jcp",
