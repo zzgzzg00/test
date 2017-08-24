@@ -6,8 +6,7 @@
 </head>
 <body>
 <script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
-<!--<script src="//api.map.baidu.com/api?v=1.4&ak=h7KwRB1TZEHVaspIMtQr6fj1&s=1" type="text/javascript"></script>-->
-<script type="text/javascript" src="https://api.map.baidu.com/getscript?v=1.4&ak=h7KwRB1TZEHVaspIMtQr6fj1&amp;services=&amp;t=20150522093217"></script>
+<script src="//api.map.baidu.com/api?v=1.4&ak=h7KwRB1TZEHVaspIMtQr6fj1&s=1" type="text/javascript"></script>
 <script>
     function getCity(defaultCity,totalTimeout,locationTimeout,getCityTimeout){
         totalTimeout=totalTimeout*1000 || 5000;
@@ -134,10 +133,8 @@
         }
         var point = new BMap.Point(data.lon, data.lat),
             gc = new BMap.Geocoder();
-        alert('baidu');
         gc.getLocation(point, function (rs) {
             var addComp = rs.addressComponents;
-            alert(JSON.stringify(addComp,null,4));
             d.resolve({
                 'status':0,
                 'from':'baidu',
@@ -168,10 +165,13 @@
             return d;
         }
         $.ajax({
-            url: "/",
+            url: "http://ebizcom.corp.qunar.com/location/get.json",
             data: {
-                lon:data.lon,
-                lat:data.lat,
+                longitude:data.lon,
+                latitude:data.lat,
+                type:1,
+                from:'train',
+                level:1,
                 _t: +new Date()
             },
             dataType: "jsonp",
