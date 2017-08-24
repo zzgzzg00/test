@@ -28,7 +28,7 @@
         }
         getLocation(locationTimeout)
             .then(function(data){
-                    alert('location3:'+JSON.stringify(data,null,4));
+                    alert('location4:'+JSON.stringify(data,null,4));
                 return firstResolve([getCityByBaiduMap(data),getCityByServer(data)],getCityTimeout)
             })
             .then(function(data){
