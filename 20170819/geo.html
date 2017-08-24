@@ -118,6 +118,7 @@
     function getCityByBaiduMap(data){
         console.log('getCityByBaiduMap');
         var d= $.Deferred();
+        alert(window.BMap);
         if(!window.BMap){
             d.reject({
                 'status':-2,
