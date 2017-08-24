@@ -27,7 +27,7 @@
         }
         getLocation(locationTimeout)
             .then(function(data){
-                    alert('location4:'+JSON.stringify(data,null,4));
+                    alert('location5:'+JSON.stringify(data,null,4));
                 return firstResolve([getCityByBaiduMap(data),getCityByServer(data)],getCityTimeout)
             })
             .then(function(data){
@@ -165,7 +165,7 @@
             return d;
         }
         $.ajax({
-            url: "http://ebizcom.corp.qunar.com/location/get.json",
+            url: "//touch.qunar.com/h5/coach/common/location.json",
             data: {
                 longitude:data.lon,
                 latitude:data.lat,
@@ -176,11 +176,18 @@
             },
             dataType: "jsonp",
             success: function(res) {
-                d.resolve({
-                    status:0,
-                    from:'server',
-                    city:res.city
-                });
+                if(res.status == 0){
+                    var addComp=res.data ||{}
+                    d.resolve({
+                        status:0,
+                        from:'server',
+                        province:addComp.province,
+                        city:addComp.city,
+                        district:addComp.district,
+                        street:addComp.street,
+                        streetNumber:addComp.streetNumber
+                    });
+                }
             }
         });
 
