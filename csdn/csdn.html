@@ -6,12 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no" />
     <meta name="format-detection"content="telephone=no"/>
     <meta charset="utf-8" />
+    <style>
+        @-webkit-keyframes test{
+            0%{
+                clip-path:polygon(0 0,50% 50%,100% 0);
+            }
+            100%{
+                clip-path:polygon(0 0,20% 50%,100% 0);
+            }
+        }
+        div{
+            height: 50px;
+            clip-path:polygon(0 0,50% 50%,100% 0);
+            background: linear-gradient(45deg,blue 0,blue 50%,red 0,red);
+            animation:test 2s linear 0s infinite alternate;
+        }
+    </style>
 </head>
 <body>
-<script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
-<script src="//api.map.baidu.com/api?v=1.4&ak=h7KwRB1TZEHVaspIMtQr6fj1&s=1" type="text/javascript"></script>
-<script>
-
-</script>
+    <div></div>
 </body>
 </html>
