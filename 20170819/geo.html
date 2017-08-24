@@ -118,7 +118,6 @@
     function getCityByBaiduMap(data){
         console.log('getCityByBaiduMap');
         var d= $.Deferred();
-        alert(window.BMap);
         if(!window.BMap){
             d.reject({
                 'status':-2,
@@ -135,8 +134,10 @@
         }
         var point = new BMap.Point(data.lon, data.lat),
             gc = new BMap.Geocoder();
+        alert(1);
         gc.getLocation(point, function (rs) {
             var addComp = rs.addressComponents;
+            alert(JSON.stringify(addComp,null,4));
             d.resolve({
                 'status':0,
                 'from':'baidu',
