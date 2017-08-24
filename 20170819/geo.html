@@ -134,7 +134,7 @@
         }
         var point = new BMap.Point(data.lon, data.lat),
             gc = new BMap.Geocoder();
-        alert(1);
+        alert('baidu');
         gc.getLocation(point, function (rs) {
             var addComp = rs.addressComponents;
             alert(JSON.stringify(addComp,null,4));
