@@ -7,42 +7,27 @@
     <meta name="format-detection"content="telephone=no"/>
     <meta charset="utf-8" />
     <style>
-
+        div{
+            width: 500px;
+            height: 100px;
+            background-color: red;
+            transition:all 1s linear 0s;
+        }
+        .a{
+            width: 50px;
+        }
     </style>
 </head>
 <body>
+<div></div>
 <script>
-    function de(){
-        var res,rej;
-        var p=new Promise(function(resolve,reject){
-            res=resolve;
-            rej=reject;
-        });
-        p.resolve=res;
-        p.reject=rej;
-        return p;
-    }
-    var d=de();
-    d.then(function(){
-        d.then(function(){
-           console.log('c');
-        });
-        console.log('a');
-    });
-
-    d.then(function(){
-        console.log('b');
-    });
+    var div=document.querySelector('div');
     window.setTimeout(function(){
-        console.log('d');
-    },0);
-    /**
-     * 第一事件队列 当前代码
-     * d.resolve在第一事件队列加入任务队列 a b
-     * 在a中在已有的任务队列再次加入任务队列 c
-     * 第一事件队列完毕 执行第二事件队列 d
-     * */
-    d.resolve();//a b c d
+        div.classList.add('a');
+    },2000);
+    div.addEventListener('transitionend',function(){
+        alert(1);
+    })
 </script>
 </body>
 </html>
