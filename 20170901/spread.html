@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function spread(fun){
+        return function array_arg(arr){
+            return fun.apply(null,arr);
+        }
+    }
+    function unspread(fun){
+        return function param_arg(){
+            return fun([].slice.call(arguments));
+        }
+    }
+    function addarr(arr){
+        return arr.reduce(function add(a,b){
+            return a+b;
+        });
+    }
+    function addparams(a,b,c){
+        return a+b+c;
+    }
+    var a1=unspread(addarr);
+    console.log(a1(1,2,3,4,5));
+    var a2=spread(addparams);
+    console.log(a2([1,2,3,4]));
+</script>
+</body>
+</html>
