@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function reverse_args(fun){
+        return function reverse(...args){
+            return fun(...args.reverse());
+        }
+    }
+    function show(){
+        console.log(...arguments);
+    }
+    var a1=reverse_args(show);
+    a1(1,2,3);
+</script>
+</body>
+</html>
