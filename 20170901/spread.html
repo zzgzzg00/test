@@ -7,12 +7,14 @@
 <script>
     function spread(fun){
         return function array_to_args(arr){
-            return fun.apply(null,arr);
+            return fun(...arr);
+            //return fun.apply(null,arr);
         }
     }
     function unspread(fun){
         return function args_to_array(){
-            return fun([].slice.call(arguments));
+            return fun([...arguments]);
+            //return fun([].slice.call(arguments));
         }
     }
     function addarr(arr){
