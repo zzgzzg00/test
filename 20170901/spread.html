@@ -6,12 +6,12 @@
 <body>
 <script>
     function spread(fun){
-        return function array_arg(arr){
+        return function array_to_args(arr){
             return fun.apply(null,arr);
         }
     }
     function unspread(fun){
-        return function param_arg(){
+        return function args_to_array(){
             return fun([].slice.call(arguments));
         }
     }
