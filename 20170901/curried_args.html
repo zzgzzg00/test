@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function curried_args(fun,len=fun.length){
+        var arr=[];
+        return function curried(param){
+            arr.push(param);
+            if(arr.length>=len){
+                return fun(...arr);
+            }
+            return curried;
+        }
+    }
+    function test(a,b,c){
+        return a+b+c;
+    }
+    var a1=curried_args(test);
+    console.log(a1(1)(2));
+    var a2=curried_args(test);
+    console.log(a2(1)(2)(3));
+</script>
+</body>
+</html>
