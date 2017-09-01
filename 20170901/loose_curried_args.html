@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function loose_curried_args(fun,len=fun.length){
+        var arr=[];
+        return function curried(...args){
+            arr.push(...args);
+            if(arr.length>=len){
+                return fun(...arr);
+            }
+            return curried;
+        }
+    }
+    function add(a,b,c,d){
+        return a+b+c+d;
+    }
+    var a1=loose_curried_args(add);
+    console.log(a1(1)(2));
+    console.log(a1(3,4));
+</script>
+</body>
+</html>
