@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function partail(fn,...args){
+        return function add_other_args(...otherargs){
+            return fn(...args,...otherargs);
+        }
+    }
+    function reverse_args(fn){
+        return function reverse(...args){
+            return fn(...args.reverse());
+        }
+    }
+    function show(){
+        console.log(arguments);
+    }
+    const s1=partail(show,1,2,3);
+    s1(4,5,6);//1-6
+    const s2=reverse_args(show);
+    s2(1,2,3);//3 2 1
+
+    /**
+     * 等同于reversedfun(...arg1,...arg2)
+     * 即 1 2 4 5 -> 5 4 2 1
+     * */
+    const s3=partail(reverse_args(show),1,2);
+    s3(4,5);//5 4 2 1
+    /**
+     * 等同于 fun(...arg1)后 reverse(fun,...arg2)
+     * 即 (1 2) (4 5) -> (1 2) (5 4)
+     * */
+    const s4=reverse_args(partail(show,1,2))
+    s4(4,5);//1 2 5 4
+    /**
+     * 等同于reverse(...arg1)后reverse(reverse,...arg2)
+     * 即(1 2) (4 5) -> (4 5) (2 1)
+     * */
+    const s5=reverse_args(partail(reverse_args(show),1,2));
+    s5(4,5);//4 5 2 1
+
+    /**
+     * 等同于上者 只是在第一次partial的时候反转了第一次的参数
+     * */
+    function partial_right(fn,...args){
+        return reverse_args(
+                    partail(
+                        reverse_args(fn),...args.reverse()
+                    )
+                );
+    }
+    const s6=partial_right(show,1,2)
+    s6(4,5);//4 5 1 2
+</script>
+</body>
+</html>
