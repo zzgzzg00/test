@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    /**
+     * 组合的好处是可以根据参数得知改组合在做什么
+     * */
+    function partial_right(fn,...args){
+        return function add_left_params(...leftparams){
+            return fn(...leftparams,...args)
+        }
+    }
+    function compose(...fns){
+        return function add_params(...params){
+            const [first,...others]=fns;
+            const [x1,x2]=params;
+            return others.reduce((a,b)=>b(a,x2),first(...params));
+        }
+    }
+
+    const [add,min,mul]=[
+        (...params)=>params.reduce((a,b)=>a+b),
+        (a,b)=>a-b,
+        (a,b)=>a*b
+    ]
+
+
+    function show(){
+        console.log([...arguments]);
+    }
+    const s1=partial_right(show,1,2,3);
+    s1(4,5,6);//4 5 6 1 2 3
+
+    const s2=compose(add,min,mul);
+    console.log(s2(1,2,3)); //(1+2+3-2)*2=8
+
+    const s3=partial_right(compose,add);
+    const s4=s3(min,mul);
+    console.log(s4(1,2,3));//(1-2)*2+2=0
+</script>
+</body>
+</html>
