@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function not(fn){
+        return function add_args(...args){
+            return !fn(...args);
+        }
+    }
+    function isNumber(str){
+        return /^\d+(?:\.\d+)?$/.test(str);
+    }
+    console.log(isNumber('10.11'),not(isNumber)('10.11'));
+</script>
+</body>
+</html>
