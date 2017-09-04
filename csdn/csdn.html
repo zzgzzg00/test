@@ -7,14 +7,44 @@
     <meta name="format-detection"content="telephone=no"/>
     <meta charset="utf-8" />
     <style>
-        div{
-            height: 20px;
-            background: linear-gradient(90deg,red 0,red 300px,blue 0,blue 500px,yellow 0);
+        @-webkit-keyframes test{
+            0%{
+                -webkit-transform:translateY(0%);
+                font-size: 22px;
+                opacity: 1;
+            }
+            100%{
+                -webkit-transform:translateY(-200%);
+                font-size: 24px;
+                opacity: 0;
+            }
         }
-        
+        div{
+            font-size: 22px;
+            color: #f8b657;
+            font-weight: bolder;
+            display: inline-block;
+            position: absolute;
+            top: 100px;
+            -webkit-animation:test .5s cubic-bezier(0.45, 0, 1, 1) 0s 1 forwards;
+        }
     </style>
 </head>
 <body>
-<div></div>
+<div>+10</div>
+<script>
+    function test(){
+        'aaa'+
+        'use strict';
+        var o={};
+        Object.defineProperty(o,'a',{
+            value:1,
+            writable:false
+        })
+        o.a=2;
+        console.log(o.a);
+    }
+    test();
+</script>
 </body>
 </html>
