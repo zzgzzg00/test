@@ -8,17 +8,23 @@
     <meta charset="utf-8" />
     <style>
         div{
-            font-size: 40px;
+            font-size: 70px;
+            text-align: center;
+        }
+        div:nth-of-type(1){
+            -webkit-text-fill-color: transparent;
+            background: linear-gradient(90deg,red,blue);
+            -webkit-background-clip: text;
+        }
+        div:nth-of-type(2){
             -webkit-text-fill-color: transparent;
             -webkit-text-stroke:1px red;
-            background: linear-gradient(90deg,blue,red);
-            background-size: 20px;
-            -webkit-background-clip: text;
         }
     </style>
 </head>
 <body>
 <input />
-<div>测试啊</div>
+<div>-webkit-background-clip: text;</div>
+<div>-webkit-text-stroke:1px red;</div>
 </body>
 </html>
