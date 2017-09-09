@@ -5,8 +5,39 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
 <meta name="format-detection" content="telephone=no,email=no" />
+<style>
+    @-webkit-keyframes test{
+        0%{
+            transform:rotate(0deg);
+        }
+        100%{
+            transform:rotate(360deg);
+        }
+    }
+    div{
+        background-color: red;
+        width: 10px;
+        height: 10px;
+        top: 100px;
+        position: relative;
+        left: 100px;
+        animation:test 5s linear infinite;
+        transform-origin:100px 100px;
+    }
+    ul>li:nth-of-type(n+2):nth-last-of-type(n+2){
+        color: red;
+    }
+</style>
 </head>
 <body>
-    123
+    <div></div>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
 </body>
 </html>

@@ -7,18 +7,23 @@
     <meta name="format-detection"content="telephone=no"/>
     <meta charset="utf-8" />
     <style>
-        input.password-field{
-            -webkit-text-security: disc;
-        }
+
     </style>
 </head>
 <body>
-<input type="text" class="password-field" style="ime-mode:disabled"/>
-<iframe src="http://zzgzzg00.github.io/csdn/csdn3.html" width="100%" height="200px"></iframe>
+<a href="aa.php?item=x,y">x,y</a>
 <script>
-    document.querySelector('iframe').onload=function(){
-        alert(document.querySelector('iframe').src);
+    function change(dom){
+        const item=dom.href.match(/item=([^?&=]+)/);
+        const htmls=item&&item[1].split(',').map(function(item){
+            cloneNode=dom.cloneNode(true);
+            cloneNode.href=cloneNode.href.replace(/(item=)[^?&=]+/,'$1'+item);
+            cloneNode.innerHTML=item;
+            return cloneNode.outerHTML;
+        });
+        dom.outerHTML=htmls.join('');
     }
+    change(document.querySelector('a'));
 </script>
 </body>
 </html>
