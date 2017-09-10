@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        svg{
+            border: 1px dashed red;
+        }
+    </style>
+</head>
+<body>
+<svg width="100" height="100" viewBox="0 0 100 200" preserveAspectRatio="xMidYMax meet">
+    <title>viewbox</title>
+    <desc>
+        preserveAspectRatio meet
+        按viewBox较小的部分算
+        即viewBox="0 0 100 100"
+        内容里所有坐标*100/200
+    </desc>
+    <rect x="0" y="0" width="100" height="200" fill="none" stroke="black" />
+</svg>
+<svg width="100" height="100" viewBox="0 0 100 200" preserveAspectRatio="xMidYMin slice">
+    <title>viewbox</title>
+    <desc>
+        preserveAspectRatio slice
+        按viewBox较大的部分算
+        即viewBox="0 0 200 200"
+        内容里所有坐标*200/100
+    </desc>
+    <rect x="0" y="0" width="100" height="200" fill="none" stroke="black" />
+</svg>
+<svg width="100" height="100" viewBox="0 0 100 200" preserveAspectRatio="none">
+    <title>viewbox</title>
+    <desc>
+        preserveAspectRatio none
+        强制拉伸
+    </desc>
+    <rect x="0" y="0" width="100" height="200" fill="none" stroke="black" />
+</svg>
+</body>
+</html>

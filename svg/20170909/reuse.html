@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        #reuse{
+            stroke:red;
+            stroke-width:2px;
+        }
+        use{
+            transform:translate(100px,0) scale(-1,1);
+        }
+    </style>
+</head>
+<body>
+<svg width="100" height="100">
+    <title>g、use</title>
+    <desc>组合、复用</desc>
+    <g id="reuse">
+        <line x1="0" y1="0" x2="50" y2="50" />
+        <line x1="0" y1="100" x2="50" y2="50" />
+    </g>
+    <use xlink:href="#reuse" />
+</svg>
+</body>
+</html>
