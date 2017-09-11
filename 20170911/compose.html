@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function compose(...funs){
+        return funs.reduce(function reduce(a,b){
+            return function addInitParams(...params){
+                return a(b(...params));
+            }
+        })
+    }
+    const [f1,f2,f3,f4]=[
+        a=>{console.log('1',a);return a},
+        a=>{console.log('2',a);return a},
+        a=>{console.log('3',a);return a},
+        (...params)=>{console.log('4',Math.max(...params));return Math.max(...params)}
+    ];
+    const s=compose(f1,f2,f3,f4);
+    s(4,2,5,1);
+</script>
+</body>
+</html>
