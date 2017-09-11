@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function createStore(reduce,state){
+        function getState(){
+            return state;
+        }
+        const listeners=[];
+        function subscrbe(fn){
+            listeners.push(fn);
+            return function unsubscrbe(){
+                const index=listeners.indexOf(fn);
+                if(index != -1){
+                    listeners.splice(index,1);
+                }
+            }
+        }
+        function dispatch(action){
+            state=reduce(state,action);
+            for(let listener of listeners){
+                listener();
+            }
+        }
+        return{
+            getState,
+            subscrbe,
+            dispatch
+        }
+    }
+
+    function combineReducers(obj){
+        return function reducers(state,action){
+            const keys=Object.keys(obj);
+            for(let key of keys){
+                state[key]=obj[key](state[key],action)
+            }
+            return state;
+        }
+    }
+
+    const state={
+        'id':1,
+        'obj':{
+            'a':'a'
+        }
+    }
+
+    const idReduce=function(state=1,action){
+        const {type,context}=action;
+        switch (type){
+            case 'id':
+                return context;
+            default :
+                return state;
+        }
+    }
+
+    const objReduce=function(state={},action){
+        const {type,context}=action;
+        switch (type){
+            case 'obj':
+                return {'a':context};
+            default :
+                return state;
+        }
+    }
+
+    const reduce=combineReducers({
+        id:idReduce,
+        obj:objReduce
+    });
+    const store=createStore(reduce,state);
+
+    var unsubscrbe=store.subscrbe(()=>console.log(1));
+    store.subscrbe(()=>console.log(2));
+    store.dispatch({type:'id',context:2});
+    console.log(store.getState());
+    unsubscrbe();
+    store.dispatch({type:'id',context:3});
+    console.log(store.getState());
+    store.dispatch({type:'obj',context:'x'});
+    console.log(store.getState());
+</script>
+</body>
+</html>
