@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        polygon{
+            fill:red;
+            fill-rule:nonzero;/*evenodd*/
+        }
+        polyline{
+            fill:none;
+            stroke:red;
+            stroke-width:5px;
+            stroke-linecap:round;/*butt square*/
+            stroke-linejoin:round;/*miter bevel*/
+        }
+    </style>
+</head>
+<body>
+<svg width="100" height="100" viewBox="0 0 100 100">
+    <polygon points="0 0,20 30,30 60,70 70" />
+</svg>
+<svg width="100" height="100" viewBox="0 0 100 100">
+    <polyline points="0 0,20 30,30 60,70 70" />
+</svg>
+</body>
+</html>
