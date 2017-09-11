@@ -10,9 +10,9 @@
             return state;
         }
         const listeners=[];
-        function subscrbe(fn){
+        function subscribe(fn){
             listeners.push(fn);
-            return function unsubscrbe(){
+            return function unsubscribe(){
                 const index=listeners.indexOf(fn);
                 if(index != -1){
                     listeners.splice(index,1);
@@ -27,7 +27,7 @@
         }
         return{
             getState,
-            subscrbe,
+            subscribe,
             dispatch
         }
     }
@@ -75,11 +75,11 @@
     });
     const store=createStore(reduce,state);
 
-    var unsubscrbe=store.subscrbe(()=>console.log(1));
-    store.subscrbe(()=>console.log(2));
+    var unsubscribe=store.subscribe(()=>console.log(1));
+    store.subscribe(()=>console.log(2));
     store.dispatch({type:'id',context:2});
     console.log(store.getState());
-    unsubscrbe();
+    unsubscribe();
     store.dispatch({type:'id',context:3});
     console.log(store.getState());
     store.dispatch({type:'obj',context:'x'});
