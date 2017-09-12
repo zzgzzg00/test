@@ -11,19 +11,16 @@
     </style>
 </head>
 <body>
-<a href="aa.php?item=x,y">x,y</a>
+<input type="button" value="add" id="add"/>
 <script>
-    function change(dom){
-        const item=dom.href.match(/item=([^?&=]+)/);
-        const htmls=item&&item[1].split(',').map(function(item){
-            cloneNode=dom.cloneNode(true);
-            cloneNode.href=cloneNode.href.replace(/(item=)[^?&=]+/,'$1'+item);
-            cloneNode.innerHTML=item;
-            return cloneNode.outerHTML;
-        });
-        dom.outerHTML=htmls.join('');
+    function add(dom){
+        let index=0;
+        return function addPassenger(){
+            dom.insertAdjacentHTML('beforeend',`<br/>姓名:<input name="name_${index}"/>ID:<input name="id_${index}" />`);
+            index++;
+        }
     }
-    change(document.querySelector('a'));
+    document.querySelector('#add').onclick=add(document.body);
 </script>
 </body>
 </html>
