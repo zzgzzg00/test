@@ -30,7 +30,17 @@
         backcolor:'black'
     }
 
-    function createLinearGradient(linesArr,obj,backcolor){
+    function createBackLinearGradient(obj){
+        const {sepColor,sepLenArr,backcolor}=obj;
+        const sepLenObjArr=sepLenArr.map(function getLinearSpread(item){
+            return{
+                color:backcolor,
+                len:item
+            }
+        });
+        return createLinearGradient(sepLenObjArr,obj);
+    }
+    function createLinearGradient(linesArr,obj){
         const {sepColor,sepLen}=obj;
         const arr=['linear-gradient(90deg'],lineLen=linesArr.length-1;
         let now=0,len=obj.sepLenArr.length;
@@ -45,7 +55,8 @@
                 arr.push(sepColor + ' ' + now + '%');
             }
         });
-        return arr.join(',')+(backcolor?','+backcolor+' '+now+'%':'')+')'
+        return arr.join(',')+')';
+        //return arr.join(',')+(backcolor?','+backcolor+' '+now+'%':'')+')'
     }
 
     //获取所在档位及所在档位的百分比
@@ -89,10 +100,11 @@
         return props=>{
             const {hasSaledNum,preSaleNum}=props;
             const hasSaledColor=createLinearGradient(getLinearSpread(hasSaledNum,obj),obj);
-            const preSaleColor=createLinearGradient(getLinearSpread(preSaleNum,obj,true),obj,obj.backcolor);
+            const preSaleColor=createLinearGradient(getLinearSpread(preSaleNum,obj,true),obj);
+            const backColor=createBackLinearGradient(obj);
             return (<div
                         className={'progress'}
-                        style={{background:hasSaledColor+','+preSaleColor}}
+                        style={{background:hasSaledColor+','+preSaleColor+','+backColor}}
                     ></div>)
                   }
     }
