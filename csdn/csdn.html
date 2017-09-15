@@ -12,15 +12,6 @@
 </head>
 <body>
 <input type="button" value="add" id="add"/>
-<script>
-    function add(dom){
-        let index=0;
-        return function addPassenger(){
-            dom.insertAdjacentHTML('beforeend',`<br/>姓名:<input name="name_${index}"/>ID:<input name="id_${index}" />`);
-            index++;
-        }
-    }
-    document.querySelector('#add').onclick=add(document.body);
-</script>
+<script type="module" src="./test2.js"></script>
 </body>
 </html>
