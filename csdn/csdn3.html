@@ -9,8 +9,9 @@
 <script>
     window.onload=function(){
         var a=1;
-        window.setTimeout(function(){
-            document.getElementById('div').innerHTML=++a;
+        window.setInterval(function(){
+            ++a;
+            document.getElementById('div').innerHTML=a;
         },1000);
     };
 </script>
