@@ -1,0 +1,14 @@
+{
+    "name":"test",
+    "version":"1.0",
+    "manifest_version":2,
+    "browser_action":{
+        "default_icon":"./x.png",
+        "default_popup":"./popup.html"
+    },
+    "permissions":[
+        "cookies",
+        "https://touch.train.qunar.com/*",
+        "https://suggest.taobao.com/"
+    ]
+}
