@@ -4,10 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <body>
+<div id="div" style="font-size: 50px;"></div>
 <script>
-    window.setTimeout(function(){
-        window.location.href='./csdn.html';
-    },3000);
+    window.onload=function(){
+        var a=1;
+        window.setTimeout(function(){
+            document.getElementById('div').innerHTML=++a;
+        },1000);
+    };
 </script>
 </body>
 </html>
