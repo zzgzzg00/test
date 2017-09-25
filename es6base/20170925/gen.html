@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function* test(){
+        yield 1;
+        yield 2;
+        yield 3;
+    }
+    var t=test();
+    var [a]=t;
+    var [b]=t;
+    console.log(a,b);//1 undefined
+    var arr=[1,2,3];
+    var x=arr[Symbol.iterator]();
+    var [c]=x;
+    var [d]=x;
+    console.log(c,d);//1 2
+</script>
+</body>
+</html>
