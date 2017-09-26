@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function* test(){
+        try{
+            yield* Array.from({length:10},(item,index)=>index);
+        }finally{
+            console.log('over');
+        }
+    }
+    //0 1 over
+    for(let i of test()){
+        console.log(i);
+        if(i ==1){
+            break;
+        }
+    }
+
+    const it=test();
+    it.next();
+    it.return(2);//需next一次
+</script>
+</body>
+</html>
