@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    /**
+     * 默认constructor会将所有参数传给super
+     * */
+    class Father{
+        constructor(a,b){
+            Object.assign(this,{a,b});
+        }
+        show(){
+            console.log(this.a,this.b);
+        }
+    }
+    class Sun extends Father{
+
+    }
+
+    let t=new Sun(1,2);
+    t.show();//1 2
+</script>
+</body>
+</html>
