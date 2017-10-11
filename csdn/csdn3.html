@@ -4,16 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <body>
-<div id="div" style="font-size: 50px;"></div>
-<a href="./csdn.html" style="font-size: 50px;">test</a>
 <script>
-    window.onload=function(){
-        var a=1;
-        window.setInterval(function(){
-            ++a;
-            document.getElementById('div').innerHTML=a;
-        },1000);
-    };
+    var arr=[null,2017,9,9,17,19];
+    var d=new (Date.bind.apply(Date,arr))();
+//    var utc=new Date(d-8*3600*1000);
+
+    console.log(d);
 </script>
 </body>
 </html>
