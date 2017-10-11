@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    const obj={
+        a:1,
+        b:2
+    };
+    const proxy=new Proxy({},{
+        get(target,key,context){
+            console.log('get');
+            Reflect.set(target,key+'target','x');
+            Reflect.set(context,key+'context','x');
+            return 1;
+        }
+    });
+    Object.setPrototypeOf(obj,proxy);
+    console.log(obj.b);//2
+    console.log(obj.c);//get 1
+    console.log(obj.ctarget);//get 1
+    console.log(obj.ccontext);//x
+</script>
+</body>
+</html>
