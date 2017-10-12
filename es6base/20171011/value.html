@@ -19,8 +19,9 @@
             return p;
         }
         const p=changearr([1,'x',{x:'s'}]);
-        console.log(p[1]);
-        console.log(p[1].value);
+        for(let item of p){
+            console.log(item === item.value);
+        }
     </script>
 </body>
 </html>
