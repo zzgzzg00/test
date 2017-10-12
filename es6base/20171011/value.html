@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <script>
+        function changearr(arr){
+            var p=new Proxy(arr,{
+                get(target,key){
+                    Object.assign(Object.prototype,{
+                        get value(){
+                            return target[key];
+                        }
+                    });
+                    return target[key];
+                }
+            })
+            return p;
+        }
+        const p=changearr([1,'x',{x:'s'}]);
+        console.log(p[1]);
+        console.log(p[1].value);
+    </script>
+</body>
+</html>
