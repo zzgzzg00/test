@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    const obj={
+        a:1,
+        b:2
+    };
+    let c, d, e,f;
+    f={a:c}={a:d,a:e}=obj;
+    console.log(c,d,e);
+    console.log(f===obj);
+</script>
+</body>
+</html>
