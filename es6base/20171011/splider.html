@@ -15,6 +15,13 @@
 </head>
 <body>
     <script>
+        /**
+         * 防抓取
+         *    通过样式after将正确的值覆盖到迷惑值的上边
+         *    通过绝对定位覆盖
+         *    内容通过背景图显示
+         *    内容通过网络字体显示
+         * */
         let styleSheet,index=Math.random()*10<<0;
         const AFTER_STYLE={
             'position':'absolute',
