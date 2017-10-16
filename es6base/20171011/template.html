@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    /**
+     * 模板字符串可以通过${}里添加反引号嵌套
+     * */
+    var d='m';
+    const a=`a${`b${`c"${d}"`}`}`;
+    console.log(a);
+</script>
+</body>
+</html>
