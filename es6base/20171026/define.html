@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function define(fun){
+        if(!window.module){
+            window.module={};
+        }
+        fun(window.module)
+    }
+    function require(name){
+        return module[name];
+    }
+    define(function(module){
+        module.show=function(v){
+            alert('show'+v);
+        }
+    });
+    define(function(module){
+        var _a=1;
+        var show=require('show');
+        module['cc']={
+            seta:function(a){
+                _a=a
+            },
+            geta:function(){
+                show(_a);
+                return _a;
+            }
+        }
+    });
+    var cc=require('cc');
+    cc.seta(2);
+    alert(cc.geta());
+</script>
+</body>
+</html>
