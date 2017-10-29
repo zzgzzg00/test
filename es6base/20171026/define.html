@@ -5,24 +5,24 @@
 </head>
 <body>
 <script>
-    function define(fun){
+    function define(name,fun){
         if(!window.module){
             window.module={};
         }
-        fun(window.module)
+        fun(window.module,name)
     }
     function require(name){
         return module[name];
     }
-    define(function(module){
-        module.show=function(v){
+    define('t1',function(module,exports){
+        module[exports]=function(v){
             alert('show'+v);
         }
     });
-    define(function(module){
+    define('t2',function(module,exports){
         var _a=1;
-        var show=require('show');
-        module['cc']={
+        var show=require('t1');
+        module[exports]={
             seta:function(a){
                 _a=a
             },
@@ -32,9 +32,9 @@
             }
         }
     });
-    var cc=require('cc');
-    cc.seta(2);
-    alert(cc.geta());
+    var t2=require('t2');
+    t2.seta(2);
+    alert(t2.geta());
 </script>
 </body>
 </html>
