@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    var index= 0,index2=0;
+    function show(resolve,tip,next){
+        console.log(tip,next?'->'+next:'');
+        resolve(next?next:tip);
+    };
+    function test1(){
+        return new Promise(function(resolve,reject){
+            setTimeout(show,1000,resolve,1);
+        });
+    }
+    function test2(){
+        ++index2;
+        return new Promise(function(resolve,reject){
+            index2<4?setTimeout(show,1000,reject,2,1):setTimeout(show,1000,resolve,2);;
+        });
+    }
+    function test3(){
+        ++index;
+        return new Promise(function(resolve,reject){
+            index<4?setTimeout(show,1000,reject,3,2):setTimeout(show,1000,resolve,3);
+        });
+    }
+    function manager(...args){
+        return function run(step){
+            var index=args.findIndex(function byName(item){
+                return item.name == step;
+            });
+            args.slice(index+1).reduce(function dorun(a,b){
+                return a.then(b);
+            },args[index]())
+                .then(function(data){
+                    console.log('success',data);
+                })
+                .catch(function(data){
+                    run('test'+data);
+                })
+
+        }
+    }
+    var c=manager(test1,test2,test3);
+    c('test1');
+</script>
+</body>
+</html>
