@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script src="../common/JSXTransformer.js"></script>
+<script src="../common/react16.js"></script>
+<script src="../common/react-dom16.js"></script>
+<script type="text/jsx">
+    const {Component,PureComponent}=React;
+    const arr=[1,2,3];
+    let str="t1"
+    class Test extends PureComponent{
+        constructor(props){
+            super(props);
+            this.state={
+                arr,
+                str
+            }
+        }
+        componentDidMount(){
+            arr.push(4);
+            str='t2';
+
+            this.setState({arr});
+            window.setTimeout(()=>this.setState({str}),2000);
+        }
+        render(){
+            const temp=this.state.arr.map(function(item,index){
+                return(<li key={index}>{item}</li>);
+            })
+            return(
+                <div>
+                    {this.state.str}
+                    <ul>{temp}</ul>
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(<Test />,document.body);
+</script>
+</body>
+</html>

@@ -5,17 +5,19 @@
 </head>
 <body>
 <script>
-//    function create(){
-//        return new Promise(function(resolve){
-//            window.setTimeout(function(){
-//                console.log(1)
-//                resolve()
-//            },1000);
-//        })
-//    }
-//    var arr=Array.from({length:4},item=>create);
-//    const [f,...x]=arr
-//    x.reduce((a,b)=>a.then(b),f());
+Function.prototype._call=function(context,...args){
+    context._____=this;
+    context._____(...args);
+    delete  context._____;
+}
+function ss(...args){
+    console.log(this.a);
+    console.log(args);
+}
+var o={
+    a:1
+}
+    ss._call(o,1,2,3,4);
 </script>
 </body>
 </html>
