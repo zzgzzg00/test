@@ -8,6 +8,10 @@
 <script src="../common/react16.js"></script>
 <script src="../common/react-dom16.js"></script>
 <script type="text/jsx">
+    /**
+        componentDidCatch会捕获子组件的错误
+        从而可以给定一个回退页面
+    */
     const {Component} = React;
     class Test extends Component{
         constructor(props){
