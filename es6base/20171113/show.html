@@ -2,6 +2,7 @@
 <html>
 <head>
     <title></title>
+    <meta charset="utf-8" />
     <style>
         *{
             padding: 0;
@@ -26,6 +27,7 @@
 <div></div>
 <div></div>
 <div></div>
+<a href="http://www.baidu.com">百度</a>
 <script>
     var windowHeight;
     function getWindowHeight(){
@@ -59,6 +61,16 @@
             }
         });
     }
+    function _whenunload(doms,options){
+        var whenShowTime;
+        doms.forEach(function(item,index){
+            whenShowTime=item.getAttribute(options.sign);
+            if(whenShowTime){
+                options.callback(item,index,new Date() - whenShowTime);
+                item.removeAttribute(options.sign);
+            }
+        });
+    }
     function observeElement(doms,options){
         var handle=null;
         var emptyfunction = Function.prototype;
@@ -69,7 +81,7 @@
         options.changeshowcallback = options.changeshowcallback || emptyfunction;
         options.changehidecallback = options.changehidecallback || emptyfunction;
         _observeElement(doms,options);
-        window.onscroll=function(){
+        window.addEventListener('scroll',function(){
             if(handle){
                 window.clearTimeout(handle);
                 handle=null;
@@ -77,14 +89,19 @@
             handle=window.setTimeout(function(){
                 _observeElement(doms,options);
             },40);
-        }
+        });
+        window.addEventListener('beforeunload',function(){
+            return _whenunload(doms,options);
+        });
     }
     function xx(){
         var x=[].slice.call(arguments);
-        alert(x.join('|'));
+        var img=new Image();
+        img.src=x.join('|');
+
     }
     var options={
-        callback:console.log,
+        callback:xx,
         whenshowcallback:console.log.bind(null,'whenshowcallback'),
         whenhidecallback:console.log.bind(null,'whenhidecallback'),
         changeshowcallback:console.log.bind(null,'changeshowcallback'),
