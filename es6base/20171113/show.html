@@ -79,8 +79,12 @@
             },40);
         }
     }
+    function xx(){
+        var x=[].slice.call(arguments);
+        alert(x.join('|'));
+    }
     var options={
-        callback:alert
+        callback:xx
 //        whenshowcallback:console.log.bind(null,'whenshowcallback'),
 //        whenhidecallback:console.log.bind(null,'whenhidecallback'),
 //        changeshowcallback:console.log.bind(null,'changeshowcallback'),
