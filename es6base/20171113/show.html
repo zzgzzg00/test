@@ -84,11 +84,11 @@
         alert(x.join('|'));
     }
     var options={
-        callback:xx
-//        whenshowcallback:console.log.bind(null,'whenshowcallback'),
-//        whenhidecallback:console.log.bind(null,'whenhidecallback'),
-//        changeshowcallback:console.log.bind(null,'changeshowcallback'),
-//        changehidecallback:console.log.bind(null,'changehidecallback')
+        callback:console.log,
+        whenshowcallback:console.log.bind(null,'whenshowcallback'),
+        whenhidecallback:console.log.bind(null,'whenhidecallback'),
+        changeshowcallback:console.log.bind(null,'changeshowcallback'),
+        changehidecallback:console.log.bind(null,'changehidecallback')
     }
     observeElement([].slice.call(document.querySelectorAll('div')),options);
 </script>
