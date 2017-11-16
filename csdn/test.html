@@ -31,7 +31,7 @@
 </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="test">
         <div class="content">
             <span>1</span>
             <span>2</span>
@@ -40,5 +40,13 @@
             <span>5</span>
         </div>
     </div>
+<script src="//common.qunarzz.com/lib/prd/iScroll/5.2.0/iscroll.min.js"></script>
+<script>
+    var myScroll = new IScroll('#test',{
+        mouseWheel: true,
+        scrollX:true,
+        click:true
+    });
+</script>
 </body>
 </html>
