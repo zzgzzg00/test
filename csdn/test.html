@@ -6,38 +6,39 @@
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
 <meta name="format-detection" content="telephone=no,email=no" />
 <style>
-    @-webkit-keyframes test{
-        0%{
-            transform:rotate(0deg);
-        }
-        100%{
-            transform:rotate(360deg);
-        }
+    *{
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+    .container{
+        width: 100%;
+        overflow: auto;
     }
     div{
-        background-color: red;
-        width: 10px;
-        height: 10px;
-        top: 100px;
-        position: relative;
-        left: 100px;
-        animation:test 5s linear infinite;
-        transform-origin:100px 100px;
+        font-size: 0;
+        width: 200%;
     }
-    ul>li:nth-of-type(n+2):nth-last-of-type(n+2){
-        color: red;
+    div>span{
+        font-size: 14px;
+        display: inline-block;
+        width: 20%;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+        border: 1px solid red;
     }
 </style>
 </head>
 <body>
-    <div></div>
-    <ul>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>6</li>
-    </ul>
+    <div class="container">
+        <div class="content">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
+    </div>
 </body>
 </html>
