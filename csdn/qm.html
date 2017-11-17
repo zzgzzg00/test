@@ -47,7 +47,7 @@
     </style>
 </head>
 <body>
-<form action="/" id="form" method="post">
+<form action="/test.jsp" id="form" method="get">
     <p><label>产品组合名称:</label><input name="" data-tip="产品组合名称"/></p>
     <p><label>售卖价格:</label><input name="" data-tip="售卖价格"/></p>
     <p>
@@ -64,10 +64,10 @@
 </form>
 <script>
     var data={
-        '专车':['一元','两元'],
-        '车车':['三元','四元','五元'],
-        '搭车':['六元','七元'],
-        '阿迪王':['八元','九元','十元']
+        '专车$1':['一元$2','两元$3'],
+        '车车$4':['三元$5','四元$6','五元$7'],
+        '搭车$8':['六元$9','七元$10'],
+        '阿迪王$11':['八元$12','九元$13','十元$14']
     };
 </script>
 <script>
@@ -84,18 +84,26 @@
     }
 
     function createSelectedInput(type,coupon){
+        var _type=splitValueAndCode(type),
+            _coupon=splitValueAndCode(coupon);
+        var text=_coupon[0]
         var html='<p class="selected">' +
-                    '<input value="'+coupon+'" readonly/>' +
+                    '<input value="'+text+'" disabled/>' +
+                    '<input name="packageContentStr" type="hidden" value="'+_type[1]+','+_coupon[1]+'"/>'
                     '<a data-type="'+type+'" data-coupon="'+coupon+'" href="javascript:void 0" action-type="del">x</a>' +
                 '</p>'
         document.getElementById('selected_content').insertAdjacentHTML('beforeend',html)
+    }
+    function splitValueAndCode(str){
+        return str.split('$');
     }
     function createOptions(data){
         var fragment=document.createDocumentFragment();
         for(var i=0;i<data.length;i++){
             var option=document.createElement('option');
+            var _data=splitValueAndCode(data[i]);
             option.value=data[i];
-            option.innerHTML=data[i];
+            option.innerHTML=_data[0];
             fragment.appendChild(option);
         }
         return fragment;
