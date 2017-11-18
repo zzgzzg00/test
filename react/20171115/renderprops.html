@@ -25,6 +25,7 @@
 
     function repeat(Comp){
         return function _repeat(time){
+            //高级组件需返回组件
             return function Repeat(){
                 return Array.from({length:time},(item,index)=><Comp content={`_${index}`} />);
             }

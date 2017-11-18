@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function getConfig(){
+        let p=new Promise(function(resolve,reject){
+            window.setTimeout(resolve,2000,{
+                switch:'on',
+                allow:'cmb',
+                forbidden:'ccb'
+            });
+        });
+        function findKey(keys){
+            return p.then(function(data){
+                var o={};
+                keys.forEach(function(item){
+                   o[item]=data[item];
+                });
+                return o;
+            });
+        }
+        return findKey;
+    }
+    var findKeys=getConfig();
+    findKeys(['switch']).then(console.log);
+    findKeys(['forbidden']).then(console.log);
+    window.setTimeout(function(){
+        findKeys(['switch','allow']).then(console.log);
+    },4000);
+</script>
+</body>
+</html>
