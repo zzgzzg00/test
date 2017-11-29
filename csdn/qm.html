@@ -49,7 +49,7 @@
 <body>
 <form action="/test.jsp" id="form" method="get">
     <p><label>产品组合名称:</label><input name="" data-tip="产品组合名称"/></p>
-    <p><label>售卖价格:</label><input name="" data-tip="售卖价格"/></p>
+    <p><label>售卖价格:</label><input id="price" name="" data-tip="售卖价格"/></p>
     <p>
         <label>子产品:</label>
         <select id="type"></select>
@@ -169,6 +169,15 @@
                         return false;
                     }
                 }
+            }
+            var price=document.getElementById('price').value;
+            if(/^\d+(\.\d+)?$/.test(price)){
+                alert('价格只能为数字');
+                return false;
+            }
+            if(SELECTED_DATA.length == 0){
+                alert('子产品不能为空');
+                return false;
             }
         }
 
