@@ -171,7 +171,7 @@
                 }
             }
             var price=document.getElementById('price').value;
-            if(/^\d+(\.\d+)?$/.test(price)){
+            if(!/^\d+(\.\d+)?$/.test(price)){
                 alert('价格只能为数字');
                 return false;
             }

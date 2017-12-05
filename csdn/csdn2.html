@@ -2,41 +2,31 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <style>
-        *{
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-        }
-        :root{
-            height: 100%;
-        }
-        body{
-            height: 100%;
-        }
-        section{
-            display: block;
-            -webkit-overflow-scrolling:touch;
-            overflow:auto;
-            height: 100%;
-        }
-        iframe{
-            height: 100%;
-        }
-        div{
-            height: 50vh;
-            background-color: #ffff00;
-        }
-        div:nth-of-type(2n+1){
-            background-color: red;
-        }
-    </style>
 </head>
 <body>
-<section>
-    <div></div>
-    <div></div>
-    <div></div>
-</section>
+<script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
+<script>
+    function createDeferred(time,sign){
+        var d=$.Deferred();
+        window.setTimeout(d.resolve,time*1000,sign);
+        return d;
+    }
+    function _createDeferred(time,sign){
+        var d=$.Deferred();
+        window.setTimeout(d.reject,time*1000,sign);
+        return d;
+    }
+    _createDeferred(1,1)
+        .then(function(sign){
+            console.log(sign);
+            return _createDeferred(1,2)
+        })
+        .then(function(sign){
+            console.log(sign);
+        })
+        .fail(function(data){
+            console.error(data)
+        })
+</script>
 </body>
 </html>
