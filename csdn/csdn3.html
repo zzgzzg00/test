@@ -3,18 +3,47 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
-        div{
-            height: 50vh;
-            background-color: #ffff00;
-        }
-        div:nth-of-type(2n+1){
-            background-color: red;
-        }
+
     </style>
 </head>
 <body>
-<div></div>
-<div></div>
-<div></div>
+<select id="versionType">
+    <option value="0">新</option>
+    <option value="1">旧</option>
+</select>
+<select id="bizType">
+</select>
+<script>
+    var BIZTYPE={
+        '0':[{
+            value:'01',
+            html:'新一'
+        },{
+            value:'02',
+            html:'新二'
+        }],
+        '1':[{
+            value:'11',
+            html:'旧一'
+        },{
+            value:'12',
+            html:'旧二'
+        }]
+    }
+    var bizSelect=document.getElementById('bizType');
+    document.getElementById('versionType').onchange=function(){
+        var value=this.value;
+        var data=BIZTYPE[value];
+        var fragment=document.createDocumentFragment();
+        for(var i=0;i<data.length;i++){
+            var option=document.createElement('option');
+            option.value=data[i].value;
+            option.innerHTML=data[i].html;
+            fragment.appendChild(option);
+        }
+        bizSelect.length=0;
+        bizSelect.appendChild(fragment);
+    }
+</script>
 </body>
 </html>
