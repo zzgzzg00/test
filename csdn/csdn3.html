@@ -9,40 +9,61 @@
 <body>
 <select id="versionType">
     <option value="0">新</option>
-    <option value="1">旧</option>
+    <option value="1" selected>旧</option>
 </select>
 <select id="bizType">
 </select>
 <script>
     var BIZTYPE={
-        '0':[{
-            value:'01',
-            html:'新一'
-        },{
-            value:'02',
-            html:'新二'
-        }],
-        '1':[{
-            value:'11',
-            html:'旧一'
-        },{
-            value:'12',
-            html:'旧二'
-        }]
-    }
+        "0": {
+            "1": "无账号qunar支付",
+            "2": "用户账号qunar支付",
+            "3": "抢票",
+            "4": "纸质票",
+            "5": "纯直连支付",
+            "6": "直付代扣",
+            "7": "纯直连支付兜底",
+            "8": "直付代扣兜底",
+            "-1": "全部"
+        },
+        "1": {
+            "17": "无账号直付代扣兜底",
+            "16": "无账号直付兜底",
+            "19": "云监控",
+            "18": "无账号qunar支付(新)",
+            "4": "纸质票",
+            "20": "云抢票",
+            "9": "账号直付",
+            "10": "账号直付代扣",
+            "11": "账号直付兜底",
+            "12": "账号直付代扣兜底",
+            "13": "账号qunar支付（新）",
+            "14": "无账号直付",
+            "15": "无账号支付代扣",
+            "-1": "全部"
+        }
+    };
+
     var bizSelect=document.getElementById('bizType');
-    document.getElementById('versionType').onchange=function(){
-        var value=this.value;
+    function createSecondarySelect(value){
         var data=BIZTYPE[value];
         var fragment=document.createDocumentFragment();
-        for(var i=0;i<data.length;i++){
-            var option=document.createElement('option');
-            option.value=data[i].value;
-            option.innerHTML=data[i].html;
-            fragment.appendChild(option);
+        for(var i in data){
+            if(data.hasOwnProperty(i)) {
+                var option = document.createElement('option');
+                option.value = i;
+                option.innerHTML = data[i];
+                fragment.appendChild(option);
+            }
         }
         bizSelect.length=0;
         bizSelect.appendChild(fragment);
+    }
+    var value=document.getElementById('versionType').value;
+    createSecondarySelect(value);
+    document.getElementById('versionType').onchange=function(){
+        var value=this.value;
+        createSecondarySelect(value);
     }
 </script>
 </body>

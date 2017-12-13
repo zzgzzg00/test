@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+            width: 200px;
+            height: 200px;
+            margin: auto;
+            position: relative;
+        }
+        .container>div{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            left: 0;
+            top: 0;
+            text-align: center;
+            line-height: 50px;
+            transition:all 0.5s linear;
+        }
+        .container>div:nth-of-type(1){
+            background-color: red;
+        }
+        .container>div:nth-of-type(2){
+            background-color: yellow;
+        }
+        .container>div:nth-of-type(3){
+            background-color: green;
+        }
+        .left{
+            -webkit-transform:translate(0,0) scale(1) rotate(0deg);
+        }
+        .right{
+            -webkit-transform:translate(150px,0) scale(1) rotate(0deg);
+        }
+        .bottom{
+            -webkit-transform:translate(75px,100px) scale(2) rotate(360deg);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="left" data-role="item">1</div>
+    <div class="bottom" data-role="item">2</div>
+    <div class="right" data-role="item">3</div>
+</div>
+<script>
+    var divs=document.querySelectorAll('.container>div');
+    function findActiveIndex(div){
+        for(var i=0;i<divs.length;i++){
+            if(divs[i]==div){
+                return i;
+            }
+        }
+    }
+    function sortByActive(index){
+        var arr=[],len=divs.length-1;
+        arr[1]=divs[index];
+        arr[0]=divs[index-1==-1?len:index-1];
+        arr[2]=divs[index+1>len?0:index+1];
+        return arr;
+    }
+    function changePosition(arr){
+        arr[0].className='left';
+        arr[1].className='bottom';
+        arr[2].className='right';
+    }
+    function clickHandle(target){
+        var index=findActiveIndex(target);
+        var arr=sortByActive(index);
+        changePosition(arr);
+    }
+    document.querySelector('.container').addEventListener('click',function(e){
+        var target=e.target;
+        if(target.getAttribute('data-role')=='item'){
+            clickHandle(target);
+        }
+    },false);
+</script>
+</body>
+</html>

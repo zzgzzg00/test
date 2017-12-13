@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        .container{
+            width: 200px;
+            height: 200px;
+            margin: auto;
+            position: relative;
+            transition:-webkit-transform 0.5s linear;
+        }
+        .container>div{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+        .container>div:nth-of-type(2n+1){
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .container>div:nth-of-type(2n){
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+        }
+        .container>div:nth-of-type(1){
+            left: 0;
+            background-color: red;
+        }
+        .container>div:nth-of-type(2){
+            bottom: 0;
+            background-color: yellow;
+        }
+        .container>div:nth-of-type(3){
+            right: 0;
+            background-color: green;
+        }
+        .a{
+            -webkit-transform:rotate(90deg);
+        }
+        .b{
+            -webkit-transform:rotate(0deg);
+        }
+        .c{
+            -webkit-transform:rotate(-90deg);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<script>
+    window.setTimeout(function(){
+        document.querySelector('.container').classList.add('a');
+    },2000);
+</script>
+</body>
+</html>

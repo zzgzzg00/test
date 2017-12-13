@@ -1,4 +1,4 @@
-<%--
+    <%--
   Created by IntelliJ IDEA.
   User: zhangyan
   Date: 17-2-28
@@ -187,19 +187,13 @@
                     </li>
                     <li><span>业务类型：</span>
                         <select id="bizType" name="bizType">
-                            <c:if test="${bizType!=null}">
-                                <option value="${bizType}">${bizTypeDesc}</option>
-                            </c:if>
 
-                            <c:forEach items="${bizTypeMap}" var="ys">
-                                <option value="${ys.key}">${ys.value}</option>
-                            </c:forEach>
                         </select>
                     </li>
                     <li><span>统计版本：</span>
                         <select id="versionType" name="versionType">
-                            <option value="0" <c:if test="${versionType == 0}">selected</c:if>>旧版</option>
-                            <option value="1" <c:if test="${versionType == 1}">selected</c:if>>新版</option>
+                            <option value="0" selected>旧版</option>
+                            <option value="1">新版</option>
                         </select>
                     </li>
 
@@ -515,20 +509,31 @@
         }
 
         //新旧二级联动
-        BIZTYPE=${BIZTYPE}
         var bizSelect=document.getElementById('bizType');
-        document.getElementById('versionType').onchange=function(){
-            var value=this.value;
+        function createSecondarySelect(value,isInit){
             var data=BIZTYPE[value];
             var fragment=document.createDocumentFragment();
-            for(var i=0;i<data.length;i++){
-                var option=document.createElement('option');
-                option.value=data[i].value;
-                option.innerHTML=data[i].html;
-                fragment.appendChild(option);
+            for(var i in data){
+                if(data.hasOwnProperty(i)) {
+                    var option = document.createElement('option');
+                    option.value = i;
+                    option.innerHTML = data[i];
+                    fragment.appendChild(option);
+                    if(isInit && hisBizTyp){
+                        if(i == hisBizTyp){
+                            option.selected=true;
+                        }
+                    }
+                }
             }
             bizSelect.length=0;
             bizSelect.appendChild(fragment);
+        }
+        var value=document.getElementById('versionType').value;
+        createSecondarySelect(value,1);
+        document.getElementById('versionType').onchange=function(){
+            var value=this.value;
+            createSecondarySelect(value);
         }
     });
 </script>
