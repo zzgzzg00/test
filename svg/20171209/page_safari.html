@@ -81,9 +81,9 @@
             arr.push(offset);
             var _offset=offset-arr[0];
             var finaloffset=-nowPosition*wheight+_offset;
-            for(var i=0;i<divs.length;i++){
-                divs[i].style.webkitTransform='translateY('+finaloffset+'px)';
-            }
+            divs.forEach(function(item){
+                item.style.webkitTransform='translateY('+finaloffset+'px)';
+            });
         }
     }
     function moveend(e){
@@ -97,6 +97,9 @@
         }
         if(nowPosition<0){
             nowPosition=0;
+        }
+        if(nowPosition>=divs.length){
+            nowPosition=divs.length-1
         }
         var finalOffset=-nowPosition*wheight;
         divs.forEach(function(item){
@@ -112,7 +115,7 @@
     container.addEventListener('touchend',moveend,false);
     document.body.addEventListener('touchmove',function(e){
         e.preventDefault();
-    },false)
+    },false);
 </script>
 </body>
 </html>
