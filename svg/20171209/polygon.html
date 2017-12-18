@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .rotatecontainer{
+            position: relative;
+            margin-left: 200px;
+            margin-top: 200px;
+        }
+        .rotatecontainer>span{
+            position: absolute;
+            left:0;
+            top: 0;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            transform-origin: 50px 50px;
+        }
+        .rotatecontainer>span:nth-of-type(1){
+            -webkit-transform: rotate(0deg);
+        }
+        .rotatecontainer>span:nth-of-type(2){
+            -webkit-transform: rotate(60deg);
+        }
+        .rotatecontainer>span:nth-of-type(3){
+            -webkit-transform: rotate(120deg);
+        }
+        .rotatecontainer>span:nth-of-type(4){
+            -webkit-transform: rotate(180deg);
+        }
+        .rotatecontainer>span:nth-of-type(5){
+            -webkit-transform: rotate(240deg);
+        }
+        .rotatecontainer>span:nth-of-type(6){
+            -webkit-transform: rotate(300deg);
+        }
+    </style>
+</head>
+<body>
+<svg width="200" height="200" viewBox="0 0 200 200">
+    <title>polygon</title>
+    <desc>polygon</desc>
+    <defs>
+        <linearGradient y2="1" x2="1" y1="0" x1="0" id="svg_2">
+            <stop stop-color="red" offset="0"/>
+            <stop stop-color="yellow" offset="1"/>
+        </linearGradient>
+    </defs>
+    <polygon points="0 200,20 150,40 130,60 100,80 120,100 100,140 90,160 50,180 60,200 0,200 200" stroke="red" fill="url(#svg_2)" />
+</svg>
+<svg width="200" height="200" viewBox="0 0 200 200">
+    <title>polygon</title>
+    <desc>polygon</desc>
+    <polygon points="0 200,20 130,40 120,60 95,80 110,100 120,140 70,160 30,180 30,200 0,200 200" stroke="red" fill="yellow" />
+    <polygon points="0 200,20 150,40 130,60 100,80 120,100 100,140 90,160 50,180 60,200 0,200 200" stroke="red" fill="red" />
+</svg>
+<div class="rotatecontainer">
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span>5</span>
+    <span>6</span>
+</div>
+</body>
+</html>
