@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        div{
+            width: 200px;
+            height:200px;
+        }
+    </style>
+</head>
+<body>
+<div class="a"></div>
+<div class="b"></div>
+<div class="c"></div>
+<script>
+    function Pie(container,ops){
+        var html=this.createSvg(ops);
+        container.innerHTML=html;
+    }
+    Pie.prototype.createSvg=function(ops){
+        var len=ops.ratio/100*156;
+        return''+
+            '<svg width="100%" height="100%" viewBox="0 0 100 100" ' +
+                'style="-webkit-transform: rotate(-90deg);border-radius:50%;background-color:'+ops.fill+'; ">'+
+                '<title>'+ops.title+'</title>'+
+                '<desc>'+ops.desc+'</desc>'+
+                '<circle ' +
+                    'cx="50" ' +
+                    'cy="50" ' +
+                    'r="25" ' +
+                    'stroke-width="50" '+
+                    'stroke-dasharray="0 156" ' +
+                    'fill="'+ops.fill+'" ' +
+                    'stroke="'+ops.stroke+'"' +
+                '>' +
+                '<animate ' +
+                    'fill="freeze" ' +
+                    'attributeName="stroke-dasharray" ' +
+                    'begin="0" ' +
+                    'dur=".5s" '+
+                    'from="0 156" '+
+                    'to="'+len+' 156" '+
+                '>'+
+                '</circle>'+
+        '</svg>'
+    };
+    var container=document.querySelector('.a');
+    new Pie(container,{
+        fill:'red',
+        stroke:'yellow',
+        ratio:30
+    });
+
+</script>
+</body>
+</html>

@@ -3,32 +3,22 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
-        :root{
-            font-size: 100px;
-        }
         div{
-            position: relative;
+            height: 100vh;
         }
-        .circle{
-            width: .2rem;
-            height: .2rem;
-            border-radius: 50%;
+        div:nth-of-type(2n+1){
             background-color: red;
-            position: absolute;
-        }
-        .arr{
-            width: .5rem;
-            height: 1rem;
-            background-color: black;
-            border-radius: 1rem;
         }
     </style>
 </head>
 <body>
-<div>
     <div class="circle"></div>
     <div class="arr"></div>
     <div class="point"></div>
-</div>
+    <script>
+        window.setTimeout(function(){
+            document.body.scrollTop=1000
+        },2000)
+    </script>
 </body>
 </html>
