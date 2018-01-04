@@ -3,22 +3,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
-        div{
-            height: 100vh;
-        }
-        div:nth-of-type(2n+1){
-            background-color: red;
-        }
+
     </style>
 </head>
 <body>
-    <div class="circle"></div>
-    <div class="arr"></div>
-    <div class="point"></div>
     <script>
-        window.setTimeout(function(){
-            document.body.scrollTop=1000
-        },2000)
+        try{
+            aa();
+        }catch (e){
+            console.log(1);
+        }
     </script>
 </body>
 </html>

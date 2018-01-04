@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var str=`
+        onmessage=function(data){
+            var index=data.data;
+            index++;
+            postMessage(index)
+        }
+    `;
+    var blob=new Blob([str],{type:'text/javascript'});
+    var url=URL.createObjectURL(blob);
+    var w=new Worker(url);
+    w.postMessage(10);
+    w.onmessage=function(data){
+        console.log(data.data);
+    }
+</script>
+</body>
+</html>
