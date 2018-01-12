@@ -7,12 +7,33 @@
     </style>
 </head>
 <body>
-    <script>
-        try{
-            aa();
-        }catch (e){
-            console.log(1);
-        }
-    </script>
+<script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
+<script>
+    function createDeferred(flag,time){
+        var deferred=$.Deferred();
+        window.setTimeout(function(){
+            deferred.resolve(flag);
+        },time)
+        return deferred;
+    }
+    createDeferred(10,500)
+        .then(function(data){
+            console.log('1_'+data);
+            return createDeferred(data+2,1000);
+        })
+        .then(function(data){
+            console.log('2_'+data);
+            return createDeferred(data+2,1000).then(function(data){
+                return 1;
+            });
+        })
+        .then(function(data){
+            console.log('3_'+data);
+            return createDeferred(data+3,1000);
+        })
+        .then(function(data){
+           console.log(data);
+        });
+</script>
 </body>
 </html>
