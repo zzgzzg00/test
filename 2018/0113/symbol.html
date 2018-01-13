@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * a instanceof b 会调用b[Symbol.hasInstance](a)
+     * */
+    const o={
+        [Symbol.hasInstance](obj){
+            return true;
+        }
+    }
+    const s=1;
+    console.log(s instanceof o);
+    class Test{
+        static [Symbol.hasInstance](obj){
+            return false;
+        }
+    }
+    const t=new Test();
+    console.log(t instanceof Test);
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function createPromise(time,tag){
+        return new Promise(function(resolve,reject){
+            var random=(Math.random()*2)<<0;
+            window.setTimeout(random?resolve:reject,time,tag)
+        });
+    }
+    function tyf(){
+        return createPromise(2000,'tyf');
+    }
+    function tjg(){
+        return createPromise(3000,'tjg');
+    }
+    function gx(){
+        return createPromise(1000,'gx');
+    }
+    function xx(){
+        return createPromise(5000,'mx');
+    }
+    function gb(){
+        return createPromise(3000,'gb');
+    }
+
+    function flow1(){
+        var items=[tyf,gx,tjg];
+        var result=items.reduce(function(a,b){
+            return a.then(function(data){
+                console.log(data);
+                return b();
+            });
+        },Promise.resolve('start flow1'));
+        return result.then(function(data){
+            console.log(`end ${data}`);
+        }).catch(function(data){
+            console.log(`error ${data}`);
+            return Promise.reject(data)
+        });
+    }
+
+    function flow2(){
+        var items=[tyf,xx];
+        var result=items.reduce(function(a,b){
+            return a.then(function(data){
+                console.log(data);
+                return b();
+            });
+        },Promise.resolve('start flow2'));
+        return result.then(function(data){
+            console.log(`end ${data}`);
+        }).catch(function(data){
+            console.log(`error ${data}`);
+            return Promise.reject(data)
+        });
+    }
+    function flow3(){
+        var items=[tyf,gb];
+        var result=items.reduce(function(a,b){
+            return a.then(function(data){
+                console.log(data);
+                return b();
+            });
+        },Promise.resolve('start flow3'));
+        return result.then(function(data){
+            console.log(`end ${data}`);
+        }).catch(function(data){
+            console.log(`error ${data}`);
+            return Promise.reject(data)
+        });
+    }
+    flow1().catch(function(){
+        return flow2();
+    }).catch(function(){
+        return flow3();
+    }).catch(function(){
+        console.log('over')
+    });
+</script>
+</body>
+</html>
