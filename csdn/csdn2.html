@@ -9,31 +9,19 @@
 <body>
 <script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
 <script>
-    function createDeferred(flag,time){
-        var deferred=$.Deferred();
-        window.setTimeout(function(){
-            deferred.resolve(flag);
-        },time)
-        return deferred;
-    }
-    createDeferred(10,500)
-        .then(function(data){
-            console.log('1_'+data);
-            return createDeferred(data+2,1000);
-        })
-        .then(function(data){
-            console.log('2_'+data);
-            return createDeferred(data+2,1000).then(function(data){
-                return 1;
-            });
-        })
-        .then(function(data){
-            console.log('3_'+data);
-            return createDeferred(data+3,1000);
-        })
-        .then(function(data){
-           console.log(data);
-        });
+    var reg=/^(?=##.{1,50}##$)##[\u4e00-\u9fa5a-z\d]*([\u4e00-\u9fa5a-z\d]*\[[a-z\d]+\:[a-z\u4e00-\u9fa5\d]+\])*[a-z\u4e00-\u9fa5\d]*##/i;
+
+    var arr=[
+        '##我是一个标题[id:1][name:李四]##',
+        '##我是一个标题##',
+        '##我是一个标题[id:1][name:李四]aa[name:李四]##',
+        '##我是一个标题[id:1][name:李四]aa[name:李四]name:李四]aa[name:李四]##',
+        '##我是一个标题[id:1][name:李四]aa[name:李四][name:李四]aa[name]##',
+        '我是一个标题[id:1][name:李四]我是一个标题[id:1][name:李四]我是一个标题[id:1][name:李四]我是一个标题[id:1][name:李四]我是一个标题[id:1][name:李四]我是一个标题[id:1][name:李四]'
+    ]
+    arr.forEach(function (item) {
+        console.log(reg.test(item));
+    })
 </script>
 </body>
 </html>

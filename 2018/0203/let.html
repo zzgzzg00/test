@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var funs=[];
+    /**
+     * 每次循环都生成新的j
+     * */
+    for(var i=0;i<10;i++){
+        let j=i;
+        funs.push(function(){
+            console.log(`${j}-${i}`);
+        })
+    }
+    funs[7]();//7-10
+</script>
+</body>
+</html>
