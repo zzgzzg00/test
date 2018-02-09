@@ -91,6 +91,7 @@
         }
         this.selectionDiv.style.left=me.left+'px';
         this.selectionDiv.style.top=me.top+'px';
+        console.log(me.calcOffsetPosition());
     }
     ClipImage.prototype.addEvents=function(){
         var me=this;
@@ -111,6 +112,13 @@
 //                console.log(me.points);
             }
         },false);
+    }
+    ClipImage.prototype.calcOffsetPosition=function(){
+        var me=this;
+        return{
+            left:me.left-me.minLeft,
+            top:me.top-me.minTop
+        }
     }
     window.setTimeout(function(){
         new ClipImage(document.querySelector('[data-role="container"]'),300,300);
