@@ -103,6 +103,7 @@
             me.points=[];
         },false);
         selectionDiv.addEventListener('touchmove',function(e){
+            e.preventDefault();
             if(me.hasStart){
                 var touch=e.changedTouches[0];
                 me.points.unshift([touch.clientX,touch.clientY]);
