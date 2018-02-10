@@ -13,11 +13,10 @@
 </head>
 <body>
 <div data-role="container">
-    <img src="https://s.qunarzz.com/open_m_train/active/travel2018/sanqi/app_bg.png" />
 </div>
 <canvas></canvas>
 <script>
-    function ClipImage(container,clipWidth,clipHeight,targetContainer) {
+    function ClipImage(container,imgsrc,clipWidth,clipHeight,targetContainer) {
         this.container=container;
         this.clipWidth=clipWidth || 100;
         this.clipHeight=clipHeight || 100;
@@ -32,9 +31,19 @@
         this.maxTop=0;
         this.minLeft=0;
         this.minTop=0;
-        this.image=container.querySelector('img');
+        this.image=null;
         this.canvas=targetContainer;
-        this.addSelectionDiv();
+        this.loadImg(imgsrc);
+    }
+    ClipImage.prototype.loadImg=function(src){
+        var img=new Image();
+        var me=this;
+        img.onload=function(){
+            me.addSelectionDiv();
+        }
+        this.image=img;
+        this.container.appendChild(img);
+        img.src=src;
     }
     ClipImage.prototype.createSelectionDiv=function(){
         if(this.selectionDiv){
@@ -136,9 +145,10 @@
         context.clearRect(0,0,width,height);
         context.drawImage(me.image,left,top,width,height,0,0,width,height);
     }
-    window.setTimeout(function(){
-        new ClipImage(document.querySelector('[data-role="container"]'),300,300,document.querySelector('canvas'));
-    },2000);
+    var src='https://s.qunarzz.com/open_m_train/active/travel2018/sanqi/app_bg.png',
+        container=document.querySelector('[data-role="container"]'),
+        targetContainer=document.querySelector('canvas');
+    new ClipImage(container,src,300,300,targetContainer);
 </script>
 </body>
 </html>
