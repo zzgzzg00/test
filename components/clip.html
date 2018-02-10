@@ -15,8 +15,9 @@
 <div data-role="container">
     <img src="https://s.qunarzz.com/open_m_train/active/travel2018/sanqi/app_bg.png" />
 </div>
+<canvas></canvas>
 <script>
-    function ClipImage(container,clipWidth,clipHeight) {
+    function ClipImage(container,clipWidth,clipHeight,targetContainer) {
         this.container=container;
         this.clipWidth=clipWidth || 100;
         this.clipHeight=clipHeight || 100;
@@ -31,6 +32,8 @@
         this.maxTop=0;
         this.minLeft=0;
         this.minTop=0;
+        this.image=container.querySelector('img');
+        this.canvas=targetContainer;
         this.addSelectionDiv();
     }
     ClipImage.prototype.createSelectionDiv=function(){
@@ -91,7 +94,8 @@
         }
         this.selectionDiv.style.left=me.left+'px';
         this.selectionDiv.style.top=me.top+'px';
-        console.log(me.calcOffsetPosition());
+//        console.log(me.calcOffsetPosition());
+        this.drawImage();
     }
     ClipImage.prototype.addEvents=function(){
         var me=this;
@@ -109,7 +113,6 @@
                 var touch=e.changedTouches[0];
                 me.points.unshift([touch.clientX,touch.clientY]);
                 me.moveSelectionDiv();
-//                console.log(me.points);
             }
         },false);
     }
@@ -120,8 +123,21 @@
             top:me.top-me.minTop
         }
     }
+    ClipImage.prototype.drawImage=function(){
+        var position=this.calcOffsetPosition();
+        var left=position.left,
+            top=position.top,
+            width=this.clipWidth,
+            height=this.clipHeight;
+        this.canvas.width=width;
+        this.canvas.height=height;
+        var me=this;
+        var context=this.canvas.getContext('2d');
+        context.clearRect(0,0,width,height);
+        context.drawImage(me.image,left,top,width,height,0,0,width,height);
+    }
     window.setTimeout(function(){
-        new ClipImage(document.querySelector('[data-role="container"]'),300,300);
+        new ClipImage(document.querySelector('[data-role="container"]'),300,300,document.querySelector('canvas'));
     },2000);
 </script>
 </body>
