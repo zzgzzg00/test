@@ -15,6 +15,7 @@
 <div data-role="container">
 </div>
 <canvas></canvas>
+<input type="file" accept="image/*" />
 <script>
     function ClipImage(container,imgsrc,clipWidth,clipHeight,targetContainer) {
         this.container=container;
@@ -40,6 +41,7 @@
         var me=this;
         img.onload=function(){
             me.addSelectionDiv();
+            img.setAttribute('crossOrigin', 'anonymous');
         }
         this.image=img;
         this.container.appendChild(img);
@@ -147,8 +149,18 @@
     }
     var src='https://s.qunarzz.com/open_m_train/active/travel2018/sanqi/app_bg.png',
         container=document.querySelector('[data-role="container"]'),
-        targetContainer=document.querySelector('canvas');
-    new ClipImage(container,src,300,300,targetContainer);
+        targetContainer=document.querySelector('canvas'),
+        selector=document.querySelector('input');
+    var reader = new FileReader();
+    selector.onchange=function(){
+        var file=this.files[0];
+        reader.onload = function() {
+            src = reader.result;
+            new ClipImage(container,src,500,500,targetContainer);
+        };
+        reader.readAsDataURL(file);
+    }
+//    new ClipImage(container,src,300,300,targetContainer);
 </script>
 </body>
 </html>
