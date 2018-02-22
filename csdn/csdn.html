@@ -18,49 +18,39 @@
 
     <meta name="keywords" content="火车票,火车票查询,列车时刻表,火车票预定" />
     <style>
-        .qn_dowload_dialog{
-            background-color: rgba(0,0,0,.5);
+        div{
             position: fixed;
-            left: 0;
-            right: 0;
             bottom: 0;
-            top: 0;
+            -webkit-transform:translate(0%,100%);
+            -webkit-transition: transform .5s linear 0s;
+            transform:translate(0%,100%);
+            transition: transform .5s linear 0s;
         }
-        .qn_dowload_dialog .dialog{
-            background: #FFFFFF;
-            border-radius: 4px;
-            width: 60%;
-            position: absolute;
-            left: 20%;
-            top:50%;
-            -webkit-transform:translateY(-50%);
-            transform:translateY(-50%);
-            height: 200px;
-            padding: 15px 10px 10px 10px;
+        div>p{
+            counter-increment: add;
         }
-
+        div>p:after{
+            content: counter(add);
+        }
+        .show{
+            -webkit-transform:translate(0%,0%);
+            transform:translate(0%,0%);
+        }
     </style>
 </head>
 <body>
-<div class="qn_dowload_dialog">
-    <div class="dialog">
-        <ul>
-            <li>
-                <img src="//s.qunarzz.com/open_m_train/vouchers/vouchers_bg.png" />
-                <div class="voucherDetail">
-                    <div class="detail">
-                        <em class="trainIcon"></em>
-                        <div class="title">
-                            <h4>mengyu_券抵减</h4>
-                            <p>有效期：至2030-09-27</p>
-                        </div>
-                        <p class="desc" action-type="showDesc" data-val="火车票12306账号购票模式可用">使用说明<em></em></p>
-                    </div>
-                    <div class="amount">¥<em>5</em></div>
-                </div>
-            </li>
-        </ul>
+    <input type="button" value="change" />
+    <div>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
     </div>
-</div>
+    <script>
+        var div=document.querySelector('div');
+        document.querySelector('input').onclick=function(){
+            div.classList.toggle('show');
+        }
+    </script>
 </body>
 </html>
