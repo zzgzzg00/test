@@ -17,40 +17,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui" />
 
     <meta name="keywords" content="火车票,火车票查询,列车时刻表,火车票预定" />
-    <style>
-        div{
-            position: fixed;
-            bottom: 0;
-            -webkit-transform:translate(0%,100%);
-            -webkit-transition: transform .5s linear 0s;
-            transform:translate(0%,100%);
-            transition: transform .5s linear 0s;
-        }
-        div>p{
-            counter-increment: add;
-        }
-        div>p:after{
-            content: counter(add);
-        }
-        .show{
-            -webkit-transform:translate(0%,0%);
-            transform:translate(0%,0%);
-        }
-    </style>
 </head>
 <body>
-    <input type="button" value="change" />
+<c:forEach items="${printList }" var="p">
     <div>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
+        <table class="table_list" >
+            <tr>
+                <td width="12%" nowrap="nowrap" class="td_css head_td">姓名</td>
+                <td width="12%" nowrap="nowrap" class="td_css" >${p.userName }</td>
+                .........
+                .........
+        </table>
+        <script type="text/javascript" flag="${p.id}">
+            $(document).ready(function() {
+                var sign="${p.id}";
+                var arr = "${p.userPayType}".split(",");
+                var arr1 = "${p.userPayFund}".split(",");
+                var flag = 1;
+                n:for(var i = 0;i<arr.length;i++){
+                    for(var j = i+1;j<arr.length;j++){
+                        if(arr[i]==arr[j]){
+                            continue n;
+                        }
+                    }
+                    var thisscript=document.querySelector('script[flag="${p.id}"]');
+                    thisscript.parent().find('.table_list').find('tr').eq(flag).find('td').eq(-2).append(arr[i]);
+                    thisscript.parent().find('.table_list').find('tr').eq(flag).find('td').eq(-1).append(arr1[i]);
+                    flag++;
+                }
+            })
+        </script>
     </div>
-    <script>
-        var div=document.querySelector('div');
-        document.querySelector('input').onclick=function(){
-            div.classList.toggle('show');
-        }
-    </script>
+</c:forEach>
 </body>
 </html>
