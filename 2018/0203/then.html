@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function toPromise(obj,key){
+        const descriptor=Object.getOwnPropertyDescriptor(obj,key)
+        const v=descriptor.value;
+        descriptor.value=function(){
+            const p=new Promise(function(resolve,reject){
+                v(resolve);
+            });
+            return p;
+        }
+        Object.defineProperty(obj,key,descriptor);
+    }
+    const t={
+        do(callback){
+            setTimeout(callback,2000,'x')
+        }
+    }
+    toPromise(t,'do');
+    t.do().then(console.log);
+</script>
+</body>
+</html>
