@@ -23,7 +23,7 @@
 <script>
     var text=document.querySelector('textarea');
     var input=document.querySelector('input');
-    text.onselect=function(e){
+    text.onmouseup=function(e){
         var start=this.selectionStart,end=this.selectionEnd;
         var v=this.value.substring(start,end);
         input.value=v+'__test';
@@ -36,6 +36,5 @@
         this.selectionEnd=end;
     }
 </script>
-<script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
 </body>
 </html>
