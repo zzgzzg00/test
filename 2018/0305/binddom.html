@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="test1" value="test1"/>
+<div id="test2"></div>
+<input id="test3" />
+<script>
+    var valueTag=['input','textarea'];
+    function checkIsValueTag(dom){
+        var tag=dom.tagName.toLowerCase();
+        return valueTag.indexOf(tag) != -1;
+    }
+    function setDomValue(dom,value) {
+        if(checkIsValueTag(dom)){
+            dom.value=value;
+        }else{
+            dom.innerHTML=value;
+        }
+    }
+    function getDomValue(dom) {
+        if(checkIsValueTag(dom)){
+            return dom.value;
+        }else{
+            return dom.innerHTML;
+        }
+    }
+    function addbind(obj,key,doms){
+        Object.defineProperty(obj,key,{
+            get:function(){
+                return getDomValue(doms[0]);
+            },
+            set:function(value){
+                doms.forEach(function(item){
+                    setDomValue(item,value);
+                })
+            }
+        })
+    }
+
+    var o={};
+    addbind(o,'test',[document.getElementById('test1'),document.getElementById('test2')]);
+    addbind(o,'test2',[document.getElementById('test3')]);
+</script>
+</body>
+</html>
