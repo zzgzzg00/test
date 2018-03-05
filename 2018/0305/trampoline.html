@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function count(n){
+        if(n == 0){
+            return true;
+        }
+        return count(--n);
+    }
+//    console.log(count(100000000));
+    function count2(n){
+        if(n == 0){
+            return true;
+        }
+        return count2.bind(null,--n);
+    }
+    var result = count2(100000000);
+    while(typeof result == 'function'){
+        result = result();
+    }
+    console.log(result);
+</script>
+</body>
+</html>

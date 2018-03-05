@@ -3,39 +3,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
-        ::selection{
-            color: red;
-        }
-        textarea{
-            border: 1px solid transparent;
-            outline: none;
-            resize: none;
-            display: block;
-            font-size: 14px;
-            height: auto;
-            width: 100%;
-        }
+
     </style>
 </head>
 <body>
-<textarea readonly>大王大王都快马克的摩卡我们的卡</textarea>
-<input readonly  hidden/>
-<script>
-    var text=document.querySelector('textarea');
-    var input=document.querySelector('input');
-    text.onselect=function(e){
-        var start=this.selectionStart,end=this.selectionEnd;
-        var v=this.value.substring(start,end);
-        input.value=v+'__test';
-        input.removeAttribute('hidden');
-        input.select();
-        document.execCommand('copy');
-        input.setAttribute('hidden',1);
-        this.select();
-        this.selectionStart=start;
-        this.selectionEnd=end;
-    }
-</script>
+<input name="a" />
 <script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
+<script>
+    var input=document.querySelector('input');
+    input.name='b';
+    document.body.insertAdjacentHTML('beforeend',input.outerHTML);
+    console.log(document.querySelectorAll('input'));
+</script>
 </body>
 </html>

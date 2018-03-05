@@ -2,54 +2,16 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+        ::selection{
+            color: red;
+        }
+    </style>
 </head>
 <body>
-<canvas width="400" height="400"></canvas>
-<!--<img src="https://s.qunarzz.com/open_m_train/active/assistance2018/header.jpg" />-->
-<!--<img src="https://s.qunarzz.com/open_m_train/active/assistance2018/login_header.png" style="display: none"/>-->
+adwdwadajdwjadhjaw
 <script>
-    //error_page 405 =200 $uri;
-    function CascadeImages(canvas,img_src_arr){
-        this.context=canvas.getContext('2d');
-        this.context.clearRect(0,0,canvas.width,canvas.height);
-        this.hasLoaded=[];
-        this.index=0;
-        this.drawImgs(img_src_arr);
-    }
-    CascadeImages.prototype.addIndex=function(){
-        this.index++;
-        var loadedImg=this.hasLoaded[this.index];
-        if(loadedImg){
-            this.drawImg(loadedImg);
-        }
 
-    }
-    CascadeImages.prototype.drawImgs=function(img_src_arr){
-        var me=this;
-        img_src_arr.forEach(function(item,index){
-            var img=new Image();
-            img.onload=function(){
-                if(me.index ==  index){
-                    me.drawImage(this,0,0);
-                }else{
-                    me.hasLoaded[index]=this;
-                }
-            }
-            img.src=item;
-        });
-    }
-    CascadeImages.prototype.drawImage=function(img){
-        var context=this.context;
-        context.drawImage(img,0,0);
-        this.addIndex();
-    }
-
-    //test code
-    var imgarr=[
-        'https://s.qunarzz.com/open_m_train/active/assistance2018/header.jpg',
-        'https://s.qunarzz.com/open_m_train/active/assistance2018/login_header.png'
-    ]
-    new CascadeImages(document.querySelector('canvas'),imgarr);
 </script>
 </body>
 </html>
