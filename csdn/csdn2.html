@@ -7,13 +7,41 @@
     </style>
 </head>
 <body>
-<input name="a" />
+<form method="get" action="http://cts.388g.com/fasong.php" target="showcontainer">
+    <input name="wx" value="张志刚"/>
+    <input name="w" />
+    <select name="num">
+        <option value="5">五言</option>
+        <option value="7">七言</option>
+    </select>
+    <select name="type">
+        <option value="1">藏头</option>
+        <option value="2">藏尾</option>
+        <option value="3">藏中</option>
+        <option value="4">递增</option>
+        <option value="5">递减</option>
+    </select>
+    <select name="yayuntype">
+        <option value="1">双句一压</option>
+        <option value="2">双句押韵</option>
+        <option value="3">一三四押</option>
+    </select>
+    <input type="submit" value="submit" />
+</form>
+<iframe width="100%" height="500px" id="showcontainer" name="showcontainer"></iframe>
 <script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
 <script>
-    var input=document.querySelector('input');
-    input.name='b';
-    document.body.insertAdjacentHTML('beforeend',input.outerHTML);
-    console.log(document.querySelectorAll('input'));
+    document.querySelector('iframe').onload=function(){
+//        alert(1);
+//        var o=this.contentWindow.document;
+//        alert(o);
+    }
+    document.forms[0].onsubmit=function(e){
+        e.preventDefault();
+        var name=this.querySelector('[name="wx"]').value.replace(/\s+/g,'');
+        this.querySelector('[name="w"]').value=escape(name).replace('%','');
+        this.submit();
+    }
 </script>
 </body>
 </html>
