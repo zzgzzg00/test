@@ -8,12 +8,10 @@
 </head>
 <body>
 <script>
-    function add(num){
-        var arr=Array.from({length:num},(item,index)=>(index+1+'').repeat(index+1));
-        arr.unshift(...arr.slice(1).reverse());
-        return arr;
-    }
-    console.log(add(4));
+    var de=new Function('','for(var i=0;i<10;i++){debugger}');
+    alert(1);
+    de();
+    alert(2);
 </script>
 </body>
 </html>

@@ -10,47 +10,25 @@
 <script src="../common/react-dom16.js"></script>
 <script type="text/jsx">
     const {Component}=React;
+    const innerHTML='window';
     class App extends Component{
         constructor(props){
             super(props);
-            this.state={
-                arr:[],
-                index:0
-            }
-            this.handle=null;
-            this.stopClickHandle=this.stopClickHandle.bind(this);
+            this.innerHTML='app';
         }
-        stopClickHandle(){
-            if(this.handle){
-                clearInterval(this.handle);
-                this.handle=null;
-            }
-        }
-        componentDidMount(){
-            const me=this;
-            this.handle=setInterval(function(){
-                me.setState(function(preState){
-                    let arr=[preState.index++,...preState.arr];
-                    return {arr};
-                });
-                if(me.state.index == me.props.max){
-                    me.stopClickHandle();
-                }
-            },1000);
+        show(){
+            alert(this.innerHTML);
         }
         render(){
-            let arr=this.state.arr;
-            arr=arr.map(function(item){
-                return (<div>{item}</div>)
-            });
             return(
                 <div>
-                    {arr}
+                    <p onClick={this.show.bind(this)}>bind</p>
+                    <p onClick={this.show}>not bind</p>
                 </div>
             )
         }
     }
-    ReactDOM.render(<App max={5} />,document.body);
+    ReactDOM.render(<App />,document.body);
 </script>
 </body>
 </html>
