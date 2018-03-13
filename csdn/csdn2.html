@@ -7,41 +7,28 @@
     </style>
 </head>
 <body>
-<form method="get" action="http://cts.388g.com/fasong.php" target="showcontainer">
-    <input name="wx" value="张志刚"/>
-    <input name="w" />
-    <select name="num">
-        <option value="5">五言</option>
-        <option value="7">七言</option>
-    </select>
-    <select name="type">
-        <option value="1">藏头</option>
-        <option value="2">藏尾</option>
-        <option value="3">藏中</option>
-        <option value="4">递增</option>
-        <option value="5">递减</option>
-    </select>
-    <select name="yayuntype">
-        <option value="1">双句一压</option>
-        <option value="2">双句押韵</option>
-        <option value="3">一三四押</option>
-    </select>
-    <input type="submit" value="submit" />
-</form>
-<iframe width="100%" height="500px" id="showcontainer" name="showcontainer"></iframe>
 <script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
 <script>
-    document.querySelector('iframe').onload=function(){
-//        alert(1);
-//        var o=this.contentWindow.document;
-//        alert(o);
-    }
-    document.forms[0].onsubmit=function(e){
-        e.preventDefault();
-        var name=this.querySelector('[name="wx"]').value.replace(/\s+/g,'');
-        this.querySelector('[name="w"]').value=escape(name).replace('%','');
-        this.submit();
-    }
+    var days = ['2018-02-02','2018-02-09','2018-02-16','2018-02-23'];
+
+    var array = [
+        {'a':1,'b':2,'c':'2018-02-01'},
+        {'a':2,'b':22,'c':'2018-02-06'},
+        {'a':2,'b':22,'c':'2018-02-07'},
+        {'a':11,'b':21,'c':'2018-02-11'},
+        {'a':13,'b':25,'c':'2018-02-15'},
+        {'a':1,'b':2,'c':'2018-02-17'},
+        {'a':1,'b':2,'c':'2018-02-24'}
+        ];
+    var tt=days.map(function(item,index,arr){
+        var arrys=array.filter(function(obj){
+            return obj.c<=item && (index-1>=0?obj.c>arr[index-1]?true:false:true);
+        });
+        var o={};
+        o[item]=arrys;
+        return o;
+    })
+    console.log(tt);
 </script>
 </body>
 </html>

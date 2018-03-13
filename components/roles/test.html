@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        :root{
+            /*background-color: red;*/
+        }
+        #test{
+            width: 400px;
+            height: 500px;
+            position: relative;
+        }
+        #test>div{
+            width: 400px;
+            height: 200px;
+            position: absolute;
+            bottom: 0;
+            /*background: linear-gradient(0deg,#ffffff 0%,#ffffff 98%,#000000 98%,#000000 0);*/
+            background-size: 100% 40px;
+            /*background-repeat: no-repeat;*/
+            background-image: url("./test.png");
+            /*background-repeat: repeat-y;*/
+            font-size: 30px;
+        }
+        #test>img{
+            max-width: 50%;
+            position: absolute;
+            top:0;
+        }
+        #test>img:nth-of-type(1){
+            max-width: 100%;
+            position: absolute;
+            bottom:0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<div id="test">
+    123
+    <img src="//s.qunarzz.com/open_m_train/vouchers/logo.png" />
+    <img src="//s.qunarzz.com/open_m_train/active/20180312.png?a=113" />
+    <div contenteditable="true"></div>
+</div>
+<input type="button" value="save" />
+<script src="./html2canvas.min.js"></script>
+<script>
+    document.querySelector('input').onclick=function(){
+        html2canvas(document.querySelector("#test"),{
+            useCORS: true
+        }).then(function(canvas){
+            document.body.appendChild(canvas);
+        });
+    }
+</script>
+</body>
+</html>
