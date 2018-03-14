@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="apple-mobile-web-app-title" content="火车票-qunar.com">
+    <meta name="full-screen" content="yes"/>
+    <meta name="browsermode" content="application"/>
+    <meta name="x5-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="x5-page-mode" content="app"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui" />
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        #container{
+            position: relative;
+        }
+        #container>img{
+            max-width: 100%;
+            line-height: 1;
+            font-size: 0;
+        }
+        #container .role_container{
+            position: absolute;
+            left: 0;
+            top:0;
+        }
+        #container .role_container img:not([data-role=major]){
+            position: absolute;
+            left: 0;
+            top:0;
+        }
+        #container .active{
+            border: 1px solid red;
+        }
+        [data-role=place] [data-role=head]{
+            top:20%;
+        }
+        #savecontainer{
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: none;
+            background-color: red;
+            z-index: 2;
+        }
+        #savecontainer img{
+            margin-top: 100px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <img src="//s.qunarzz.com/open_m_train/active/20180312.png" />
+</div>
+<div id="test2"></div>
+<div id="savecontainer">
+    <img />
+</div>
+<input type="button" id="add" value="add" />
+<input type="button" id="save" value="save" />
+<script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
+<script src="./html2canvas.min.js"></script>
+<script>
+    var textDom=document.getElementById('test2')
+    function show(text){
+        textDom.innerHTML+=text+'<br/>';
+    }
+    function manager(container){
+        var _container=container;
+        var _width=$(container).width();
+        var _height=$(container).height();
+        var preUrl='//s.qunarzz.com/open_m_train/active/';
+        var emptyFun=Function.prototype;
+        var _index=0;
+        var _record={};
+        var _target;
+        var initTranslate=[_width/3,_height/3];
+        var step=0.01;
+        function createId(){
+            return 'role'+_index++;
+        }
+        function findRole(id){
+            return _record[id];
+        }
+        function findTarget(){
+            return _target;
+        }
+        function createImg(name,role,callback){
+            var img=new Image();
+            img.onload=function(){
+                callback && callback(img);
+            }
+            img.src=preUrl+name;
+            img.setAttribute('data-role',role);
+            return img;
+        }
+        function Role(role,name){
+            this.firstPoints=[];
+            this.secondPonits=[];
+            this.touchLength=0;
+            this.transformOffset=initTranslate.slice(0);
+            this.width=0;
+            this.height=0;
+            this.majorInitWidth=0;
+            this.scale=1;
+            var me=this;
+            var div=this.container=document.createElement('div');
+            div.className='role_container';
+            div.setAttribute('data-role',role);
+            var major=createImg(name,'major',function(img){
+                div.appendChild(img);
+                _container.appendChild(div);
+                me.major=img;
+                me.getSize();
+                me.setTranslate();
+            });
+            var id=createId();
+            div.id=id;
+            _record[id]=this;
+            this.bindEvents();
+        }
+        Role.prototype.getSize=function(){
+            this.width=$(this.container).width();
+            this.height=$(this.container).height();
+            if(!this.majorInitWidth){
+                this.majorInitWidth=this.width;
+            }
+        }
+        //scale不会修改元素实际长宽
+        Role.prototype.setTranslate=function(){
+            this.editTranslate();
+            this.editScale();
+            var x=this.transformOffset[0],
+                y=this.transformOffset[1];
+            this.major.style.width=parseFloat(this.majorInitWidth)*this.scale+'px';
+            this.container.style.left=x+'px';
+            this.container.style.top=y+'px';
+            //html2canvas transform会导致绘制位置不正确
+//            this.container.style.webkitTransform='translate('+x+'px,'+y+'px)';// scale('+this.scale+','+this.scale+')';
+//            this.container.style.transform='translate('+x+'px,'+y+'px)';// scale('+this.scale+','+this.scale+')';
+        }
+        Role.prototype.bindEvents=function(){
+            var me=this;
+            this.container.addEventListener('touchstart',function(e){
+                var id=this.id;
+                _target=findRole(id);
+                Object.keys(_record).forEach(function(item){
+                    var container=_record[item].container;
+                    if(container != this){
+                        container.classList.remove('active');
+                    }
+                });
+                this.classList.add('active');
+            },false);
+            this.container.addEventListener('touchmove',function(e){
+                var touchesLength=e.touches.length;
+                if(touchesLength != me.touchLength){
+                    me.firstPoints=[];
+                    me.secondPonits=[];
+                    me.touchLength=touchesLength;
+                }
+                if(touchesLength == 1){
+                    me.move(e);
+                }else{
+                    me.scaleMove(e);
+                }
+            },false);
+            this.container.addEventListener('touchend',function(e){
+                me.firstPoints=[];
+                me.secondPonits=[];
+                me.getSize();
+            },false);
+        }
+        Role.prototype.addImage=function(name,role){
+            var me=this;
+            createImg(name,role,function(img){
+                me.container.appendChild(img);
+            })
+        };
+        //修正移动边界
+        Role.prototype.editTranslate=function(){
+            if(this.transformOffset[0]<0){
+                this.transformOffset[0]=0;
+            }
+            if(this.transformOffset[0]+this.width > _width){
+                this.transformOffset[0]=_width-this.width;
+            }
+            if(this.transformOffset[1]<0){
+                this.transformOffset[1]=0;
+            }
+            if(this.transformOffset[1]+this.height >= _height){
+                this.transformOffset[1]=_height-this.height;
+            }
+        }
+        //修正缩放边界
+        Role.prototype.editScale=function(){
+            if(this.scale<=0.5){
+                this.scale=0.5;
+            }
+            if(this.scale>=2){
+                this.scale=2;
+            }
+        }
+        Role.prototype.move=function(e){
+            e.preventDefault();
+            var touch=e.touches[0];
+            var x=touch.clientX,
+                y=touch.clientY;
+            if(this.firstPoints.length>0){
+                var offsetX=x-this.firstPoints[0][0],
+                    offsetY=y-this.firstPoints[0][1];
+                this.transformOffset[0]+=offsetX;
+                this.transformOffset[1]+=offsetY;
+                this.setTranslate();
+            }
+            this.firstPoints.unshift([x,y]);
+        }
+        Role.prototype.scaleMove=function(e){
+            e.preventDefault();
+            var touch1=e.touches[0],
+                touch2=e.touches[1];
+            var x1=touch1.clientX,
+                y1=touch1.clientY,
+                x2=touch2.clientX,
+                y2=touch2.clientY;
+            if(this.firstPoints.length>0){
+                var offsetX1=x1-this.firstPoints[0][0],
+                    offsetY1=y1-this.firstPoints[0][1],
+                    offsetX2=x2-this.secondPonits[0][0],
+                    offsetY2=y2-this.secondPonits[0][1];
+                if(offsetX1 >0 && offsetX2 <0){
+                    this.scale-=step;
+                }else if(offsetX1 <0 && offsetX2 > 0){
+                    this.scale+=step;
+                }else if(offsetY1 >0 && offsetY2 < 0){
+                    this.scale+=step;
+                }else if(offsetY1 < 0 && offsetY2 > 0){
+                    this.scale-=step;
+                }
+                this.setTranslate();
+            }
+            this.firstPoints.unshift([x1,y1]);
+            this.secondPonits.unshift([x2,y2])
+        }
+        function createPlace(name){
+            return new Role('place',name)
+        }
+        return{
+            createPlace:createPlace,
+            findRole:findRole,
+            findTarget:findTarget
+        }
+
+    }
+    var o=manager(document.querySelector('#container'));
+    var r1=o.createPlace('20171011.png');
+    var r1=o.createPlace('20171025.png');
+
+    var img=document.querySelector('#savecontainer img');
+    var container=document.querySelector('#savecontainer');
+    document.querySelector('#add').onclick=function(){
+        o.findTarget().addImage('movieCouponIcon.png','head')
+    }
+    container.onclick=function(){
+        this.style.display='none';
+    }
+    document.querySelector('#save').onclick=function(){
+        html2canvas(document.querySelector("#container"),{
+            useCORS: true
+        }).then(function(canvas){
+            var url=canvas.toDataURL();
+            img.src=url;
+            container.style.display='block';
+        });
+    }
+</script>
+</body>
+</html>
