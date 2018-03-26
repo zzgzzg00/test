@@ -4,14 +4,11 @@
     <title></title>
 </head>
 <body>
-<iframe src="https://zzgzzg00.github.io/csdn/inner.html"></iframe>
 <script>
-    window.onload=function(){
-        var h=document.querySelector('iframe').contentWindow.document.querySelector('div').innerHTML;
-        alert(h);
-        h=document.querySelector('div');
-        alert(h)
-    }
+    setTimeout(function(){
+        window.opener.change('aa');
+        window.close();
+    },2000);
 </script>
 </body>
 </html>

@@ -19,35 +19,19 @@
     <meta name="keywords" content="火车票,火车票查询,列车时刻表,火车票预定" />
 </head>
 <body>
-<c:forEach items="${printList }" var="p">
-    <div>
-        <table class="table_list" >
-            <tr>
-                <td width="12%" nowrap="nowrap" class="td_css head_td">姓名</td>
-                <td width="12%" nowrap="nowrap" class="td_css" >${p.userName }</td>
-                .........
-                .........
-        </table>
-        <script type="text/javascript" flag="${p.id}">
-            $(document).ready(function() {
-                var sign="${p.id}";
-                var arr = "${p.userPayType}".split(",");
-                var arr1 = "${p.userPayFund}".split(",");
-                var flag = 1;
-                n:for(var i = 0;i<arr.length;i++){
-                    for(var j = i+1;j<arr.length;j++){
-                        if(arr[i]==arr[j]){
-                            continue n;
-                        }
-                    }
-                    var thisscript=document.querySelector('script[flag="${p.id}"]');
-                    thisscript.parent().find('.table_list').find('tr').eq(flag).find('td').eq(-2).append(arr[i]);
-                    thisscript.parent().find('.table_list').find('tr').eq(flag).find('td').eq(-1).append(arr1[i]);
-                    flag++;
-                }
-            })
-        </script>
-    </div>
-</c:forEach>
+<script>
+    var Print=new Proxy(function(){},{
+        apply:function(target){
+            target.index=~~target.index+1;
+            if(target.index %3 ==0){
+                console.log(String.fromCharCode(target.index/3+96).repeat(3));
+            }
+            return Print;
+        }
+    });
+    Print.Print=Print;
+    Print().Print()();
+    Print()().Print();
+</script>
 </body>
 </html>

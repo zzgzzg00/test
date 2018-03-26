@@ -9,26 +9,20 @@
 <body>
 <script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
 <script>
-    var days = ['2018-02-02','2018-02-09','2018-02-16','2018-02-23'];
-
-    var array = [
-        {'a':1,'b':2,'c':'2018-02-01'},
-        {'a':2,'b':22,'c':'2018-02-06'},
-        {'a':2,'b':22,'c':'2018-02-07'},
-        {'a':11,'b':21,'c':'2018-02-11'},
-        {'a':13,'b':25,'c':'2018-02-15'},
-        {'a':1,'b':2,'c':'2018-02-17'},
-        {'a':1,'b':2,'c':'2018-02-24'}
-        ];
-    var tt=days.map(function(item,index,arr){
-        var arrys=array.filter(function(obj){
-            return obj.c<=item && (index-1>=0?obj.c>arr[index-1]?true:false:true);
-        });
+    str="zz=aaa,bb=bbb,cc=ccc;User=ZZZ&zz=aaa1&bb=bbb1&cc=ccc1";
+    function find(str){
+        var reg=/([^?=&]+)=([^?=&]+)/g;
+        var result=null;
         var o={};
-        o[item]=arrys;
-        return o;
-    })
-    console.log(tt);
+        while((result=reg.exec(str))!=null){
+            o[result[1]]=result[2];
+        }
+        return function getByName(name){
+            return o[name];
+        }
+    }
+    var s=find(str);
+    console.log(s('zz'),s('cc'));
 </script>
 </body>
 </html>

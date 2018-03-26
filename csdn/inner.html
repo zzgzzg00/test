@@ -4,6 +4,14 @@
     <title></title>
 </head>
 <body>
-<div>123</div>
+<div></div>
+<script>
+    function change(text){
+        document.querySelector('div').innerHTML=text;
+    }
+    document.querySelector(':root').onclick=function(){
+        window.open('./outer.html');
+    }
+</script>
 </body>
 </html>
