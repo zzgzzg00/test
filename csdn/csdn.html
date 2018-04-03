@@ -19,19 +19,40 @@
     <meta name="keywords" content="火车票,火车票查询,列车时刻表,火车票预定" />
 </head>
 <body>
+<form method="get" action="http://user.qunar.com/passport/platformverify.jsp">
+    <input name="platform" value="samsung" />
+    <input name="page" value="http://touch.train.qunar.com/trainOrderFill.html?startStation=%E5%8C%97%E4%BA%AC%E5%8D%97&endStation=%E4%B8%8A%E6%B5%B7%E8%99%B9%E6%A1%A5&trainNum=G103&dptHm=06:53&date=2018-03-31&searchType=stasta&sort=7&agentId=264&agentType=1&cat=mtrain_service_inner&bizMode=9&ticketId=4&seatType=%E4%BA%8C%E7%AD%89%E5%BA%A7&userType=2&from=samsungs_train&validateToken=ZBPUHSA23v85VR9bfFnuaw==&authToken=FSVIMS2WXxkbcxq6JQEL72sGD&status=signInSuccess&country=CN" />
+    <input name="userid" value="ODhmYjNlNjg3MGE4ZjY2YTQyODc3NjFhYzI3YzBjMTFjYjhmMjk2M2ViZDFhOTU0MTNiYTFhZGZiYmQ2M2QyZA==" />
+    <input name="sign" value="18c9d50016be9cb0135de896c77ac783" />
+    <input name="app" value="train" />
+    <input name="format" value="js" />
+    <input name="_" value="1522308231457" />
+    <input name="callback" value="jsonp4" />
+    <input type="submit" />
+</form>
 <script>
-    var Print=new Proxy(function(){},{
-        apply:function(target){
-            target.index=~~target.index+1;
-            if(target.index %3 ==0){
-                console.log(String.fromCharCode(target.index/3+96).repeat(3));
-            }
-            return Print;
+    class Base{
+        constructor(a=1,b=1){
+            Object.assign(this,{a,b});
         }
-    });
-    Print.Print=Print;
-    Print().Print()();
-    Print()().Print();
+        setState(obj={}){
+            Object.assign(this,obj);
+            this.render();
+        }
+        render(){
+            console.log('base',this)
+        }
+    }
+    class Test extends Base{
+        constructor(a=1,b=2){
+            super(a,b);
+        }
+        render(){
+            console.log('test',this)
+        }
+    }
+    var b=new Test();
+    b.setState({c:1,a:2});
 </script>
 </body>
 </html>
