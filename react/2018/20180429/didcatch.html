@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="test"></div>
+<div id="root"></div>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    /**
+     * componentDidCatch只能捕获自组建中render中的错误
+     * */
+    const {Component}=React;
+    class ErrorBound extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                isError:false,
+                content:''
+            }
+        }
+        componentDidCatch(error,info){
+            this.setState({isError:true,content:info});
+        }
+        render(){
+            if(this.state.isError){
+                return(
+                    <p>{this.state.content.componentStack}</p>
+                )
+            }
+            return this.props.children;
+        }
+    }
+    class Button extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                index:1
+            }
+            this.clickHandle=this.clickHandle.bind(this);
+        }
+        clickHandle(){
+            this.setState({index:this.state.index+1});
+        }
+        render(){
+            if(this.state.index<4){
+                return (<div onClick={this.clickHandle}>button {this.state.index}</div>);
+            }else{
+                throw new Error('aa');
+            }
+        }
+    }
+    const App=props=>(
+            <ErrorBound>
+                <Button />
+            </ErrorBound>
+        )
+    ReactDOM.render(<App />,document.getElementById('test'));
+</script>
+</body>
+</html>
