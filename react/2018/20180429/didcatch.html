@@ -19,17 +19,18 @@
         constructor(props){
             super(props);
             this.state={
-                isError:false,
-                content:''
+                error:null,
+                info:''
             }
         }
         componentDidCatch(error,info){
-            this.setState({isError:true,content:info});
+            this.setState({error,info});
         }
         render(){
-            if(this.state.isError){
+            if(this.state.error){
+                const {error,info}=this.state;
                 return(
-                    <p>{this.state.content.componentStack}</p>
+                    <p>from {info.componentStack} throw error {error.toString()}</p>
                 )
             }
             return this.props.children;
