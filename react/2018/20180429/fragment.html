@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    /**
+     * Fragment
+     *   属性只支持key
+     *   缩写<></>并非都支持
+     * */
+    React.__spread=Object.assign;
+    const Column=props=>[
+        <td>{props.name}</td>,
+        <td>{props.age}</td>
+    ];
+    const Column2=props=>(
+        <React.Fragment>
+            <td>{props.name2}</td>
+            <td>{props.age2}</td>
+        </React.Fragment>
+    )
+    const App=props=>(
+        <table>
+            <tr>
+                <Column {...props}/>
+            </tr>
+            <tr>
+                <Column2 {...props}/>
+            </tr>
+        </table>
+    );
+    const data={
+        name:'gjj',
+        age:30,
+        name2:'lm',
+        age2:30
+    }
+    ReactDOM.render(<App {...data} />,document.body);
+</script>
+</body>
+</html>

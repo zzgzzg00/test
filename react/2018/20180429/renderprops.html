@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    React.__spread=Object.assign;
+    const {PureComponent}=React;
+    class RenderProps extends PureComponent{
+        constructor(props){
+            super(props);
+            this.state={
+                time:0
+            }
+            this.clickHandle=this.clickHandle.bind(this);
+        }
+        clickHandle(){
+            this.setState(preState=>({time:preState.time+1}));
+        }
+        render(){
+            return[
+                <div onClick={this.clickHandle}>{this.state.time}</div>,
+                this.props.children(this.state)
+            ]
+        }
+    }
+    const Timer=props=>(
+        <p>time:{props.time}</p>
+    )
+    const App=props=>(
+        <RenderProps>
+            {props=>(<Timer {...props} />)}
+        </RenderProps>
+    )
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
