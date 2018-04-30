@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    /**
+     * defaultProps
+     *   static property
+     *
+     * React.createRef()
+     *  When the ref attribute is used on an HTML element,
+     *  the ref created in the constructor with React.createRef() receives the underlying DOM element as its current property
+     *
+     *  When the ref attribute is used on a custom class component,
+     *  the ref object receives the mounted instance of the component as its current
+     *
+     *  You may not use the ref attribute on functional components because they don’t have instances.
+     * */
+    const {Component}=React;
+
+    class ShowDiv extends Component{
+        constructor(props){
+            super(props);
+            this.setChangeHandle=this.setChangeHandle.bind(this);
+            this.state={
+                html:'default'
+            }
+        }
+        setChangeHandle(html){
+            this.setState({html})
+        }
+        render(){
+            return(
+                <div>{this.state.html}</div>
+            )
+        }
+    }
+
+    class Input extends Component{
+        constructor(props){
+            super(props);
+            this.changeHandle=this.changeHandle.bind(this);
+            this.inputRef=React.createRef();
+            this.state={
+                value:props.defaultValue
+            }
+        }
+        componentDidMount(){
+            if(this.props.focus){
+                this.inputRef.current.focus();
+            }
+        }
+        changeHandle(e){
+            this.setState({value:e.target.value});
+            this.props.changeHandle(e.target.value);
+        }
+        render(){
+            return(
+                <input ref={this.inputRef} onChange={this.changeHandle} value={this.state.value} />
+            )
+        }
+    }
+    Input.defaultProps={
+        defaultValue:'input',
+        focus:false,
+        changeHandle:function(){}
+    }
+
+    class App extends Component{
+        constructor(props){
+            super(props);
+            this.showRef=React.createRef();
+            this.whenChange=this.whenChange.bind(this);
+        }
+        whenChange(value){
+            this.showRef.current.setChangeHandle(value);
+        }
+        render(){
+            return[
+                <Input defaultValue={'test'} changeHandle={this.whenChange} focus={true}/>,
+                <ShowDiv ref={this.showRef} />
+            ]
+        }
+    }
+
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

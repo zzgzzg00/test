@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="test"></div>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    /**
+     * */
+    const {Component}=React;
+    class App extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                r1:'',
+                r2:''
+            }
+        }
+        fetch1(){
+            const p=new Promise(function(resolve,reject){
+                setTimeout(resolve,2000,'fetch1_resolve');
+            });
+            return p;
+        }
+        fetch2(){
+            const p=new Promise(function(resolve,reject){
+                setTimeout(resolve,4000,'fetch2_resolve');
+            });
+            return p;
+        }
+        render(){
+            const [p1,p2]=[this.fetch1(),this.fetch2()]
+            Promise.all([p1,p2]).then(([r1,r2])=>{this.setState({r1,r2})});
+            return[
+                <div>{this.state.r1}</div>,
+                <div>{this.state.r2}</div>
+            ]
+        }
+    }
+    ReactDOM.render(<App />,document.getElementById('test'));
+</script>
+</body>
+</html>

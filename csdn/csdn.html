@@ -31,28 +31,11 @@
     <input type="submit" />
 </form>
 <script>
-    class Base{
-        constructor(a=1,b=1){
-            Object.assign(this,{a,b});
-        }
-        setState(obj={}){
-            Object.assign(this,obj);
-            this.render();
-        }
-        render(){
-            console.log('base',this)
-        }
+    function fill(min,max=((max)=>([max,min]=[min,0])[0])()){
+        console.log(min,max);
     }
-    class Test extends Base{
-        constructor(a=1,b=2){
-            super(a,b);
-        }
-        render(){
-            console.log('test',this)
-        }
-    }
-    var b=new Test();
-    b.setState({c:1,a:2});
+    fill(5);
+    fill(2,5);
 </script>
 </body>
 </html>
