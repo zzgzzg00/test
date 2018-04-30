@@ -10,17 +10,22 @@
 <script src="../../common/react-dom16.3.js"></script>
 <script type="text/jsx">
     React.__spread=Object.assign;
-    const withContext=(Component,Consumer)=>()=>(
+    const withContext=(Component,Consumer)=>(props)=>(
         <Consumer>
-            {data=>(
-                <Component {...data} />
-            )}
+            {
+                function addConsumer(data){
+                    const _data={...data,...props};
+                    return(
+                        <Component {..._data} />
+                    )
+                }
+            }
         </Consumer>
     );
     const {PureComponent}=React;
     const {Provider,Consumer}=React.createContext();
     const Show=props=>(
-        <div onClick={props.change}>{props.context}</div>
+        <div onClick={props.change}>{props.context}-{props.index}</div>
     )
     const ShowConsumer=withContext(Show,Consumer);
     class App extends PureComponent{
@@ -35,9 +40,9 @@
         render(){
             return(
                 <Provider value={this.state}>
-                    <ShowConsumer />
-                    <ShowConsumer />
-                    <ShowConsumer />
+                    <ShowConsumer index={'index_1'}/>
+                    <ShowConsumer index={'index_2'}/>
+                    <ShowConsumer index={'index_3'}/>
                 </Provider>
             )
         }
