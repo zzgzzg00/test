@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    React.__spread=Object.assign;
+    const withContext=(Component,Consumer)=>()=>(
+        <Consumer>
+            {data=>(
+                <Component {...data} />
+            )}
+        </Consumer>
+    );
+    const {PureComponent}=React;
+    const {Provider,Consumer}=React.createContext();
+    const Show=props=>(
+        <div onClick={props.change}>{props.context}</div>
+    )
+    const ShowConsumer=withContext(Show,Consumer);
+    class App extends PureComponent{
+        constructor(props){
+            super(props);
+            this.change=()=>this.setState(preState=>({context:preState.context+1}));
+            this.state={
+                context:0,
+                change:this.change
+            }
+        }
+        render(){
+            return(
+                <Provider value={this.state}>
+                    <ShowConsumer />
+                    <ShowConsumer />
+                    <ShowConsumer />
+                </Provider>
+            )
+        }
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

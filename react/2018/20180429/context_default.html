@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    const {PureComponent}=React;
+    /**
+     * 当Consumer里的组件的父组件没有Provider时 则用createContext中的参数作为默认值
+     * */
+    const {Provider,Consumer}=React.createContext({context:'test'});
+    const ContextComponent=props=>(
+        <div>{props.context}</div>
+    )
+    const App=props=>(
+        <React.Fragment>
+            <Provider value={{context:'context'}}>
+                <Consumer>
+                    {data=>(
+                            <ContextComponent context={data.context} />
+                    )}
+                </Consumer>
+            </Provider>
+            <Consumer>
+                {data=>(
+                    <ContextComponent context={data.context} />
+                )}
+            </Consumer>
+        </React.Fragment>
+    )
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
