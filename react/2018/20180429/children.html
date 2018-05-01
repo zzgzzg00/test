@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    const Show=props=>(
+        <div>{props.context}</div>
+    )
+    const Repeat=props=>{
+        const items=Array.from({length:props.length}).map(props.children);
+        return items;
+    }
+    const App=props=>(
+        <Repeat length={10}>
+            {(context,index)=><Show key={index} context={index} />}
+        </Repeat>
+    )
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
