@@ -1,5 +1,7 @@
 const cacheName='20180504';
 const cacheFiles=[
+    '/',
+    './index.html',
     './imgs/test.png'
 ]
 self.addEventListener('install',function whenInstall(e){
