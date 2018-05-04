@@ -10,4 +10,13 @@ self.addEventListener('install',function whenInstall(e){
         return cache.addAll(cacheFiles);
     });
     e.waitUntil(cachePromise);
-})
+});
+self.addEventListener('fetch', function (e) {
+    e.respondWith(
+        caches.match(e.request).then(function (cache) {
+            return cache || fetch(e.request);
+        }).catch(function (err) {
+            return fetch(e.request);
+        })
+    );
+});
