@@ -20,6 +20,62 @@
     <img src="http://zzg.com:8081/postcard/decorations/female_hair_01.png" />
 </div>
 <script>
+    var set={
+        "title": "VIP抢票通道",
+        "bgcolor": "#82d886",
+        "configs": [
+            {
+                "type": "img",
+                "src": "https://source.qunarzz.com/site/images/wap/push/toop.jpg"
+            },
+            {
+                "type": "vcode_dialog_distinction_new_old",
+                "bgcolor": "#fff",
+                "titlecolor": "#ffa800",
+                "title": "输入手机号",
+                "inputcolor": "#ffa800",
+                "codebgcolor": "#ffa800",
+                "subbgcolor": "#ffa800",
+                "sysCode": "ceshia",
+                "dotbgcolor": "#82d886"
+            },
+            {
+                "type": "strage_express",
+                "title": "火车票抢票攻略",
+                "stargeItem": [
+                    {
+                        "title": "多功能智能抢",
+                        "content": "多车次，多坐席，多日期一起抢，快捷高效",
+                        "icon": "set_pic1@2x.png"
+                    },
+                    {
+                        "title": "多样式放心抢",
+                        "content": "提前60天预约，更支持跨站抢票，开售自动枪",
+                        "icon": "set_pic2@2x.png"
+                    },
+                    {
+                        "title": "无压力信用抢",
+                        "content": "抢到票再付款，毫无资金压力",
+                        "icon": "set_pic3@2x.png"
+                    },
+                    {
+                        "title": "24小时全天服务",
+                        "content": "日夜兼程服务，云端自动刷票，开售自动出票",
+                        "icon": "set_pic4@2x.png"
+                    }
+                ]
+            },
+            {
+                "type": "button",
+                "text": "立即抢票",
+                "color": "#fff",
+                "bgcolor":'#ffa800',
+                "sign": "robquick",
+                "linkto": "https://touch.train.qunar.com?bd_source=hideHead"
+            }
+        ]
+    }
+    console.log(JSON.stringify(set));
 </script>
 </body>
 </html>
