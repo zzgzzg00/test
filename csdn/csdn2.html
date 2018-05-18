@@ -3,30 +3,22 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
-        span{
-            color: red;
-            position: relative;
-            display: inline-block;
-        }
-        span:after{
-            content: attr(data-text);
-            display: block;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            padding-left: 50%;
-            color: green;
-            top:0;
-            left: -50%;
-            box-sizing: border-box;
-        }
     </style>
 </head>
 <body>
-<span data-text="测">测</span><span data-text="大">大</span>
-<script src="//q.qunarzz.com/open_m_train/prd/scripts/zepto@5f84d4ac791c84f64346aec65b2a0083.js"></script>
 <script>
+    const betaReg=/fetrain([a-z]*?)\.beta\.qunar\.com/;
+    var utls=[
+        'https://fetrainnoaha.beta.qunar.com/train_ad_hy/index.html#/curse_train?_k=ff0oa4',
+        'https://fetraina.beta.qunar.com/train_ad_hy/index.html#/curse_train?_k=ff0oa4'
+    ]
+    for(let i of utls){
+        var s=betaReg.exec(i);
+        if(s){
+            console.log(s[1]);
+        }
+    }
+    var s={"stuffData":[{"titleImg":"ingredients.png","stuff":[{"id":1,"img":"key.png"},{"id":2,"img":"meat.png"}]},{"titleImg":"accessories.png","stuff":[{"id":3,"img":"eye.png"},{"id":4,"img":"milk.png"}]},{"titleImg":"spice.png","stuff":[{"id":5,"img":"tofu.png"},{"id":6,"img":"sock.png"}]}],"curseData":{"1-3-5":{"img_index":1,"tip":"今天女朋友跟我说，她闺蜜在胸上做了个纹身，看着很有感觉她也想去纹一个。我说还是算了吧，她那胸纹个蝴蝶都显小，你这纹个蜜蜂都占满了，别难为纹身师傅了。然后女朋友问我是怎么知道她闺蜜纹的是只蝴蝶"},"1-3-6":{"img_index":2,"tip":"今天妹妹问我，异地恋是什么感觉。我说，异地恋就像，你虽然知道TA的Wifi密码，但就是距离太远连接不上，还得时刻担心有人去偷摸蹭网"},"1-4-5":{"img_index":3,"tip":"今天女朋友要和我分手，因为她妈不同意我们在一起。我问为什么，她说，咱俩走同样的路，我的手机计步器显示是3572步，你的是5000多步"},"1-4-6":{"img_index":4,"tip":"今天我又去了寺庙，进门就喊：大师快给我剃度吧，我已看破红尘，对世间没什么留恋啦。大师说，快滚吧小伙子，你一个月来一次出门剪头能要多少钱啊"},"2-3-5":{"img_index":5,"tip":"今天去男朋友家玩耍，看到他穿了很久的袜子还没换，忍不住说，你该换袜子了！他来了一句，我买了五双一样的。我相信了他，不久后，我在发现了那四双崭新未拆封的袜子"},"2-3-6":{"img_index":6,"tip":"今天女朋友一边照镜子一边问我，老实说你觉得我怎么样。我说，虽然不是美貌与智慧并重，但起码你占了一个。她问，是美貌还是智慧？我说，是病重"},"2-4-5":{"img_index":7,"tip":"今天隔壁同学嫌我太胖然后就掐住我的脖子，我跟他说你掐的是我的双下巴不是我的脖子哦，你这样掐我还是可以呼吸的，然后他就被我吓哭了"},"2-4-6":{"img_index":8,"tip":"\"我生病了，发烧到40度了\”<br/>\“牛逼啊\”<br/>\“今天是咱们在一起第500天了\”<br/>\“太好了，我要给自己买个游戏机庆祝一下\""}},"expressData":["欢迎来到我的魔咒列车","在这里","你可以选择心仪的魔法材料","合成一张专属神秘咒符","用它诅咒所有放肆的恩爱狗们","让他们在甜言蜜语时","感受到你的悲愤","现在","开启你的邪恶祝福之旅吧"]}
 </script>
 </body>
 </html>

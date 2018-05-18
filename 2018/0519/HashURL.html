@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class HashURL{
+        constructor(url=location.href){
+            this.url=url;
+            this.hashReg=/#[^?&]+/i;
+            this.newUrl=url;
+            this.paramReg=/([^&?=]+)=([^&?=]*)/g;
+            this.viewObj=null;
+            this.params=null;
+            this.init();
+        }
+        init(){
+            this.getHash();
+            this.getViewName();
+            this.getParams();
+        }
+        getHash(){
+            if(!this.hash){
+                let {0:hash,index:hashIndex}=this.url.match(this.hashReg);
+                hash=hash.replace('#','');
+                Object.assign(this,{hash,hashIndex});
+                this.path=this.url.substring(0,hashIndex);
+            }
+            return this.hash;
+        }
+        getViewName(){
+            if(!this.viewObj){
+                const hash=this.getHash();
+                const [_,...arr]=hash.split('/');
+                this.viewObj={
+                    view:arr[arr.length-1],
+                    pathArr:arr,
+                    path:hash
+                }
+            }
+            return this.viewObj;
+        }
+        getParams(){
+            if(!this.params){
+                this.getHash();
+                const index=this.newUrl.indexOf('?',this.hashIndex);
+                const params={};
+                if(index!=-1){
+                    const url=this.newUrl.substring(index+1);
+                    let result=null;
+                    while((result=this.paramReg.exec(url))!=null){
+                        params[result[1]]=result[2];
+                    }
+                }
+                this.params=params;
+            }
+            return this.params;
+        }
+        setParams(obj){
+            this.getParams();
+            Object.keys(obj).forEach(item=>this.params[item]=obj[item]);
+        }
+        setParam(key,value){
+            this.setParams({
+                [key]:value
+            })
+        }
+        delParams(...keys){
+            for(let key of keys){
+                delete this.params[key];
+            }
+        }
+        delParam(key){
+            this.delParams(key);
+        }
+        clearParams(){
+            this.params={};
+        }
+        createUrl(){
+            const params=Object.keys(this.params).map(item=>`${item}=${this.params[item]}`).join('&');
+            if(params.length){
+                this.newUrl=`${this.path}#${this.hash}?${params}`;
+            }else{
+                this.newUrl=`${this.path}#${this.hash}`;
+            }
+            return this.newUrl;
+        }
+    }
+    const url='http://tmt.dev.qunar.com:8081/index_ad.html?ss=aa&tt=ss#/curse_train/ss?shareLevel=2&_k=9ufbd9&selectResult=2-4-6&aa='
+    const s=new HashURL(url);
+    s.setParams({
+        's1':'x1',
+        's2':33
+    });
+    console.log(s.createUrl());
+    s.delParam('_k');
+    console.log(s.createUrl());
+    s.setParam('s3',3);
+    console.log(s.createUrl());
+    s.setParam('s1','aaa');
+    console.log(s.createUrl());
+    s.setParam('s4','aaa');
+    s.delParams('s3','s1');
+    console.log(s.createUrl());
+    s.clearParams();
+    console.log(s.createUrl());
+    s.setParams({
+        'a':1,
+        'b':2,
+        'c':3
+    });
+    console.log(s.createUrl());
+</script>
+</body>
+</html>
