@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        @-webkit-keyframes hide {
+            0%{
+                opacity: 1;
+            }
+            100%{
+                opacity: 0;
+            }
+        }
+        .up, .down {
+            height: 100px;
+            width: 100%;
+            position: relative;
+            padding:2em;
+            box-sizing: border-box;
+        }
+        .up {
+            background-color: #fecd0f;
+            color: #666;
+        }
+        .up::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            border-bottom: 8px dotted white;
+        }
+        #test{
+            position: fixed;
+            left: 0;
+            right: 0;
+            top:0;
+            bottom: 0;
+            background-color: rgba(0,0,0,.5);
+            display: none;
+        }
+        #test:target{
+            display: block;
+            animation:hide 1s linear 0s forwards;
+        }
+    </style>
+</head>
+<body>
+<div style="box-shadow:0 0 4px;width:250px;">
+    <div class="up">
+        上面的内容在这里
+    </div>
+    <div class="down">
+        下面的内容在这里
+    </div>
+</div>
+<div id="test"></div>
+<a href="#test">test</a>
+</body>
+</html>

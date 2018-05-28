@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script src="../../common/react-router.js"></script>
+<script src="../../common/react-router-dom.js"></script>
+<script type="text/jsx">
+    const {PureComponent,Fragment}=React;
+    const {HashRouter,Route}=ReactRouterDOM;
+    const App=props=>(
+        <Fragment>{props.children||1}</Fragment>
+    );
+    const Test=props=>(
+        <div>test</div>
+    );
+    const Path=props=>(
+        <HashRouter>
+            <Route path={'/'} component={App}>
+                <Route path={'test'} component={Test}></Route>
+            </Route>
+        </HashRouter>
+    )
+    ReactDOM.render(<Path></Path>,document.body);
+</script>
+</body>
+</html>

@@ -10,21 +10,22 @@
 <script src="../common/react-dom16.js"></script>
 <script type="text/jsx">
     const {Component}=React;
-    const innerHTML='window';
     class App extends Component{
-        constructor(props){
+        constructor(props) {
             super(props);
-            this.innerHTML='app';
+            this.state = {
+                isSelected:0
+            }
         }
-        show(){
-            alert(this.innerHTML);
+        handleClick(index){
+            console.log(index);
+            this.setState({
+                isSelected:index
+            })
         }
-        render(){
+        render() {
             return(
-                <div>
-                    <p onClick={this.show.bind(this)}>bind</p>
-                    <p onClick={this.show}>not bind</p>
-                </div>
+                <div onClick={this.handleClick.bind(this,1)}>{this.state.isSelected}</div>
             )
         }
     }
