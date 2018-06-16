@@ -10,6 +10,7 @@
         const canvas=document.getElementById('test');
         const [png,jpeg,webp]=[canvas.toDataURL('image/png',0.7),canvas.toDataURL('image/jpeg',0.7),canvas.toDataURL('image/webp',0.7)];
         console.log(png.length,jpeg.length,webp.length);
+        document.location.href=jpeg.replace('image/jpeg','image/octet-stream');
     </script>
 </body>
 </html>
