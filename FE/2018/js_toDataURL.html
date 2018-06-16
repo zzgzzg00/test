@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <canvas id="test" width="200" height="200"></canvas>
+    <script>
+        const canvas=document.getElementById('test');
+        const [png,jpeg,webp]=[canvas.toDataURL('image/png',0.7),canvas.toDataURL('image/jpeg',0.7),canvas.toDataURL('image/webp',0.7)];
+        console.log(png.length,jpeg.length,webp.length);
+    </script>
+</body>
+</html>
