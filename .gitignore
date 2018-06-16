@@ -1,4 +1,5 @@
 # qzz/fekit/grunt
+node_modules/
 /ver/
 /dev/
 /prd/
