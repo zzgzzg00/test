@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const abortController=new AbortController();
+    const signal=abortController.signal;
+    fetch('./testdata/abortcontroller.json',{signal})
+        .then(data=>data.json())
+        .then(console.log)
+        .catch(console.log);
+    //fetch canceled
+    abortController.abort();
+</script>
+</body>
+</html>

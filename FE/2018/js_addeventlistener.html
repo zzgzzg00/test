@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            line-height: 200px;
+            clip-path:polygon(0% 0%,100% 0%,50% 100%);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="test">123</div>
+<script>
+    let isSupportPassive=false;
+    document.querySelector('#test').addEventListener('click',function(e){
+//        e.preventDefault();
+        alert(1);
+    },{
+        get passive(){
+            isSupportPassive=true;
+            return true
+        },
+        once:true,
+        capture:false
+    });
+    alert(isSupportPassive);
+</script>
+</body>
+</html>
