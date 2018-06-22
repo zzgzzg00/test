@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        :root{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<img />
+<a href="#" download="" />
+<script>
+    const str='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAwCAMAAABDh1hgAAAAe1BMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////NgkbwAAAAKXRSTlMAioaOknyAdJqDeJZhZltvahGfo1ZxThiuU6YdRjwVSgWyqUE4MiAMKHC7mRkAAAJySURBVDjLhdHZctNAEEBRep19yWiJJGRMbCfh/78QhQIKyDj0kx5Ole50f/p3nm+f/jMPQA8fi6+ZKX/9kDxLwHT9SHyOjqWWl/vi9RyRxZT59W7IeU0H8XU/3cs5rbkAO0m3de6Lb3HMJjBpvGV47m7ExDEJHySfIuhDJyRJzm8E/HytTuN7sqvJsTgmKPtuVMzzuxDRKXoFJkzXvahO65d/QrxoNUDE7PLpPKmWdX74K6So+OSZgEnydZ6c1jWmP7czMopJyuAIJc6rQY17wvmP4zUGnSqyU1BTYvag8VyRXn6HBMvoSwFSRe99TY40zhNQ/HUsGSw7P3lA79AbmQoEjKMhSqefIUMLIMYjg3duMuo9B0yjYYrr7cdGtjfijSNLAq56JxiCi1kYYi5HzitfhsbOeAgWHGkRJ2CDHM3scvTm9dOOqL7EsbK16EiKorJlyXMycR9T3X8//NEODR2YCQGtJZ/fn/qxbQ0QiwGgZsF0yOdhsIiuClA4vqaxQ7aBEaQ4gLZZLfnLHeINEA1bkHsEcHpL2QYyKT92SCPQ6hHDpUHJPdKYyBVxzi4D1DV2iEWy4FW1HSTO9T15sY4DKApuS3PjPnVIwIMACFyWJueT6fyIwFpgVl6WZq6n0iFALVAIYJenZm7X2tmLA8sUGIanpZXTOXUOIEgIAejytNhyXjvkUUQ8BUfL0xLSHHvEmMmwlR8kz6l2yFSqD1bwcpB1rR3yxdSkITi1l43H3CcpoQ0o1DaKuaYOkZTABvDODlBzjJ0WrYUOYsQ2THnMXWKI6Y1YTeM8doivAsf4I0jiOK+dllIQHKKCJfMX+Q5Pcir1w8Q7/wAAAABJRU5ErkJggg=='
+    const [img,a]=[document.querySelector('img'),document.querySelector('a')];
+    img.src=str;
+    const splitData=str.split(';base64,');
+    const [type,content]=[splitData[0].replace('data:',''),splitData[1]];
+    const blobBase64=atob(content);
+    const uint8arr=Uint8Array.from(blobBase64,item=>item.charCodeAt(0));
+    const blob=new Blob([uint8arr],{type});
+    const url=URL.createObjectURL(blob);
+    console.log(url);
+    a.href=url;
+    a.download=`a.png`;
+    a.click();
+    URL.revokeObjectURL(url);
+    console.log(url);
+</script>
+</body>
+</html>
