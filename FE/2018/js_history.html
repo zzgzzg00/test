@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        div{
+            height: 90vh;
+            display: none;
+            line-height: 90vh;
+            text-align: center;
+        }
+        div:nth-of-type(2n){
+            background-color: red;
+        }
+        div:nth-of-type(2n+1){
+            background-color: green;
+        }
+        .show{
+            display: block;
+        }
+        p{
+            height: 10vh;
+            text-align: center;
+            line-height: 10vh;
+        }
+    </style>
+</head>
+<body>
+<p>
+    <input type="button" value="forwards" id="forwards"/>
+    <input type="button" value="backwards" id="backwards"/>
+</p>
+<div>page1</div>
+<div>page2</div>
+<div>page3</div>
+<div>page4</div>
+<div>page5</div>
+<script>
+    /**
+     * pushState
+     *     popstate事件会将当前的state弹出而返回上次的state
+     *     通过historu.back()方法销毁最近一次push的state
+     *     通过监听popstate事件获取上次的state 做出相应处理
+     * */
+    let page=0;
+    const divs=[...document.querySelectorAll('DIV')];
+    function showPage(){
+        for(let i of divs){
+            i.classList.remove('show');
+        }
+        divs[page].classList.add('show');
+    }
+    function pushState() {
+        history.pushState({page},`page${page}`,`/page${page+1}.html`);
+    }
+    function showPageAndPushState() {
+        showPage();
+        pushState();
+    }
+    showPageAndPushState();
+    document.getElementById('forwards').addEventListener('click',function(){
+        page++;
+        page%=divs.length;
+        showPageAndPushState();
+    });
+    document.getElementById('backwards').addEventListener('click',function(){
+        history.back();
+    });
+    window.addEventListener('popstate',function(e){
+        page=e.state && e.state.page || 0;
+        showPage();
+    });
+</script>
+</body>
+</html>
