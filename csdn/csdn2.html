@@ -6,15 +6,306 @@
 
     </style>
 </head>
-<body>
+<body>·
 <script>
-    const arr=new Int32Array([...'这是个测试'].map(item=>item.charCodeAt(0)));
-    const blob=new Blob(arr);
-    const f=new FileReader();
-    f.onload=function(e){
-        console.log(e);
+    var a={
+        "cwd": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy",
+        "context": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/src",
+        "entry": {
+            "page/index.js": [
+                "./page/index.js"
+            ]
+        },
+        "output": {
+            "local": {
+                "path": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/prd/",
+                "filename": "[name][ext]",
+                "chunkFilename": "[id]-chunk.js",
+                "publicPath": "//q.qunarzz.com/train_ad_hy/prd/"
+            },
+            "dev": {
+                "path": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/dev",
+                "filename": "[name]@dev[ext]",
+                "chunkFilename": "[id]-chunk@dev.js",
+                "publicPath": "//q.qunarzz.com/train_ad_hy/dev/"
+            },
+            "prd": {
+                "path": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/prd",
+                "filename": "[name]@[chunkhash][ext]",
+                "chunkFilename": "[id]-chunk@[chunkhash].js",
+                "publicPath": "//q.qunarzz.com/train_ad_hy/prd/"
+            }
+        },
+        "module": {
+            "preLoaders": [
+                {
+                    "test": {},
+                    "loaders": [
+                        "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/node_modules/ykit-config-yo/loader/component-shortcut.js",
+                        "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/node_modules/ykit-config-yo/loader/scss-preloader.js",
+                        "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/node_modules/ykit-config-yo/loader/async-require.js"
+                    ]
+                }
+            ],
+            "loaders": [
+                {
+                    "test": {},
+                    "exclude": {},
+                    "loader": "/usr/local/lib/node_modules/ykit/node_modules/json-loader/index.js"
+                },
+                {
+                    "test": {},
+                    "loader": "/usr/local/lib/node_modules/ykit/node_modules/html-loader/index.js"
+                },
+                {
+                    "test": {},
+                    "loader": "/usr/local/lib/node_modules/ykit/node_modules/extract-text-webpack-plugin/loader.js?{\"omit\":1,\"extract\":true,\"remove\":true}!/usr/local/lib/node_modules/ykit/node_modules/style-loader/index.js!/usr/local/lib/node_modules/ykit/node_modules/css-loader/index.js"
+                },
+                {
+                    "test": {},
+                    "exclude": {},
+                    "loader": "happypack/loader"
+                },
+                {
+                    "test": {},
+                    "loader": "/usr/local/lib/node_modules/ykit/node_modules/extract-text-webpack-plugin/loader.js?{\"omit\":1,\"extract\":true,\"remove\":true}!/Users/zhangzhigang/Desktop/workspace/train_ad_hy/node_modules/style-loader/index.js!/Users/zhangzhigang/Desktop/workspace/train_ad_hy/node_modules/css-loader/index.js?sourceMap!/Users/zhangzhigang/Desktop/workspace/train_ad_hy/node_modules/fast-sass-loader-china/lib/index.js?sourceMap"
+                }
+            ],
+            "postLoaders": []
+        },
+        "plugins": [
+            {},
+            {},
+            {},
+            {
+                "options": {},
+                "pathCache": {},
+                "fsOperations": 0,
+                "primed": false
+            },
+            {
+                "name": "HappyPack",
+                "state": {
+                    "started": false,
+                    "loaders": [],
+                    "baseLoaderRequest": "",
+                    "foregroundThreadPool": null,
+                    "verbose": false,
+                    "debug": false
+                },
+                "config": {
+                    "id": "1",
+                    "compilerId": "default",
+                    "tempDir": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/node_modules/happypack",
+                    "threads": 4,
+                    "cache": true,
+                    "cacheContext": {},
+                    "verbose": false,
+                    "enabled": true,
+                    "loaders": [
+                        {
+                            "loader": "babel-loader",
+                            "test": {},
+                            "exclude": {},
+                            "query": {
+                                "cacheDirectory": true,
+                                "presets": [
+                                    [
+                                        "env",
+                                        {
+                                            "modules": "commonjs",
+                                            "targets": {
+                                                "browsers": [
+                                                    "> 1%",
+                                                    "last 3 versions",
+                                                    "ios 8",
+                                                    "android 4.2",
+                                                    "ie 9"
+                                                ]
+                                            },
+                                            "useBuiltIns": "usage"
+                                        }
+                                    ],
+                                    "react"
+                                ],
+                                "plugins": [
+                                    "transform-decorators-legacy",
+                                    "transform-class-properties",
+                                    "transform-object-rest-spread",
+                                    "transform-object-assign",
+                                    "transform-function-bind"
+                                ]
+                            }
+                        }
+                    ],
+                    "cachePath": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/node_modules/happypack/cache--[id].json"
+                },
+                "id": "1"
+            },
+            {
+                "definitions": {
+                    "process.env": {
+                        "NODE_ENV": "\"dev\""
+                    }
+                }
+            },
+            {
+                "options": {
+                    "context": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy",
+                    "manifest": {
+                        "name": "lib",
+                        "content": {
+                            "./node_modules/yo3/component/touchable/src/gesture.js": 43514901,
+                            "./node_modules/query-string/index.js": 47711912,
+                            "./node_modules/yo-router/lib/history/createHashHistory.js": 47895343,
+                            "./node_modules/warning/browser.js": 48158885,
+                            "./node_modules/lodash/now.js": 49127502,
+                            "./node_modules/yo-router/lib/withFetch.js": 49910870,
+                            "./node_modules/yo-router/lib/withRouter.js": 50078915,
+                            "./node_modules/yo-router/lib/history/createBrowserHistory.js": 50228783,
+                            "./node_modules/hoist-non-react-statics/index.js": 50687587,
+                            "../../../../../usr/local/lib/node_modules/ykit/node_modules/webpack/buildin/amd-options.js": 50978503,
+                            "./node_modules/invariant/browser.js": 51038512,
+                            "./node_modules/yo-router/lib/history/LocationUtils.js": 51129056,
+                            "./node_modules/yo3/component/touchable/src/index.js": 51160188,
+                            "./node_modules/yo-router/lib/PatternUtils.js": 51751970,
+                            "./node_modules/yo-router/lib/history/protocol/HybridProtocol.js": 52521808,
+                            "./node_modules/yo3/component/sticky/index.js": 52842289,
+                            "./node_modules/yo-router/lib/plugin/HyLink.js": 53080950,
+                            "./node_modules/yo-router/lib/RouteUtils.js": 53909976,
+                            "./node_modules/qreact/lib/createClass.js": 54214970,
+                            "./node_modules/yo-router/lib/createTransitionManager.js": 54816980,
+                            "./node_modules/yo3/component/scroller/src/utils.js": 56792276,
+                            "./node_modules/yo3/component/list/src/list.js": 57699886,
+                            "./node_modules/yo-router/lib/history/QueryUtils.js": 58011966,
+                            "./node_modules/classnames/index.js": 58139855,
+                            "./node_modules/asap/browser-raw.js": 65436582,
+                            "./node_modules/yo-router/lib/Router.js": 65505783,
+                            "./node_modules/strict-uri-encode/index.js": 65510615,
+                            "./node_modules/yo-router/lib/history/createManager.js": 65802221,
+                            "./node_modules/yo3/component/list/src/ListItem.js": 65891167,
+                            "./node_modules/yo-router/lib/plugin/EnvView.js": 66116579,
+                            "./node_modules/qreact/lib/ReactPropTypes.js": 66905751,
+                            "./node_modules/yo3/component/modal/src/index.js": 67109085,
+                            "./node_modules/yo3/component/common/fastclick.js": 67210113,
+                            "./node_modules/yo-router/lib/Route.js": 67815616,
+                            "./node_modules/lodash/debounce.js": 67890282,
+                            "./node_modules/qreact/dist/React.js": 68030202,
+                            "./node_modules/yo-router/lib/PromiseUtils.js": 68031371,
+                            "./node_modules/@qnpm/hysdk/hysdk.min.js": 68824754,
+                            "./node_modules/qreact/lib/injectTapEventPlugin.js": 68828819,
+                            "./node_modules/yo-router/lib/history/NavigationUtils.js": 69062110,
+                            "./node_modules/yo-router/lib/history/protocol/ProtocolUtils.js": 69858270,
+                            "./node_modules/yo-router/lib/AsyncUtils.js": 70055412,
+                            "./node_modules/@qnpm/hysdk/index.js": 70699967,
+                            "./node_modules/yo-router/lib/history/ManualHistory.js": 71212082,
+                            "./node_modules/yo-router/lib/getRouteParams.js": 71767298,
+                            "./node_modules/yo-router/lib/history/styleInception.js": 72801617,
+                            "./node_modules/yo-router/lib/history/DOMUtils.js": 73229900,
+                            "../../../../../usr/local/lib/node_modules/ykit/node_modules/process/browser.js": 73766985,
+                            "./node_modules/@qnpm/hysdk-qunar/index.js": 74171404,
+                            "./node_modules/object-assign/index.js": 74527907,
+                            "./node_modules/yo3/component/list/src/index.js": 74772050,
+                            "./node_modules/yo-router/lib/history/PathUtils.js": 74905077,
+                            "./node_modules/yo-router/lib/IndexRoute.js": 76808377,
+                            "./node_modules/yo3/component/common/tapEventPluginInit.js": 77688814,
+                            "./node_modules/lodash/_root.js": 77740477,
+                            "./node_modules/yo-router/lib/getComponents.js": 78557873,
+                            "./node_modules/@qnpm/hysdk-qunar/hysdk.qunar.min.js": 79675085,
+                            "./node_modules/yo-router/lib/IndexLink.js": 80095790,
+                            "./node_modules/lodash/isObjectLike.js": 80182166,
+                            "./node_modules/yo-router/lib/history/DOMStateStorage.js": 83139752,
+                            "./node_modules/yo-router/lib/plugin/createEventManager.js": 83871267,
+                            "./node_modules/yo3/component/touchable/src/touchable.js": 84692118,
+                            "./node_modules/promise/lib/core.js": 84832188,
+                            "./node_modules/yo-router/lib/RouterContext.js": 85699120,
+                            "./node_modules/resolve-pathname/cjs/index.js": 85987643,
+                            "./node_modules/yo3/component/lazyimage/index.js": 86537279,
+                            "./node_modules/yo-router/lib/isActive.js": 86815648,
+                            "./node_modules/yo-router/lib/history/HysdkUtils.js": 87532320,
+                            "./node_modules/yo-router/lib/computeChangedRoutes.js": 88867774,
+                            "./node_modules/lodash/throttle.js": 90200052,
+                            "./node_modules/yo3/component/scroller/src/index.js": 90982314,
+                            "./node_modules/lodash/isSymbol.js": 99037955,
+                            "./node_modules/yo-router/lib/Redirect.js": 99111998,
+                            "./node_modules/yo3/component/common/ComponentCore.js": 100439875,
+                            "./node_modules/lodash/_baseGetTag.js": 101538488,
+                            "./node_modules/yo-router/lib/IndexRedirect.js": 101780217,
+                            "./node_modules/yo-router/lib/InternalPropTypes.js": 103571288,
+                            "./node_modules/yo-router/lib/ContextUtils.js": 103814814,
+                            "./node_modules/yo3/component/common/util.js": 105527087,
+                            "./node_modules/lodash/toNumber.js": 105834890,
+                            "./node_modules/yo3/component/modal/src/modal.js": 105836751,
+                            "./node_modules/yo-router/lib/RouterUtils.js": 105907281,
+                            "./node_modules/lodash/_freeGlobal.js": 106516857,
+                            "./node_modules/yo3/component/list/src/ListCore.js": 107145710,
+                            "./node_modules/yo-router/lib/PropTypes.js": 107506622,
+                            "./node_modules/lodash/_objectToString.js": 108811000,
+                            "./node_modules/yo3/component/scroller/src/scroller.js": 109068089,
+                            "./node_modules/yo-router/lib/routerWarning.js": 109977207,
+                            "./node_modules/yo-router/lib/history/LifecycleUtils.js": 110051175,
+                            "./node_modules/yo-router/lib/history/protocol/MultiplePageProtocol.js": 110846576,
+                            "./node_modules/raf/polyfill.js": 111166702,
+                            "./node_modules/raf/index.js": 111887808,
+                            "./node_modules/yo-router/lib/history/protocol/SinglePageProtocol.js": 112544901,
+                            "./node_modules/yo-router/lib/plugin/ViewStack.js": 114776579,
+                            "./node_modules/yo-router/lib/index.js": 114838867,
+                            "./node_modules/promise/lib/es6-extensions.js": 114841456,
+                            "./node_modules/value-equal/index.js": 116438707,
+                            "./node_modules/yo3/component/common/EventEmitter.js": 116780889,
+                            "./node_modules/yo-router/lib/Link.js": 116847348,
+                            "./node_modules/lodash/isObject.js": 117581873,
+                            "./node_modules/lodash/_getRawTag.js": 118057989,
+                            "./node_modules/yo-router/lib/plugin/getNavigation.js": 118529966,
+                            "./node_modules/yo-router/lib/applyRouterMiddleware.js": 119037308,
+                            "./node_modules/yo-router/lib/matchRoutes.js": 119578306,
+                            "./node_modules/lodash/_Symbol.js": 120131301,
+                            "./node_modules/performance-now/lib/performance-now.js": 120791002,
+                            "./node_modules/yo3/component/modal/src/realmodal.js": 121906565
+                        }
+                    }
+                }
+            },
+            {
+                "definitions": {
+                    "process.env": {
+                        "NODE_ENV": "\"dev\""
+                    }
+                }
+            }
+        ],
+        "resolve": {
+            "alias": {
+                "$yo": "yo3",
+                "$yo-config": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/src/yo-config",
+                "$yo-component": "yo3/component",
+                "$router": "yo-router",
+                "$common": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/src/common",
+                "$component": "/Users/zhangzhigang/Desktop/workspace/train_ad_hy/src/component"
+            }
+        },
+        "entryExtNames": {
+            "css": [
+                ".css",
+                "sass",
+                "scss",
+                "less"
+            ],
+            "js": [
+                ".js",
+                ".jsx",
+                ".ts",
+                ".tsx"
+            ]
+        },
+        "requireRules": [
+            "fekit_modules|fekit.config:main|./src/index.js"
+        ],
+        "devtool": "cheap-source-map",
+        "middleware": [
+            null
+        ]
     }
-    f.readAsArrayBuffer(blob);
 </script>
 </body>
 </html>
