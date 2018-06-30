@@ -6,27 +6,38 @@
 </head>
 <body>
 <script src="../common/JSXTransformer.js"></script>
-<script src="../common/react16.js"></script>
-<script src="../common/react-dom16.js"></script>
+<script src="../common/react16.3.js"></script>
+<script src="../common/react-dom16.3.js"></script>
 <script type="text/jsx">
-    const {Component}=React;
-    class App extends Component{
-        constructor(props) {
+    const {PureComponent}=React;
+    class A extends PureComponent{
+        constructor(props){
             super(props);
-            this.state = {
-                isSelected:0
-            }
+            this.name=props.name;
         }
-        handleClick(index){
-            console.log(index);
-            this.setState({
-                isSelected:index
-            })
+        show(){
+            alert(this.name)
         }
-        render() {
+        render(){
             return(
-                <div onClick={this.handleClick.bind(this,1)}>{this.state.isSelected}</div>
+                    <div>1</div>
             )
+        }
+    }
+    class App extends PureComponent{
+        constructor(props){
+            super(props);
+            this.ref=React.createRef();
+            this.show=this.show.bind(this);
+        }
+        show(){
+            this.ref.current.show();
+        }
+        render(){
+            return[
+                <input type="button" value="show" onClick={this.show} />,
+                <A name={'A'} ref={this.ref} />
+            ]
         }
     }
     ReactDOM.render(<App />,document.body);
