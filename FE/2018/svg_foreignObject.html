@@ -27,7 +27,7 @@
         const base64=canvas.toDataURL();
         const content=`
             <p style="font-size: 20px;color:red;">测试时</p>
-            <img style="max-width: 100%;" src="${base64}"></img>
+            <img style="max-width: 100%;transform: rotate(45deg);" src="${base64}"></img>
         `
         div.innerHTML=content;
         const html=(new XMLSerializer).serializeToString(svg);
