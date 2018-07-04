@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        @-webkit-keyframes move {
+            0%{
+                -webkit-clip-path:polygon(50% 50%,50% 50%,50% 50%,50% 50%);
+            }
+            100%{
+                -webkit-clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);
+            }
+        }
+        div{
+            width: 400px;
+            height: 400px;
+            -webkit-clip-path:polygon(50% 50%,50% 50%,50% 50%,50% 50%);
+            animation:move 2s linear 0s forwards;
+        }
+        div>img{
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <img src="./imgs/font.jpg" />
+</div>
+</body>
+</html>
