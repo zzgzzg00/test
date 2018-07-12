@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="test">
+    <img id="testimg"/>
+    <p>123</p>
+</div>
+<img id="img" />
+<script src="./html2canvas.js"></script>
+<script src="./domtoimage.js"></script>
+<script>
+    var img=document.getElementById('img');
+    var container=document.getElementById('test');
+    var testimg=document.getElementById('testimg');
+    testimg.onload=function() {
+        var _img=document.createElement('img');
+        _img.onload=function(){
+            domtoimage.toPng(container)
+                .then(function (dataUrl) {
+                    img.src = dataUrl;
+                })
+                .catch(function (error) {
+                    console.error('oops, something went wrong!', error);
+                });
+//            html2canvas(container, {
+//                useCORS: true,
+//                imageTimeout: 0
+//            }).then(function (canvas) {
+//                var url = _canvasUrl = canvas.toDataURL();
+//                alert(url.length);
+//                img.src = url;
+//            });
+        }
+        _img.src='//s.qunarzz.com/open_m_train/active/postcard/decorations/kid_clothes_01.png';
+        container.appendChild(_img);
+    }
+    setTimeout(function(){
+        testimg.src='//s.qunarzz.com/open_m_train/active/postcard/cities/beijing_1.png';
+    },1000);
+</script>
+</body>
+</html>
