@@ -9,38 +9,59 @@
 <script src="../common/react16.3.js"></script>
 <script src="../common/react-dom16.3.js"></script>
 <script type="text/jsx">
-    const {PureComponent}=React;
-    class A extends PureComponent{
+    const {Component,PureComponent}=React;
+    class ProductCell extends PureComponent{
         constructor(props){
             super(props);
-            this.name=props.name;
+            this.state={
+                value:'',
+                isActive:false,
+                fromParent:false
+            }
+            this.changeHandle=this.changeHandle.bind(this);
         }
-        show(){
-            alert(this.name)
+        static getDerivedStateFromProps(nextProps,preState){
+            if(preState.isActive){
+                return {isActive:!preState.isActive,fromParent:true};
+            }
+            return null;
         }
-        render(){
-            return(
-                    <div>1</div>
-            )
-        }
-    }
-    class App extends PureComponent{
-        constructor(props){
-            super(props);
-            this.ref=React.createRef();
-            this.show=this.show.bind(this);
-        }
-        show(){
-            this.ref.current.show();
+        changeHandle(e){
+            this.setState({value:e.target.value,isActive:true,fromParent:false});
         }
         render(){
+            const {id,func}=this.props;
+            if(this.state.fromParent){
+                func(id,this.state.value);
+            }
             return[
-                <input type="button" value="show" onClick={this.show} />,
-                <A name={'A'} ref={this.ref} />
+                <label>{id}</label>,
+                <input value={this.state.value} onChange={this.changeHandle}/>
             ]
         }
     }
-    ReactDOM.render(<App />,document.body);
+    class ProductTable extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                reRender:false
+            }
+            this.clickHandle=this.clickHandle.bind(this);
+            this.showChange=this.showChange.bind(this);
+        }
+        clickHandle(){
+            this.setState({reRender:true});
+        }
+        showChange(id,value){
+            console.log(id,value);
+        }
+        render(){
+            const arr=Array.from({length:this.props.length},(item,index)=>(<ProductCell func={this.showChange} key={index} id={index} />));
+            arr.push(<input type={'button'} value={'save'} onClick={this.clickHandle} />);
+            return arr;
+        }
+    }
+    ReactDOM.render(<ProductTable length={10}/>,document.body);
 </script>
 </body>
 </html>
