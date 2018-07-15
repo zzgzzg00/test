@@ -58,7 +58,7 @@
             }
         }
     }
-//    const Lazing=str=>new _Lazing(str);
+    //    const Lazing=str=>new _Lazing(str);
     const Lazing=str=>{
         const l=new _Lazing2(str);
         setTimeout(()=>l.next(),0);
@@ -66,19 +66,19 @@
     };
 
 
-//    Lazing('Garry')
+    //    Lazing('Garry')
     // 输出 'hello Garray'
 
-//    Lazing('Garry').sleep(10).eat('rice')
+    //    Lazing('Garry').sleep(10).eat('rice')
     // 输出 'hello Garray'
     // 等待10秒...
     // 输出 'eating rice'
 
-//    Lazing('Garry').eat('rice').eat('bread')
+    //    Lazing('Garry').eat('rice').eat('bread')
     // 输出 'eating rice'
     // 输出 'eating bread'
 
-//    Lazing('Garry').sleepFirst(5).eat('rice')
+    //    Lazing('Garry').sleepFirst(5).eat('rice')
     // 等待5秒...
     // 输出 'hello Garray'
     // 输出 'eating rice'
