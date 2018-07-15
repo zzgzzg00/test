@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function _Lazing(){
+        const seq=[];
+        function f(str){
+            seq.push(()=>{console.log(`hello ${str}`);f.next()});
+            return f;
+        }
+        f.sleep=function(time){
+            seq.push(()=>{setTimeout(()=>f.next(),time*1000)});
+            return f;
+        }
+        f.eat=function(something){
+            seq.push(()=>{console.log(`eating ${something}`);f.next()});
+            return f;
+        }
+        f.sleepFirst=function(time){
+            seq.unshift(()=>{setTimeout(()=>f.next(),time*1000)});
+            return f;
+        }
+        f.next=function(){
+            const _next=seq.shift();
+            if(_next){
+                _next();
+            }
+            return f;
+        }
+        f.toString=function(){
+            f.next();
+        }
+        return f;
+    }
+    const Lazing=_Lazing();
+
+//     Lazing('Garry');
+//     输出 'hello Garray'
+
+    //    Lazing('Garry').sleep(10).eat('rice')
+    // 输出 'hello Garray'
+    // 等待10秒...
+    // 输出 'eating rice'
+
+    //    Lazing('Garry').eat('rice').eat('bread')
+    // 输出 'eating rice'
+    // 输出 'eating bread'
+
+    //    Lazing('Garry').sleepFirst(5).eat('rice')
+    // 等待5秒...
+    // 输出 'hello Garray'
+    // 输出 'eating rice'
+//    Lazing('Garry').eat('rice').sleepFirst(5).sleep(2).eat('aa');
+</script>
+</body>
+</html>

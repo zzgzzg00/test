@@ -43,14 +43,6 @@
             this.seq.unshift(()=>{setTimeout(()=>this.next(),time*1000)});
             return this;
         }
-        toString(){
-            this.next();
-            return '';
-        }
-        valueOf(){
-            this.next();
-            return '';
-        }
         next(){
             const _next=this.seq.shift();
             if(_next){
