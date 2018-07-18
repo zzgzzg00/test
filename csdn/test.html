@@ -10,9 +10,9 @@
 </style>
 </head>
 <body>
-<svg width="100%" height="100%">
-    <title>发送人次</title>
-    <desc>2015-2018春运发送人次</desc>
-    <polygon points="0 144,83.75 112,167.5 80,251.25 48,335 80" fill="#33cccc" stroke="black" stroke-width="1/><polygon points="0 128,83.75 96,167.5 64,251.25 32,335 0" fill="#33cc99" stroke="black" stroke-width="1/><polygon points="0 128,83.75 16,167.5 64,251.25 96,335 32" fill="#ffcc99" stroke="black" stroke-width="1/></svg>"
+<script>
+    var reg=/^((?![a-z]{2,},)(?![0-9]{2,},)[a-z0-9]{2,},)*(?![a-z]{2,}$)(?![0-9]{2,}$)[a-z0-9]{2,}$/i;
+    console.log(reg.test('aaa1'),reg.test('aaa1,'),reg.test('aaa1,aaa2'),reg.test('aaa,aaa2'),reg.test('aaa2,222'),reg.test('aaa'));
+</script>
 </body>
 </html>

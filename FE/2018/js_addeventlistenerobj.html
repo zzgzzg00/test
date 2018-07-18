@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>1</div>
+<script>
+    var obj={
+        innerHTML:'aa',
+        handleEvent:function(){
+            alert(this.innerHTML);
+        }
+    }
+    document.querySelector('div').addEventListener('click',obj);
+</script>
+</body>
+</html>

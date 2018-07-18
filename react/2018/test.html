@@ -8,60 +8,34 @@
 <script src="../common/JSXTransformer.js"></script>
 <script src="../common/react16.3.js"></script>
 <script src="../common/react-dom16.3.js"></script>
+<script src="../common/react-router-dom.js"></script>
 <script type="text/jsx">
     const {Component,PureComponent}=React;
-    class ProductCell extends PureComponent{
-        constructor(props){
-            super(props);
-            this.state={
-                value:'',
-                isActive:false,
-                fromParent:false
-            }
-            this.changeHandle=this.changeHandle.bind(this);
-        }
-        static getDerivedStateFromProps(nextProps,preState){
-            if(preState.isActive){
-                return {isActive:!preState.isActive,fromParent:true};
-            }
-            return null;
-        }
-        changeHandle(e){
-            this.setState({value:e.target.value,isActive:true,fromParent:false});
-        }
-        render(){
-            const {id,func}=this.props;
-            if(this.state.fromParent){
-                func(id,this.state.value);
-            }
-            return[
-                <label>{id}</label>,
-                <input value={this.state.value} onChange={this.changeHandle}/>
-            ]
-        }
-    }
-    class ProductTable extends Component{
-        constructor(props){
-            super(props);
-            this.state={
-                reRender:false
-            }
-            this.clickHandle=this.clickHandle.bind(this);
-            this.showChange=this.showChange.bind(this);
-        }
-        clickHandle(){
-            this.setState({reRender:true});
-        }
-        showChange(id,value){
-            console.log(id,value);
-        }
-        render(){
-            const arr=Array.from({length:this.props.length},(item,index)=>(<ProductCell func={this.showChange} key={index} id={index} />));
-            arr.push(<input type={'button'} value={'save'} onClick={this.clickHandle} />);
-            return arr;
-        }
-    }
-    ReactDOM.render(<ProductTable length={10}/>,document.body);
+    const {HashRouter,Switch,Route,Link}=ReactRouterDOM;
+    const Index=()=>(<div>index</div>);
+    const User=()=>(<div>user</div>);
+    const Msg=()=>(<div>msg</div>);
+    const Abt=()=>(<div>abt</div>);
+    const Details=()=>(
+            <div>
+                <ul>
+                    <li><Link to="/details/msg">click msg</Link></li>
+                    <li><Link to="/details/abt">cliock abt</Link></li>
+                </ul>
+                <Route path="/details/msg" component={Msg} />
+                <Route path="/details/abt" component={Abt} />
+            </div>
+    )
+    const App = () => (
+        <HashRouter>
+            <Switch>
+                <Route exact path="/" component={Index}/>
+                <Route strict exact path="/user" component={User} />
+                <Route path="/details" component={Details} />
+            </Switch>
+        </HashRouter>
+    )
+    ReactDOM.render(<App />,document.body);
 </script>
 </body>
 </html>
