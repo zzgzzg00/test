@@ -16,7 +16,7 @@
         }
     }
 
-    function firstResolve(params,...funcs){
+    function parallelFirstResolve(params,...funcs){
         return new Promise(function(resolve,reject){
             let errorStack=[],len=funcs.length;
             for(let func of funcs){
@@ -32,7 +32,7 @@
         })
     }
 
-    function orderResolve(params,...funcs){
+    function serialFirstResolve(params,...funcs){
         const arr=[];
         const result=funcs.reduce(function(promise,item){
             return promise.catch((err)=>{
@@ -187,13 +187,13 @@
         new PcFetchTrainList({
             url:'/pc',
             sign:'pc',
-            isSuccess:false,
+            isSuccess:true,
             during:4
         }),
         new TouchFetchTrainList({
             url:'/touch',
             sign:'touch',
-            isSuccess:false,
+            isSuccess:true,
             during:4
         }),
         new MinprogromFetchTrainList({
@@ -209,14 +209,14 @@
             during:1
         })
     ];
-    orderResolve(commonOptions,pc.fetch.bind(pc),touch.fetch.bind(touch),mm.fetch.bind(mm),pub.fetch.bind(pub))
+    serialFirstResolve(commonOptions,pc.fetch.bind(pc),touch.fetch.bind(touch),mm.fetch.bind(mm),pub.fetch.bind(pub))
         .then(function(data){
             console.log(data);
         })
         .catch(function(error){
             console.log(1,error);
         });
-//    firstResolve(commonOptions,pc.fetch.bind(pc),touch.fetch.bind(touch),mm.fetch.bind(mm),pub.fetch.bind(pub))
+//    parallelFirstResolve(commonOptions,pc.fetch.bind(pc),touch.fetch.bind(touch),mm.fetch.bind(mm),pub.fetch.bind(pub))
 //        .then(function(data){
 //            console.log(data);
 //        })
