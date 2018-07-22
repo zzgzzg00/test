@@ -32,6 +32,19 @@
         })
     }
 
+    function orderResolve(params,...funcs){
+        const arr=[];
+        const result=funcs.reduce(function(promise,item){
+            return promise.catch((err)=>{
+                arr.push(err);
+                return item(params);
+            })
+        },Promise.reject());
+        return result
+            .then(data=>Promise.resolve(data))
+            .catch(()=>Promise.reject(arr));
+    }
+
     const promiseRequest=wrapPromiseForCallbackable(request);
 
     class BaseFetchTrainList{
@@ -40,6 +53,7 @@
         }
         fetch(commonParams){
             const params=this.convertParams(commonParams);
+            console.log(params);
             const obj=Object.assign({},{data:params},this.options);
             return promiseRequest(obj)
                 .then(response=>this.convertResponse(response))
@@ -76,7 +90,7 @@
             }
         }
         convertResponse(response){
-            const {data}=reponse;
+            const {data}=response;
             if(data.status == 0){
                 return Promise.resolve({
                     lists:data.list
@@ -94,7 +108,7 @@
             }
         }
         convertResponse(response){
-            const {data}=reponse;
+            const {data}=response;
             if(data.status == 0){
                 return Promise.resolve({
                     lists:data.data
@@ -112,7 +126,7 @@
             }
         }
         convertResponse(response){
-            const {data}=reponse;
+            const {data}=response;
             if(data.status == 0){
                 return Promise.resolve({
                     lists:data.result
@@ -124,13 +138,13 @@
     class PublicaccountFetchTrainList extends BaseFetchTrainList{
         convertParams(params){
             return{
-                time:params.times,
+                time:params.date,
                 startStation:params.startCity,
                 endStation:params.endCity
             }
         }
         convertResponse(response){
-            const {data}=reponse;
+            const {data}=response;
             if(data.status == 0){
                 return Promise.resolve({
                     lists:data.results
@@ -145,22 +159,70 @@
             const {isSuccess}=obj;
             if(isSuccess){
                 obj.success({
-                    status:0,
                     data:{
+                        status:0,
+                        data:obj.sign,
+                        list:obj.sign,
+                        result:obj.sign,
                         lists:obj.sign
                     }
                 })
             }else{
                 obj.fail({
-                    status:-1,
                     data:{
+                        status:-1,
                         error:(new Error(obj.sign)).message
                     }
                 })
             }
         },obj.during*1000);
     }
-    const []
+
+    const commonOptions={
+        date:'2018-01-05',
+        startCity:'北京',
+        endCity:'上海'
+    }
+    const [pc,touch,mm,pub]=[
+        new PcFetchTrainList({
+            url:'/pc',
+            sign:'pc',
+            isSuccess:false,
+            during:4
+        }),
+        new TouchFetchTrainList({
+            url:'/touch',
+            sign:'touch',
+            isSuccess:false,
+            during:4
+        }),
+        new MinprogromFetchTrainList({
+            url:'/min',
+            sign:'min',
+            isSuccess:false,
+            during:3
+        }),
+        new PublicaccountFetchTrainList({
+            url:'/pub',
+            sign:'pub',
+            isSuccess:false,
+            during:1
+        })
+    ];
+    orderResolve(commonOptions,pc.fetch.bind(pc),touch.fetch.bind(touch),mm.fetch.bind(mm),pub.fetch.bind(pub))
+        .then(function(data){
+            console.log(data);
+        })
+        .catch(function(error){
+            console.log(1,error);
+        });
+//    firstResolve(commonOptions,pc.fetch.bind(pc),touch.fetch.bind(touch),mm.fetch.bind(mm),pub.fetch.bind(pub))
+//        .then(function(data){
+//            console.log(data);
+//        })
+//        .catch(function(error){
+//            console.log(error);
+//        });
 //    const [successPromise1,successPromise2,successPromise3,successPromise4]=[
 //        ()=>promiseRequest({during:2,isSuccess:true,sign:1}),
 //        ()=>promiseRequest({during:4,isSuccess:true,sign:2}),
