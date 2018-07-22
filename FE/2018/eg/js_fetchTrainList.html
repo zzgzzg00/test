@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function wrapPromiseForCallbackable(callbackableFunc){
+        return function promiseFunc(obj){
+            return new Promise(function(resolve,reject){
+                obj.success=resolve;
+                obj.fail=reject;
+                return callbackableFunc(obj);
+            })
+        }
+    }
+
+    function firstResolve(params,...funcs){
+        return new Promise(function(resolve,reject){
+            let errorStack=[],len=funcs.length;
+            for(let func of funcs){
+                func(params)
+                    .then(resolve)
+                    .catch(function(e){
+                        errorStack.push(e);
+                        if(errorStack.length >= len){
+                            reject(errorStack);
+                        }
+                    })
+            }
+        })
+    }
+
+    const promiseRequest=wrapPromiseForCallbackable(request);
+
+    class BaseFetchTrainList{
+        constructor(options){
+            this.options=options;
+        }
+        fetch(commonParams){
+            const params=this.convertParams(commonParams);
+            const obj=Object.assign({},{data:params},this.options);
+            return promiseRequest(obj)
+                .then(response=>this.convertResponse(response))
+                .catch(error=>Promise.reject(this.convertError(error)));
+        }
+        convertParams(params){
+            const tip=`
+                需被子类重写，用以将统一格式的参数处理为接口需要的格式参数
+                应返回参数对象
+            `;
+            throw new Error(tip);
+        }
+        convertResponse(response){
+            const tip=`
+                需被子类重写，用以将返回的数处理为统一格式 方便管理类进行后处理
+                应返回promise实例 如若数据不符合成功要求则返回reject的promise
+            `;
+            return Promise.reject(new Error(errorTip));
+        }
+        convertError(error){
+            const tip=`
+                可被子类重写，用以处理网络错误
+            `;
+            return new Error(error);
+        }
+    }
+
+    class PcFetchTrainList extends BaseFetchTrainList{
+        convertParams(params){
+            return{
+                timeStr:params.date,
+                start:params.startCity,
+                end:params.endCity
+            }
+        }
+        convertResponse(response){
+            const {data}=reponse;
+            if(data.status == 0){
+                return Promise.resolve({
+                    lists:data.list
+                })
+            }
+        }
+    }
+
+    class TouchFetchTrainList extends BaseFetchTrainList{
+        convertParams(params){
+            return{
+                time:params.date,
+                startCode:params.startCity,
+                endCode:params.endCity
+            }
+        }
+        convertResponse(response){
+            const {data}=reponse;
+            if(data.status == 0){
+                return Promise.resolve({
+                    lists:data.data
+                })
+            }
+        }
+    }
+
+    class MinprogromFetchTrainList extends BaseFetchTrainList{
+        convertParams(params){
+            return{
+                time:params.date.split('-'),
+                startStation:params.startCity,
+                endStation:params.endCity
+            }
+        }
+        convertResponse(response){
+            const {data}=reponse;
+            if(data.status == 0){
+                return Promise.resolve({
+                    lists:data.result
+                })
+            }
+        }
+    }
+
+    class PublicaccountFetchTrainList extends BaseFetchTrainList{
+        convertParams(params){
+            return{
+                time:params.times,
+                startStation:params.startCity,
+                endStation:params.endCity
+            }
+        }
+        convertResponse(response){
+            const {data}=reponse;
+            if(data.status == 0){
+                return Promise.resolve({
+                    lists:data.results
+                })
+            }
+        }
+    }
+
+    //test
+    function request(obj){
+        setTimeout(function(){
+            const {isSuccess}=obj;
+            if(isSuccess){
+                obj.success({
+                    status:0,
+                    data:{
+                        lists:obj.sign
+                    }
+                })
+            }else{
+                obj.fail({
+                    status:-1,
+                    data:{
+                        error:(new Error(obj.sign)).message
+                    }
+                })
+            }
+        },obj.during*1000);
+    }
+    const []
+//    const [successPromise1,successPromise2,successPromise3,successPromise4]=[
+//        ()=>promiseRequest({during:2,isSuccess:true,sign:1}),
+//        ()=>promiseRequest({during:4,isSuccess:true,sign:2}),
+//        ()=>promiseRequest({during:3,isSuccess:true,sign:3}),
+//        ()=>promiseRequest({during:1,isSuccess:true,sign:4})
+//    ];
+//    const [failPromise1,failPromise2,failPromise3,failPromise4]=[
+//        ()=>promiseRequest({during:2,isSuccess:false,sign:1}),
+//        ()=>promiseRequest({during:4,isSuccess:false,sign:2}),
+//        ()=>promiseRequest({during:3,isSuccess:false,sign:3}),
+//        ()=>promiseRequest({during:1,isSuccess:false,sign:4})
+//    ];
+//    firstResolve({},failPromise2,failPromise3,failPromise4,failPromise1)
+//        .then(console.log)
+//        .catch(console.log);
+</script>
+</body>
+</html>
