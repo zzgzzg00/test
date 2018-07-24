@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img src="http://zzg.com:8081/scqpk_bgs.jpg" />
+<script>
+    document.body.onclick=function(){
+        a+1;
+    }
+    /**
+     * 捕获阶段可以捕获图片的error事件 但不会捕获load
+     * */
+    setTimeout(function(){
+        document.querySelector('img').src='http://zzg.com:8081/scqpk_bg.jpg';
+    },3000);
+    window.addEventListener('error',function(e){
+        console.log(e);
+    },true);
+    window.addEventListener('load',function(e){
+        console.log(e);
+    },true);
+</script>
+</body>
+</html>
