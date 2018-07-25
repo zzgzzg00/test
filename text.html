@@ -3,48 +3,29 @@
 <head>
     <title></title>
     <style>
-        div{
-            width: 100px;
-            height: 100px;
-            line-height: 100px;
-            text-align: center;
-            color: #ffffff;
-            font-size: 24px;
-            background-color: rgba(255,0,0,.3);
-            cursor: none;
-        }
-        .bolder{
-            text-shadow: 1px 1px 0 black,1px -1px 0 black,-1px 1px 0 black,-1px -1px 0 black;
-        }
-        .lighter{
-            transition:all .5s linear 0s;
-            text-shadow: 0 0 0 #fff,0 0 0 #fff;
-            position: relative;
-        }
-        .lighter:after{
-            position: absolute;
-            left: -50px;
-            top: -50px;
-            bottom: -50px;
-            right: -50px;
-            content: '';
+        html {
+            display: table;
+            height: 100%;
+            width: 100%;
         }
 
-        .lighter:hover{
-            color: transparent;
-            text-shadow: 0 0 .1em #fff,0 0 .3em #fff;
+        body {
+            display: table-cell;
+            vertical-align: middle;
         }
-        .d3{
-            text-shadow: 0 1px 0 rgba(0,0,0,.5);
-            text-shadow: 0 2px 0 rgba(0,0,0,.3);
-            text-shadow: 0 3px 0 rgba(0,0,0,.1);
-            text-shadow: 0 5px 0 rgba(0,0,0,1);
+
+        div {
+            margin: auto;
+            width: 100px;
+            height: 100px;
+            outline: inset 100px green;
+            outline-offset: -125px;
         }
     </style>
 </head>
 <body>
-<div class="bolder">测试</div>
-<div class="lighter">测试</div>
-<div class="d3">测试</div>
+<div>
+
+</div>
 </body>
 </html>

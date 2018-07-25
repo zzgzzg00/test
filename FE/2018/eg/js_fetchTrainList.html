@@ -6,6 +6,54 @@
 </head>
 <body>
 <script>
+    function getType(obj){
+        return ({}).toString.call(obj).toLowerCase().replace(/\[object (.*?)]/,'$1');
+    }
+    const TYPE={
+        STRING:'string',
+        ARRAY:'array',
+        NUMBER:'number',
+        OBJECT:'object',
+        FUNCTION:'function',
+        ARRAY_OF:function(...types){
+            return function(data){
+                if(getType(data) != TYPE.ARRAY){
+                    return false;
+                }
+                return data.every(function(item){
+                    return types.indexOf(getType(item))!=-1;
+                });
+            }
+        },
+        ARRAY_EVERY:function(...types){
+            return function(data){
+                if(getType(data) != TYPE.ARRAY){
+                    return false;
+                }
+                if(data.length != types.length){
+                    return false;
+                }
+                return data.every(function(item,index){
+                    return getType(item) == types[index];
+                });
+            }
+        },
+        ANY:function(...types){
+            return function(data){
+                return types.indexOf(getType(data)) != -1;
+            }
+        }
+    }
+    function checkTypes(checkedData,data){
+        return Object.keys(data).every(function(key){
+            const type=data[key],
+                  checkedDataItem=checkedData[key];
+            if(getType(type) === TYPE.FUNCTION){
+                return type(checkedDataItem);
+            }
+            return getType(checkedDataItem) === type;
+        })
+    }
     function wrapPromiseForCallbackable(callbackableFunc){
         return function promiseFunc(obj){
             return new Promise(function(resolve,reject){
@@ -49,7 +97,8 @@
 
     class BaseFetchTrainList{
         constructor(options){
-            this.options=options;
+            this.hasRetredTime=0;
+            this.options=Object.assign({retryTime:3},options);
         }
         fetch(commonParams){
             const params=this.convertParams(commonParams);
@@ -57,7 +106,14 @@
             const obj=Object.assign({},{data:params},this.options);
             return promiseRequest(obj)
                 .then(response=>this.convertResponse(response))
-                .catch(error=>Promise.reject(this.convertError(error)));
+                .catch(error=>{
+                    if(this.hasRetredTime < this.options.retryTime){
+                        this.hasRetredTime++;
+                        return this.fetch(commonParams);
+                    }else{
+                        return Promise.reject(this.convertError(error));
+                    }
+                });
         }
         convertParams(params){
             const tip=`
@@ -209,13 +265,28 @@
             during:1
         })
     ];
-    serialFirstResolve(commonOptions,pc.fetch.bind(pc),touch.fetch.bind(touch),mm.fetch.bind(mm),pub.fetch.bind(pub))
-        .then(function(data){
-            console.log(data);
-        })
-        .catch(function(error){
-            console.log(1,error);
-        });
+
+    const COMMON_RESPONSE_DATA={
+        status:TYPE.NUMBER,
+        lists:TYPE.ARRAY_EVERY(TYPE.STRING,TYPE.OBJECT),
+        test1:TYPE.ANY(TYPE.STRING,TYPE.ARRAY),
+        test2:TYPE.ARRAY_OF(TYPE.STRING,TYPE.NUMBER)
+    };
+    const data={
+        status:1,
+        lists:['a',{}],
+        test1:[],
+        test2:[1,{},1]
+    };
+    const result=checkTypes(data,COMMON_RESPONSE_DATA);
+    console.log(result);
+//    serialFirstResolve(commonOptions,pc.fetch.bind(pc),touch.fetch.bind(touch),mm.fetch.bind(mm),pub.fetch.bind(pub))
+//        .then(function(data){
+//            console.log(data);
+//        })
+//        .catch(function(error){
+//            console.log(1,error);
+//        });
 //    parallelFirstResolve(commonOptions,pc.fetch.bind(pc),touch.fetch.bind(touch),mm.fetch.bind(mm),pub.fetch.bind(pub))
 //        .then(function(data){
 //            console.log(data);
