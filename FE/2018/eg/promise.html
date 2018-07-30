@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var time=0;
+    function createRandomPromise(){
+        return new Promise(function(resolve,reject){
+            const result=(Math.random()*1000)<<0;
+            if(result & 1){
+                resolve(`suc_${result}`);
+            }else{
+                reject(`err_${result}`)
+            }
+        })
+    }
+    function test(){
+        return createRandomPromise()
+            .then(data=>{
+                console.log(data);
+                return data;
+            })
+            .catch(data=>{
+                time++;
+                console.log(data);
+                if(time<=3){
+                    return test();
+                }else{
+                    return Promise.reject(data);
+                }
+            })
+    }
+    test()
+        .then(data=>console.log(`rs_${data}`))
+        .catch(data=>console.log(`rf_${data}`));
+</script>
+</body>
+</html>
