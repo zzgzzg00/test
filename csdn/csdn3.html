@@ -2,87 +2,40 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style>
+        li{
+            counter-increment: add;
+            list-style: none;
+            position: relative;
+            padding-left: 20px;
+
+        }
+        li:before{
+            content: counter(add);
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top:-2px;
+        }
+    </style>
 </head>
 <body>
-<script>
-    class _Lazing{
-        constructor(str){
-            this.promise=new Promise(res=>this.res=res);
-            this.promise=this.promise.then(()=>console.log(`hello ${str}`));
-            this.t=setTimeout(()=>this.res(),0);
-        }
-        sleep(time){
-            this.promise=this.promise.then(()=>new Promise(res=>setTimeout(res,time*1000)));
-            return this;
-        }
-        eat(something){
-            this.promise=this.promise.then(data=>console.log(`eating ${something}`));
-            return this;
-        }
-        sleepFirst(time){
-            clearTimeout(this.t);
-            new Promise(res=>setTimeout(res,time*1000)).then(()=>this.res());
-            return this;
-        }
-    }
+<ul id="test">
 
-    class _Lazing2{
-        constructor(str){
-            this.seq=[];
-            this.seq.push(()=>{console.log(`hello ${str}`);this.next()});
-        }
-        sleep(time){
-            this.seq.push(()=>{setTimeout(()=>this.next(),time*1000)});
-            return this;
-        }
-        eat(something){
-            this.seq.push(()=>{console.log(`eating ${something}`);this.next()});
-            return this;
-        }
-        sleepFirst(time){
-            this.seq.unshift(()=>{setTimeout(()=>this.next(),time*1000)});
-            return this;
-        }
-        toString(){
-            this.next();
-            return '';
-        }
-        valueOf(){
-            this.next();
-            return '';
-        }
-        next(){
-            const _next=this.seq.shift();
-            if(_next){
-                _next();
+</ul>
+<script>
+    const obj={
+        a:1,
+        b:[1,2,{c:1}],
+        d:{
+            e:{
+                f:4
             }
         }
     }
-//    const Lazing=str=>new _Lazing(str);
-    const Lazing=str=>{
-        const l=new _Lazing2(str);
-        setTimeout(()=>l.next(),0);
-        return l;
-    };
-
-
-//    Lazing('Garry')
-    // 输出 'hello Garray'
-
-//    Lazing('Garry').sleep(10).eat('rice')
-    // 输出 'hello Garray'
-    // 等待10秒...
-    // 输出 'eating rice'
-
-//    Lazing('Garry').eat('rice').eat('bread')
-    // 输出 'eating rice'
-    // 输出 'eating bread'
-
-//    Lazing('Garry').sleepFirst(5).eat('rice')
-    // 等待5秒...
-    // 输出 'hello Garray'
-    // 输出 'eating rice'
-    Lazing('Garry').eat('rice').sleepFirst(5).sleep(2).eat('aa');
+    const str=JSON.stringify(obj,null,0);
+    const html=str.split(/\n/).map(item=>`<li><pre>${item}</pre></li>`);
+    document.querySelector('#test').innerHTML=html.join('');
 </script>
 </body>
 </html>
