@@ -3,39 +3,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
-        li{
-            counter-increment: add;
-            list-style: none;
-            position: relative;
-            padding-left: 20px;
-
-        }
-        li:before{
-            content: counter(add);
-            display: inline-block;
-            position: absolute;
-            left: 0;
-            top:-2px;
-        }
     </style>
 </head>
 <body>
-<ul id="test">
-
-</ul>
+<a href="http://touch.train.qunar.com/?bd_source=travel_gonglue_hcy_h5">test</a>
 <script>
-    const obj={
-        a:1,
-        b:[1,2,{c:1}],
-        d:{
-            e:{
-                f:4
-            }
-        }
-    }
-    const str=JSON.stringify(obj,null,0);
-    const html=str.split(/\n/).map(item=>`<li><pre>${item}</pre></li>`);
-    document.querySelector('#test').innerHTML=html.join('');
+
 </script>
 </body>
 </html>

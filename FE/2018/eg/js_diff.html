@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            line-height: 1.1;
+        }
+        summary:focus{
+            outline: none;
+        }
+        input[type=checkbox]{
+            margin-right: 5px;
+        }
+        #container,#show{
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+
+</div>
+<div id="show"></div>
+<script>
+    const container=document.getElementById('container');
+    const show=document.getElementById('show');
+    const detailsArr=[];
+    const defaultSep='.';
+    function checkIsObject(obj){
+        if(obj === null){
+            return false;
+        }
+        return ({}).toString.call(obj).toLowerCase() == '[object object]';
+    }
+    function serailize(obj,_key='') {
+        const keys=Object.keys(obj);
+        const arr=[];
+        for(let key of keys){
+            const item=obj[key];
+            if(checkIsObject(item) || Array.isArray(item)){
+                arr.push(...serailize(item,`${_key?_key+'.':_key}${key}`));
+            }else{
+                arr.push(`${_key?_key+'.':_key}${key}`);
+            }
+        }
+        return arr;
+    }
+    function createTree(str,sep=defaultSep){
+        const arr=str.split(sep);
+        arr.reduce(function(a,b,index){
+            let id=!a?b:`${a}${sep}${b}`,
+                key=b,
+                details=createDetails(id,key,index != arr.length-1),
+                parentNode=!a?container:findDetails(a);
+            parentNode.appendChild(details);
+            return id;
+        },'')
+    }
+    function createDetails(id,name,isdetails){
+        if(findDetails(id)){
+            return findDetails(id);
+        }
+        const details=document.createElement(isdetails?'details':'p');
+        details.id=id;
+        details.style.textIndent=id.split('.').length-1+'em';
+        if(isdetails){
+            const summary=document.createElement('summary');
+            summary.innerHTML=`<input type="checkbox" value="${id}">${name}`;
+            details.appendChild(summary);
+        }else{
+            details.innerHTML=`<input type="checkbox" value="${id}">${name}`;
+        }
+        detailsArr.push(details);
+        return details;
+    }
+    function findDetails(id){
+        return detailsArr.filter(item=>item.id == id)[0];
+    }
+    function addEvent() {
+        container.addEventListener('click',function(e){
+            const target=e.target;
+            if(target.tagName.toLowerCase() == 'input' && target.type == 'checkbox'){
+                if(target.parentNode.tagName.toLowerCase() == 'summary'){
+                    const closestDetail=target.closest('details');
+                    closestDetail.querySelectorAll('input[type="checkbox"]').forEach(function(item){
+                        item.checked=target.checked;
+                    });
+                }
+                show.innerHTML=findAllChecked();
+            }
+        },false)
+    }
+
+    function findAllChecked(){
+        return [...container.querySelectorAll('p input[type="checkbox"]:checked')].map(function(item){
+            return `<p>${item.value}</p>`;
+        }).join('')
+    }
+
+    const obj={
+        a:{
+            b:{
+                c:1
+            },
+            e:{
+                f:3
+            }
+        },
+        d:1,
+        f:[
+            1,
+            {g:{
+                s:[1,2,3]
+            }}
+        ,3]
+    }
+    const lists=serailize(obj);
+    console.log(lists);
+    for(let list of lists){
+        createTree(list);
+    }
+    addEvent();
+</script>
+</body>
+</html>
