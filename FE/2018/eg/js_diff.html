@@ -37,37 +37,36 @@
         }
         return ({}).toString.call(obj).toLowerCase() == '[object object]';
     }
-    function serailize(obj,_key='') {
+    function serailize(obj,_key='',sep=defaultSep) {
         const keys=Object.keys(obj);
         const arr=[];
         for(let key of keys){
             const item=obj[key];
             if(checkIsObject(item) || Array.isArray(item)){
-                arr.push(...serailize(item,`${_key?_key+'.':_key}${key}`));
+                arr.push(...serailize(item,`${_key?_key+sep:_key}${key}`));
             }else{
-                arr.push(`${_key?_key+'.':_key}${key}`);
+                arr.push(`${_key?_key+sep:_key}${key}`);
             }
         }
         return arr;
     }
     function createTree(str,sep=defaultSep){
         const arr=str.split(sep);
-        arr.reduce(function(a,b,index){
-            let id=!a?b:`${a}${sep}${b}`,
-                key=b,
-                details=createDetails(id,key,index != arr.length-1),
-                parentNode=!a?container:findDetails(a);
+        arr.reduce(function(key,name,index){
+            let id=!key?name:`${key}${sep}${name}`,
+                details=createDetails(id,name,index != arr.length-1),
+                parentNode=!key?container:findDetails(key);
             parentNode.appendChild(details);
             return id;
         },'')
     }
-    function createDetails(id,name,isdetails){
+    function createDetails(id,name,isdetails,sep=defaultSep){
         if(findDetails(id)){
             return findDetails(id);
         }
         const details=document.createElement(isdetails?'details':'p');
         details.id=id;
-        details.style.textIndent=id.split('.').length-1+'em';
+        details.style.textIndent=id.split(sep).length-1+'em';
         if(isdetails){
             const summary=document.createElement('summary');
             summary.innerHTML=`<input type="checkbox" value="${id}">${name}`;
