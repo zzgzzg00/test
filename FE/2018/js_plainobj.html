@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class Test{
+
+    }
+    let a={};
+    let c={
+        __proto__:a
+    }
+    let b= new Test();
+
+    //通过检测对象的第一层proto和最后一层proto是否一致获得
+    function checkIsPlainObject(obj){
+        let proto=obj;
+        while(Object.getPrototypeOf(proto) != null){
+            proto=Object.getPrototypeOf(proto);
+        }
+        return proto == Object.getPrototypeOf(obj);
+    }
+
+    console.log(checkIsPlainObject(a));//true
+    console.log(checkIsPlainObject(b));//false
+    console.log(checkIsPlainObject(c));//false
+</script>
+</body>
+</html>
