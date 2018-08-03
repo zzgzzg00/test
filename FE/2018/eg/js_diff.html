@@ -169,38 +169,12 @@
         new CustomTree(union(o1||{},o2||{}),container,show);
     };
 
-    const _o1={
-        a:1,
-        b:{
-            c:1
-        },
-        d:[1,2],
-        f:{
-            a:{
-                x:2
-            },
-            c:1
-        },
-        g:[1,2,3,4,{b:{d:1}}]
-    };
-    const _o2={
-        b:1,
-        d:[1,4,3],
-        f:{
-            a:1,
-            d:1
-        },
-        g:{
-            a:1,
-            b:{
-                c:{
-                    d:2
-                }
-            }
-        }
-    }
-    write1.value=JSON.stringify(_o1);
-    write2.value=JSON.stringify(_o2);
+    //test
+    const str1=`{"format":"example","content":[{"align":"center","depth":0,"list":false,"content":[{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"FFFFFF","fontFamily":"Arial"},"content":"And please, feel free to send us your feedback and comments to "},{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"4DC3FF","fontFamily":"Arial"},"content":"hello world"},{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"FFFFFF","fontFamily":"Arial"},"content":", or just by clicking on the "},{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"4DC3FF","fontFamily":"Arial"},"content":"feedback"}],"ordered":false}],"version":3}`;
+    const str2=`{"format":"example","version":3.1,"content":[{"list":false,"depth":0,"ordered":false,"content":[{"content":"And please, feel free to send us your feedback and comments to ","style":{"size":20,"color":"FFFFFF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":"foo","style":{"size":20,"color":"4DC2FF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":", or just by clicking on the ","style":{"size":20,"color":"FFFFFF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":"feedback","style":{"size":20,"color":"4DC2FF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":" button up above.","style":{"size":20,"color":"FFFFFF","name":"Arial","bold":2,"italic":2,"underline":2}}],"align":"center"}]}`
+    write1.value=str1;
+    write2.value=str2;
+    write1.onchange();
 </script>
 </body>
 </html>
