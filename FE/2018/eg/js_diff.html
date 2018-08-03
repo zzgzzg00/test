@@ -19,9 +19,17 @@
         #container,#show{
             padding: 20px;
         }
+        .write{
+            height: 50vh;
+            width: 45.5vw;
+            display: inline-block;
+            margin-left: 3vw;
+            border:1px solid grey;
+        }
     </style>
 </head>
 <body>
+<textarea class="write"></textarea><textarea class="write"></textarea>
 <div id="container">
 
 </div>
@@ -141,33 +149,23 @@
 
     const container=document.getElementById('container');
     const show=document.getElementById('show');
-    const obj={
-        a:{
-            b:{
-                c:1
-            },
-            e:{
-                f:3
-            },
-            k:{
-                s:{
-                    x:{
-                        y:['a',{z:{z1:1}},'b']
-                    }
-                }
-            }
-        },
-        d:1,
-        f:[
-            1,
-            {g:{
-                s:[1,2,3]
-            }}
-        ,3]
+    let o1={},o2={};
+    const [write1,write2]=document.querySelectorAll('.write');
+    function createTree(){
+        container.innerHTML='';
+        show.innerHTML='';
+        new CustomTree(union(o1,o2),container,show);
     }
-//    new CustomTree(obj,container,show);
+    write1.onchange=function(){
+        o1=JSON.parse(this.value) || {};
+        createTree();
+    }
+    write2.onchange=function(){
+        o2=JSON.parse(this.value) || {};
+        createTree();
+    }
 
-    const o1={
+    const _o1={
         a:1,
         b:{
             c:1
@@ -181,7 +179,7 @@
         },
         g:[1,2,3,4,{b:{d:1}}]
     };
-    const o2={
+    const _o2={
         b:1,
         d:[1,4,3],
         f:{
@@ -197,8 +195,8 @@
             }
         }
     }
-    console.log(union(o1,o2));
-    new CustomTree(union(o1,o2),container,show);
+    write1.value=JSON.stringify(_o1);
+    write2.value=JSON.stringify(_o2);
 </script>
 </body>
 </html>
