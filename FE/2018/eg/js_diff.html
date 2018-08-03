@@ -27,80 +27,94 @@
 </div>
 <div id="show"></div>
 <script>
-    const container=document.getElementById('container');
-    const show=document.getElementById('show');
-    const detailsArr=[];
-    const defaultSep='.';
     function checkIsObject(obj){
         if(obj === null){
             return false;
         }
         return ({}).toString.call(obj).toLowerCase() == '[object object]';
     }
-    function serailize(obj,_key='',sep=defaultSep) {
-        const keys=Object.keys(obj);
-        const arr=[];
-        for(let key of keys){
-            const item=obj[key];
-            if(checkIsObject(item) || Array.isArray(item)){
-                arr.push(...serailize(item,`${_key?_key+sep:_key}${key}`));
-            }else{
-                arr.push(`${_key?_key+sep:_key}${key}`);
+    class CustomTree{
+        constructor(obj,containerDom,showDom,defaultSep='.',root='root'){
+            Object.assign(this,{containerDom,showDom,defaultSep,root,detailsArr:[]});
+            this.addEvent();
+            this.createRoot();
+            const lists=this.serailize(obj);
+            for(let list of lists){
+                this.createTree(list);
             }
         }
-        return arr;
-    }
-    function createTree(str,sep=defaultSep){
-        const arr=str.split(sep);
-        arr.reduce(function(key,name,index){
-            let id=!key?name:`${key}${sep}${name}`,
-                details=createDetails(id,name,index != arr.length-1),
-                parentNode=!key?container:findDetails(key);
-            parentNode.appendChild(details);
-            return id;
-        },'')
-    }
-    function createDetails(id,name,isdetails,sep=defaultSep){
-        if(findDetails(id)){
-            return findDetails(id);
+        createRoot(){
+            const root=this.createDetails(this.root,this.root,true);
+            root.style.textIndent='0em';
+            this.containerDom.appendChild(root);
+            this.containerDom=root;
         }
-        const details=document.createElement(isdetails?'details':'p');
-        details.id=id;
-        details.style.textIndent=id.split(sep).length-1+'em';
-        if(isdetails){
-            const summary=document.createElement('summary');
-            summary.innerHTML=`<input type="checkbox" value="${id}">${name}`;
-            details.appendChild(summary);
-        }else{
-            details.innerHTML=`<input type="checkbox" value="${id}">${name}`;
-        }
-        detailsArr.push(details);
-        return details;
-    }
-    function findDetails(id){
-        return detailsArr.filter(item=>item.id == id)[0];
-    }
-    function addEvent() {
-        container.addEventListener('click',function(e){
-            const target=e.target;
-            if(target.tagName.toLowerCase() == 'input' && target.type == 'checkbox'){
-                if(target.parentNode.tagName.toLowerCase() == 'summary'){
-                    const closestDetail=target.closest('details');
-                    closestDetail.querySelectorAll('input[type="checkbox"]').forEach(function(item){
-                        item.checked=target.checked;
-                    });
+        serailize(obj,_key='') {
+            const keys=Object.keys(obj);
+            const arr=[];
+            for(let key of keys){
+                const item=obj[key];
+                if(checkIsObject(item) || Array.isArray(item)){
+                    arr.push(...this.serailize(item,`${_key?_key+this.defaultSep:_key}${key}`));
+                }else{
+                    arr.push(`${_key?_key+this.defaultSep:_key}${key}`);
                 }
-                show.innerHTML=findAllChecked();
             }
-        },false)
+            return arr;
+        }
+        createTree(str){
+            const arr=str.split(this.defaultSep);
+            arr.reduce((key,name,index)=>{
+                let id=!key?name:`${key}${this.defaultSep}${name}`,
+                    details=this.createDetails(id,name,index != arr.length-1),
+                    parentNode=!key?this.containerDom:this.findDetails(key);
+                parentNode.appendChild(details);
+                return id;
+            },'')
+        }
+        createDetails(id,name,isdetails){
+            if(this.findDetails(id)){
+                return this.findDetails(id);
+            }
+            const details=document.createElement(isdetails?'details':'p');
+            details.id=id;
+            details.style.textIndent=id.split(this.defaultSep).length+'em';
+            if(isdetails){
+                const summary=document.createElement('summary');
+                summary.innerHTML=`<input type="checkbox" value="${id}">${name}`;
+                details.appendChild(summary);
+            }else{
+                details.innerHTML=`<input type="checkbox" value="${id}">${name}`;
+            }
+            this.detailsArr.push(details);
+            return details;
+        }
+        findDetails(id){
+            return this.detailsArr.filter(item=>item.id == id)[0];
+        }
+        addEvent() {
+            this.containerDom.addEventListener('click',e=>{
+                const target=e.target;
+                if(target.tagName.toLowerCase() == 'input' && target.type == 'checkbox'){
+                    if(target.parentNode.tagName.toLowerCase() == 'summary'){
+                        const closestDetail=target.closest('details');
+                        closestDetail.querySelectorAll('input[type="checkbox"]').forEach(function(item){
+                            item.checked=target.checked;
+                        });
+                    }
+                    this.showDom.innerHTML=this.findAllChecked();
+                }
+            },false)
+        }
+        findAllChecked(){
+            return [...this.containerDom.querySelectorAll('p input[type="checkbox"]:checked')].map(function(item){
+                return `<p>${item.value}</p>`;
+            }).join('')
+        }
     }
 
-    function findAllChecked(){
-        return [...container.querySelectorAll('p input[type="checkbox"]:checked')].map(function(item){
-            return `<p>${item.value}</p>`;
-        }).join('')
-    }
-
+    const container=document.getElementById('container');
+    const show=document.getElementById('show');
     const obj={
         a:{
             b:{
@@ -118,12 +132,7 @@
             }}
         ,3]
     }
-    const lists=serailize(obj);
-    console.log(lists);
-    for(let list of lists){
-        createTree(list);
-    }
-    addEvent();
+    new CustomTree(obj,container,show);
 </script>
 </body>
 </html>
