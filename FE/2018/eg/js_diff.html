@@ -151,19 +151,23 @@
     const show=document.getElementById('show');
     let o1={},o2={};
     const [write1,write2]=document.querySelectorAll('.write');
-    function createTree(){
+    write1.onchange=write2.onchange=function(){
         container.innerHTML='';
         show.innerHTML='';
-        new CustomTree(union(o1,o2),container,show);
-    }
-    write1.onchange=function(){
-        o1=JSON.parse(this.value) || {};
-        createTree();
-    }
-    write2.onchange=function(){
-        o2=JSON.parse(this.value) || {};
-        createTree();
-    }
+        try{
+            o1=JSON.parse(write1.value);
+        }catch{
+            alert('left json error');
+            o1={}
+        }
+        try{
+            o2=JSON.parse(write2.value);
+        }catch{
+            alert('right json error');
+            o2={}
+        }
+        new CustomTree(union(o1||{},o2||{}),container,show);
+    };
 
     const _o1={
         a:1,
