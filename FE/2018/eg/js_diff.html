@@ -27,11 +27,37 @@
 </div>
 <div id="show"></div>
 <script>
-    function checkIsObject(obj){
+    function checkIsObjectOrArray(obj){
         if(obj === null){
             return false;
         }
-        return ({}).toString.call(obj).toLowerCase() == '[object object]';
+        return ({}).toString.call(obj).toLowerCase() == '[object object]' || Array.isArray(obj);
+    }
+    function union(obj1,obj2,obj={}){
+        const [keys1,keys2]=[Object.keys(obj1),Object.keys(obj2)];
+        const [obj1haskey,obj2haskey,commonkeys]=[keys1.filter(item=>keys2.indexOf(item) == -1),
+                                         keys2.filter(item=>keys1.indexOf(item) == -1),
+                                         keys1.filter(item=>keys2.indexOf(item) != -1)];
+        for(let key of obj1haskey){
+            obj[key]=obj1[key];
+        }
+        for(let key of obj2haskey){
+            obj[key]=obj2[key];
+        }
+        for(let key of commonkeys){
+            const [item1,item2]=[obj1[key],obj2[key]];
+            if(!checkIsObjectOrArray(item1) && !checkIsObjectOrArray(item2)){
+                obj[key]=1;
+            }else if(!checkIsObjectOrArray(item1) && checkIsObjectOrArray(item2)){
+                obj[key]=item2;
+            }else if(checkIsObjectOrArray(item1) && !checkIsObjectOrArray(item2)){
+                obj[key]=item1;
+            }else{
+                obj[key]={};
+                union(item1,item2,obj[key]);
+            }
+        }
+        return obj;
     }
     class CustomTree{
         constructor(obj,containerDom,showDom,defaultSep='.',root='root'){
@@ -54,7 +80,7 @@
             const arr=[];
             for(let key of keys){
                 const item=obj[key];
-                if(checkIsObject(item) || Array.isArray(item)){
+                if(checkIsObjectOrArray(item)){
                     arr.push(...this.serailize(item,`${_key?_key+this.defaultSep:_key}${key}`));
                 }else{
                     arr.push(`${_key?_key+this.defaultSep:_key}${key}`);
@@ -84,7 +110,7 @@
                 summary.innerHTML=`<input type="checkbox" value="${id}">${name}`;
                 details.appendChild(summary);
             }else{
-                details.innerHTML=`<input type="checkbox" value="${id}">${name}`;
+                details.innerHTML=`<span style="visibility: hidden;">我</span><input type="checkbox" value="${id}">${name}`;
             }
             this.detailsArr.push(details);
             return details;
@@ -122,6 +148,13 @@
             },
             e:{
                 f:3
+            },
+            k:{
+                s:{
+                    x:{
+                        y:['a',{z:{z1:1}},'b']
+                    }
+                }
             }
         },
         d:1,
@@ -132,7 +165,40 @@
             }}
         ,3]
     }
-    new CustomTree(obj,container,show);
+//    new CustomTree(obj,container,show);
+
+    const o1={
+        a:1,
+        b:{
+            c:1
+        },
+        d:[1,2],
+        f:{
+            a:{
+                x:2
+            },
+            c:1
+        },
+        g:[1,2,3,4,{b:{d:1}}]
+    };
+    const o2={
+        b:1,
+        d:[1,4,3],
+        f:{
+            a:1,
+            d:1
+        },
+        g:{
+            a:1,
+            b:{
+                c:{
+                    d:2
+                }
+            }
+        }
+    }
+    console.log(union(o1,o2));
+    new CustomTree(union(o1,o2),container,show);
 </script>
 </body>
 </html>
