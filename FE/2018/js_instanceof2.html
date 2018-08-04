@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class Test1 extends Array{
+
+    }
+    class Test2 extends Test1{
+
+    }
+    class Test3 extends Test2{
+
+    }
+
+    const t=new Test3();
+    console.log(t instanceof Array,t instanceof Test3,t instanceof Test2,t instanceof Test1,t instanceof Date);
+
+    function checkIsInstanceOf(obj,Class){
+        let proto=Object.getPrototypeOf(obj);
+        if(proto === Class.prototype){
+            return true;
+        }
+        while(proto != null){
+            proto=Object.getPrototypeOf(proto);
+            if(proto === Class.prototype){
+                return true;
+            }
+        }
+        return false;
+    }
+    console.log(checkIsInstanceOf(t,Test3),checkIsInstanceOf(t,Test2),checkIsInstanceOf(t,Test1),
+                checkIsInstanceOf(t,Array),checkIsInstanceOf(t,Date));
+
+    function findPrototype(obj){
+        let proto=Object.getPrototypeOf(obj);
+        while(proto != null){
+            console.log(proto);
+            proto=Object.getPrototypeOf(proto);
+        }
+    }
+    findPrototype(t);
+</script>
+</body>
+</html>
