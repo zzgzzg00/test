@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*focus-within 表示一个元素获得焦点，或，该元素的后代元素获得焦点*/
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        input:focus{
+            outline: none;
+            border: 1px solid red;
+        }
+        div{
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            line-height: 200px;
+        }
+        div:focus-within{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <input />
+</div>
+</body>
+</html>
