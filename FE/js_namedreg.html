@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const str='19850511';
+    const reg=/(?<year>\d{4})(?<month>\d{2})(?<date>\d{2})/;
+    const result=reg.exec(str);
+    console.log(result.groups.month);
+    console.log(str.replace(reg,'$<year>/$<month>/$<date>'));
+</script>
+</body>
+</html>

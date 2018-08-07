@@ -11,31 +11,53 @@
 <script src="../common/react-router-dom.js"></script>
 <script type="text/jsx">
     const {Component,PureComponent}=React;
-    const {HashRouter,Switch,Route,Link}=ReactRouterDOM;
-    const Index=()=>(<div>index</div>);
-    const User=()=>(<div>user</div>);
-    const Msg=()=>(<div>msg</div>);
-    const Abt=()=>(<div>abt</div>);
-    const Details=()=>(
-            <div>
-                <ul>
-                    <li><Link to="/details/msg">click msg</Link></li>
-                    <li><Link to="/details/abt">cliock abt</Link></li>
-                </ul>
-                <Route path="/details/msg" component={Msg} />
-                <Route path="/details/abt" component={Abt} />
-            </div>
-    )
-    const App = () => (
-        <HashRouter>
-            <Switch>
-                <Route exact path="/" component={Index}/>
-                <Route strict exact path="/user" component={User} />
-                <Route path="/details" component={Details} />
-            </Switch>
-        </HashRouter>
-    )
-    ReactDOM.render(<App />,document.body);
+    class ElectricityFees extends Component{
+        constructor(props) {
+            super(props);
+            props.rooms.forEach((item,i) => {
+                this[`refs${i}`] = React.createRef();
+            });
+            this.calcAccount = this.calcAccount.bind(this);
+        }
+        calcAccount(){
+            const self = this;
+            console.log(this);
+            this.props.rooms.forEach((index,i) => {
+                const a=self[`refs${i}`].current;
+                a.test()
+            });
+        };
+        render() {
+            const key = 'name';
+            return (
+                <React.Fragment>
+                    {
+                        this.props.rooms.map((_,i) => {
+                            return (
+                                <ElectricityTemp name={`${_}${key}`} ref={this[`refs${i}`]}/>
+                            )
+                        })
+                    }
+                    <button onClick={this.calcAccount}>结算</button>
+                </React.Fragment>
+            )
+        }
+    }
+    ElectricityFees.defaultProps={
+        rooms:[1,1,2,3,4]
+    }
+    class ElectricityTemp extends Component{
+        test(){
+            console.log(this.props.name);
+        }
+        render() {
+            return (
+                    <div>
+                    </div>
+            );
+        }
+    }
+    ReactDOM.render(<ElectricityFees />,document.body);
 </script>
 </body>
 </html>
