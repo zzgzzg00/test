@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        @-webkit-keyframes move {
+            0%{
+                -webkit-mask-position:0% 0%;
+            }
+            100%{
+                -webkit-mask-position:100% 0%;
+            }
+        }
+        .outer{
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            text-align: center;
+            font-size: 30px;
+            color: red;
+            position: relative;
+            font-weight: bolder;
+        }
+        .inner{
+            position: absolute;
+            left: 0;
+            right: 0;
+            top:0;
+            bottom: 0;
+            /*background-color: rgba(0,0,0,.5);*/
+            filter:blur(2px);
+            text-align: center;
+            font-size: 30px;
+            color: red;
+            font-weight: bolder;
+            -webkit-mask-image: linear-gradient(90deg,red 0%,red 50%,transparent 0,transparent 100%);
+            -webkit-mask-position:0% 0%;
+            -webkit-mask-size: 10% 100%;
+            -webkit-mask-repeat: no-repeat;
+            animation:move 10s linear 0s;
+        }
+    </style>
+</head>
+<body>
+<div class="outer">
+    just a test
+    <div class="inner">just a test</div>
+</div>
+</body>
+</html>

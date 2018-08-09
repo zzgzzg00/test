@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div><pre id="test"></pre></div>
+<script>
+    function checkIsObjectOrArray(obj){
+        if(obj === null){
+            return false;
+        }
+        return ({}).toString.call(obj).toLowerCase() == '[object object]' || Array.isArray(obj);
+    }
+    const container=document.getElementById('test');
+    fetch('../testdata/verification.json')
+        .then(response=>response.json())
+        .then(data=>JSON.stringify(data,null,4))
+        .then(data=>container.innerHTML=data);
+</script>
+</body>
+</html>

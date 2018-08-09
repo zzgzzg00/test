@@ -73,8 +73,10 @@
             this.addEvent();
             this.createRoot();
             const lists=this.serailize(obj);
+            window.list=lists;
             for(let list of lists){
-                this.createTree(list);
+                setTimeout(()=>this.createTree(list),0);
+//                this.createTree(list);
             }
         }
         createRoot(){
@@ -149,32 +151,37 @@
 
     const container=document.getElementById('container');
     const show=document.getElementById('show');
-    let o1={},o2={};
-    const [write1,write2]=document.querySelectorAll('.write');
-    write1.onchange=write2.onchange=function(){
-        container.innerHTML='';
-        show.innerHTML='';
-        try{
-            o1=JSON.parse(write1.value);
-        }catch{
-            alert('left json error');
-            o1={}
-        }
-        try{
-            o2=JSON.parse(write2.value);
-        }catch{
-            alert('right json error');
-            o2={}
-        }
-        new CustomTree(union(o1||{},o2||{}),container,show);
-    };
 
-    //test
-    const str1=`{"format":"example","content":[{"align":"center","depth":0,"list":false,"content":[{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"FFFFFF","fontFamily":"Arial"},"content":"And please, feel free to send us your feedback and comments to "},{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"4DC3FF","fontFamily":"Arial"},"content":"hello world"},{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"FFFFFF","fontFamily":"Arial"},"content":", or just by clicking on the "},{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"4DC3FF","fontFamily":"Arial"},"content":"feedback"}],"ordered":false}],"version":3}`;
-    const str2=`{"format":"example","version":3.1,"content":[{"list":false,"depth":0,"ordered":false,"content":[{"content":"And please, feel free to send us your feedback and comments to ","style":{"size":20,"color":"FFFFFF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":"foo","style":{"size":20,"color":"4DC2FF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":", or just by clicking on the ","style":{"size":20,"color":"FFFFFF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":"feedback","style":{"size":20,"color":"4DC2FF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":" button up above.","style":{"size":20,"color":"FFFFFF","name":"Arial","bold":2,"italic":2,"underline":2}}],"align":"center"}]}`
-    write1.value=str1;
-    write2.value=str2;
-    write1.onchange();
+    fetch('../testdata/verification.json')
+        .then(response=>response.json())
+        .then(data=>new CustomTree(data,container,show))
+
+//    let o1={},o2={};
+//    const [write1,write2]=document.querySelectorAll('.write');
+//    write1.onchange=write2.onchange=function(){
+//        container.innerHTML='';
+//        show.innerHTML='';
+//        try{
+//            o1=JSON.parse(write1.value);
+//        }catch{
+//            alert('left json error');
+//            o1={}
+//        }
+//        try{
+//            o2=JSON.parse(write2.value);
+//        }catch{
+//            alert('right json error');
+//            o2={}
+//        }
+//        new CustomTree(union(o1||{},o2||{}),container,show);
+//    };
+//
+//    //test
+//    const str1=`{"format":"example","content":[{"align":"center","depth":0,"list":false,"content":[{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"FFFFFF","fontFamily":"Arial"},"content":"And please, feel free to send us your feedback and comments to "},{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"4DC3FF","fontFamily":"Arial"},"content":"hello world"},{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"FFFFFF","fontFamily":"Arial"},"content":", or just by clicking on the "},{"style":{"underline":1,"bold":2,"size":20,"italic":2,"color":"4DC3FF","fontFamily":"Arial"},"content":"feedback"}],"ordered":false}],"version":3}`;
+//    const str2=`{"format":"example","version":3.1,"content":[{"list":false,"depth":0,"ordered":false,"content":[{"content":"And please, feel free to send us your feedback and comments to ","style":{"size":20,"color":"FFFFFF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":"foo","style":{"size":20,"color":"4DC2FF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":", or just by clicking on the ","style":{"size":20,"color":"FFFFFF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":"feedback","style":{"size":20,"color":"4DC2FF","name":"Arial","bold":2,"italic":2,"underline":2}},{"content":" button up above.","style":{"size":20,"color":"FFFFFF","name":"Arial","bold":2,"italic":2,"underline":2}}],"align":"center"}]}`
+//    write1.value=str1;
+//    write2.value=str2;
+//    write1.onchange();
 </script>
 </body>
 </html>
