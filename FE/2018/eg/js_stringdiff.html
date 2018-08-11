@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div></div>
+<script>
+    const div=document.querySelector('div');
+    function deal(data){
+        const arr=data.split(/\n/);
+        const reg=/^(\s+)(.*$)/g
+        const html=arr.map(item=>{
+            item=item.replace(reg,'$2');
+            const space=RegExp.$1;
+            return `<div data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
+                        <pre>${space}<input type="checkbox">${item}</pre>
+                    </div>`
+        });
+        div.innerHTML=html.join('');
+    }
+    document.body.onclick=function(e){
+        const target=e.target;
+        if(target.tagName.toLowerCase()=='input'){
+            const div=getParentDiv(target);
+            if(target.checked){
+                checkedAllChildren(div);
+                checkedAllParents(div);
+            }else{
+                canceldAllChildren(div);
+                if(!getBrothersStatus(div)){
+                    canceldAllParents(div);
+                }
+            }
+        }
+    }
+
+    function getDivData(parentDiv){
+        return parentDiv.dataset;
+    }
+
+    function getParentDiv(input){
+        return input.closest('div');
+    }
+    function getChildInput(parentDiv){
+        return parentDiv.querySelector('input');
+    }
+    function getBrothersStatus(parentDiv){
+        const brothers=findBrothers(parentDiv);
+        for(let brother of brothers){
+            if(getChildInput(brother).checked){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    function findParents(parentDiv){
+        const parents=[];
+        let {space}=getDivData(parentDiv);
+        --space;
+        while(true){
+            if(space==0){
+                break;
+            }
+            parentDiv=parentDiv.previousElementSibling;
+            const {space:_space}=getDivData(parentDiv);
+            if(space==_space){
+                parents.push(parentDiv);
+                --space;
+            }
+        }
+        return parents;
+    }
+    function findChidren(parentDiv){
+        const children=[];
+        const {space}=getDivData(parentDiv);
+        while(true){
+            parentDiv=parentDiv.nextElementSibling;
+            const {space:_space}=getDivData(parentDiv);
+            if(_space>space){
+                children.push(parentDiv);
+            }else{
+                break;
+            }
+        }
+        return children;
+    }
+    function findBrothers(parentDiv){
+        const brothers=[];
+        const _parentDiv=parentDiv;
+        const {space}=getDivData(parentDiv);
+        while(true){
+            parentDiv=parentDiv.previousElementSibling;
+            const {space:_space}=getDivData(parentDiv);
+            if(space==_space){
+                brothers.push(parentDiv);
+            }
+            if(space>_space){
+                break;
+            }
+        }
+        brothers.reverse();
+        parentDiv=_parentDiv;
+        while(true){
+            parentDiv=parentDiv.nextElementSibling;
+            const {space:_space}=getDivData(parentDiv);
+            if(space==_space){
+                brothers.push(parentDiv);
+            }
+            if(space>_space){
+                break;
+            }
+        }
+        return brothers;
+    }
+
+    function checkedAllChildren(parentDiv,isChecked=true){
+        const chidlren=findChidren(parentDiv);
+        for(let child of chidlren){
+            getChildInput(child).checked=isChecked;
+        }
+    }
+    function canceldAllChildren(parentDiv){
+        checkedAllChildren(parentDiv,false);
+    }
+
+    function checkedAllParents(parentDiv,isChecked=true){
+        const parents=findParents(parentDiv);
+        for(let parent of parents){
+            getChildInput(parent).checked=isChecked;
+        }
+    }
+    function canceldAllParents(parentDiv){
+        checkedAllParents(parentDiv,false);
+    }
+
+    fetch('../testdata/verification.json')
+        .then(response=>response.json())
+        .then(data=>deal(JSON.stringify(data,null,4)))
+</script>
+</body>
+</html>

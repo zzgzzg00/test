@@ -73,10 +73,9 @@
             this.addEvent();
             this.createRoot();
             const lists=this.serailize(obj);
-            window.list=lists;
             for(let list of lists){
                 setTimeout(()=>this.createTree(list),0);
-//                this.createTree(list);
+                this.createTree(list);
             }
         }
         createRoot(){
