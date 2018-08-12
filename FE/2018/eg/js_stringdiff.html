@@ -5,26 +5,35 @@
     <title>Title</title>
 </head>
 <body>
-    <div id='container'></div>
+    <div id='container'>
+        <div data-id="id0" data-space="0" data-item="root">
+            <pre><span>▼</span><input data-isleaf="false" type="checkbox" />root</pre>
+        </div>
+    </div>
     <div id='result'></div>
 <script>
     const containerDOM=document.querySelector('#container');
     const resultDOM=document.querySelector('#result');
     const fold='▶',expand='▼',defaultSperator='.';
+    const caches={};
     function deal(data){
         const arr=data.split(/\n/);
         const reg=/^(\s+)(.*$)/g
         const html=arr.map((item,index,arr)=>{
+            const emptyReg=/^\{|(?:\},?)$/;
+            if(emptyReg.test(item)){
+                return '';
+            }
             item=item.replace(reg,'$2')//.replace(/:.*$/,'');
             const space=RegExp.$1;
             item=item.replace(/"(.*?)":.*$/,'$1');
             const isLeaf=arr[index+1]?arr[index+1].indexOf(space+' ')!=0:true;
             const button=isLeaf?'':`<span>${expand}</span>`;
-            return `<div data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
+            return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
                         <pre>${space}${button}<input data-isleaf="${isLeaf}" type="checkbox" />${item}</pre>
                     </div>`
         });
-        containerDOM.innerHTML=html.join('');
+        containerDOM.insertAdjacentHTML('beforeend',html.join(''));
     }
     document.body.onclick=function(e){
         const target=e.target;
@@ -57,6 +66,21 @@
     function getDivData(parentDiv){
         return parentDiv.dataset;
     }
+    function getCacheData(id,type){
+        if(!caches[id]){
+            return false;
+        }
+        if(!caches[id][type]){
+            return false;
+        }
+        return caches[id][type];
+    }
+    function setCacheData(id,type,data){
+        if(!caches[id]){
+            caches[id]={};
+        }
+        caches[id][type]=data;
+    }
 
     function getParentDiv(input){
         return input.closest('div');
@@ -77,26 +101,41 @@
 
     function findParents(parentDiv){
         const parents=[];
-        let {space}=getDivData(parentDiv);
+        let {space,id}=getDivData(parentDiv);
+        const $parents=getCacheData(id,'parents');
+        if($parents){
+            return $parents;
+        }
         --space;
         while(true){
-            if(space==0){
+            if(space==-1){
                 break;
             }
             parentDiv=parentDiv.previousElementSibling;
+            if(!parentDiv){
+                break;
+            }
             const {space:_space}=getDivData(parentDiv);
             if(space==_space){
                 parents.push(parentDiv);
                 --space;
             }
         }
+        setCacheData(id,'parents',parents);
         return parents;
     }
     function findChidren(parentDiv){
         const children=[];
-        const {space}=getDivData(parentDiv);
+        const {space,id}=getDivData(parentDiv);
+        const $children=getCacheData(id,'children');
+        if($children){
+            return $children;
+        }
         while(true){
             parentDiv=parentDiv.nextElementSibling;
+            if(!parentDiv){
+                break;
+            }
             const {space:_space}=getDivData(parentDiv);
             if(_space>space){
                 children.push(parentDiv);
@@ -104,14 +143,22 @@
                 break;
             }
         }
+        setCacheData(id,'children',children);
         return children;
     }
     function findBrothers(parentDiv){
         const brothers=[];
         const _parentDiv=parentDiv;
-        const {space}=getDivData(parentDiv);
+        const {space,id}=getDivData(parentDiv);
+        const $brothers=getCacheData(id,'brothers');
+        if($brothers){
+            return $brothers;
+        }
         while(true){
             parentDiv=parentDiv.previousElementSibling;
+            if(!parentDiv){
+                break;
+            }
             const {space:_space}=getDivData(parentDiv);
             if(space==_space){
                 brothers.push(parentDiv);
@@ -124,6 +171,9 @@
         parentDiv=_parentDiv;
         while(true){
             parentDiv=parentDiv.nextElementSibling;
+            if(!parentDiv){
+                break;
+            }
             const {space:_space}=getDivData(parentDiv);
             if(space==_space){
                 brothers.push(parentDiv);
@@ -132,6 +182,7 @@
                 break;
             }
         }
+        setCacheData(id,'brothers',brothers);
         return brothers;
     }
 
@@ -181,7 +232,7 @@
             const div=getParentDiv(leaf);
             value=decodeURIComponent(getDivData(div).item);
             const parents=findParents(div);
-            value=parents.reduce((a,b)=>{
+            value=parents.reverse().reduce((a,b)=>{
                 return a+decodeURIComponent(getDivData(b).item)+defaultSperator;
             },'')+value;
             leaf.dataset.item=encodeURIComponent(value);
