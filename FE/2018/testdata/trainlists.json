@@ -1,0 +1,1362 @@
+{
+    "ret": 1,
+    "errCode": 0,
+    "data": {
+        "batchData": [{
+            "line": {
+                "dptCode": "WCN",
+                "arrCode": "XAY",
+                "date": "20180828",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2016",
+                        "trainNo": "Z138",
+                        "dptCode": "WCN",
+                        "arrCode": "XAY"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2254",
+                        "trainNo": "Z264",
+                        "dptCode": "WCN",
+                        "arrCode": "XAY"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2248",
+                        "trainNo": "Z230",
+                        "dptCode": "WCN",
+                        "arrCode": "XAY"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 24
+        }, {
+            "line": {
+                "dptCode": "GIW",
+                "arrCode": "GLT",
+                "date": "20180820",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0415",
+                        "trainNo": "K726",
+                        "dptCode": "GIW",
+                        "arrCode": "GLT"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "GBZ",
+                "arrCode": "BHZ",
+                "date": "20180813",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1100",
+                        "trainNo": "D3563",
+                        "dptCode": "GBZ",
+                        "arrCode": "BHZ"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1545",
+                        "trainNo": "D8413",
+                        "dptCode": "GLZ",
+                        "arrCode": "BHZ"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "0936",
+                        "trainNo": "D8407",
+                        "dptCode": "GLZ",
+                        "arrCode": "BHZ"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "0800",
+                        "trainNo": "D8403",
+                        "dptCode": "GLZ",
+                        "arrCode": "BHZ"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "EAY",
+                "arrCode": "EWW",
+                "date": "20180814",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1214",
+                        "trainNo": "D1931",
+                        "dptCode": "EAY",
+                        "arrCode": "EWW"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1618",
+                        "trainNo": "D1943",
+                        "dptCode": "EAY",
+                        "arrCode": "EWW"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "BJP",
+                "arrCode": "KFF",
+                "date": "20180817",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2235",
+                        "trainNo": "1303",
+                        "dptCode": "BXP",
+                        "arrCode": "KFF"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "TJP",
+                "arrCode": "DLT",
+                "date": "20180828",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0902",
+                        "trainNo": "G387",
+                        "dptCode": "TXP",
+                        "arrCode": "DFT"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "0943",
+                        "trainNo": "G391",
+                        "dptCode": "TXP",
+                        "arrCode": "DFT"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "DFT",
+                "arrCode": "TSP",
+                "date": "20180817",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1351",
+                        "trainNo": "G4385",
+                        "dptCode": "DFT",
+                        "arrCode": "TSP"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1503",
+                        "trainNo": "G389",
+                        "dptCode": "DFT",
+                        "arrCode": "TSP"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1017",
+                        "trainNo": "G1293",
+                        "dptCode": "DFT",
+                        "arrCode": "TSP"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "LLF",
+                "arrCode": "SJP",
+                "date": "20180816",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1734",
+                        "trainNo": "G666",
+                        "dptCode": "LLF",
+                        "arrCode": "SJP"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "DXG",
+                "arrCode": "GZQ",
+                "date": "20180817",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1904",
+                        "trainNo": "K793",
+                        "dptCode": "DXG",
+                        "arrCode": "GGQ"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "TJP",
+                "arrCode": "SHB",
+                "date": "20180819",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1759",
+                        "trainNo": "K547",
+                        "dptCode": "TJP",
+                        "arrCode": "SHB"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "KQW",
+                "arrCode": "WHN",
+                "date": "20180818",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1407",
+                        "trainNo": "G1536",
+                        "dptCode": "KQW",
+                        "arrCode": "WHN"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1325",
+                        "trainNo": "G406",
+                        "dptCode": "KQW",
+                        "arrCode": "WHN"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1423",
+                        "trainNo": "G1524",
+                        "dptCode": "KQW",
+                        "arrCode": "WHN"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1753",
+                        "trainNo": "G1526",
+                        "dptCode": "KQW",
+                        "arrCode": "WHN"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "JXK",
+                "arrCode": "CCT",
+                "date": "20180813",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1830",
+                        "trainNo": "K702",
+                        "dptCode": "QHK",
+                        "arrCode": "CCT"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "BJP",
+                "arrCode": "WCN",
+                "date": "20180817",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1302",
+                        "trainNo": "G533",
+                        "dptCode": "BXP",
+                        "arrCode": "WHN"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "2057",
+                        "trainNo": "Z207",
+                        "dptCode": "BJP",
+                        "arrCode": "WCN"
+                    },
+                    "seatList": ["4"]
+                }, {
+                    "train": {
+                        "dptTime": "2116",
+                        "trainNo": "Z53",
+                        "dptCode": "BXP",
+                        "arrCode": "WCN"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2200",
+                        "trainNo": "T289",
+                        "dptCode": "BXP",
+                        "arrCode": "WCN"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2046",
+                        "trainNo": "Z37",
+                        "dptCode": "BXP",
+                        "arrCode": "WCN"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2110",
+                        "trainNo": "Z285",
+                        "dptCode": "BXP",
+                        "arrCode": "WCN"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 30
+        }, {
+            "line": {
+                "dptCode": "CCT",
+                "arrCode": "WRB",
+                "date": "20180817",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2333",
+                        "trainNo": "2209",
+                        "dptCode": "CCT",
+                        "arrCode": "WRB"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "XXF",
+                "arrCode": "JME",
+                "date": "20180815",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1225",
+                        "trainNo": "G571",
+                        "dptCode": "EGF",
+                        "arrCode": "JME"
+                    },
+                    "seatList": ["M", "O"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "WBK",
+                "arrCode": "WCN",
+                "date": "20180814",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1020",
+                        "trainNo": "K1066",
+                        "dptCode": "WBK",
+                        "arrCode": "HKN"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "CDW",
+                "arrCode": "QFW",
+                "date": "20180821",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1858",
+                        "trainNo": "D1952",
+                        "dptCode": "ICW",
+                        "arrCode": "QFW"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "LUQ",
+                "arrCode": "KCN",
+                "date": "20180903",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1527",
+                        "trainNo": "K134",
+                        "dptCode": "LUQ",
+                        "arrCode": "KCN"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "JCF",
+                "arrCode": "DTV",
+                "date": "20180831",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2144",
+                        "trainNo": "K1366",
+                        "dptCode": "JCF",
+                        "arrCode": "DTV"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "XAY",
+                "arrCode": "XCH",
+                "date": "20180818",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2044",
+                        "trainNo": "Z166",
+                        "dptCode": "XAY",
+                        "arrCode": "XCH"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2327",
+                        "trainNo": "Z218",
+                        "dptCode": "XAY",
+                        "arrCode": "XCH"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "1933",
+                        "trainNo": "Z106",
+                        "dptCode": "XAY",
+                        "arrCode": "XCH"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2135",
+                        "trainNo": "Z254",
+                        "dptCode": "XAY",
+                        "arrCode": "XCH"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2345",
+                        "trainNo": "T114",
+                        "dptCode": "XAY",
+                        "arrCode": "XCH"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2050",
+                        "trainNo": "Z42",
+                        "dptCode": "XAY",
+                        "arrCode": "XCH"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "MHL",
+                "arrCode": "QTP",
+                "date": "20180816",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2218",
+                        "trainNo": "K78",
+                        "dptCode": "MHL",
+                        "arrCode": "QTP"
+                    },
+                    "seatList": ["4"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "FUY",
+                "arrCode": "XAY",
+                "date": "20180901",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1545",
+                        "trainNo": "G1832",
+                        "dptCode": "FUY",
+                        "arrCode": "EAY"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "CRT",
+                "arrCode": "VAB",
+                "date": "20180817",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2028",
+                        "trainNo": "D101",
+                        "dptCode": "CRT",
+                        "arrCode": "VAB"
+                    },
+                    "seatList": ["1", "0", "O"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "BJY",
+                "arrCode": "SZH",
+                "date": "20180816",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2145",
+                        "trainNo": "Z218",
+                        "dptCode": "BJY",
+                        "arrCode": "SZH"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "FIQ",
+                "arrCode": "CWQ",
+                "date": "20180831",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1354",
+                        "trainNo": "G6454",
+                        "dptCode": "FIQ",
+                        "arrCode": "CWQ"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1547",
+                        "trainNo": "G2366",
+                        "dptCode": "FIQ",
+                        "arrCode": "CWQ"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1506",
+                        "trainNo": "G6488",
+                        "dptCode": "FIQ",
+                        "arrCode": "CWQ"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "BJP",
+                "arrCode": "TYB",
+                "date": "20180818",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1107",
+                        "trainNo": "K339",
+                        "dptCode": "BJP",
+                        "arrCode": "TYB"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "XNO",
+                "arrCode": "XCF",
+                "date": "20180825",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1132",
+                        "trainNo": "Z294",
+                        "dptCode": "XNO",
+                        "arrCode": "XCF"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "BXJ",
+                "arrCode": "LZJ",
+                "date": "20180831",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0509",
+                        "trainNo": "K815",
+                        "dptCode": "BXJ",
+                        "arrCode": "LAJ"
+                    },
+                    "seatList": ["1"]
+                }, {
+                    "train": {
+                        "dptTime": "0509",
+                        "trainNo": "K815",
+                        "dptCode": "BXJ",
+                        "arrCode": "LZJ"
+                    },
+                    "seatList": ["1"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "HGH",
+                "arrCode": "INH",
+                "date": "20180814",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0810",
+                        "trainNo": "D656",
+                        "dptCode": "HGH",
+                        "arrCode": "INH"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "GZQ",
+                "arrCode": "XUN",
+                "date": "20180820",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1930",
+                        "trainNo": "T254",
+                        "dptCode": "GZQ",
+                        "arrCode": "XUN"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2020",
+                        "trainNo": "K226",
+                        "dptCode": "GZQ",
+                        "arrCode": "XUN"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "1950",
+                        "trainNo": "Z236",
+                        "dptCode": "GGQ",
+                        "arrCode": "XUN"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "1039",
+                        "trainNo": "G822",
+                        "dptCode": "IZQ",
+                        "arrCode": "OYN"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1827",
+                        "trainNo": "K238",
+                        "dptCode": "GZQ",
+                        "arrCode": "XUN"
+                    },
+                    "seatList": ["1"]
+                }, {
+                    "train": {
+                        "dptTime": "1652",
+                        "trainNo": "K82",
+                        "dptCode": "GZQ",
+                        "arrCode": "XUN"
+                    },
+                    "seatList": ["1"]
+                }, {
+                    "train": {
+                        "dptTime": "1738",
+                        "trainNo": "T124",
+                        "dptCode": "GZQ",
+                        "arrCode": "XUN"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "1541",
+                        "trainNo": "Z190",
+                        "dptCode": "GZQ",
+                        "arrCode": "XUN"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "1414",
+                        "trainNo": "K1008",
+                        "dptCode": "GZQ",
+                        "arrCode": "XUN"
+                    },
+                    "seatList": ["1"]
+                }, {
+                    "train": {
+                        "dptTime": "2252",
+                        "trainNo": "Z168",
+                        "dptCode": "GGQ",
+                        "arrCode": "XUN"
+                    },
+                    "seatList": ["1"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "ZEJ",
+                "arrCode": "NJH",
+                "date": "20180819",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0745",
+                        "trainNo": "Z42",
+                        "dptCode": "ZEJ",
+                        "arrCode": "NJH"
+                    },
+                    "seatList": ["3", "4"]
+                }, {
+                    "train": {
+                        "dptTime": "1009",
+                        "trainNo": "T206",
+                        "dptCode": "ZYJ",
+                        "arrCode": "NJH"
+                    },
+                    "seatList": ["3", "4"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "HBB",
+                "arrCode": "SJP",
+                "date": "20180828",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1931",
+                        "trainNo": "K548",
+                        "dptCode": "VBB",
+                        "arrCode": "VVP"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "2144",
+                        "trainNo": "Z238",
+                        "dptCode": "VAB",
+                        "arrCode": "SJP"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "JCJ",
+                "arrCode": "YIJ",
+                "date": "20180815",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0953",
+                        "trainNo": "Z180",
+                        "dptCode": "JCJ",
+                        "arrCode": "YIJ"
+                    },
+                    "seatList": ["1"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "ABV",
+                "arrCode": "EAY",
+                "date": "20180813",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0826",
+                        "trainNo": "D2537",
+                        "dptCode": "ABV",
+                        "arrCode": "EAY"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "0906",
+                        "trainNo": "D2501",
+                        "dptCode": "ABV",
+                        "arrCode": "EAY"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1506",
+                        "trainNo": "D2515",
+                        "dptCode": "ABV",
+                        "arrCode": "EAY"
+                    },
+                    "seatList": ["M", "O"]
+                }, {
+                    "train": {
+                        "dptTime": "1716",
+                        "trainNo": "D2565",
+                        "dptCode": "ABV",
+                        "arrCode": "EAY"
+                    },
+                    "seatList": ["M", "O"]
+                }, {
+                    "train": {
+                        "dptTime": "1015",
+                        "trainNo": "D2507",
+                        "dptCode": "ABV",
+                        "arrCode": "EAY"
+                    },
+                    "seatList": ["M", "O"]
+                }, {
+                    "train": {
+                        "dptTime": "1539",
+                        "trainNo": "D2517",
+                        "dptCode": "ABV",
+                        "arrCode": "EAY"
+                    },
+                    "seatList": ["M", "O"]
+                }, {
+                    "train": {
+                        "dptTime": "1031",
+                        "trainNo": "D2505",
+                        "dptCode": "ABV",
+                        "arrCode": "EAY"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 24
+        }, {
+            "line": {
+                "dptCode": "SZH",
+                "arrCode": "FYS",
+                "date": "20180815",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0803",
+                        "trainNo": "D3125",
+                        "dptCode": "SZH",
+                        "arrCode": "FYS"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "0929",
+                        "trainNo": "D2281",
+                        "dptCode": "SZH",
+                        "arrCode": "FYS"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "ICW",
+                "arrCode": "KOM",
+                "date": "20180813",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0851",
+                        "trainNo": "G2883",
+                        "dptCode": "ICW",
+                        "arrCode": "KOM"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1457",
+                        "trainNo": "K165",
+                        "dptCode": "CDW",
+                        "arrCode": "KMM"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "1428",
+                        "trainNo": "K145",
+                        "dptCode": "CDW",
+                        "arrCode": "KMM"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "0919",
+                        "trainNo": "G2885",
+                        "dptCode": "ICW",
+                        "arrCode": "KOM"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1603",
+                        "trainNo": "K985",
+                        "dptCode": "CDW",
+                        "arrCode": "KMM"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "1300",
+                        "trainNo": "K113",
+                        "dptCode": "CDW",
+                        "arrCode": "KMM"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "1506",
+                        "trainNo": "G2887",
+                        "dptCode": "ICW",
+                        "arrCode": "KOM"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1606",
+                        "trainNo": "G2889",
+                        "dptCode": "ICW",
+                        "arrCode": "KOM"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 31
+        }, {
+            "line": {
+                "dptCode": "BXP",
+                "arrCode": "PTS",
+                "date": "20180819",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1600",
+                        "trainNo": "Z307",
+                        "dptCode": "BXP",
+                        "arrCode": "PTS"
+                    },
+                    "seatList": ["3", "4"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "BTC",
+                "arrCode": "TYV",
+                "date": "20180818",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1644",
+                        "trainNo": "2462",
+                        "dptCode": "BTC",
+                        "arrCode": "TYV"
+                    },
+                    "seatList": ["3"]
+                }, {
+                    "train": {
+                        "dptTime": "1644",
+                        "trainNo": "2462",
+                        "dptCode": "BTC",
+                        "arrCode": "TDV"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "XNO",
+                "arrCode": "JNK",
+                "date": "20180815",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0853",
+                        "trainNo": "Z106",
+                        "dptCode": "XNO",
+                        "arrCode": "JNK"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "RMP",
+                "arrCode": "SJP",
+                "date": "20180901",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1004",
+                        "trainNo": "T123",
+                        "dptCode": "RMP",
+                        "arrCode": "SJP"
+                    },
+                    "seatList": ["1"]
+                }, {
+                    "train": {
+                        "dptTime": "1434",
+                        "trainNo": "G1215",
+                        "dptCode": "FOP",
+                        "arrCode": "SJP"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1345",
+                        "trainNo": "G2625",
+                        "dptCode": "FOP",
+                        "arrCode": "SJP"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 24
+        }, {
+            "line": {
+                "dptCode": "GZQ",
+                "arrCode": "EFQ",
+                "date": "20180822",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1812",
+                        "trainNo": "D7549",
+                        "dptCode": "IZQ",
+                        "arrCode": "EFQ"
+                    },
+                    "seatList": ["M", "O"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "GZQ",
+                "arrCode": "JNK",
+                "date": "20180824",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2012",
+                        "trainNo": "T180",
+                        "dptCode": "GZQ",
+                        "arrCode": "JNK"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "GZJ",
+                "arrCode": "DZX",
+                "date": "20180901",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1215",
+                        "trainNo": "K1082",
+                        "dptCode": "SHJ",
+                        "arrCode": "RHX"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "JNK",
+                "arrCode": "CUW",
+                "date": "20180818",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0740",
+                        "trainNo": "K15",
+                        "dptCode": "JNK",
+                        "arrCode": "CUW"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "LYF",
+                "arrCode": "JFW",
+                "date": "20180818",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1350",
+                        "trainNo": "G307",
+                        "dptCode": "LLF",
+                        "arrCode": "JFW"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1302",
+                        "trainNo": "G1975",
+                        "dptCode": "LLF",
+                        "arrCode": "JFW"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1357",
+                        "trainNo": "G1701",
+                        "dptCode": "LLF",
+                        "arrCode": "JFW"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1557",
+                        "trainNo": "G1281",
+                        "dptCode": "LLF",
+                        "arrCode": "JFW"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "HCQ",
+                "arrCode": "SZQ",
+                "date": "20180814",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0843",
+                        "trainNo": "G6347",
+                        "dptCode": "KNQ",
+                        "arrCode": "IOQ"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 20
+        }, {
+            "line": {
+                "dptCode": "XNN",
+                "arrCode": "LYF",
+                "date": "20180901",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2221",
+                        "trainNo": "K1348",
+                        "dptCode": "XNN",
+                        "arrCode": "LYF"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 22
+        }, {
+            "line": {
+                "dptCode": "QHK",
+                "arrCode": "JNK",
+                "date": "20180902",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "1225",
+                        "trainNo": "G190",
+                        "dptCode": "QHK",
+                        "arrCode": "JNK"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1325",
+                        "trainNo": "D1612",
+                        "dptCode": "QHK",
+                        "arrCode": "JGK"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1238",
+                        "trainNo": "G192",
+                        "dptCode": "QHK",
+                        "arrCode": "JGK"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1225",
+                        "trainNo": "G190",
+                        "dptCode": "QHK",
+                        "arrCode": "JGK"
+                    },
+                    "seatList": ["9"]
+                }, {
+                    "train": {
+                        "dptTime": "1205",
+                        "trainNo": "G190",
+                        "dptCode": "QDK",
+                        "arrCode": "JGK"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1326",
+                        "trainNo": "D6008",
+                        "dptCode": "QDK",
+                        "arrCode": "JNK"
+                    },
+                    "seatList": ["O"]
+                }, {
+                    "train": {
+                        "dptTime": "1358",
+                        "trainNo": "G228",
+                        "dptCode": "QHK",
+                        "arrCode": "JNK"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 23
+        }, {
+            "line": {
+                "dptCode": "QZK",
+                "arrCode": "SMF",
+                "date": "20180902",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "0956",
+                        "trainNo": "G1838",
+                        "dptCode": "QZK",
+                        "arrCode": "SCF"
+                    },
+                    "seatList": ["O"]
+                }]
+            },
+            "weight": 21
+        }, {
+            "line": {
+                "dptCode": "CCT",
+                "arrCode": "YSY",
+                "date": "20180826",
+                "requestType": "ADULT",
+                "focusTrainList": [{
+                    "train": {
+                        "dptTime": "2248",
+                        "trainNo": "K548",
+                        "dptCode": "CCT",
+                        "arrCode": "YSY"
+                    },
+                    "seatList": ["3"]
+                }]
+            },
+            "weight": 20
+        }],
+        "control": {
+            "refreshFunc": "FOCUS_YP",
+            "refreshMaxSeconds": 76,
+            "configVersion": 172,
+            "useCdnCount": 4,
+            "qpsPerCdn": 1.0,
+            "sleepMills": 0
+        }
+    },
+    "success": true
+}
