@@ -56,6 +56,7 @@
             display: none;
         }
         .type_select{
+            margin: 10px;
             text-align: center;
         }
         .type_select>label:nth-of-type(2){
@@ -87,15 +88,15 @@
     <label for="url"><input name="type" id="url" type="radio">url比较</label>
 </p>
 <div class="container">
-    <textarea id="left" class="write" required></textarea>
+    <textarea id="left" class="write"></textarea>
     <div>
         <p hidden id="merge">合并</p>
         <p id="diff">比较</p>
     </div>
     <textarea id="right" class="write" required></textarea>
 </div>
-<input type="url" placeholder="left url" disabled/>
-<input type="url" placeholder="right url" disabled/>
+<input type="url" required placeholder="left url" disabled/>
+<input type="url" required placeholder="right url" disabled/>
 <div id='container'>
     <!--
     <div data-id="id0" data-space="0" data-item="root">
@@ -450,11 +451,18 @@
         deal(JSON.stringify(data,null,4))
     }
     document.querySelector('#diff').onclick=function(){
-        const [lefttext,righttext,rmvalue]=[leftarea.value,rightarea.value];
+        const [lefttext,righttext,lefturl,righturl]=[leftarea.value,rightarea.value,leftUrlDOM.value,rightUrlDOM.value];
+        const invalid=document.querySelector(':invalid');
+        if(invalid){
+            alert('输入无效');
+            return false;
+        }
         $.post('./diff.jsp',{
             data:{
                 leftJson:parseText(lefttext),
                 rightJson:parseText(righttext),
+                lefturl,
+                righturl,
                 ignoreList:ignoreArr
             },
             method:'POST'
