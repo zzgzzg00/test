@@ -89,16 +89,24 @@
     const spaceReg=/^(\s+)(.*$)/g;
     const emptyReg=/^(?:(\s*\{)|(\s*\[,?))$/;
     const ignoreReg=/^\s*[\}\]],?$/;
-    const keyReg=/"(.*?)(?<!\\)":.*$/;
+    const keyReg=/"(.*?)(?<!\\)":(.*)$/;
+    const startReg=/^\s*(\{|\[)\s*$/;
     function deal(data){
         const t1=performance.now();
         maskDOM.classList.remove('hide');
         setTimeout(()=>{
             const arr=data.split(/\n/);
             const html=arr.map((item,index,arr)=>{
+                let _v='';
                 item=item.replace(spaceReg,'$2');
                 const space=RegExp.$1;
                 item=item.replace(keyReg,'$1');
+                if(startReg.test(RegExp.$2)){
+                    let end=RegExp.$1;
+                    if(!checkIsEmpty(item)){
+                        _v=end;
+                    }
+                }
                 const isLeaf=arr[index+1]?arr[index+1].indexOf(space+' ')!=0:true;
                 const button=isLeaf?'':`<span>${expand}</span>`;
                 if(ignoreReg.test(item)){
@@ -107,7 +115,7 @@
                         </div>`
                 }
                 return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
-                        <pre>${space}${button}<input ${emptyReg.test(item)?'hidden':''} data-isleaf="${isLeaf}" type="checkbox" />${item}</pre>
+                        <pre>${space}${button}<input ${emptyReg.test(item)?'hidden':''} data-isleaf="${isLeaf}" type="checkbox" />${item}${_v}</pre>
                     </div>`
             });
             containerDOM.innerHTML=html.join('');
@@ -144,6 +152,9 @@
             }
 
         }
+    }
+    function checkIsEmpty(str){
+        return !/[a-z]/i.test(str);
     }
 
     function getDivData(parentDiv){
