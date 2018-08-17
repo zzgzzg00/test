@@ -47,16 +47,18 @@
 <div class="container">
     <textarea id="left" class="write"></textarea>
     <div>
-        <p id="merge">合并</p>
+        <p hidden id="merge">合并</p>
         <p id="diff">比较</p>
     </div>
     <textarea id="right" class="write"></textarea>
 </div>
     <div id='container'>
+        <!--
         <div data-id="id0" data-space="0" data-item="root">
             <pre><span>▼</span><input data-isleaf="false" type="checkbox" />root</pre>
-        </div>
+        </div>-->
     </div>
+    <h2>剔除项</h2>
     <div id='result'></div>
 <script>
     const containerDOM=document.querySelector('#container');
@@ -66,24 +68,27 @@
     const fold='▶',expand='▼',defaultSperator='.';
     const caches={};
     let ignoreArr=[];
+    let doubleckicksign=0;
     function deal(data){
         const t1=performance.now();
         const arr=data.split(/\n/);
-        const reg=/^(\s+)(.*$)/g
+        const spaceReg=/^(\s+)(.*$)/g;
+        const emptyReg=/^(?:(\s*\{)|(\s*\[,?))$/;
+        const ignoreReg=/^\s*[\}\]],?$/;
+        const keyReg=/"(.*?)(?<!\\)":.*$/;
         const html=arr.map((item,index,arr)=>{
-            const emptyReg=/^(\s*\{)|(\s*\},?)$/;
-            item=item.replace(reg,'$2')//.replace(/:.*$/,'');
+            item=item.replace(spaceReg,'$2');
             const space=RegExp.$1;
-            item=item.replace(/"(.*?)(?<!\\)":.*$/,'$1');
+            item=item.replace(keyReg,'$1');
             const isLeaf=arr[index+1]?arr[index+1].indexOf(space+' ')!=0:true;
             const button=isLeaf?'':`<span>${expand}</span>`;
-            if(emptyReg.test(item)){
+            if(ignoreReg.test(item)){
                 return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
-                            <pre>${space}${button}<input data-isleaf="${isLeaf}" type="checkbox" />${item}</pre>
-                        </div>`;
+                            <pre>${space}<input hidden data-isleaf="false" type="checkbox" />${item.replace(/,/,'')}</pre>
+                        </div>`
             }
             return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
-                        <pre>${space}${button}<input data-isleaf="${isLeaf}" type="checkbox" />${item}</pre>
+                        <pre>${space}${button}<input ${emptyReg.test(item)?'hidden':''} data-isleaf="${isLeaf}" type="checkbox" />${item}</pre>
                     </div>`
         });
         containerDOM.insertAdjacentHTML('beforeend',html.join(''));
@@ -103,7 +108,7 @@
                 }
             }
             const result=getSelectedLeaf();
-            resultDOM.innerHTML=result.map(item=>`<p>${item}</p>`).join('');
+            resultDOM.innerHTML=`<pre>${JSON.stringify(result,null,4)}</pre>`;
             ignoreArr=result;
         }else if(target.tagName.toLowerCase()=='span'){
             const div=getParentDiv(target);
@@ -335,7 +340,13 @@
         }
     }
     document.body.ondblclick=function(){
-        resultDOM.scrollIntoView(true);
+        if(!doubleckicksign) {
+            doubleckicksign=1;
+            resultDOM.scrollIntoView(true);
+        }else{
+            doubleckicksign=0;
+            containerDOM.scrollIntoView(true);
+        }
     }
     document.querySelector('#merge').onclick=function(){
         const [lefttext,righttext]=[leftarea.value,rightarea.value];
@@ -350,9 +361,13 @@
             }
         });
     }
+    leftarea.onchange=function(){
+        const value=this.value;
+        const data=parseText(value);
+        deal(JSON.stringify(data,null,4))
+    }
     document.querySelector('#diff').onclick=function(){
         const [lefttext,righttext,rmvalue]=[leftarea.value,rightarea.value];
-        console.log(ignoreArr);
         $.post('./diff.jsp',{
             data:{
                 leftJson:parseText(lefttext),
@@ -362,9 +377,9 @@
             method:'POST'
         });
     }
-    fetch('../testdata/verification.json')
-        .then(response=>response.json())
-        .then(data=>deal(JSON.stringify(data,null,4)))
+//    fetch('../testdata/verification.json')
+//        .then(response=>response.json())
+//        .then(data=>deal(JSON.stringify(data,null,4)))
 </script>
 </body>
 </html>
