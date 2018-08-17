@@ -91,7 +91,8 @@
                         <pre>${space}${button}<input ${emptyReg.test(item)?'hidden':''} data-isleaf="${isLeaf}" type="checkbox" />${item}</pre>
                     </div>`
         });
-        containerDOM.insertAdjacentHTML('beforeend',html.join(''));
+        containerDOM.innerHTML=html.join('');
+        resultDOM.innerHTML='';
         console.log(performance.now()-t1);
     }
     document.body.onclick=function(e){
