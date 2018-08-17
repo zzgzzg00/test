@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function analysisYpInfo(result, map){
+        var cp = result, cr = map;
+        var co = [];
+        for (var cn = 0; cn < cp.length; cn++) {
+            var cs = {};
+            var cm = cp[cn].split("|");
+            if (cm.length !== 37) {
+                console.warn('Error: analysisYpInfo result schema changed!, last length 37, current:', cm.length);
+            }
+            cs.secretHBStr = cm[36];
+            cs.secretStr = cm[0];
+            cs.buttonTextInfo = cm[1];
+            var cq = {};
+            cq.train_no = cm[2];
+            cq.station_train_code = cm[3];
+            cq.start_station_telecode = cm[4];
+            cq.end_station_telecode = cm[5];
+            cq.from_station_telecode = cm[6];
+            cq.to_station_telecode = cm[7];
+            cq.start_time = cm[8];
+            cq.arrive_time = cm[9];
+            cq.lishi = cm[10];
+            cq.canWebBuy = cm[11];
+            cq.yp_info = cm[12];
+            cq.start_train_date = cm[13];
+            cq.train_seat_feature = cm[14];
+            cq.location_code = cm[15];
+            cq.from_station_no = cm[16];
+            cq.to_station_no = cm[17];
+            cq.is_support_card = cm[18];
+            cq.controlled_train_flag = cm[19];
+            cq.gg_num = cm[20] ? cm[20] : "--";
+            cq.gr_num = cm[21] ? cm[21] : "--";
+            cq.qt_num = cm[22] ? cm[22] : "--";
+            cq.rw_num = cm[23] ? cm[23] : "--";
+            cq.rz_num = cm[24] ? cm[24] : "--";
+            cq.tz_num = cm[25] ? cm[25] : "--";
+            cq.wz_num = cm[26] ? cm[26] : "--";
+            cq.yb_num = cm[27] ? cm[27] : "--";
+            cq.yw_num = cm[28] ? cm[28] : "--";
+            cq.yz_num = cm[29] ? cm[29] : "--";
+            cq.ze_num = cm[30] ? cm[30] : "--";
+            cq.zy_num = cm[31] ? cm[31] : "--";
+            cq.swz_num = cm[32] ? cm[32] : "--";
+            cq.srrb_num = cm[33] ? cm[33] : "--";
+            cq.yp_ex = cm[34];
+            cq.seat_types = cm[35];
+            cq.exchange_train_flag = cm[36];
+            cq.from_station_name = cr[cm[6]];
+            cq.to_station_name = cr[cm[7]];
+            cs.queryLeftNewDTO = cq;
+            co.push(cs);
+        }
+        return co;
+    }
+    fetch('../testdata/trainlist.json')
+        .then(resp=>resp.json())
+        .then(result=>analysisYpInfo(result.data.result, result.data.map))
+        .then(console.log);
+</script>
+</body>
+</html>

@@ -3,8 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            line-height: 1.1;
+        }
+        .container{
+            display: flex;
+            justify-content:center;
+            align-items:center;
+        }
+        .container>div{
+            margin: 0 10px;
+        }
+        .container>div>p:nth-of-type(1){
+            margin-bottom: 10px;
+        }
+        .container>div>p{
+            border:1px solid grey;
+            padding: 5px 10px;
+        }
+        summary:focus{
+            outline: none;
+        }
+        input[type=checkbox]{
+            margin-right: 5px;
+        }
+        #container,#show{
+            padding: 20px;
+        }
+        .write{
+            display: block;
+            border:1px solid grey;
+            height: 50vh;
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
+<script src="./zepto.js"></script>
+<div class="container">
+    <textarea id="left" class="write"></textarea>
+    <div>
+        <p id="merge">合并</p>
+        <p id="diff">比较</p>
+    </div>
+    <textarea id="right" class="write"></textarea>
+</div>
     <div id='container'>
         <div data-id="id0" data-space="0" data-item="root">
             <pre><span>▼</span><input data-isleaf="false" type="checkbox" />root</pre>
@@ -14,26 +61,33 @@
 <script>
     const containerDOM=document.querySelector('#container');
     const resultDOM=document.querySelector('#result');
+    const resultTextarea=document.querySelector('#resulttext');
+    const [leftarea,rightarea]=document.querySelectorAll('textarea');
     const fold='▶',expand='▼',defaultSperator='.';
     const caches={};
+    let ignoreArr=[];
     function deal(data){
+        const t1=performance.now();
         const arr=data.split(/\n/);
         const reg=/^(\s+)(.*$)/g
         const html=arr.map((item,index,arr)=>{
-            const emptyReg=/^\{|(?:\},?)$/;
-            if(emptyReg.test(item)){
-                return '';
-            }
+            const emptyReg=/^(\s*\{)|(\s*\},?)$/;
             item=item.replace(reg,'$2')//.replace(/:.*$/,'');
             const space=RegExp.$1;
-            item=item.replace(/"(.*?)":.*$/,'$1');
+            item=item.replace(/"(.*?)(?<!\\)":.*$/,'$1');
             const isLeaf=arr[index+1]?arr[index+1].indexOf(space+' ')!=0:true;
             const button=isLeaf?'':`<span>${expand}</span>`;
+            if(emptyReg.test(item)){
+                return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
+                            <pre>${space}${button}<input data-isleaf="${isLeaf}" type="checkbox" />${item}</pre>
+                        </div>`;
+            }
             return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
                         <pre>${space}${button}<input data-isleaf="${isLeaf}" type="checkbox" />${item}</pre>
                     </div>`
         });
         containerDOM.insertAdjacentHTML('beforeend',html.join(''));
+        console.log(performance.now()-t1);
     }
     document.body.onclick=function(e){
         const target=e.target;
@@ -50,6 +104,7 @@
             }
             const result=getSelectedLeaf();
             resultDOM.innerHTML=result.map(item=>`<p>${item}</p>`).join('');
+            ignoreArr=result;
         }else if(target.tagName.toLowerCase()=='span'){
             const div=getParentDiv(target);
             if(target.innerHTML==expand){
@@ -220,27 +275,93 @@
         hideChildren(parentDiv);
     }
 
+    function createSendValue(value){
+        return{
+            key:value,
+            arrayAble:false
+        }
+    }
+    function setIsArraySign(values){
+        let isArray=false;
+        for(let value of values){
+            if(isArray){
+                value.arrayAble=true;
+            }
+            if(value.key == '['){
+                isArray=true;
+            }
+        }
+    }
+    function removeSignItem(values){
+        return values.filter(item=>item.key != '[' && item.key != '{');
+    }
     function getSelectedLeaf(){
         const result=[];
         const selected=[...document.querySelectorAll('input[data-isleaf="true"]:checked')];
         for(let leaf of selected){
             let value=getDivData(leaf).item;
             if(value){
-                result.push(decodeURIComponent(value));
+                result.push(JSON.parse(value));
                 continue;
             }
             const div=getParentDiv(leaf);
             value=decodeURIComponent(getDivData(div).item);
+            value=createSendValue(value);
             const parents=findParents(div);
-            value=parents.reverse().reduce((a,b)=>{
-                return a+decodeURIComponent(getDivData(b).item)+defaultSperator;
-            },'')+value;
-            leaf.dataset.item=encodeURIComponent(value);
-            result.push(value);
+            let _values=parents.reverse().reduce((res,item)=>{
+                const _value=decodeURIComponent(getDivData(item).item)
+                return (res.push(createSendValue(_value)),res);
+            },[]);
+            _values.push(value);
+            setIsArraySign(_values);
+            _values=removeSignItem(_values);
+            leaf.dataset.item=JSON.stringify(_values);
+            result.push(_values);
+//            value=parents.reverse().reduce((a,b)=>{
+//                return a+decodeURIComponent(getDivData(b).item)+defaultSperator;
+//            },'')+value;
+//            leaf.dataset.item=encodeURIComponent(value);
+//            result.push(value);
         }
+        console.log(result);
         return result;
     }
 
+    function parseText(str){
+        try{
+            return JSON.parse(str);
+        }catch(e){
+            return '';
+        }
+    }
+    document.body.ondblclick=function(){
+        resultDOM.scrollIntoView(true);
+    }
+    document.querySelector('#merge').onclick=function(){
+        const [lefttext,righttext]=[leftarea.value,rightarea.value];
+        $.post('./merge.jsp',{
+            data:{
+                leftJson:parseText(lefttext),
+                rightJson:parseText(righttext)
+            },
+            method:'POST',
+            success:function(data){
+                deal(JSON.stringify(data,null,4))
+            }
+        });
+    }
+    document.querySelector('#diff').onclick=function(){
+        const [lefttext,righttext,rmvalue]=[leftarea.value,rightarea.value];
+        console.log(ignoreArr);
+        $.post('./diff.jsp',{
+            data:{
+                leftJson:parseText(lefttext),
+                rightJson:parseText(righttext),
+                ignoreList:ignoreArr
+            },
+            method:'POST'
+        });
+    }
     fetch('../testdata/verification.json')
         .then(response=>response.json())
         .then(data=>deal(JSON.stringify(data,null,4)))
