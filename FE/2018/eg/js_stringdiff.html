@@ -40,6 +40,21 @@
             height: 50vh;
             flex: 1;
         }
+        #mask{
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,.3);
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            color: #ffffff;
+        }
+        #mask.hide{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -52,48 +67,55 @@
     </div>
     <textarea id="right" class="write"></textarea>
 </div>
-    <div id='container'>
-        <!--
-        <div data-id="id0" data-space="0" data-item="root">
-            <pre><span>▼</span><input data-isleaf="false" type="checkbox" />root</pre>
-        </div>-->
-    </div>
-    <h2>剔除项</h2>
-    <div id='result'></div>
+<div id='container'>
+    <!--
+    <div data-id="id0" data-space="0" data-item="root">
+        <pre><span>▼</span><input data-isleaf="false" type="checkbox" />root</pre>
+    </div>-->
+</div>
+<h2>剔除项</h2>
+<div id='result'></div>
+<div id="mask" class="hide">生成树型结构...</div>
 <script>
     const containerDOM=document.querySelector('#container');
     const resultDOM=document.querySelector('#result');
     const resultTextarea=document.querySelector('#resulttext');
     const [leftarea,rightarea]=document.querySelectorAll('textarea');
+    const maskDOM=document.querySelector('#mask');
     const fold='▶',expand='▼',defaultSperator='.';
-    const caches={};
+    let caches={};
     let ignoreArr=[];
     let doubleckicksign=0;
+    const spaceReg=/^(\s+)(.*$)/g;
+    const emptyReg=/^(?:(\s*\{)|(\s*\[,?))$/;
+    const ignoreReg=/^\s*[\}\]],?$/;
+    const keyReg=/"(.*?)(?<!\\)":.*$/;
     function deal(data){
         const t1=performance.now();
-        const arr=data.split(/\n/);
-        const spaceReg=/^(\s+)(.*$)/g;
-        const emptyReg=/^(?:(\s*\{)|(\s*\[,?))$/;
-        const ignoreReg=/^\s*[\}\]],?$/;
-        const keyReg=/"(.*?)(?<!\\)":.*$/;
-        const html=arr.map((item,index,arr)=>{
-            item=item.replace(spaceReg,'$2');
-            const space=RegExp.$1;
-            item=item.replace(keyReg,'$1');
-            const isLeaf=arr[index+1]?arr[index+1].indexOf(space+' ')!=0:true;
-            const button=isLeaf?'':`<span>${expand}</span>`;
-            if(ignoreReg.test(item)){
-                return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
+        maskDOM.classList.remove('hide');
+        setTimeout(()=>{
+            const arr=data.split(/\n/);
+            const html=arr.map((item,index,arr)=>{
+                item=item.replace(spaceReg,'$2');
+                const space=RegExp.$1;
+                item=item.replace(keyReg,'$1');
+                const isLeaf=arr[index+1]?arr[index+1].indexOf(space+' ')!=0:true;
+                const button=isLeaf?'':`<span>${expand}</span>`;
+                if(ignoreReg.test(item)){
+                    return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
                             <pre>${space}<input hidden data-isleaf="false" type="checkbox" />${item.replace(/,/,'')}</pre>
                         </div>`
-            }
-            return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
+                }
+                return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
                         <pre>${space}${button}<input ${emptyReg.test(item)?'hidden':''} data-isleaf="${isLeaf}" type="checkbox" />${item}</pre>
                     </div>`
-        });
-        containerDOM.innerHTML=html.join('');
-        resultDOM.innerHTML='';
-        console.log(performance.now()-t1);
+            });
+            containerDOM.innerHTML=html.join('');
+            resultDOM.innerHTML='';
+            maskDOM.classList.add('hide');
+            console.log(performance.now()-t1);
+            caches={};
+        },0);
     }
     document.body.onclick=function(e){
         const target=e.target;
@@ -323,11 +345,6 @@
             _values=removeSignItem(_values);
             leaf.dataset.item=JSON.stringify(_values);
             result.push(_values);
-//            value=parents.reverse().reduce((a,b)=>{
-//                return a+decodeURIComponent(getDivData(b).item)+defaultSperator;
-//            },'')+value;
-//            leaf.dataset.item=encodeURIComponent(value);
-//            result.push(value);
         }
         console.log(result);
         return result;
