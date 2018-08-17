@@ -154,11 +154,15 @@
         }
     }
     function checkIsEmpty(str){
-        return !/[a-z]/i.test(str);
+        return !/[a-z\d]/i.test(str);
     }
 
     function getDivData(parentDiv){
-        return parentDiv.dataset;
+        let {id,space}=parentDiv.dataset;
+        return{
+            id,
+            space:space<<0
+        }
     }
     function getCacheData(id,type){
         if(!caches[id]){
@@ -191,7 +195,6 @@
         }
         return false;
     }
-
 
     function findParents(parentDiv){
         const parents=[];
