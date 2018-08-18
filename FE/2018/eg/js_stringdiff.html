@@ -106,6 +106,7 @@
 <h2>剔除项</h2>
 <div id='result'></div>
 <div id="mask" class="hide">生成树型结构...</div>
+<div id="diffresult"></div>
 <script>
     const [jsonDOM,urlDOM]=document.querySelectorAll('input[type="radio"]');
     const [leftUrlDOM,rightUrlDOM]=document.querySelectorAll('input[type="url"]');
@@ -114,14 +115,16 @@
     const resultTextarea=document.querySelector('#resulttext');
     const [leftarea,rightarea]=document.querySelectorAll('textarea');
     const maskDOM=document.querySelector('#mask');
+    const diffresultDOM=document.getElementById('diffresult');
     const fold='▶',expand='▼',defaultSperator='.';
     let caches={};
     let ignoreArr=[];
     let doubleckicksign=0;
+    let difftype='json';
     const spaceReg=/^(\s+)(.*$)/g;
     const emptyReg=/^(?:(\s*\{)|(\s*\[,?))$/;
     const ignoreReg=/^\s*[\}\]],?$/;
-    const keyReg=/"(.*?)(?<!\\)":(.*)$/;
+    const keyReg=/"(.*)":(.*)$/;
     const startReg=/^\s*(\{|\[)\s*$/;
     function deal(data){
         const t1=performance.now();
@@ -186,8 +189,10 @@
         }else if(target.tagName.toLowerCase()=='input' && target.type == 'radio'){
             if(jsonDOM.checked){
                 setReadOnly([rightarea],[leftUrlDOM,rightUrlDOM]);
+                difftype='json';
             }else{
                 setReadOnly([leftUrlDOM,rightUrlDOM],[rightarea]);
+                difftype='url';
             }
         }
     }
@@ -423,6 +428,15 @@
             return '';
         }
     }
+    function checkIsObj(value){
+        return Array.isArray(value) || ({}).toString.call(value).toLowerCase() == '[object object]';
+    }
+    function emptyNotObjectValue(key,value){
+        if(checkIsObj(value)){
+            return value;
+        }
+        return '';
+    }
     document.body.ondblclick=function(){
         if(!doubleckicksign) {
             doubleckicksign=1;
@@ -448,7 +462,13 @@
     leftarea.onchange=function(){
         const value=this.value;
         const data=parseText(value);
-        deal(JSON.stringify(data,null,4))
+        deal(JSON.stringify(data,emptyNotObjectValue,4))
+    }
+    function showdiffResult(resp){
+        const lists=resp.comparedNodeList;
+        lists.map(item=>{
+
+        })
     }
     document.querySelector('#diff').onclick=function(){
         const [lefttext,righttext,lefturl,righturl]=[leftarea.value,rightarea.value,leftUrlDOM.value,rightUrlDOM.value];
@@ -463,14 +483,18 @@
                 rightJson:parseText(righttext),
                 lefturl,
                 righturl,
+                difftype,
                 ignoreList:ignoreArr
             },
-            method:'POST'
+            method:'POST',
+            success:function(resp){
+                showdiffResult(resp);
+            }
         });
     }
-//    fetch('../testdata/verification.json')
-//        .then(response=>response.json())
-//        .then(data=>deal(JSON.stringify(data,null,4)))
+    fetch('../testdata/verification.json')
+        .then(response=>response.json())
+        .then(data=>deal(JSON.stringify(data,emptyNotObjectValue,4)));
 </script>
 </body>
 </html>
