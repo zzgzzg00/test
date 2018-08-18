@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            line-height: 1.1;
+        }
+        .container{
+            display: flex;
+            justify-content:center;
+            align-items:center;
+        }
+        .container>div{
+            margin: 0 10px;
+        }
+        .container>div>p:nth-of-type(1){
+            margin-bottom: 10px;
+        }
+        .container>div>p{
+            border:1px solid grey;
+            padding: 5px 10px;
+        }
+        summary:focus{
+            outline: none;
+        }
+        input[type=checkbox]{
+            margin-right: 5px;
+        }
+        #container,#show{
+            padding: 20px;
+        }
+        .write{
+            display: block;
+            border:1px solid grey;
+            height: 50vh;
+            flex: 1;
+        }
+        #mask{
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,.3);
+            display: flex;
+            justify-content:center;
+            align-items: center;
+            color: #ffffff;
+        }
+        #mask.hide{
+            display: none;
+        }
+        .type_select{
+            margin: 10px;
+            text-align: center;
+        }
+        .type_select>label:nth-of-type(2){
+            margin-left: 20px;
+        }
+        ::-webkit-input-placeholder{
+            color:lightslategray;
+        }
+        [type=url]{
+            display: block;
+            width: 90%;
+            height: 30px;
+            margin: 10px auto;
+            font-size: 16px;
+            line-height: 30px;
+            padding: 10px;
+            color: #000000;
+        }
+        :invalid{
+            border:1px solid red;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<script src="./zepto.js"></script>
+<p class="type_select">
+    <label for="json"><input checked name="type" id="json" type="radio">json比较</label>
+    <label for="url"><input name="type" id="url" type="radio">url比较</label>
+</p>
+<div class="container">
+    <textarea id="left" class="write"></textarea>
+    <div>
+        <p hidden id="merge">合并</p>
+        <p id="diff">比较</p>
+    </div>
+    <textarea id="right" class="write" required></textarea>
+</div>
+<input type="url" required placeholder="left url" disabled/>
+<input type="url" required placeholder="right url" disabled/>
+<div id='container'>
+    <!--
+    <div data-id="id0" data-space="0" data-item="root">
+        <pre><span>▼</span><input data-isleaf="false" type="checkbox" />root</pre>
+    </div>-->
+</div>
+<h2>剔除项</h2>
+<div id='result'></div>
+<div id="mask" class="hide">生成树型结构...</div>
+<div id="diffresult"></div>
+<script>
+    'use strict';
+
+    var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+    function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+    var _document$querySelect = document.querySelectorAll('input[type="radio"]'),
+        _document$querySelect2 = _slicedToArray(_document$querySelect, 2),
+        jsonDOM = _document$querySelect2[0],
+        urlDOM = _document$querySelect2[1];
+
+    var _document$querySelect3 = document.querySelectorAll('input[type="url"]'),
+        _document$querySelect4 = _slicedToArray(_document$querySelect3, 2),
+        leftUrlDOM = _document$querySelect4[0],
+        rightUrlDOM = _document$querySelect4[1];
+
+    var containerDOM = document.querySelector('#container');
+    var resultDOM = document.querySelector('#result');
+    var resultTextarea = document.querySelector('#resulttext');
+
+    var _document$querySelect5 = document.querySelectorAll('textarea'),
+        _document$querySelect6 = _slicedToArray(_document$querySelect5, 2),
+        leftarea = _document$querySelect6[0],
+        rightarea = _document$querySelect6[1];
+
+    var maskDOM = document.querySelector('#mask');
+    var diffresultDOM = document.getElementById('diffresult');
+    var fold = '▶',
+        expand = '▼',
+        defaultSperator = '.';
+    var _caches = {};
+    var ignoreArr = [];
+    var doubleckicksign = 0;
+    var difftype = 'json';
+    var spaceReg = /^(\s+)(.*$)/g;
+    var emptyReg = /^(?:(\s*\{)|(\s*\[,?))$/;
+    var ignoreReg = /^\s*[\}\]],?$/;
+    var keyReg = /"(.*)":(.*)$/;
+    var startReg = /^\s*(\{|\[)\s*$/;
+    function deal(data) {
+        maskDOM.classList.remove('hide');
+        setTimeout(function () {
+            var arr = data.split(/\n/);
+            var html = arr.map(function (item, index, arr) {
+                var _v = '';
+                item = item.replace(spaceReg, '$2');
+                var space = RegExp.$1;
+                item = item.replace(keyReg, '$1');
+                if (startReg.test(RegExp.$2)) {
+                    var end = RegExp.$1;
+                    if (!checkIsEmpty(item)) {
+                        _v = end;
+                    }
+                }
+                var isLeaf = arr[index + 1] ? arr[index + 1].indexOf(space + ' ') != 0 : true;
+                var button = isLeaf ? '' : '<span>' + expand + '</span>';
+                if (ignoreReg.test(item)) {
+                    return '<div data-id="id' + (index + 1) + '" data-space="' + space.length / 4 + '" data-item="' + encodeURIComponent(item) + '">\n                            <pre>' + space + '<input hidden data-isleaf="false" type="checkbox" />' + item.replace(/,/, '') + '</pre>\n                        </div>';
+                }
+                return '<div data-id="id' + (index + 1) + '" data-space="' + space.length / 4 + '" data-item="' + encodeURIComponent(item) + '" data-type="' + _v + '">\n                        <pre>' + space + button + '<input ' + (emptyReg.test(item) ? 'hidden' : '') + ' data-isleaf="' + isLeaf + '" type="checkbox" />' + item + _v + '</pre>\n                    </div>';
+            });
+            containerDOM.innerHTML = html.join('');
+            resultDOM.innerHTML = '';
+            maskDOM.classList.add('hide');
+            _caches = {};
+        }, 0);
+    }
+    document.body.onclick = function (e) {
+        var target = e.target;
+        if (target.tagName.toLowerCase() == 'input' && target.type == 'checkbox') {
+            var div = getParentDiv(target);
+            if (target.checked) {
+                checkedAllChildren(div);
+                checkedAllParents(div);
+            } else {
+                canceldAllChildren(div);
+                if (!getBrothersStatus(div)) {
+                    canceldAllParents(div);
+                }
+            }
+            var result = getSelectedLeaf();
+            resultDOM.innerHTML = '<pre>' + JSON.stringify(result, function (key, value) {
+                return key == 'type' ? undefined : value;
+            }, 4) + '</pre>';
+            ignoreArr = result;
+        } else if (target.tagName.toLowerCase() == 'span') {
+            var _div = getParentDiv(target);
+            if (target.innerHTML == expand) {
+                hideChildren(_div);
+                target.innerHTML = fold;
+            } else {
+                hideChildren(_div, false);
+                target.innerHTML = expand;
+            }
+        } else if (target.tagName.toLowerCase() == 'input' && target.type == 'radio') {
+            if (jsonDOM.checked) {
+                setReadOnly([rightarea], [leftUrlDOM, rightUrlDOM]);
+                difftype = 'json';
+            } else {
+                setReadOnly([leftUrlDOM, rightUrlDOM], [rightarea]);
+                difftype = 'url';
+            }
+        }
+    };
+    function setReadOnly(canreadarr, cannotreadarr) {
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = canreadarr[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var read = _step.value;
+
+                read.disabled = false;
+            }
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+            for (var _iterator2 = cannotreadarr[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                var notread = _step2.value;
+
+                notread.disabled = true;
+            }
+        } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                    _iterator2.return();
+                }
+            } finally {
+                if (_didIteratorError2) {
+                    throw _iteratorError2;
+                }
+            }
+        }
+    }
+    function checkIsEmpty(str) {
+        return !/[a-z\d]/i.test(str);
+    }
+
+    function getDivData(parentDiv) {
+        var _parentDiv$dataset = parentDiv.dataset,
+            id = _parentDiv$dataset.id,
+            space = _parentDiv$dataset.space,
+            item = _parentDiv$dataset.item,
+            type = _parentDiv$dataset.type;
+
+        return {
+            id: id,
+            item: item,
+            space: space << 0,
+            type: type
+        };
+    }
+    function getCacheData(id, type) {
+        if (!_caches[id]) {
+            return false;
+        }
+        if (!_caches[id][type]) {
+            return false;
+        }
+        return _caches[id][type];
+    }
+    function setCacheData(id, type, data) {
+        if (!_caches[id]) {
+            _caches[id] = {};
+        }
+        _caches[id][type] = data;
+    }
+
+    function getParentDiv(input) {
+        return input.closest('div');
+    }
+    function getChildInput(parentDiv) {
+        return parentDiv.querySelector('input');
+    }
+    function getBrothersStatus(parentDiv) {
+        var brothers = findBrothers(parentDiv);
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
+
+        try {
+            for (var _iterator3 = brothers[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                var brother = _step3.value;
+
+                if (getChildInput(brother).checked) {
+                    return true;
+                }
+            }
+        } catch (err) {
+            _didIteratorError3 = true;
+            _iteratorError3 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                    _iterator3.return();
+                }
+            } finally {
+                if (_didIteratorError3) {
+                    throw _iteratorError3;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    function findParents(parentDiv) {
+        var parents = [];
+
+        var _getDivData = getDivData(parentDiv),
+            space = _getDivData.space,
+            id = _getDivData.id;
+
+        var $parents = getCacheData(id, 'parents');
+        if ($parents) {
+            return $parents;
+        }
+        --space;
+        while (true) {
+            if (space == -1) {
+                break;
+            }
+            parentDiv = parentDiv.previousElementSibling;
+            if (!parentDiv) {
+                break;
+            }
+
+            var _getDivData2 = getDivData(parentDiv),
+                _space = _getDivData2.space;
+
+            if (space == _space) {
+                parents.push(parentDiv);
+                --space;
+            }
+        }
+        setCacheData(id, 'parents', parents);
+        return parents;
+    }
+    function findChidren(parentDiv) {
+        var children = [];
+
+        var _getDivData3 = getDivData(parentDiv),
+            space = _getDivData3.space,
+            id = _getDivData3.id;
+
+        var $children = getCacheData(id, 'children');
+        if ($children) {
+            return $children;
+        }
+        while (true) {
+            parentDiv = parentDiv.nextElementSibling;
+            if (!parentDiv) {
+                break;
+            }
+
+            var _getDivData4 = getDivData(parentDiv),
+                _space = _getDivData4.space;
+
+            if (_space > space) {
+                children.push(parentDiv);
+            } else {
+                break;
+            }
+        }
+        setCacheData(id, 'children', children);
+        return children;
+    }
+    function findBrothers(parentDiv) {
+        var brothers = [];
+        var _parentDiv = parentDiv;
+
+        var _getDivData5 = getDivData(parentDiv),
+            space = _getDivData5.space,
+            id = _getDivData5.id;
+
+        var $brothers = getCacheData(id, 'brothers');
+        if ($brothers) {
+            return $brothers;
+        }
+        while (true) {
+            parentDiv = parentDiv.previousElementSibling;
+            if (!parentDiv) {
+                break;
+            }
+
+            var _getDivData6 = getDivData(parentDiv),
+                _space = _getDivData6.space;
+
+            if (space == _space) {
+                brothers.push(parentDiv);
+            }
+            if (space > _space) {
+                break;
+            }
+        }
+        brothers.reverse();
+        parentDiv = _parentDiv;
+        while (true) {
+            parentDiv = parentDiv.nextElementSibling;
+            if (!parentDiv) {
+                break;
+            }
+
+            var _getDivData7 = getDivData(parentDiv),
+                _space = _getDivData7.space;
+
+            if (space == _space) {
+                brothers.push(parentDiv);
+            }
+            if (space > _space) {
+                break;
+            }
+        }
+        setCacheData(id, 'brothers', brothers);
+        return brothers;
+    }
+
+    function checkedAllChildren(parentDiv) {
+        var isChecked = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+        var chidlren = findChidren(parentDiv);
+        var _iteratorNormalCompletion4 = true;
+        var _didIteratorError4 = false;
+        var _iteratorError4 = undefined;
+
+        try {
+            for (var _iterator4 = chidlren[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                var child = _step4.value;
+
+                getChildInput(child).checked = isChecked;
+            }
+        } catch (err) {
+            _didIteratorError4 = true;
+            _iteratorError4 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                    _iterator4.return();
+                }
+            } finally {
+                if (_didIteratorError4) {
+                    throw _iteratorError4;
+                }
+            }
+        }
+    }
+    function canceldAllChildren(parentDiv) {
+        checkedAllChildren(parentDiv, false);
+    }
+
+    function checkedAllParents(parentDiv) {
+        var isChecked = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+        var parents = findParents(parentDiv);
+        var _iteratorNormalCompletion5 = true;
+        var _didIteratorError5 = false;
+        var _iteratorError5 = undefined;
+
+        try {
+            for (var _iterator5 = parents[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                var parent = _step5.value;
+
+                getChildInput(parent).checked = isChecked;
+            }
+        } catch (err) {
+            _didIteratorError5 = true;
+            _iteratorError5 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                    _iterator5.return();
+                }
+            } finally {
+                if (_didIteratorError5) {
+                    throw _iteratorError5;
+                }
+            }
+        }
+    }
+    function canceldAllParents(parentDiv) {
+        checkedAllParents(parentDiv, false);
+    }
+
+    function hideChildren(parentDiv) {
+        var isHide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+        var children = findChidren(parentDiv);
+        var _iteratorNormalCompletion6 = true;
+        var _didIteratorError6 = false;
+        var _iteratorError6 = undefined;
+
+        try {
+            for (var _iterator6 = children[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                var child = _step6.value;
+
+                if (isHide) {
+                    child.style.display = 'none';
+                } else {
+                    child.style.display = 'block';
+                }
+            }
+        } catch (err) {
+            _didIteratorError6 = true;
+            _iteratorError6 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                    _iterator6.return();
+                }
+            } finally {
+                if (_didIteratorError6) {
+                    throw _iteratorError6;
+                }
+            }
+        }
+    }
+    function showChildren(parentDiv) {
+        hideChildren(parentDiv);
+    }
+
+    function createSendValue(value, type) {
+        return {
+            key: value,
+            type: type,
+            arrayAble: false
+        };
+    }
+    function setIsArraySign(values) {
+        var isArray = false;
+        var _iteratorNormalCompletion7 = true;
+        var _didIteratorError7 = false;
+        var _iteratorError7 = undefined;
+
+        try {
+            for (var _iterator7 = values[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                var value = _step7.value;
+
+                if (value.key == '[' || value.type == '[') {
+                    isArray = true;
+                }
+                if (isArray) {
+                    value.arrayAble = true;
+                }
+            }
+        } catch (err) {
+            _didIteratorError7 = true;
+            _iteratorError7 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion7 && _iterator7.return) {
+                    _iterator7.return();
+                }
+            } finally {
+                if (_didIteratorError7) {
+                    throw _iteratorError7;
+                }
+            }
+        }
+    }
+    function removeSignItem(values) {
+        //        return values;
+        return values.filter(function (item) {
+            return item.key != '[' && item.key != '{';
+        });
+    }
+    function getSelectedLeaf() {
+        var result = [];
+        var selected = [].concat(_toConsumableArray(document.querySelectorAll('input[data-isleaf="true"]:checked')));
+        var _iteratorNormalCompletion8 = true;
+        var _didIteratorError8 = false;
+        var _iteratorError8 = undefined;
+
+        try {
+            for (var _iterator8 = selected[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+                var leaf = _step8.value;
+
+                var value = getDivData(leaf).item;
+                if (value) {
+                    result.push(JSON.parse(value));
+                    continue;
+                }
+                var div = getParentDiv(leaf);
+                value = decodeURIComponent(getDivData(div).item);
+                var type = getDivData(div).type;
+                value = createSendValue(value, type);
+                var parents = findParents(div);
+                var _values = parents.reverse().reduce(function (res, item) {
+                    var _value = decodeURIComponent(getDivData(item).item);
+                    var type = getDivData(item).type;
+                    return res.push(createSendValue(_value, type)), res;
+                }, []);
+                _values.push(value);
+                setIsArraySign(_values);
+                _values = removeSignItem(_values);
+                leaf.dataset.item = JSON.stringify(_values);
+                result.push(_values);
+            }
+        } catch (err) {
+            _didIteratorError8 = true;
+            _iteratorError8 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion8 && _iterator8.return) {
+                    _iterator8.return();
+                }
+            } finally {
+                if (_didIteratorError8) {
+                    throw _iteratorError8;
+                }
+            }
+        }
+
+        console.log(result);
+        return result;
+    }
+
+    function parseText(str) {
+        try {
+            return JSON.parse(str);
+        } catch (e) {
+            return '';
+        }
+    }
+    function checkIsObj(value) {
+        return Array.isArray(value) || {}.toString.call(value).toLowerCase() == '[object object]';
+    }
+    function emptyNotObjectValue(key, value) {
+        if (checkIsObj(value)) {
+            return value;
+        }
+        return '';
+    }
+    function repeatSpace(num) {
+        return Array.apply(Array, { length: num + 1 }).join('    ');
+    }
+    document.body.ondblclick = function () {
+        if (!doubleckicksign) {
+            doubleckicksign = 1;
+            resultDOM.scrollIntoView(true);
+        } else {
+            doubleckicksign = 0;
+            containerDOM.scrollIntoView(true);
+        }
+    };
+    document.querySelector('#merge').onclick = function () {
+        var _ref = [leftarea.value, rightarea.value],
+            lefttext = _ref[0],
+            righttext = _ref[1];
+
+        $.post('./merge.jsp', {
+            data: {
+                leftJson: parseText(lefttext),
+                rightJson: parseText(righttext)
+            },
+            method: 'POST',
+            success: function success(data) {
+                deal(JSON.stringify(data, null, 4));
+            }
+        });
+    };
+    leftarea.onchange = function () {
+        var value = this.value;
+        var data = parseText(value);
+        deal(JSON.stringify(data, emptyNotObjectValue, 4));
+    };
+    function showdiffResult(resp) {
+        var lists = resp.comparedNodeList;
+        return lists.map(function (item, index) {
+            var space = repeatSpace(item.depth);
+            var resultFlag = item.resultFlag;
+            var elementName = item.elementName;
+            return '<div class="' + resultFlag.toLowerCase() + '"><pre>' + space + elementName + '</pre></div>';
+        });
+    }
+    document.querySelector('#diff').onclick = function () {
+        var _ref2 = [leftarea.value, rightarea.value, leftUrlDOM.value, rightUrlDOM.value],
+            lefttext = _ref2[0],
+            righttext = _ref2[1],
+            lefturl = _ref2[2],
+            righturl = _ref2[3];
+
+        var invalid = document.querySelector(':invalid');
+        if (invalid) {
+            alert('输入无效');
+            return false;
+        }
+        $.post('./diff.jsp', {
+            data: {
+                leftJson: parseText(lefttext),
+                rightJson: parseText(righttext),
+                lefturl: lefturl,
+                righturl: righturl,
+                difftype: difftype,
+                ignoreList: ignoreArr
+            },
+            method: 'POST',
+            success: function success(resp) {
+                var result = showdiffResult(resp);
+                diffresultDOM.innerHTML = result;
+            }
+        });
+    };
+    fetch('../testdata/verification.json')
+        .then(response=>response.json())
+        .then(data=>deal(JSON.stringify(data,emptyNotObjectValue,4)));
+    const resp={
+        comparedNodeList:[{
+            "depth": 0,
+            "elementName": "root",
+            "resultFlag": "SAME"
+        },
+            {
+                "depth": 1,
+                "elementName": "ROOTA",
+                "resultFlag": "SAME"
+            },
+            {
+                "depth": 2,
+                "elementName": "[ArrayElement]",
+                "resultFlag": "SAME"
+            },
+            {
+                "depth": 3,
+                "elementName": "[ArrayElement]",
+                "resultFlag": "SAME"
+            },
+            {
+                "base": "back",
+                "baseType": "STRING",
+                "changed": "away",
+                "changedType": "STRING",
+                "depth": 4,
+                "elementName": "go",
+                "resultFlag": "CHANGED"
+            },
+            {
+                "depth": 3,
+                "elementName": "[ArrayElement]",
+                "resultFlag": "SAME"
+            },
+            {
+                "base": "boo",
+                "baseType": "STRING",
+                "depth": 4,
+                "elementName": "ignored",
+                "resultFlag": "IGNORED"
+            },
+            {
+                "depth": 3,
+                "elementName": "[ArrayElement]",
+                "resultFlag": "SAME"
+            },
+            {
+                "base": "here",
+                "baseType": "STRING",
+                "changed": "back",
+                "changedType": "STRING",
+                "depth": 4,
+                "elementName": "come ",
+                "resultFlag": "CHANGED"
+            },
+            {
+                "depth": 2,
+                "elementName": "[ArrayElement]",
+                "resultFlag": "SAME"
+            },
+            {
+                "depth": 3,
+                "elementName": "[ArrayElement]",
+                "resultFlag": "SAME"
+            },
+            {
+                "base": 123,
+                "baseType": "NUMBER",
+                "depth": 4,
+                "elementName": "ignored",
+                "resultFlag": "IGNORED"
+            },
+            {
+                "base": 345,
+                "baseType": "NUMBER",
+                "depth": 4,
+                "elementName": "ignored2",
+                "resultFlag": "IGNORED"
+            },
+            {
+                "base": 14,
+                "baseType": "NUMBER",
+                "changed": 6,
+                "changedType": "NUMBER",
+                "depth": 3,
+                "elementName": "[ArrayElement]",
+                "resultFlag": "CHANGED"
+            },
+            {
+                "base": 9,
+                "baseType": "NUMBER",
+                "changed": 8,
+                "changedType": "NUMBER",
+                "depth": 3,
+                "elementName": "[ArrayElement]",
+                "resultFlag": "CHANGED"
+            },
+            {
+                "depth": 2,
+                "elementName": "[ArrayElement]",
+                "resultFlag": "REMOVED"
+            },
+            {
+                "base": "lalala",
+                "baseType": "STRING",
+                "depth": 3,
+                "elementName": "ign",
+                "resultFlag": "IGNORED"
+            },
+            {
+                "depth": 1,
+                "elementName": "TEST",
+                "resultFlag": "SAME"
+            },
+            {
+                "base": 567,
+                "baseType": "NUMBER",
+                "changed": 9,
+                "changedType": "NUMBER",
+                "depth": 2,
+                "elementName": "HERE",
+                "resultFlag": "CHANGED"
+            },
+            {
+                "base": 789,
+                "baseType": "NUMBER",
+                "depth": 2,
+                "elementName": "IGNORE",
+                "resultFlag": "IGNORED"
+            }]
+    }
+    const result=showdiffResult(resp);
+    diffresultDOM.innerHTML=result.join('');
+</script>
+</body>
+</html>
