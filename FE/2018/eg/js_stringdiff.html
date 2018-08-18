@@ -161,6 +161,13 @@
 <div id="diffresult"></div>
 <div id="mask" class="hide">生成树型结构...</div>
 <script>
+    try {
+        var __supportes6=new Function('','const a={"a":1};const {a:_a}=a;return `${_a}`');
+    }catch(e){
+        location.href='./js_stringdiff_es5.html';
+    }
+</script>
+<script>
     const [jsonDOM,urlDOM]=document.querySelectorAll('input[type="radio"]');
     const [leftUrlDOM,rightUrlDOM]=document.querySelectorAll('input[type="url"]');
     const containerDOM=document.querySelector('#container');
@@ -550,11 +557,12 @@
                 difftype,
                 ignoreList:ignoreArr
             },
-            method:'POST',
-            success:function(resp){
-                const result=showdiffResult(resp);
-                diffresultDOM.innerHTML=result;
-            }
+            method:'POST'
+        }).then(function(resp){
+            const result=showdiffResult(resp);
+            diffresultDOM.innerHTML=result;
+        },function(){
+
         });
     }
 //    fetch('../testdata/verification.json')
