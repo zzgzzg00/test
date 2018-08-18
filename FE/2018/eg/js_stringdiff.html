@@ -79,6 +79,58 @@
             border:1px solid red;
             outline: none;
         }
+        #diffresult .added{
+            background-color: #d9edf7;
+        }
+        #diffresult .removed{
+            background-color: #FDD;
+        }
+        #diffresult .changed{
+            background-color: lightyellow;
+        }
+        #diffresult div.ignored{
+            background-color: rgba(0,0,255,.2);
+        }
+        #diffresult div{
+            position: relative;
+            padding-left: 40px;
+            counter-increment: add;
+            height: 20px;
+            line-height: 20px;
+        }
+        #diffresult div:after{
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top:0;
+            content:counter(add);
+            font-size: 12px;
+            width: 30px;
+            text-align: right;
+        }
+        #diffresult div.added:after{
+            content:counter(add)' +';
+        }
+        #diffresult div.removed:after{
+            content: counter(add)' -';
+        }
+        #diffresult div.changed:after{
+            content: counter(add)'⇋';
+        }
+        #diffresult div.ignored:after{
+            content: counter(add)' x';
+        }
+        #diffresult div.same:after{
+            content: counter(add)' o';
+        }
+        #diffresult div>pre{
+            line-height: 20px;
+            vertical-align: middle;
+        }
+        #diffresult .changedtext{
+            background-color: rgba(255,0,0,.1);
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
@@ -105,8 +157,9 @@
 </div>
 <h2>剔除项</h2>
 <div id='result'></div>
-<div id="mask" class="hide">生成树型结构...</div>
+<h2>比较结果 o:same -:removed +:added ⇋:changed x:ignored</h2>
 <div id="diffresult"></div>
+<div id="mask" class="hide">生成树型结构...</div>
 <script>
     const [jsonDOM,urlDOM]=document.querySelectorAll('input[type="radio"]');
     const [leftUrlDOM,rightUrlDOM]=document.querySelectorAll('input[type="url"]');
@@ -142,7 +195,7 @@
                     }
                 }
                 const isLeaf=arr[index+1]?arr[index+1].indexOf(space+' ')!=0:true;
-                const button=isLeaf?'':`<span>${expand}</span>`;
+                const button=isLeaf?'':`<span class="js_span">${expand}</span>`;
                 if(ignoreReg.test(item)){
                     return `<div data-id="id${index+1}" data-space="${space.length/4}" data-item="${encodeURIComponent(item)}">
                             <pre>${space}<input hidden data-isleaf="false" type="checkbox" />${item.replace(/,/,'')}</pre>
@@ -174,7 +227,7 @@
             const result=getSelectedLeaf();
             resultDOM.innerHTML=`<pre>${JSON.stringify(result,(key,value)=>key=='type'?undefined:value,4)}</pre>`;
             ignoreArr=result;
-        }else if(target.tagName.toLowerCase()=='span'){
+        }else if(target.tagName.toLowerCase()=='span' && target.classList.contains('js_span')){
             const div=getParentDiv(target);
             if(target.innerHTML==expand){
                 hideChildren(div);
@@ -387,8 +440,14 @@
         }
     }
     function removeSignItem(values){
-//        return values;
-        return values.filter(item=>item.key != '[' && item.key != '{');
+        values=values.filter(item=>item.key != '{');
+        for(let i=0;i<values.length;i++){
+            const item=values[i];
+            if(item.type == '['){
+                values.splice(i+1,0,{key:'[',type:'',arrayAble:true});
+            }
+        }
+        return values.map(item=>item.key == '['?null:item);
     }
     function getSelectedLeaf(){
         const result=[];
@@ -471,7 +530,8 @@
             const space=repeatSpace(item.depth);
             const resultFlag=item.resultFlag;
             const elementName=item.elementName;
-            return `<div class="${resultFlag.toLowerCase()}"><pre>${space}${elementName}</pre></div>`;
+            const changed=item.changed?`<span class="changedtext">${item.base}->${item.changed}</span>`:'';
+            return `<div class="${resultFlag.toLowerCase()}"><pre>${space}${elementName} ${changed}</pre></div>`;
         });
     }
     document.querySelector('#diff').onclick=function(){
@@ -497,9 +557,9 @@
             }
         });
     }
-    fetch('../testdata/verification.json')
-        .then(response=>response.json())
-        .then(data=>deal(JSON.stringify(data,emptyNotObjectValue,4)));
+//    fetch('../testdata/verification.json')
+//        .then(response=>response.json())
+//        .then(data=>deal(JSON.stringify(data,emptyNotObjectValue,4)));
     const resp={
         comparedNodeList:[{
             "depth": 0,
@@ -618,8 +678,8 @@
         {
             "base": 567,
             "baseType": "NUMBER",
-            "changed": 9,
-            "changedType": "NUMBER",
+            "changed": "\"9\"",
+            "changedType": "STRING",
             "depth": 2,
             "elementName": "HERE",
             "resultFlag": "CHANGED"
