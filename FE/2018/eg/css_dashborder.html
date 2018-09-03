@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        @-webkit-keyframes ani {
+            0%{
+                background-position: 0% 0%;
+            }
+            100%{
+                background-position: 100% 0%;
+            }
+        }
+        div{
+            width: 200px;
+            height: 200px;
+            background-image: linear-gradient(0deg,#000 0,#000 50%,#fff 0,#fff 100%);
+            -webkit-mask-image: url('../imgs/test.png');
+            -webkit-mask-position: center;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-size: auto 200px;
+            text-align: center;
+            background-position: 0% 0%;
+            animation: ani 2s linear 0s infinite;
+        }
+        div>img{
+            height: 194px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <!--<img src="../imgs/test.png" />-->
+</div>
+</body>
+</html>
