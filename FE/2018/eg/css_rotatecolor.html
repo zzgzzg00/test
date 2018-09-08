@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            box-sizing: border-box;
+        }
+        .container{
+            margin: 25vh auto;
+            background-image: linear-gradient(90deg,red,yellow,blue);
+            position: relative;
+        }
+        @-webkit-keyframes rotate {
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+        .inner{
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #ffffff;
+            -webkit-mask-image: radial-gradient(10vw at 10vw 10vw,transparent 5vw,red 0);
+            animation:rotate 5s linear 0s infinite;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="inner"></div>
+</div>
+</body>
+</html>
