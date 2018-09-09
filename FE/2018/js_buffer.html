@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const buffer=new ArrayBuffer(8);
+    const i8=new Int8Array(buffer,0,2);//第二个参数表示起始位置 第三个参数表示分配长度
+    i8[0]=12;
+    i8[1]=21;
+    const i16=new Int16Array(buffer);
+    const [start,end]=[...i8].map(item=>item.toString(2).padStart(8,'0'));
+    const result=i16[0].toString(2).padStart(16,'0');
+    console.log(result==start+end,result==end+start);//大小端
+
+    const d=new DataView(buffer,0,2);
+    const result1=d.getInt16(0).toString(2).padStart(16,'0');//大端
+    const result2=d.getInt16(0,true).toString(2).padStart(16,'0');//小端
+    console.log(result1,result2);
+</script>
+</body>
+</html>
