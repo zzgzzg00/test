@@ -3,12 +3,23 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
+        div{
+        }
     </style>
 </head>
 <body>
-<a href="http://touch.train.qunar.com/?bd_source=travel_gonglue_hcy_h5">test</a>
 <script>
-
+    const upload = async (url, formData) => {
+        return await fetch(url, {
+            method: 'POST',
+            headers: {
+                'content-Type': 'multipart/form-data',
+            },
+            body: formData,
+        }).then(response => (response.json()))
+    };
+    upload('../FE/2018/testdata/abortcontroller.json',{})
+        .then(console.log);
 </script>
 </body>
 </html>
