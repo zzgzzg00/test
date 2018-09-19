@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.3.js"></script>
+<script src="../../common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    const {Component}=React;
+    class Button extends Component{
+        constructor(props){
+            super(props);
+        }
+        change(){
+            a++;
+        }
+        render(){
+            a++;
+            return(
+                <div onClick={this.change.bind(this)}>button</div>
+            )
+        }
+    }
+    class App extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                hasError:false,
+                errorInfo:''
+            }
+        }
+        componentDidCatch(e,errorinfo){
+            this.setState({
+                hasError:e,
+                errorInfo:errorinfo
+            })
+        }
+        componentDidMount(){
+//            a++;
+        }
+        render(){
+            const {hasError,errorInfo}=this.state;
+            if(hasError){
+                return(
+                    <div>
+                        {JSON.stringify(errorInfo)}
+                        {JSON.stringify(hasError)}
+                    </div>
+                )
+            }
+            return(
+                <Button />
+            )
+        }
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
