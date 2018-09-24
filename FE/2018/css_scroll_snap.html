@@ -13,6 +13,7 @@
             max-height: 100vh;/**需指明父元素高度*/
             overflow-y: scroll;
             scroll-snap-type: both mandatory;
+            -webkit-overflow-scrolling: touch;
         }
         .container>div{
             height: 100vh;
@@ -21,7 +22,6 @@
             font-size: 40px;
             color: #ffffff;
             scroll-snap-align: start;
-            display: flex;
         }
         .container>div:nth-of-type(3n){
             background-color: red;
