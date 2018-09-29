@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function require(str){
+        const module={};
+        const fun=new Function('module',str);
+        fun(module);
+        return module.exports;
+    }
+    function path1(){
+        return`
+            let num=1;
+            module.exports={
+                showNum:function(){
+                    alert(num)
+                }
+            }
+        `
+    }
+    function path2(){
+        return`
+            let num=2;
+            module.exports={
+                showNum:function(){
+                    alert(num)
+                }
+            }
+        `
+    }
+    const d1=require(path1());
+    d1.showNum();
+    const d2=require(path2());
+    d2.showNum();
+</script>
+</body>
+</html>

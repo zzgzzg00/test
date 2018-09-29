@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            display: flex;
+        }
+        div{
+            flex: 1;
+            text-align: center;
+        }
+        div:nth-of-type(2){
+            /*类似这个元素不存在 子元素仿佛直接放在body下 但color font-size等依旧有效*/
+            display: contents;
+            color: red;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<div>1</div>
+<div>
+    <div>2</div>
+    <div>3</div>
+</div>
+<div>4</div>
+</body>
+</html>

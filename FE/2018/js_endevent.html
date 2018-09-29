@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        @-webkit-keyframes move {
+            0%{
+                width: 100px;
+            }
+            100%{
+                width: 200px;
+            }
+        }
+        div{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin-top: 10px;
+            transition: all .5s linear 0s;
+            animation: move .5s linear 2s forwards;
+        }
+        div:hover{
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="test1"></div>
+<div id="test2"></div>
+<script>
+    [...document.querySelectorAll('div')].forEach((item,index)=>{
+        item.addEventListener('transitionend',function(){
+            console.log(index);
+        });
+        item.addEventListener('animationend',function(){
+            console.log('a',index);
+        })
+    })
+</script>
+</body>
+</html>
