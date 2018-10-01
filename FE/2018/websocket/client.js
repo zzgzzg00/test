@@ -28,12 +28,24 @@ function setId(id){
 
     ws.onmessage = function(evt) {
         const data=JSON.parse(evt.data);
-        const {from,to,say}=data.msg;
+        const {from,to,say,tip}=data.msg;
         switch(data.type){
             case 'login':
-                const {users}=data.msg;
+                const {users,offlineInfos}=data.msg;
                 const {listArr:arr}=createFriendList(users);
                 listDOM.innerHTML=arr.join('');
+                if(offlineInfos.length){
+                    const offlineInfosArr=offlineInfos.map(({type,from,say,time,tip})=>{
+                        if(type == 'support'){
+                            return `<p>${from}在${time}赞了您</p>`;
+                        }else if(type == 'say'){
+                            return `<p>${from}在${time}给您留言:${say}</p>`;
+                        }else if(tip){
+                            return `<p>${tip}</p>`;
+                        }
+                    });
+                    logDOM.insertAdjacentHTML('beforeend',offlineInfosArr.join(''));
+                }
                 break;
             case 'friendlogin':
                 const {friend:loginfriend}=data.msg;
@@ -51,15 +63,19 @@ function setId(id){
             case 'support':
                 if(from){
                     logDOM.insertAdjacentHTML('beforeend',`<p>${from}赞了您</p>`);
-                }else{
+                }else if(to){
                     logDOM.insertAdjacentHTML('beforeend',`<p>您赞了${to}</p>`);
+                }else if(tip){
+                    logDOM.insertAdjacentHTML('beforeend',`<p>${tip}</p>`);
                 }
                 break;
             case 'say':
                 if(from){
                     logDOM.insertAdjacentHTML('beforeend',`<p>${from}对您说 ${say}</p>`);
-                }else{
+                }else if(to){
                     logDOM.insertAdjacentHTML('beforeend',`<p>您对${to}说了 ${say}</p>`);
+                }else if(tip){
+                    logDOM.insertAdjacentHTML('beforeend',`<p>${tip}</p>`);
                 }
                 break;
             case 'friendlogout':

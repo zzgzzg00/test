@@ -14,7 +14,7 @@ function converUsersInfo(users){
             o[item]={
                 infos:users[item].infos,
                 online:users[item].online,
-                notread:[]
+                offlineInfos:users[item].offlineInfos
             };
         });
     return o;
@@ -28,13 +28,13 @@ function responseAllOnLineUser(userid,userDB,type,time){
             sendMessage(userDB[key],{
                 status:0,
                 type,
-                msg:{time:time,users:allOnlineUsers}
+                msg:{time:time,users:allOnlineUsers,offlineInfos:userDB[key].offlineInfos}
             });
         }else{
             sendMessage(userDB[key],{
                 status:0,
                 type:'friendlogin',
-                msg:{time:time,friend:{[userid]:userDB[userid].infos}}
+                msg:{time:time,friend:{[userid]:allOnlineUsers[userid]}}
             });
         }
     });
@@ -60,7 +60,7 @@ function addInfo(user,type,from,time,say=''){
     if(!user){
         return false;
     }
-    user.infos.push({
+    user[user.online?'infos':'offlineInfos'].push({
         type,
         from,
         say,
@@ -68,12 +68,22 @@ function addInfo(user,type,from,time,say=''){
     });
     return true;
 }
+//修改未读消息为已读
+function editReadedInfo(user){
+    if(!user || !user.online){
+        return;
+    }
+    const {offlineInfos}=user;
+    user.infos.push(...offlineInfos);
+    user.offlineInfos=[];
+}
 //登录/注册
 function registerOrLogin(userDB,userid,conn){
     if(!userDB[userid]){
         userDB[userid]={
             conn:conn,
             infos:[],
+            offlineInfos:[{tip:'注册成功'}],
             online:true
         };
     }else if(!userDB[userid].online){
@@ -105,6 +115,7 @@ var server = ws.createServer(function(conn){
             case 'login':
                 registerOrLogin(users,from,conn);
                 responseAllOnLineUser(from,users,type,time);
+                editReadedInfo(users[from]);
                 break;
             case 'support':
             case 'say':
@@ -125,7 +136,7 @@ var server = ws.createServer(function(conn){
                         sendMessage(users[from],{
                             status:0,
                             type,
-                            msg:'用户已离线，上线后可看到您发送的消息'
+                            msg:{tip:'用户已离线，上线后可看到您发送的消息'}
                         })
                     }
                 }else{
