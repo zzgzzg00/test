@@ -1,3 +1,26 @@
+/**
+ * users 存储的用户信息
+ *  conn          链接句柄
+ *  infos         留言/赞信息
+ *  offlineInfos  离线信息
+ *  online        是否在线
+ *
+ * 用户传输格式
+ *  key           userid
+ *      infos         留言/赞信息
+ *      online        是否在线
+ *      offlineInfos  离线信息
+ *
+ * type
+ *  login 登录
+ *      为登录用户传输所有用户信息
+ *  friendlogin 有好友登录
+ *      为其他在线用户传输登录用户的信息
+ *  support/say
+ *      为发送和目标用户传输信息
+ *  friendlogout 登出
+ *      为其他用户传输退出登录的用户信息
+ * */
 var ws = require("nodejs-websocket");
 const users={};
 function formatDig(num){
@@ -28,7 +51,7 @@ function responseAllOnLineUser(userid,userDB,type,time){
             sendMessage(userDB[key],{
                 status:0,
                 type,
-                msg:{time:time,users:allOnlineUsers,offlineInfos:userDB[key].offlineInfos}
+                msg:{time:time,users:allOnlineUsers,offlineInfos:allOnlineUsers[key].offlineInfos}
             });
         }else{
             sendMessage(userDB[key],{
