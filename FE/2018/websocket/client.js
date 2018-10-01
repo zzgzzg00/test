@@ -2,9 +2,26 @@ let _id;
 const listDOM=document.querySelector('#lists');
 const logDOM=document.querySelector('#log');
 let ws;
+function createFriendList(users){
+    const ids=[];
+    const arr=Object.keys(users).map(function(id){
+        const isonline=users[id].online;
+        ids.push(id);
+        return `<p id=${id} style="background-color: ${isonline?"":"gray"}">
+                    <span>${id}</span>
+                    <input placeholder="对TA说" />
+                    <span data-id="${id}" data-role="say">发送</span> 
+                    <span data-id="${id}" data-role="support">赞</span>
+                </p>`;
+    });
+    return{
+        listArr:arr,
+        ids
+    }
+}
 function setId(id){
     _id=id;
-    ws = new WebSocket("ws://100.81.136.154:8028");
+    ws = new WebSocket("ws://192.168.3.55:8028");
     ws.onopen = function(evt) {
         ws.send(JSON.stringify({from:_id,type:'login'}));
     };
@@ -14,16 +31,22 @@ function setId(id){
         const {from,to,say}=data.msg;
         switch(data.type){
             case 'login':
-                const {all,newId}=data.msg;
-                const arr=all.map(function(id){
-                    return `<p>
-                                <span>${id}</span>
-                                <input placeholder="对TA说" />
-                                <span data-id="${id}" data-role="say">发送</span> 
-                                <span data-id="${id}" data-role="support">赞</span>
-                            </p>`;
-                });
+                const {users}=data.msg;
+                const {listArr:arr}=createFriendList(users);
                 listDOM.innerHTML=arr.join('');
+                break;
+            case 'friendlogin':
+                const {friend:loginfriend}=data.msg;
+                Object.keys(loginfriend).forEach(id=>{
+                    const friendDOM=document.getElementById(id);
+                    if(friendDOM){
+                        friendDOM.style.backgroundColor='transparent';
+                    }else{
+                        const {listArr:loginfriendList}=createFriendList(loginfriend);
+                        listDOM.insertAdjacentHTML('beforeend',loginfriendList.join(''));
+                    }
+                    logDOM.insertAdjacentHTML('beforeend',`<p>${id}上线了</p>`);
+                });
                 break;
             case 'support':
                 if(from){
@@ -38,6 +61,19 @@ function setId(id){
                 }else{
                     logDOM.insertAdjacentHTML('beforeend',`<p>您对${to}说了 ${say}</p>`);
                 }
+                break;
+            case 'friendlogout':
+                const {friend:logoutfriend}=data.msg;
+                Object.keys(logoutfriend).forEach(id=>{
+                    const friendDOM=document.getElementById(id);
+                    if(friendDOM){
+                        friendDOM.style.backgroundColor='gray';
+                    }else{
+                        const {listArr:logoutfriendList}=createFriendList(logoutfriend[id]);
+                        listDOM.insertAdjacentHTML('beforeend',logoutfriendList.join(''));
+                    }
+                    logDOM.insertAdjacentHTML('beforeend',`<p>${id}离线了</p>`);
+                });
                 break;
         }
     };
