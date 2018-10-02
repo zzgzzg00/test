@@ -42,11 +42,14 @@ function converUsersInfo(users){
         });
     return o;
 }
+function getAllRelationSendFormatUserData(userid,userDB){
+    const allReleationUser=findReleationUser(userid,userDB);
+    return converUsersInfo(allReleationUser);
+}
 //为新登录用户返回所有相关用户信息 为已登录用户返回新登录用户信息
 function responseAllOnLineUser(userid,userDB,type,time){
-    const allReleationUser=findReleationUser(userid,userDB);
-    const allOnlineUsers=converUsersInfo(allReleationUser);
-    Object.keys(allReleationUser).forEach(function(key){
+    const allOnlineUsers=getAllRelationSendFormatUserData(userid,userDB);
+    Object.keys(users).forEach(function(key){
         if(key == userid){
             sendMessage(userDB[key],{
                 status:0,
@@ -63,13 +66,13 @@ function responseAllOnLineUser(userid,userDB,type,time){
     });
 }
 function responseAllOffLine(userid,userDB,time){
-    const allReleationUser=findReleationUser(userid,userDB);
-    Object.keys(allReleationUser).forEach(function(key){
+    const allOnlineUsers=getAllRelationSendFormatUserData(userid,userDB);
+    Object.keys(users).forEach(function(key){
         if(key != userid){
             sendMessage(userDB[key],{
                 status:0,
                 type:'friendlogout',
-                msg:{time:time,friend:{[userid]:userDB[userid].infos}}
+                msg:{time:time,friend:{[userid]:allOnlineUsers[userid]}}
             });
         }
     });
@@ -144,22 +147,23 @@ var server = ws.createServer(function(conn){
             case 'say':
                 const addResult=addInfo(users[to],type,from,time,say);
                 if(addResult){
+                    const allOnlineUsers=getAllRelationSendFormatUserData(to,users);
                     const sendFeed=sendMessage(users[to],{
                         status:0,
                         type,
-                        msg:{from,say,time}
+                        msg:{from,say,time,friend:{[to]:allOnlineUsers[to]}}
                     });
                     if(sendFeed){
                         sendMessage(users[from],{
                             status:0,
                             type,
-                            msg:{to,say,time}
+                            msg:{to,say,time,friend:{[to]:allOnlineUsers[to]}}
                         });
                     }else{
                         sendMessage(users[from],{
                             status:0,
                             type,
-                            msg:{tip:'用户已离线，上线后可看到您发送的消息'}
+                            msg:{tip:'用户已离线，上线后可看到您发送的消息',friend:{[to]:allOnlineUsers[to]}}
                         })
                     }
                 }else{
