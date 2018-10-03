@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../common/JSXTransformer.js"></script>
+<script src="../common/react16.3.js"></script>
+<script src="../common/react-dom16.3.js"></script>
+<script src="../common/react-router-dom.js"></script>
+<script type="text/jsx">
+    const {Component}=React;
+    const {HashRouter,Route,Switch,withRouter,Redirect}=ReactRouterDOM;
+    const Home=props=><div>home</div>;
+    const S1=props=><div>s1</div>;
+    const S2=props=><div>s2-{props.match.params.user}</div>;
+    const S3=props=>props.match.path == '/test1'?(<div>s3</div>):(<Redirect to={'/test1'} />);
+    //withRouter方法为组件props添加match等router属性
+    //match.url 是浏览器 URL 中的实际路径，而 match.path 是为路由编写的路径
+    //path - (string) 用于匹配路径模式。用于构建嵌套的 <Route>
+    //url - (string) URL 匹配的部分。 用于构建嵌套的 <Link>
+    //path返回的route中的path url返回的浏览器的url 区别如 /test2/s/:user
+    const WS3=withRouter(S3);
+    const Test1=props=>(
+        <div>
+            <p>test1</p>
+            <WS3 />
+            <Route path={`${props.match.path}/s`} component={S1}/>
+            <Route path={`${props.match.path}/s/:user`} component={S2}/>
+        </div>
+    );
+    const Test2=props=>(
+            <div>
+                <p>test2</p>
+                <WS3 />
+                <Switch>
+                    <Route path='/test2/s' component={S1}/>
+                    <Route path='/test2/s/:user' component={S2}/>
+                </Switch>
+            </div>
+    );
+    const App=props=>(
+        <HashRouter>
+            <div>
+                <Switch>
+                    <Route path='/' exact={true} component={Home} />
+                    <Route path='/test1' component={Test1} />
+                    <Route path='/test2' component={Test2} />
+                    <Redirect to={'/'} />
+                </Switch>
+            </div>
+        </HashRouter>
+    )
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
