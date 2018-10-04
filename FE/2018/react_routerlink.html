@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .active{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<script src="../common/JSXTransformer.js"></script>
+<script src="../common/react16.3.js"></script>
+<script src="../common/react-dom16.3.js"></script>
+<script src="../common/react-router-dom.js"></script>
+<script type="text/jsx">
+    const {Component,Fragment}=React;
+    const {HashRouter,Link,Route,Switch,NavLink}=ReactRouterDOM;
+    const {Provider,Consumer}=React.createContext();
+    React.__spread=Object.assign;
+    const data={
+        name:'gjj',
+        age:30
+    }
+    setTimeout(()=>data.age=31,5000);
+    function withConsumer(Component,Consumer){
+        return function NewComponent(props){
+            return(
+                <Consumer>
+                    {
+                        data=>(<Component {...Object.assign(data,props)}/>)
+                    }
+                </Consumer>
+            )
+        }
+    }
+    const Container=props=>(
+        <Fragment>
+            <nav>
+                <NavLink activeClassName={'active'} to={'/l1'}>ntest1</NavLink>
+                <NavLink activeClassName={'active'} to={'/l2'}>ntest2</NavLink>
+                <NavLink activeClassName={'active'} to={'/l3'}>ntest3</NavLink>
+            </nav>
+            <Link to={'/l1'}>test1</Link>
+            <Link to={'/l2'}>test2</Link>
+            <Link to={'/l3'}>test3</Link>
+        </Fragment>
+    )
+    const Test1=props=>(
+        <p>Test1,{props.name},{props.age}</p>
+    )
+    const Test2=props=>(
+        <p>Test2</p>
+    )
+    const Test3=withConsumer(Test1,Consumer);
+    const App=props=>(
+        <Provider value={data}>
+            <HashRouter>
+                <Fragment>
+                    <Switch>
+                        <Route exact={true} path={'/'} component={Container} />
+                        <Route path={'/l1'} component={Test1} />
+                        <Route path={'/l2'} component={Test2} />
+                        <Route path={'/l3'} component={Test3} />
+                    </Switch>
+                </Fragment>
+            </HashRouter>
+        </Provider>
+    )
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
