@@ -12,10 +12,18 @@
 <script type="text/jsx">
     /**
      * Consumer需与Provider成层级关系
+     * 否则走React.createContext里的值
      * */
     const {Component,Fragment}=React;
     const {HashRouter,Link,Redirect,Route,Switch}=ReactRouterDOM;
-    const {Provider,Consumer}=React.createContext();
+    const {Provider,Consumer}=React.createContext({
+        data:{
+            'test4':'test4'
+        },
+        changeState:function(){
+            this.data.test4='a'
+        }
+    });
     React.__spread=Object.assign;
     function wrapConsumer(Component,Consumer){
         return function NewComponent(props){
@@ -41,8 +49,18 @@
             )
         }
     }
-    const [Test1,Test2,Test3]=[createTestComponent('test1'),createTestComponent('test2'),createTestComponent('test3')];
-    const [WrapTest1,WrapTest2,WrapTest3]=[wrapConsumer(Test1,Consumer),wrapConsumer(Test2,Consumer),wrapConsumer(Test3,Consumer)];
+    const [Test1,Test2,Test3,Test4]=[
+        createTestComponent('test1'),
+        createTestComponent('test2'),
+        createTestComponent('test3'),
+        createTestComponent('test4')
+    ];
+    const [WrapTest1,WrapTest2,WrapTest3,WrapTest4]=[
+        wrapConsumer(Test1,Consumer),
+        wrapConsumer(Test2,Consumer),
+        wrapConsumer(Test3,Consumer),
+        wrapConsumer(Test4,Consumer)
+    ];
     const Home=props=>(
         <Fragment>
             <p>home</p>
@@ -66,15 +84,18 @@
         }
         render(){
             return(
-                <Provider value={{data:this.state,changeState:this.changeState}}>
-                    <WrapTest1 />
-                    <Switch>
-                        <Route path={'/'} exact component={Home} />
-                        <Route path={'/t1'} component={WrapTest1} />
-                        <Route path={'/t2'} component={WrapTest2} />
-                        <Route path={'/t3'} component={WrapTest3} />
-                    </Switch>
-                </Provider>
+                <Fragment>
+                    <Provider value={{data:this.state,changeState:this.changeState}}>
+                        <WrapTest1 />
+                        <Switch>
+                            <Route path={'/'} exact component={Home} />
+                            <Route path={'/t1'} component={WrapTest1} />
+                            <Route path={'/t2'} component={WrapTest2} />
+                            <Route path={'/t3'} component={WrapTest3} />
+                        </Switch>
+                    </Provider>
+                    <WrapTest4 />
+                </Fragment>
             )
         }
     }
