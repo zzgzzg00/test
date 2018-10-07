@@ -10,11 +10,29 @@
     </style>
 </head>
 <body>
-<script>
-    for(let i=0;i<3;i++){
-        var i=1;
-        console.log(i);
+<script src="./common/JSXTransformer.js"></script>
+<script src="./common/react16.3.js"></script>
+<script src="./common/react-dom16.3.js"></script>
+<script type="text/jsx">
+    const {Component} = React;
+    class Sub extends Component{
+        render(){
+            return <p>{this.props.p}</p>
+        }
     }
+    class App extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                ss:0
+            }
+            setTimeout(()=>this.setState({ss:1}),1000);
+        }
+        render(){
+            return <Sub p={this.state.ss} />
+        }
+    }
+    ReactDOM.render(<App />,document.body);
 </script>
 </body>
 </html>

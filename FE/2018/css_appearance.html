@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        [type=button]{
+            /*user-select:none cursor等依旧存在为button的样式 span则都没有*/
+            -webkit-appearance: none;
+            border: none;
+            outline: none;
+        }
+        [type=checkbox]{
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 1px solid red;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+        [type=checkbox]:checked:after{
+            position: absolute;
+            content: '';
+            left: -29%;
+            top: -56%;
+            width: 20px;
+            height: 20px;
+            border: 1px solid black;
+            transform:rotate(45deg);
+        }
+        [type=button]:active,span:active{
+            color: red;
+        }
+        span{
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+<input type="button" value="提交"/>
+<input type="checkbox" />
+<span>提   交</span>
+</body>
+</html>
