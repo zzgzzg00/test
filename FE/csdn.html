@@ -4,35 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        polygon{
-            fill: blue;
-        }
     </style>
 </head>
 <body>
-<script src="./common/JSXTransformer.js"></script>
-<script src="./common/react16.3.js"></script>
-<script src="./common/react-dom16.3.js"></script>
-<script type="text/jsx">
-    const {Component} = React;
-    class Sub extends Component{
-        render(){
-            return <p>{this.props.p}</p>
-        }
-    }
-    class App extends Component{
-        constructor(props){
-            super(props);
-            this.state={
-                ss:0
-            }
-            setTimeout(()=>this.setState({ss:1}),1000);
-        }
-        render(){
-            return <Sub p={this.state.ss} />
-        }
-    }
-    ReactDOM.render(<App />,document.body);
+<script>
+    document.body.addEventListener('click',e=>alert(e.target.dataset.key));
+    const html=Array.from({length:10},(item,index)=>`<p data-key=${index}>${index}</p>`).join('');
+    document.body.insertAdjacentHTML('beforeend',html);
 </script>
 </body>
 </html>
