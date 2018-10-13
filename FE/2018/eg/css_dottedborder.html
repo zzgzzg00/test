@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        div{
+            width: 400px;
+            height: 400px;
+            background-color: red;
+            padding: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        div:after,div:before{
+            content: '';
+            display: block;
+            width: 100%;
+            position: absolute;
+            border-top: 10px dotted yellow;
+        }
+        div:after{
+            top:0;
+            transform:translateY(-50%);
+        }
+        div:before{
+            bottom: 0;
+            transform:translateY(50%);
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+</body>
+</html>
