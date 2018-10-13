@@ -4,19 +4,38 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        div{
+            width: 400px;
+            height: 400px;
+            background-color: red;
+            padding: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        div:after,div:before{
+            content: '';
+            display: block;
+            width: 100%;
+            position: absolute;
+            border-top: 10px dotted yellow;
+            transform:translateY(-50%);
+        }
+        div:after{
+            top:0;
+            transform:translateY(-50%);
+        }
+        div:before{
+            bottom: 0;
+            transform:translateY(50%);
+        }
     </style>
 </head>
 <body>
-<script>
-`
-    1000-1,900-1,800-1,700-1,600-1,500-1,400-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1,300-1
-`
-`
-    1000-1,900-1,800-1,700-1,600-1,500-1,400-1,300-1,200-1,200-1,200-1,200-1,200-0.55,400-0.025,600-0,800-0,1000-0.025,1200-0.025,1400-0.025,1600-0,1800-0.025,2000-0.05,2200-0.025,2400-0.025,2600-0.025
-`
-`
-    1000-1,900-1,800-1,700-1,600-1,500-1,400-1,300-1,200-1,200-1,200-1,200-1,200-1,200-1,200-0.125,400-0
-`
-</script>
+    <div></div>
 </body>
 </html>
