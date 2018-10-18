@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<template id="tl1">
+    <style>
+        div{
+            color: red;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+    </style>
+    <div>123</div>
+</template>
+<div id="container"><p>x</p></div>
+<script>
+    const temp=document.querySelector('#tl1');
+    const container=document.querySelector('#container');
+    const copy=document.importNode(temp.content,true);
+    const shadowRoot=container.attachShadow({ mode: 'closed' });
+    shadowRoot.appendChild(copy);
+</script>
+</body>
+</html>

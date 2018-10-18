@@ -21,3 +21,4 @@ var t1 = new Test(1);
 t1.func(1);
 var t2 = new Test([1]);
 t2.func([1]);
+//# sourceMappingURL=generics.js.map

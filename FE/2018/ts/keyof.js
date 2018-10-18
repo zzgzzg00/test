@@ -14,3 +14,4 @@ var refl = {
     age: 1,
     test: 1
 };
+//# sourceMappingURL=keyof.js.map

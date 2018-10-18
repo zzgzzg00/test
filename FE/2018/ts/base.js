@@ -12,3 +12,4 @@ var Color;
 function enumTest(test) {
 }
 enumTest(Color.A);
+//# sourceMappingURL=base.js.map

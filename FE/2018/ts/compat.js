@@ -7,3 +7,4 @@ var Test = (function () {
 }());
 var n;
 n = new Test();
+//# sourceMappingURL=compat.js.map

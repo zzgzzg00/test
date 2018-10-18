@@ -44,3 +44,4 @@ var mis = {
     age: 10,
     sex: 1
 };
+//# sourceMappingURL=interface.js.map

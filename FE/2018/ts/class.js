@@ -68,3 +68,4 @@ var it = new ITest('a');
 // let at=new ATest('a');
 var it2 = new ITest('a');
 var it3 = ITest;
+//# sourceMappingURL=class.js.map

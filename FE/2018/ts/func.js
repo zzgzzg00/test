@@ -7,3 +7,4 @@ var objfun = {
     fun1: function (key) { return key; },
     fun2: function (key) { return key; }
 };
+//# sourceMappingURL=func.js.map
