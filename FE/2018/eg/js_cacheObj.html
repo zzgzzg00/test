@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * 缓存的数据使得方法不得不纯的数据 可以放到一处
+     * */
+    function upperFirstLetter(str){
+        const [firstLetter,...others]=str;
+        return firstLetter.toUpperCase()+others.join('');
+    }
+    function addBooleanMethods(caches,upperFirstLetterKey){
+        caches[`enabled${upperFirstLetterKey}`]=function(){
+            caches[upperFirstLetterKey]=true;
+        }
+        caches[`disabled${upperFirstLetterKey}`]=function(){
+            caches[upperFirstLetterKey]=false;
+        }
+        caches[`checkIsEnabled${upperFirstLetterKey}`]=function(){
+            return caches[upperFirstLetterKey];
+        }
+    }
+    function addSetterAndGetter(caches,upperFirstLetterKey){
+        caches[`set${upperFirstLetterKey}`]=function(value){
+            caches[upperFirstLetterKey]=value;
+        }
+        caches[`get${upperFirstLetterKey}`]=function(){
+            return caches[upperFirstLetterKey];
+        }
+    }
+    function createCacheObject(configObject){
+        const caches={};
+        const configKeyArray=Object.keys(configObject);
+        for(let configKey of configKeyArray){
+            let upperFirstLetterKey=upperFirstLetter(configKey);
+            caches[upperFirstLetterKey]=configObject[configKey];
+            if(typeof configObject[configKey] == 'boolean'){
+                addBooleanMethods(caches,upperFirstLetterKey);
+            }else{
+                addSetterAndGetter(caches,upperFirstLetterKey);
+            }
+
+        }
+        return caches;
+    }
+
+    const cache=createCacheObject({start:false,sners:[],snfs:[]});
+    cache.enabledStart();
+    cache.setSners(['gjj','yq','hf','sw']);
+    cache.setSnfs(['qj','trf','tj','qj']);
+
+    console.log(cache.checkIsEnabledStart());
+    console.log(cache.getSners());
+    console.log(cache.getSnfs());
+</script>
+</body>
+</html>
