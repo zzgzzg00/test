@@ -4,41 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
-        .svgContent {
-            border: 2px solid #ddd;
-            background: #ddd;
-            border-radius: 5px;
-            width: 50%;
-            margin: auto;
-            height: 40px;
-            line-height: 40px;
-            padding-top: 20px;
-        }
-        .lineAnimation {
-            -webkit-animation: testMove 3s linear infinite;
-        }
-        @-webkit-keyframes testMove {
-            from {
-                stroke-dashoffset: 100%
-            }
-            to {
-                stroke-dashoffset: 0
-            }
-        }
     </style>
 </head>
 <body>
-<div class="svgContent">
-    <svg viewBox="0 0 300 10">
-        <defs>
-            <linearGradient id='lg' x1="0%" y1="0%" x1="100" y1="0%">
-                <stop offset="0%" stop-color="red" />
-                <stop offset="100%" stop-color="black" />
-            </linearGradient>
-        </defs>
-        <line class="lineAnimation" x1="0" y1="0" x2="300" y2="0"
-              stroke="url(#lg)" stroke-width="10" stroke-dasharray="40,10" stroke-dashoffset="" />
-    </svg>
-</div>
+<script></script>
 </body>
 </html>

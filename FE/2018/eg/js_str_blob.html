@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class FileReaderManager{
+        constructor(){
+            this.seq=[];
+        }
+        getFileReader(){
+            if(!this.getLength()){
+                this.seq.push(new FileReader());
+            }
+            return this.seq.pop();
+        }
+        takebackFileReader(fr){
+            this.seq.push(fr);
+        }
+        getLength(){
+            return this.seq.length;
+        }
+    }
+
+    const fm=new FileReaderManager();
+
+    function _read(contents,readType){
+        return new Promise((resolve,reject)=>{
+            let fileReader=fm.getFileReader();
+            fileReader.onload=fileReader.onerror=function(e){
+                e.type=='load'?resolve(e.target.result):reject(e);
+                fm.takebackFileReader(fileReader);
+                fileReader=null;
+            }
+            const b=new Blob([contents]);
+            fileReader[readType](b);
+        })
+    }
+
+    function textToArrayBuffer(str){
+        return _read(str,'readAsArrayBuffer')
+    }
+
+    function textToUint8Array(str){
+        return textToArrayBuffer(str).then(arrayBuffer=>new Uint8Array(arrayBuffer));
+    }
+
+    function uint8ArrayToText(i8){
+        return _read(i8,'readAsText');
+    }
+
+    function test(str){
+        textToUint8Array(str).then(data=>{
+            console.log(data);
+            return data;
+        }).then(data=>{
+            return uint8ArrayToText(data);
+        }).then(console.log);
+    }
+    test('伟雄啊测试');
+    setTimeout(function(){
+        test('这是个测试二');
+        test('这是个测试三');
+    },2000);
+
+</script>
+</body>
+</html>
