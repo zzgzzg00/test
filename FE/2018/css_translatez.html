@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            perspective: 200px;
+            perspective-origin: right bottom;
+        }
+        @-webkit-keyframes move {
+            0%{
+                transform: translateZ(100px);
+            }
+            100%{
+                transform: translateZ(0px);
+            }
+        }
+        div{
+            width: 40px;
+            height: 40px;
+            background-color: red;
+            margin-left: 300px;
+            border-radius: 50%;
+            transform: translateZ(100px);
+            animation: move .5s linear 0s 1 forwards;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>

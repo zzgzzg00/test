@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .test{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+<div>test</div>
+<script>
+    const div=document.querySelector('div');
+    //mode 若为closed则之后div.shadowRoot为null
+    //shadow dom与外界隔离 不会受外界test样式的影响 同样不会影响外界
+    const shadowRoot=div.attachShadow({mode:'open'});
+    shadowRoot.innerHTML='<style>div{color:yellow;}</style><div class="test">1</div>';
+    setTimeout(function(){
+        div.shadowRoot.innerHTML='<div class="test">2</div>';
+    },2000);
+</script>
+</body>
+</html>
