@@ -1,15 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>5-1</title>
     <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        @-webkit-keyframes move {
+            0%{
+                transform:translate(10%,100%);
+            }
+            100%{
+                transform:translate(0%,0%);
+            }
+        }
+        div{
+            text-align: center;
+            height: 50vh;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border: 1px solid red;
+            border-bottom: none;
+            transform:translate(10%,100%);
+            transition:transform .5s cubic-bezier(0.01, 0.88, 0.61, 1.1) 0s;
+        }
+        .move{
+            transform:translate(0%,0%);
+        }
     </style>
 </head>
 <body>
+<input type="button" value="button"/>
+<div>
+    <h1>just a test</h1>
+    <p>just a test</p>
+</div>
 <script>
-    const d={"type":"asyncorderinfo","infos":[{"trainNo":"6854","seat":"硬座","seatCode":"1","seatExt":[],"seatExtCode":[],"depStation":"包头","depStationCode":"BTC","arrStation":"包头东","arrStationCode":"BDC","depDate":"2018-10-26","trainStartTime":"201810261124","dptStation":"包头","date":"2018-10-26","to":"","orderNo":"qqpww181023103424520"}]}
-    console.log(JSON.stringify(d,null,4));
+    const [input,div]=[document.querySelector('input'),document.querySelector('div')];
+    input.onclick=function(){
+        div.classList.toggle('move');
+    }
 </script>
 </body>
 </html>
