@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src='../common/JSXTransformer.js'></script>
+<script src="../common/react16.6.js"></script>
+<script src="../common/react-dom16.6.js"></script>
+<script type="text/jsx">
+    const {Component,Fragment}=React;
+    const Show=props=><p>{props.hasClicked?props.obj.name:props.contents}</p>;
+    class App extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                hasClick:false,
+                hasError:false
+            }
+            this.clickHandle=this.clickHandle.bind(this);
+        }
+        clickHandle(){
+            this.setState({hasClick:true});
+        }
+        /**
+         * getDerivedStateFromError()
+         *  is called during the “render” phase, so side-effects are not permitted.
+         *  For those use cases, use componentDidCatch() instead.
+         * */
+        static getDerivedStateFromError(){
+            return {
+                hasError:true
+            }
+        }
+        componentDidCatch(){
+            console.log('componentDidCatch');
+        }
+        render(){
+            const {hasError}=this.state;
+            if(hasError){
+                return(
+                    <div>hasError</div>
+                )
+            }
+            return(
+                <Fragment>
+                    <Show contents={'test'} hasClicked={this.state.hasClick} />
+                    <input type="button" value="button" onClick={this.clickHandle} />
+                </Fragment>
+            )
+        }
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

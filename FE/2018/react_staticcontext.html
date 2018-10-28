@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../common/JSXTransformer.js"></script>
+<script src="../common/react16.6.js"></script>
+<script src="../common/react-dom16.6.js"></script>
+<script type="text/jsx">
+    const {Component,Fragment}=React;
+    const Context=React.createContext();
+    class Show extends Component{
+        constructor(props){
+            super(props);
+        }
+        render(){
+            return(
+                <p>{this.context.contents}</p>
+            )
+        }
+    }
+    Show.contextType=Context;
+    const Container=props=>(
+        <Fragment>
+            <p>container</p>
+            <Show />
+        </Fragment>
+    )
+    /**
+     * PureContainer 每次setState的时候 虽然不执行该方法 但是缓存的Show是会根据state发生变化的
+     * */
+    const PureContainer=React.memo(Container);
+    class App extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                contents:'',
+                index:0
+            }
+            this.clickHandle=this.clickHandle.bind(this);
+        }
+        clickHandle(){
+            const {index}=this.state;
+            this.setState({
+                contents:`test${index}`,
+                index:index+1
+            })
+        }
+        render(){
+            return(
+                <Context.Provider value={this.state}>
+                    <PureContainer />
+                    <Container />
+                    <input type="button" value="add" onClick={this.clickHandle} />
+                </Context.Provider>
+            )
+        }
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
