@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const body=document.body;
+    document.addEventListener('visibilitychange',function(){
+        const state=document.visibilityState;
+        body.insertAdjacentText('beforeend',`${state};`);
+    },{passive:false})
+</script>
+</body>
+</html>
