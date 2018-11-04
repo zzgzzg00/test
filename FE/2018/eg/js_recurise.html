@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * 异步/蹦床函数会解决递归溢出问题
+     * 异步是将要递归的函数放入任务队列后结束本函数
+     * 蹦床函数是返回一个函数后结束本次执行
+     * 总归是将异步修改为多个函数依次执行
+     * */
+    function countDown(num){
+        if(num<=10){
+            console.log('over');
+            return num;
+        }
+        return countDown(--num);
+    }
+//    countDown(10000);
+
+    function asyncCountDown(num){
+        if(num<=10){
+            console.log('over');
+            return num;
+        }
+        setTimeout(()=>asyncCountDown(--num),0);
+    }
+//    asyncCountDown(10000);
+
+    function bindCountDown(num){
+        if(num<=10){
+            console.log('over');
+            return num;
+        }
+        return bindCountDown.bind(null,--num);
+    }
+    let b=bindCountDown(10000000);
+    while(typeof b == 'function'){
+        b=b();
+    }
+</script>
+</body>
+</html>
