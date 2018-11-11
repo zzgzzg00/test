@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function strategyMethod(strategy){
+        const strategies=[
+            ['gjj','yg'],
+            ['gjj','hy'],
+            ['xw','yq'],
+            ['xw','hy']
+        ];
+        const map=new Map();
+        map.set(strategies[0],function(){
+            console.log('tj');
+        });
+        map.set(strategies[1],function(){
+            console.log('dpg');
+        });
+        map.set(strategies[2],function(){
+            console.log('lg');
+        });
+        map.set(strategies[3],function(){
+            console.log('qm');
+        });
+        map.set(undefined,function(){
+            console.log('qj');
+        });
+
+        const result=strategies.find(_strategie=>_strategie.every((item,index)=>item===strategy[index]));
+        return map.get(result);
+    }
+
+    function random(arr){
+        const {length}=arr;
+        return arr[(Math.random()*length)<<0];
+    }
+
+    const n=['gjj','xw'];
+    const z=['hy','yq'];
+
+    for(let i=0;i<=10;i++){
+        const sn=random(n);
+        const sz=random(z);
+        console.log(`com:${sn}:${sz}`);
+        strategyMethod([sn,sz])();
+    }
+</script>
+</body>
+</html>
