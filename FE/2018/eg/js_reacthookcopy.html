@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function getFunContext(fun){
+        let funstr=fun.toString();
+        funstr=funstr.replace(/function\s*.*?\(.*?\)\{/,'').replace(/\}$/,'');
+        return funstr;
+    }
+    function wraphook(fun,props){
+        const state=[];
+        const funs=[];
+        const isFirst=[];
+        return function(){
+            let index=0;
+            function useState(initValue){
+                if(!isFirst[index]){
+                    let _index=index;
+                    state[index]=initValue;
+                    funs[index]=function wrapSetter(newValue){
+                        state[_index]=newValue;
+                    }
+                    isFirst[index]=true;
+                }
+                const result=[state[index],funs[index]];
+                index++;
+                return result;
+            }
+            const funContext=getFunContext(fun);
+            let newFun=new Function('props,useState',funContext);
+            newFun(props,useState);
+        }
+    }
+    function test(props){
+        let [a,setA]=useState(0);
+        let [b,setB]=useState(10);
+        console.log(a,b,props.testkey);
+        setA(a+1);
+        setB(b+1);
+    }
+    const mm=wraphook(test,{testkey:'test'});
+    mm();
+    mm();
+    mm();
+    mm();
+    mm();
+</script>
+</body>
+</html>
