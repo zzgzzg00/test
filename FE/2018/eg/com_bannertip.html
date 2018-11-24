@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        .outer{
+            width: 980px;
+            margin: 0 auto;
+        }
+        .bannertip_container{
+            position: relative;
+            height: 28px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .bannertip_container .noteboard{
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom:0;
+            top:0;
+            background-color: red;
+            text-align: center;
+            vertical-align: middle;
+
+            -webkit-transform:rotateX(0deg);
+            -ms-transform:rotateX(0deg);
+            -o-transform:rotateX(0deg);
+            -moz-transform:rotateX(0deg);
+            transform:rotateX(0deg);
+
+            -webkit-backface-visibility:hidden;
+            -ms-backface-visibility:hidden;
+            -o-backface-visibility:hidden;
+            -moz-backface-visibility:hidden;
+            backface-visibility:hidden;
+
+            -webkit-transition:-webkit-tramsform;
+            -ms-transition:-ms-tramsform;
+            -o-transition:-o-tramsform;
+            -moz-transition:-moz-tramsform;
+            transition:transform .5s linear 0s;
+        }
+        .bannertip_container .user_header{
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .bannertip_container .tip_content{
+            vertical-align: middle;
+        }
+        .bannertip_container .back{
+            -webkit-transform:rotateX(180deg);
+            -ms-transform:rotateX(180deg);
+            -o-transform:rotateX(180deg);
+            -moz-transform:rotateX(180deg);
+            transform:rotateX(180deg);
+        }
+    </style>
+</head>
+<body>
+<div class="outer">
+    <div class="bannertip_container">
+        <div id="noteboard" class="noteboard">
+            <img src="https://s.qunarzz.com/trainapp1/images/thumbnail/1.jpg" class="user_header" />
+            <span class="tip_content">田女士刚刚抢到天津-沈阳北的G1237</span>
+        </div>
+        <div id="backnoteboard" class="noteboard back">
+            <img src="https://s.qunarzz.com/trainapp1/images/thumbnail/2.jpg" class="user_header" />
+            <span class="tip_content">郭女士刚刚抢到天津-沈阳北的G1237</span>
+        </div>
+    </div>
+</div>
+<script>
+    var index=0;
+    var headerUrl='https://s.qunarzz.com/trainapp1/images/thumbnail/';
+    var showNoteboardClass='noteboard',
+        hideNoteboardClass='noteboard back';
+    var noteboard=document.getElementById('noteboard'),
+        noteboardHeader=noteboard.getElementsByTagName('img')[0],
+        noteboardContent=noteboard.getElementsByTagName('span')[0];
+
+    var backnoteboard=document.getElementById('backnoteboard'),
+        backnoteboardHeader=backnoteboard.getElementsByTagName('img')[0],
+        backnoteboardContent=backnoteboard.getElementsByTagName('span')[0];
+
+    function randomInt(min,max){
+        if(max === undefined){
+            max=min;
+            min=0;
+        }
+        return min + (Math.random() * Math.abs(max - min))<<0;
+    }
+
+    function changeTip(){
+        var header=headerUrl+randomInt(1,101)+'.jpg';
+        if(index % 2){
+            noteboard.className=showNoteboardClass;
+            backnoteboard.className=hideNoteboardClass;
+            noteboardHeader.src=header;
+            noteboardContent.innerHTML=randomInt(30)+'女士刚刚抢到天津-沈阳北的G1237'
+        }else{
+            noteboard.className=hideNoteboardClass;
+            backnoteboard.className=showNoteboardClass;
+            backnoteboardHeader.src=header;
+            backnoteboardContent.innerHTML=randomInt(30)+'女士刚刚抢到天津-沈阳北的G1237';
+        }
+        index++;
+        setTimeout(changeTip,2000);
+    }
+    changeTip();
+</script>
+</body>
+</html>
