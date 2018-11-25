@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../common/react16.6.js"></script>
+<script src="../common/react-dom16.6.js"></script>
+<script src="../common/JSXTransformer.js"></script>
+<script type="text/jsx">
+    /**
+     * Content每次add都会使得根组件setState 导致所有子组件重新render
+     * 阻止方式
+     *  1 子组件为PureComponet
+     *  2 不直接渲染子组件 而是将子组件转换后的值放入根组件中
+     *       this.eleHeader=<Header sign={'ele'} />
+     *  3 memo memo后函数只执行一次 之后就是返回组件的转换后的值
+     *
+     * */
+    const {Component,PureComponent,Fragment}=React;
+    const Context=React.createContext();
+    class Content extends Component{
+        constructor(props){
+            super(props);
+        }
+        render(){
+            return(
+                <Fragment>
+                    <p>{this.context.count}</p>
+                    <button onClick={this.context.add}>add</button>
+                </Fragment>
+            )
+        }
+    }
+    Content.contextType=Context;
+
+    class Header extends Component{
+        render(){
+            console.log(`${this.props.sign} render`);
+            return(
+                    <p>{this.props.sign}</p>
+            )
+        }
+    }
+    Header.defaultProps={
+        sign:'header'
+    }
+
+    const FunHeader=props=><Header sign={'fun'} />
+
+    const Mheader=React.memo(FunHeader);
+
+    class PureHeader extends PureComponent{
+        render(){
+            console.log('pure header render');
+            return(
+                <p>pure header</p>
+            )
+        }
+    }
+
+    class App extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                count:0
+            }
+            this.add=this.add.bind(this);
+            this.eleHeader=<Header sign={'ele'} />
+        }
+        add(){
+            this.setState(preState=>({
+                count:preState.count+1
+            }))
+        }
+        render(){
+            const value={
+                count:this.state.count,
+                add:this.add
+            }
+            return(
+                <Context.Provider value={value}>
+                    <Header />
+                    <PureHeader />
+                    {this.eleHeader}
+                    <FunHeader />
+                    <Mheader />
+                    <Content />
+                </Context.Provider>
+            )
+        }
+    }
+
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
