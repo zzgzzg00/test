@@ -5,15 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-<input type="email" /><input />
-
-<input type="button" value="aaa"/>
+<input type="email" />
+<a href="" style="display: none;"/>发送</body>
 <script>
     var email=document.querySelector('[type="email"]');
     var button=document.querySelector('[type="button"]');
-    button.onclick=function(){
+    var a=document.querySelector('a');
+    email.oninput=function(){
         var d=email.checkValidity();
-        alert(d);
+        if(d){
+            a.setAttribute('href','mailto:'+email.value+'?subject=万人抢票联盟&body=https://f.qunar.com');
+            a.style.display='inline';
+        }else{
+            a.style.display='none';
+        }
     }
 </script>
 </body>

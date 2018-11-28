@@ -2,6 +2,7 @@ sudo su
 export CSC_LINK='/Users/zhangzhigang/Desktop/homewell.p12'
 export CSC_KEY_PASSWORD='zzg.258Aa'
 
+j4,a|mtncwui@hs
 
 "win": {
       "icon": "build/qunaricon256.ico",
