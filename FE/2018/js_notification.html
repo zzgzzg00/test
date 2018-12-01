@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    setTimeout(function(){
+        Notification.requestPermission(function(status){
+            const instance=new Notification('测试',{
+                body:'这是个测试2',
+                icon:'https://s.qunarzz.com/trainapp1/images/thumbnail/1.jpg'
+            })
+        })
+    },4000);
+</script>
+</body>
+</html>
