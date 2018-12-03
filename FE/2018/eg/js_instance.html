@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function ITest(){
+        const isInstance=this instanceof ITest;
+        if(!isInstance){
+            throw new Error(1);
+        }
+        const isBase=Object.getPrototypeOf(this)==ITest.prototype;
+        if(isBase){
+            throw new Error(2);
+        }
+        this.con='con';
+    }
+    ITest.prototype.show=function(){
+        alert(this.con);
+    }
+
+    function extend(Base,Son){
+        function F(){};
+        F.prototype=Base.prototype;
+        Son.prototype=new F();
+    }
+
+    function Test(){
+        ITest.call(this);
+    }
+    extend(ITest,Test);
+
+
+    function addCatch(callback){
+        try{
+            callback();
+        }catch (e){
+            console.log(e);
+        }
+    }
+
+    addCatch(ITest)
+    addCatch(()=>new ITest());
+    addCatch(()=>{
+        let t=new Test();
+        t.show();
+    });
+</script>
+</body>
+</html>
