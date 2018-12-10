@@ -3,22 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-    <style>
-    </style>
 </head>
 <body>
 <script>
-    const watchStayTimeDistribution=[10,30,60,12*60,24*60];
-    function createStayTimeStep(minute){
-        const oneDayMinute=watchStayTimeDistribution[watchStayTimeDistribution.length-1];
-        if(minute >= oneDayMinute){
-            return ((minute/oneDayMinute)<<0)+'d';
+    asyncOneByOne([one, two,one,two]);
+    // 输出
+    //first
+    //second
+    function asyncOneByOne(arr){
+        var len=arr.length;
+        var s=arr[len-1];
+        for(var i=len-2;i>=0;i--){
+            s=(function(x){
+                var m=s;
+                return function(){
+                    arr[x](m);
+                }
+            })(i)
         }
-        for(let i of watchStayTimeDistribution){
-            if(minute < i){
-                return i;
-            }
-        }
+        s();
+    }
+    function one(callback) {
+        setTimeout(function () {
+            console.log('first');
+            callback && callback();
+        }, 200);
+    }
+
+    function two(callback) {
+        setTimeout(function () {
+            console.log('second');
+            callback && callback();
+        }, 0);
     }
 </script>
 </body>
