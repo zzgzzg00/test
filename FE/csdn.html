@@ -3,39 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        .a{
+            height: 200px;
+            position: fixed;
+            overflow: auto;
+            width: 200px;
+        }
+        .a>div{
+            height: 400px;
+            width: 200px;
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
-<script>
-    asyncOneByOne([one, two,one,two]);
-    // 输出
-    //first
-    //second
-    function asyncOneByOne(arr){
-        var len=arr.length;
-        var s=arr[len-1];
-        for(var i=len-2;i>=0;i--){
-            s=(function(x){
-                var m=s;
-                return function(){
-                    arr[x](m);
-                }
-            })(i)
-        }
-        s();
-    }
-    function one(callback) {
-        setTimeout(function () {
-            console.log('first');
-            callback && callback();
-        }, 200);
-    }
-
-    function two(callback) {
-        setTimeout(function () {
-            console.log('second');
-            callback && callback();
-        }, 0);
-    }
-</script>
+<div class="a">
+    <div></div>
+</div>
 </body>
 </html>
