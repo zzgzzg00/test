@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * 面向对象的lazy实现
+     * 可以将map all传入的参数放入数组中最后在getResult中reduce
+     * */
+    const box=x=>({
+        map:f=>box(f(x)),
+        fold:f=>f(x)
+    });
+    const result=box(3)
+        .map(num=>num+1)
+        .map(num=>num*2)
+        .fold(num=>num+1);
+    console.log(result);
+
+    class Box{
+        constructor(init){
+            this.init=init;
+        }
+        map(fun){
+            this.init=fun(this.init);
+            return this;
+        }
+        getResult(){
+            return this.init;
+        }
+    }
+    const bresult=(new Box(3)).map(num=>num+1).map(num=>num*2).getResult();
+    console.log(bresult);
+
+
+
+    const right=x=>({
+        map:f=>right(f(x)),
+        fold:(fail,success)=>success(x)
+    });
+    const left=x=>({
+        map:f=>left(x),
+        fold:(fail,success)=>fail(x)
+    });
+    function find(num){
+        return num>0?right(num):left(num);
+    }
+    find(5).map(num=>num*2).fold(console.error,console.log);
+    find(-5).map(num=>num*2).fold(console.error,console.log);
+
+    class Right{
+        constructor(init){
+            this.init=init;
+        }
+        map(fun){
+            this.init=fun(this.init);
+            return this;
+        }
+        getResult(fail,success){
+            return success(this.init);
+        }
+    }
+    class Left{
+        constructor(init){
+            this.init=init;
+        }
+        map(fun){
+            return this;
+        }
+        getResult(fail,success){
+            return fail(this.init);
+        }
+    }
+    function find2(num){
+        return num>0?new Right(num):new Left(num);
+    }
+    find2(5).map(num=>num*2).getResult(console.error,console.log);
+    find2(-5).map(num=>num*2).getResult(console.error,console.log);
+
+
+
+    const all=x=>({
+        x,
+        concat:o=>all(x && o.x),
+        fold:f=>f(x)
+    });
+    const s=all(5>4).concat(all(5>3)).fold(console.log);
+    all(5>4).concat(all(5<3)).fold(console.log);
+
+    class All{
+        constructor(init){
+            this.result=init;
+        }
+        concat(bool){
+            this.result=this.result && bool;
+            return this;
+        }
+        getResult(){
+            return this.result;
+        }
+    }
+    const newall1=(new All(5>4)).concat(5>3).concat(5>2).getResult();
+    console.log(newall1);
+    const newall2=(new All(5>4)).concat(5>3).concat(5<2).getResult();
+    console.log(newall2);
+</script>
+</body>
+</html>
