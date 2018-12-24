@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * 返回新实例不污染旧实例
+     * 使得状态更易追踪
+     * */
+    class CheckContions{
+        constructor(bool){
+            this.bool=bool;
+        }
+        map(bool){
+            return CheckContions.of(bool && this.bool);
+        }
+        getResult(){
+            return this.bool;
+        }
+        static of(bool){
+            return new CheckContions(bool);
+        }
+    }
+    const result=CheckContions.of(1>0).map(2>1).map(3>2);
+    console.log(result.getResult());
+    const result2=CheckContions.of(1>0).map(2>3).map(3>2);
+    console.log(result2.getResult());
+</script>
+</body>
+</html>
