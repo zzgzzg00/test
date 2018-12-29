@@ -13,3 +13,23 @@ j4,a|mtncwui@hs
       "certificateFile":"/Users/zhangzhigang/Desktop/OS201403036479.pfx",
       "certificatePassword":"QUNARKEY2014"
     },
+
+
+healthcheck.html
+/home/q/www/train_seckill
+trainpcsk.qunar.com.conf
+server{
+        listen  8080;
+        server_name trainpcsk.qunar.com;
+        ssi on;
+        location / {
+            root /home/q/www/train_seckill/;
+        }
+}
+
+
+vhost
+#gzip  on;
+    include vhost/*.conf;
+sudo /home/q/nginx/sbin/nginx -c /home/q/nginx/conf/nginx.conf
+sudo yum -y install q-nginx
