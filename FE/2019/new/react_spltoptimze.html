@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.6.js"></script>
+<script src="../../common/react-dom16.6.js"></script>
+<script type="text/jsx">
+    const {Component,PureComponent}=React;
+    const arr=Array.from({length:50000},(item,index)=>index);
+    class List extends PureComponent{
+        constructor(props){
+            super(props);
+        }
+        render(){
+            const {arr}=this.props;
+            const list=arr.map(item=>(<p key={item}>{item}</p>));
+            return list;
+        }
+    }
+    List.displayName='List';
+    class App extends Component{
+        constructor(props){
+            super(props);
+            this.state={
+                value:'',
+                arr
+            }
+            this.inputHandle=this.inputHandle.bind(this);
+        }
+        inputHandle(e){
+            this.setState({
+                value:e.target.value
+            })
+        }
+        render(){
+            /**
+             * 每次value的修改都会导致组件重新渲染，包括list部分
+             * list的上万元素的diff导致渲染迟钝
+             * 将list单独作为一个纯组件分离后 由于arr做浅比较后无需render
+             * 使得渲染提升
+             * */
+            const {value,arr}=this.state;
+//            const list=arr.map(item=>(<p key={item}>{item}</p>))
+            return(
+                <div>
+                    <input value={value} onInput={this.inputHandle}/>
+                    <List arr={arr} />
+                    {/*list*/}
+                </div>
+            )
+        }
+    }
+    App.displayName='App';
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

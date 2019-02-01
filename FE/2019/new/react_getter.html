@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.6.js"></script>
+<script src="../../common/react-dom16.6.js"></script>
+<script type="text/jsx">
+    const {Component,Fragment}=React;
+    class App extends Component{
+        get isShow(){
+            return (Math.random()*2)>1;
+        }
+        render(){
+            return(
+                <Fragment>
+                    {this.isShow && <div>1</div>}
+                </Fragment>
+            )
+        }
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
