@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.6.js"></script>
+<script src="../../common/react-dom16.6.js"></script>
+<script type="text/jsx">
+    React.__spread=Object.assign;
+    function withFlattenProps(key){
+        return function addComponent(Component){
+            return function statelessComponent(props){
+                const values=props[key];
+                return(
+                    <Component {...values} />
+                )
+            }
+        }
+    }
+    const Test=({title,content})=>[
+        <h3>{title}</h3>,
+        <p>{content}</p>
+    ];
+    const FlattenTest=withFlattenProps('info')(Test);
+    ReactDOM.render(<FlattenTest info={{title:'title',content:'con'}}/>,document.body);
+</script>
+</body>
+</html>

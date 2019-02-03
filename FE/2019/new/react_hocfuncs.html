@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.6.js"></script>
+<script src="../../common/react-dom16.6.js"></script>
+<script type="text/jsx">
+    const {Component}=React;
+    function withPropsFunc(fun){
+        return function wrapComponent(Com){
+            return class extends Component{
+                constructor(props){
+                    super(props);
+                    this.state={
+                        result:0
+                    }
+                }
+                componentDidMount(){
+                    const result=fun(this.props.result);
+                    this.setState({
+                        result
+                    })
+                }
+                render(){
+                    return <Com result={this.state.result} />
+                }
+            }
+        }
+    }
+
+    const Test=props=>(<p>{props.result}</p>);
+    const Test1=withPropsFunc(props=>props+1)(Test);
+    const Test2=withPropsFunc(props=>props+2)(Test);
+
+    const App=props=>[<Test1 result={1} />,<Test2 result={1} />];
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
