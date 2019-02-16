@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.8.js"></script>
+<script src="../../common/react-dom16.8.js"></script>
+<script type="text/jsx">
+    /**
+     * Hooks allow you to reuse stateful logic without changing your component hierarchy.
+     * 每个组件内的state彼此独立
+     * */
+    const {useState}=React;
+    const Item=props=>{
+        const [count,setCount]=useState(1);
+        return(
+            <p onClick={()=>setCount(count+1)}>{count}</p>
+        )
+    }
+    const App=props=>([
+        <Item />,
+        <Item />
+    ])
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

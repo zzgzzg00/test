@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.8.js"></script>
+<script src="../../common/react-dom16.8.js"></script>
+<script type="text/jsx">
+    /**
+     * use*的状态是与组件实例绑定的 多个实例复用同样的use*彼此独立
+     * */
+    const {useState}=React;
+    function useAdd(_num){
+        const [num,setNum]=useState(_num);
+        return [num,()=>setNum(num+1)];
+    }
+    const Test1=props=>{
+        const [num,addNum]=useAdd(1);
+        return(
+                <p onClick={addNum}>test1 {num}</p>
+        )
+    }
+    const Test2=props=>{
+        const [num,addNum]=useAdd(2);
+        return(
+                <p onClick={addNum}>test2 {num}</p>
+        )
+    }
+    const App=props=>[
+        <Test1 />,
+        <Test2 />
+    ]
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

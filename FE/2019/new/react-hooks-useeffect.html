@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.8.js"></script>
+<script src="../../common/react-dom16.8.js"></script>
+<script type="text/jsx">
+    /**
+     * effect cleanup phase happens after every re-render
+     * If you want to run an effect and clean it up only once (on mount and unmount),
+     * you can pass an empty array ([]) as a second argument
+     * */
+    const {useState,useEffect}=React;
+    const App=props=>{
+        const [state,setState]=useState(1);
+        const [tip,setTip]=useState('tip');
+        useEffect(()=>{
+            document.title=state;
+            return function clearup(){
+                console.log('clear up');
+            }
+        },[state])/*Only re-run the effect if state changes*/
+        useEffect(()=>{
+            return function clearup(){
+                console.log('tip clear up');
+            }
+        },[tip])
+        return([
+            <p onClick={()=>setState(state+1)}>{state}</p>,
+            <p onClick={()=>setTip('new tip')}>{tip}</p>,
+        ])
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
