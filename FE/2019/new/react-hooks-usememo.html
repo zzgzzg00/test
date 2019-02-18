@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.8.js"></script>
+<script src="../../common/react-dom16.8.js"></script>
+<script type="text/jsx">
+    const {useMemo,useState}=React;
+    const Inner=({name,role})=>(<p>{name}-{role}</p>);
+    const PureInner=React.memo(Inner,(preProps,nextProps)=>preProps.name === nextProps.name);
+    const App=props=>{
+        const [name,setName]=useState('gjj');
+        const [role,setRole]=useState('n');
+        return[
+            <Inner name={name} role={role} />,
+            <PureInner name={name} role={role} />,
+            <button onClick={()=>setRole('z')}>change</button>
+        ]
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

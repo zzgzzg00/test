@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.8.js"></script>
+<script src="../../common/react-dom16.8.js"></script>
+<script type="text/jsx">
+    const {useState}=React;
+    const useReduce=(reducer,initValue)=>{
+        const [value,setValue]=useState(initValue);
+        const dispatch=action=>{
+            const _value=reducer(value,action);
+            setValue(_value);
+        }
+        return[value,dispatch];
+    }
+    function reducer(state,action){
+        const {type}=action;
+        const {num}=state;
+        switch(type){
+            case 'add':
+                return {num:num+1};
+            case 'min':
+                return {num:num-1};
+            default:
+                return state;
+        }
+    }
+    const App=props=>{
+        const [value,dispatch]=useReduce(reducer,{num:1});
+        return[
+            <button onClick={()=>dispatch({type:'min'})}>-</button>,
+            <p>{value.num}</p>,
+            <button onClick={()=>dispatch({type:'add'})}>+</button>
+        ]
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

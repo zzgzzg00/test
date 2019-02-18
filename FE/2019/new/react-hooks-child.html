@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.8.js"></script>
+<script src="../../common/react-dom16.8.js"></script>
+<script type="text/jsx">
+    const {useState}=React;
+    /**
+     * customhooks本身状态的修改会导致使用改状态的组件重新渲染
+     * 此处等于在render中通过settimeout执行settate
+     * */
+    const useCustomState=initValue=>{
+        const [value,setValue]=useState(initValue);
+        setTimeout(setValue,3000,value+1);
+        return value;
+    }
+    const App=props=>{
+        const value=useCustomState(1);
+        return(
+            <p>{value}</p>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
