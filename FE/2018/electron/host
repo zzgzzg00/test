@@ -1,17 +1,36 @@
-GET /otsmobile/app/mgs/mgw.htm?operationType=com.cars.otsmobile.queryLeftTicketZ&requestData=%5B%7B%22train_date%22%3A%2220190213%22%2C%22purpose_codes%22%3A%2200%22%2C%22from_station%22%3A%22BJP%22%2C%22to_station%22%3A%22CDW%22%2C%22station_train_code%22%3A%22%22%2C%22start_time_begin%22%3A%220000%22%2C%22start_time_end%22%3A%222400%22%2C%22train_headers%22%3A%22QB%23%22%2C%22train_flag%22%3A%22%22%2C%22seat_type%22%3A%220%22%2C%22seatBack_Type%22%3A%22%22%2C%22ticket_num%22%3A%22%22%2C%22dfpStr%22%3A%22%22%2C%22baseDTO%22%3A%7B%22check_code%22%3A%2250acf553f1d95ed6151e4432bdfa289f%22%2C%22device_no%22%3A%22V%2Bz7MhyQ3tUDALtZm2TGsFMN%22%2C%22mobile_no%22%3A%2215810213644%22%2C%22os_type%22%3A%22a%22%2C%22time_str%22%3A%2220190213165717%22%2C%22user_name%22%3A%22zzgzzg00%22%2C%22version_no%22%3A%224.1.9%22%7D%7D%5D&ts=1550048237206&sign=62ad86cb54c1773be3ea86608f2ad489 HTTP/1.1
-riskudid: 2672cb3a-19dc-39ce-995f-189fe696418a
-tk: BB4XgyQCDWIFdBAJFqplLEmAWgeAZYu08jMgSAsdz2z0
-WorkspaceId: product
-AppId: 9101430221728
-Platform: ANDROID
-AppId: 9101430221728
-did: V+z7MhyQ3tUDALtZm2TGsFMN
-clientId: 181227095809714|865291026976737
-TRACKERID:
-signType: 0
-Cookie: __NRF=03C43B7C98BC0612AE38877CBE5CA52A; JSESSIONID=0A02EF322075B7D8E14520F12F8FF375C2456A23DC; AlteonMobile=FPDMMD/UAQqdSQx/38fEFA$$; altmobile=FkvGLxzlAgoA4pN4NpmlFQ$$; BIGipServernginxformobile=82510346.50215.0000
-Accept-Language: zh-Hans
-Accept-Encoding: gzip
-Connection: Keep-Alive
-Host: mobile.12306.cn
-User-Agent: android
+server{
+	listen  8080;
+	server_name touch.train.qunar.com;
+	expires -1;
+	ssi on;
+    location = /index.html {
+       root /home/q/www/images/;
+       index index.html;
+    }
+    location = /? {
+      root /home/q/www/images/;
+      index index.html;
+    }
+    error_page   500 502 503 504  /50x.html;
+    error_page 405 =200 $uri;
+    location = /50x.html {
+        root   html;
+    }
+	location ~* \.html  {
+        root /home/q/www/images/test/;
+        index index.htm;
+    }
+}
+
+server {
+        listen       8080;
+        server_name  localhost;
+        ssi on;
+
+        root   /home/q/touch;
+        error_page   500 502 503 504  /50x.html;
+        error_page 405 =200 $uri;
+        location = /50x.html {
+            root   html;
+        }
+}

@@ -18,40 +18,27 @@
 
     <meta name="keywords" content="火车票,火车票查询,列车时刻表,火车票预定" />
     <style>
-        .outer{
-            height: 200px;
-            overflow: auto;
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
         }
-        .inner{
-            height: 3000px;
-            background-color: red;
+        .outer{
+            display: flex;
+        }
+        span{
+            width: 200px;
+        }
+        .outer>div{
+            flex: 1;
         }
     </style>
 </head>
 <body>
 <div class="outer">
-    <div class="outer">
-        <div class="inner"></div>
-    </div>
+    <span>1</span>
+    <div>2</div>
+    <span>3</span>
 </div>
-<script>
-    var mm={
-        'A': {
-            title: '联盟简介',
-            titleTips: ['联盟成员共享自己的网络互相刷票', '抢票速度是所有抢票App总和的3倍', '成功率达到最高'],
-            subTitle: '如何加入',
-            subTitleTips: ['在电脑的浏览器中登录以下网址', '下载并安装软件后即可使用']
-        },
-        'C': {
-            title: '什么是抢票联盟？',
-            subTitle: '万人共享网络互相刷票',
-            tip: '速度相当于{num}个去哪儿APP',
-            num: '4',
-            joinTip: '*在电脑的浏览器中打开此网址 立即加入',
-            robSuccessTip: '今日{robsuccesstip}人抢票成功'
-        }
-    }
-    console.log(JSON.stringify(mm));
-</script>
 </body>
 </html>
