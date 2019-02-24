@@ -11,11 +11,13 @@ function curry(fun,len=fun.length){
         }
         const arr = [...args];
         return function addParams(...params) {
-            arr.push(...params);
-            if (arr.length >= len) {
-                return fun(...arr);
+            const newArr=[...arr,...params];
+            if (newArr.length >= len) {
+                return fun(...newArr);
             }
-            return addParams;
+            return function appendParams(...newParams){
+                return addParams(...params,...newParams);
+            }
         }
     }
 }
@@ -34,6 +36,10 @@ const split=curry(function (sign,str){
 
 const join=curry(function(sign,elements){
     return elements.join(sign);
+})
+
+const prop=curry(function(key,obj){
+    return obj[key];
 })
 
 const toUpperCase=String.prototype.toUpperCase.call.bind(String.prototype.toUpperCase);

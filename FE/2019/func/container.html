@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="./lib.js"></script>
+<script>
+    /**
+     * functor 是实现了 map 函数并遵守一些特定规则的容器类型。
+     * */
+    class Container{
+        constructor(value){
+            this.value=value;
+        }
+        /**
+         * map(fun:any=>any)
+         * */
+        map(fun){
+            return Container.of(fun(this.value));
+        }
+        /**
+         * of(value:any)=>Container
+         * */
+        static of(value){
+            return new Container(value);
+        }
+    }
+    const c=Container.of(1).map(a=>a*2);
+    console.log(c.value);
+
+    class Maybe{
+        constructor(value){
+            this.value=value;
+        }
+        static of(value){
+            return new Maybe(value);
+        }
+        get isNothing(){
+            return this.value===null || this.value===undefined;
+        }
+        map(fun){
+            return this.isNothing?Maybe.of(null):Maybe.of(fun(this.value));
+        }
+    }
+
+    let m=Maybe.of().map(a=>a+1).map(a=>a**2);
+    console.log(m.value);
+
+    const maybe=curry(function(falsevalue,rightfun,maybeInstance){
+        return maybeInstance.isNothing?falsevalue:rightfun(maybeInstance.value);
+    })
+    const maybeResult=compose(maybe('over',a=>a+1),a=>a>1?Maybe.of(a):Maybe.of(null));
+    console.log(maybeResult(2));
+    console.log(maybeResult(-2));
+
+    /**
+     * getValue(initValue:object,...keys:string[])=>any
+     * */
+    function getValue(initValue,...keys){
+        const result=keys.reduce((a,b)=>a.map(a=>a[b]),Maybe.of(initValue));
+        return result.value;
+    }
+    const obj={a:{b:1}}
+    console.log(getValue(obj,'a','b'));
+    console.log(getValue(obj,'a','b','c','d'));
+
+    class Either{
+        constructor(value){
+            this.value=value;
+        }
+        static of(value){
+            return new Either(value);
+        }
+        map(fun){
+            throw new Error('Either must be implemented');
+        }
+    }
+    class Left extends Either{
+        map(fun){
+            return this;
+        }
+    }
+    class Right extends Either{
+        map(fun){
+            return Right.of(fun(this.value));
+        }
+    }
+
+</script>
+</body>
+</html>
