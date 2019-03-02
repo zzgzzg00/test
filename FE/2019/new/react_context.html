@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.8.js"></script>
+<script src="../../common/react-dom16.8.js"></script>
+<script type="text/jsx">
+    const {Component}=React;
+    const Context=React.createContext({name:''});
+    class Item extends Component{
+        constructor(){
+            super(...arguments);
+        }
+
+        render(){
+            return(
+                <div onClick={this.context.changeName}>{this.context.name}</div>
+            )
+        }
+    }
+    Item.contextType=Context;
+    class App extends Component{
+        constructor(){
+            super(...arguments);
+            this.state={
+                name:'gjj',
+                role:'n'
+            }
+            this.changeName=this.changeName.bind(this);
+        }
+        changeName(){
+            this.setState({
+                name:'lm'
+            })
+        }
+        render(){
+            return(
+                <Context.Provider value={{...this.state,changeName:this.changeName}}>
+                    <Item />
+                </Context.Provider>
+            )
+        }
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
