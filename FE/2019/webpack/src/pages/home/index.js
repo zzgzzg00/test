@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,lazy,Fragment,Suspense} from 'react';
 import './index.css';
 const Home=({initCount})=>{
     const [count,setCount]=useState(initCount);

@@ -30,6 +30,12 @@ module.exports={
                 loader:'babel-loader'
             }],
             exclude:/node_modules/
+        },{
+            test:/\.tsx?$/,
+            use:[{
+                loader:'ts-loader'
+            }],
+            exclude:/node_modules/
         }]
     },
     plugins:[

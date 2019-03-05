@@ -9,8 +9,13 @@
 <script src="../../common/react16.8.js"></script>
 <script src="../../common/react-dom16.8.js"></script>
 <script type="text/jsx">
-    const {Component}=React;
+    const {Component,PureComponent,Fragment}=React;
     const Context=React.createContext({name:''});
+    /**
+     * Provier组件发生变化时react会递归的寻找子组件的context并标记
+     * 所以即便拥有context的组件的父组件不发生rerender
+     * 子组件也会更新
+     * */
     class Item extends Component{
         constructor(){
             super(...arguments);
@@ -23,6 +28,19 @@
         }
     }
     Item.contextType=Context;
+    class List extends PureComponent{
+        shouldComponentUpdate(){
+            return false;
+        }
+        render(){
+            return (
+                <Fragment>
+                    list:{this.props.name}
+                    {this.props.children}
+                </Fragment>
+            );
+        }
+    }
     class App extends Component{
         constructor(){
             super(...arguments);
@@ -40,7 +58,9 @@
         render(){
             return(
                 <Context.Provider value={{...this.state,changeName:this.changeName}}>
-                    <Item />
+                    <List name={this.state.name}>
+                        <Item />
+                    </List>
                 </Context.Provider>
             )
         }
