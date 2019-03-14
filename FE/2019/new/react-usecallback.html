@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react16.8.js"></script>
+<script src="../../common/react-dom16.8.js"></script>
+<script type="text/jsx">
+    /**
+     * usecallback
+     *  第二个参数数组指定当哪些变量发生变化时重新生成函数
+     *  由于闭包的原因 useCallback里的外部变量count
+     *  由于没有更新方法 此时count一直是之前的值 所以setCount不会render
+     *  所以需要在addCount方法中添加一个时addCount重新赋值的变量
+     *  同useEffet一样 不指定第二个参数则每次render重新生成函数，[]用不生成函数
+     * */
+    const randomSet=new Set();
+    const countSet=new Set();
+    const {useState,useCallback,Fragment}=React;
+    const App=props=>{
+        const [count,setCount]=useState(0);
+        const [random,setRandom]=useState(0);
+        const addRandom=useCallback(e=>{
+            setRandom(Math.random());
+        },[]);
+        const addCount=useCallback(e=>{
+            setCount(count+1);
+        },[random]);
+        randomSet.add(addRandom);
+        countSet.add(addCount);
+        console.log('randomset',randomSet);
+        console.log('countset',countSet);
+        return(
+            <Fragment>
+                <p onClick={addCount}>count-{count}</p>
+                <p onClick={addRandom}>random-{random}</p>
+            </Fragment>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

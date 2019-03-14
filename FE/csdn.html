@@ -3,12 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <style>
+    </style>
 </head>
 <body>
-<input type="text" />
-<br />
-<input type="text" />
 <script>
+    const fucArr = [
+        next => {
+            setTimeout(() => {
+                console.log(1);
+                next()
+            }, 300)
+        },
+        next => {
+            setTimeout(() => {
+                console.log(2);
+                next()
+            }, 200)
+        },
+        next => {
+            setTimeout(() => {
+                console.log(3);
+                next()
+            }, 100)
+        }
+    ]
+
+    var run = arr=>{
+        function *_run(){
+            for(let i of arr){
+                yield i;
+            }
+        }
+        var c=_run();
+        function next(){
+            const {value,done}=c.next();
+            if(!done){
+                value(next);
+            }
+        }
+        next();
+//        const result=arr.reduceRight(function(a,b){
+//            return ()=>b(a);
+//        },Function.prototype);
+//        result();
+    }
+    run(fucArr);
 </script>
 </body>
 </html>
