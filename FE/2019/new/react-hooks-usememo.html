@@ -9,17 +9,29 @@
 <script src="../../common/react16.8.js"></script>
 <script src="../../common/react-dom16.8.js"></script>
 <script type="text/jsx">
-    const {useMemo,useState}=React;
-    const Inner=({name,role})=>(<p>{name}-{role}</p>);
-    const PureInner=React.memo(Inner,(preProps,nextProps)=>preProps.name === nextProps.name);
+    const {useEffect,useState,useMemo,Fragment}=React;
+    const Child=props=>{
+        useEffect(()=>{
+            console.log(`effect-${props.name}`);
+        });
+        return(
+            <p>c</p>
+        )
+    }
     const App=props=>{
-        const [name,setName]=useState('gjj');
-        const [role,setRole]=useState('n');
-        return[
-            <Inner name={name} role={role} />,
-            <PureInner name={name} role={role} />,
-            <button onClick={()=>setRole('z')}>change</button>
-        ]
+        const [count,setCount]=useState(0);
+        const child=useMemo(()=>(<Child name={'memo'}/>),[]);
+        const child2=(<Child name={'unneno2'}/>);
+        const child3=useMemo(()=>(<Child name={'memo_count'}/>),[count]);
+        return(
+            <Fragment>
+                <p onClick={()=>setCount(count+1)}>{count}</p>
+                <Child name={'unneno'}/>
+                {child}
+                {child2}
+                {child3}
+            </Fragment>
+        )
     }
     ReactDOM.render(<App />,document.body);
 </script>
