@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {useEffect,useState,useRef,useReducer}=React;
+    const initState=0;
+    const reducer=(initState,action)=>{
+        const {type}=action;
+        switch(type){
+            case 'add':
+                return initState+1;
+            default:
+                return initState;
+        }
+    }
+    const App=props=>{
+        const [count,setCount]=useState(0);
+        const [state,dispatch]=useReducer(reducer,initState);
+        useEffect(()=>{
+            const id=setInterval(()=>{
+//                setCount(count=>count+1);
+                /**
+                 * 由于是在componentDidMount时建立的effect
+                 * 所以effect保留的时count为0时的render快照
+                 * 所以count一直显示的是1
+                 * 可以使用setCount(callback)或者useReducer规避该问题
+                 * */
+                setCount(count+1);
+                dispatch({type:'add'});
+                console.log('interval')
+            },1000);
+            return ()=>{
+                clearInterval(id);
+            }
+        },[]);
+        return(
+            <p>{count}-{state}</p>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

@@ -4,51 +4,29 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
+        .outer{
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .left{
+            white-space: nowrap;
+            word-break: keep-all;
+        }
+        .right{
+            flex: 1;
+        }
     </style>
 </head>
 <body>
-<script>
-    const fucArr = [
-        next => {
-            setTimeout(() => {
-                console.log(1);
-                next()
-            }, 300)
-        },
-        next => {
-            setTimeout(() => {
-                console.log(2);
-                next()
-            }, 200)
-        },
-        next => {
-            setTimeout(() => {
-                console.log(3);
-                next()
-            }, 100)
-        }
-    ]
-
-    var run = arr=>{
-        function *_run(){
-            for(let i of arr){
-                yield i;
-            }
-        }
-        var c=_run();
-        function next(){
-            const {value,done}=c.next();
-            if(!done){
-                value(next);
-            }
-        }
-        next();
-//        const result=arr.reduceRight(function(a,b){
-//            return ()=>b(a);
-//        },Function.prototype);
-//        result();
-    }
-    run(fucArr);
-</script>
+<div class="outer">
+    <div class="left">test:</div><div class="right">just adawd dawd wa da test</div>
+</div>
+<div class="outer">
+    <div class="left">test test:</div><div class="right">just adawd dawd wa da test</div>
+</div>
+<div class="outer">
+    <div class="left">test test test:</div><div class="right">just adawd dawd wa da test</div>
+</div>
 </body>
 </html>

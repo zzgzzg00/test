@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    /**
+     *FC存在capture value
+     * 即每次render都会形成一个render快照
+     * SubFc第一次click的时候 虽然父组件setState导致子组件重新渲染
+     * 但click具柄是在上次render中形成的 故props.name依旧显示的是上次的name aa
+     * class组件因为重新渲染导致this发生变化，所以显示的是class
+     * 可以认为每次 Render 的内容都会形成一个快照并保留下来，
+     * 因此当状态变更而 Rerender 时，就形成了 N 个 Render 状态，
+     * 而每个 Render 状态都拥有自己固定不变的 Props 与 State。
+     * */
+    const {useCallback,Component,Fragment,useState,useRef,useEffect}=React;
+    const SubFc=props=>{
+        const clickHandle=useCallback(e=>{
+            props.setName('fc')
+            setTimeout(alert,2000,props.name);
+        },[props.name]);
+        return(
+            <p onClick={clickHandle}>click fc</p>
+        )
+    }
+    class SubClass extends Component{
+        constructor(props){
+            super(props);
+            this.clickHandle=this.clickHandle.bind(this);
+        }
+        clickHandle(){
+            this.props.setName('class');
+            setTimeout(()=>alert(this.props.name),2000);
+        }
+        render(){
+            return(
+                <p onClick={this.clickHandle}>click class</p>
+            )
+        }
+    }
+    const App=props=>{
+        const [name,setName]=useState('aa');
+        return(
+            <Fragment>
+                <SubFc name={name} setName={setName}/>
+                <SubClass name={name} setName={setName}/>
+            </Fragment>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
