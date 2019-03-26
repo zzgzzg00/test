@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {useCallback,useEffect,useState,useRef}=React;
+    const App=props=>{
+        const [count,setCount]=useState(0);
+        const [time,setTime]=useState(0);
+        const timeRef=useRef(null);
+        setTimeout(()=>setTime(time+1),1500);
+        const fetchData=useCallback(e=>{
+            return new Promise((resolve,reject)=>{
+               timeRef.current=setTimeout(resolve,2000,Math.random().toFixed(2));
+            });
+        },[]);
+        useEffect(()=>{
+            fetchData()
+                .then(setCount);
+            return ()=>{
+                if(timeRef.current){
+                    clearTimeout(timeRef.current);
+                    timeRef.current=null;
+                }
+            };
+        },[time]);
+        return(
+            <p>{count}-{time}</p>
+        )
+    };
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

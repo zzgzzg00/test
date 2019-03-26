@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {useCallback,useState,useReducer,useRef,useEffect}=React;
+    const App=props=>{
+        const [count,setCount]=useState(0);
+        const stateRef=useRef(null);
+        const effectRef=useRef(null);
+        const showHandle=useCallback(e=>{
+           console.log(stateRef.current,effectRef.current);
+        },[]);
+        const addHandle=useCallback(e=>{
+            setCount(count+1);
+            /**
+             * stateRef.current获取的是上一次的count
+             * 执行到addHandle的时候 setCount虽然rerender
+             * 但此时正在执行的addHandle是setCount之前的render的快照
+             * */
+            stateRef.current=count;
+        },[count]);
+        useEffect(()=>{
+            /**
+             * 当前count的值
+             * */
+            effectRef.current=count;
+        },[count]);
+
+        return(
+            <div>
+                <p onClick={addHandle}>count-{count}</p>
+                <p onClick={showHandle}>show</p>
+            </div>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
