@@ -3,39 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="apple-mobile-web-app-title" content="火车票-qunar.com">
     <style>
-        *{
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
+        div{
+            padding-top: 40vh;
         }
-        span{
-            display: inline-block;
-            width: 5vw;
-            height: 5vw;
-            background-color: grey;
-            text-align: center;
-            line-height: 5vw;
-            margin-left: .1vw;
-            margin-bottom: .1vw;
-        }
-        .show{
-            background-color: red;
+        input{
+            width: 50vw;
+            height: 5vh;
+            margin-bottom: 10vh;
         }
     </style>
 </head>
 <body>
+<script src="../common/JSXTransformer.js"></script>
+<script src="../common/react@16.8.5.js"></script>
+<script src="../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {Component}=React;
+    class App extends Component{
+        render(){
+            return(
+                    <div>
+                        <input /><br/>
+                        <input /><br/>
+                        <input /><br/>
+                        <input /><br/>
+                        <input /><br/>
+                        <input /><br/><input /><br/>
+                        <input /><br/>
+                        <input /><br/><input /><br/>
+                        <input /><br/>
+                        <input /><br/><input /><br/>
+                        <input /><br/>
+                        <input /><br/>
+                        <input />
+                    </div>
+            )
+        }
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
 <script>
-    const html=Array.from({length:100}).map((item,index)=>`<span>${index+1}</span>`).join('');
-    document.body.insertAdjacentHTML('beforeBegin',`<div>${html}</div>`);
-    const {0:firstSpan,99:lastSpan}=document.querySelectorAll('span');
-    document.body.addEventListener('click',function(e){
-        const target=e.target;
-        target.classList.toggle('show');
-        const [pre,next]=[target.previousElementSibling || lastSpan,target.nextElementSibling || firstSpan];
-        pre.classList.toggle('show');
-        next.classList.toggle('show');
-    },false)
 </script>
 </body>
 </html>
