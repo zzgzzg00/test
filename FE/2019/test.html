@@ -3,49 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta content="telephone=no" name="format-detection" />
-    <meta name="apple-mobile-web-app-title" content="火车票-qunar.com">
-    <style>
-        div{
-            padding-top: 40vh;
-        }
-        input{
-            width: 50vw;
-            height: 5vh;
-            margin-bottom: 10vh;
-        }
-    </style>
 </head>
 <body>
 <script src="../common/JSXTransformer.js"></script>
 <script src="../common/react@16.8.5.js"></script>
 <script src="../common/react-dom@16.8.4.js"></script>
 <script type="text/jsx">
-    const {Component}=React;
-    class App extends Component{
-        render(){
-            return(
-                    <div>
-                        <input /><br/>
-                        <input /><br/>
-                        <input /><br/>
-                        <input /><br/>
-                        <input /><br/>
-                        <input /><br/><input /><br/>
-                        <input /><br/>
-                        <input /><br/><input /><br/>
-                        <input /><br/>
-                        <input /><br/><input /><br/>
-                        <input /><br/>
-                        <input /><br/>
-                        <input />
-                    </div>
-            )
-        }
+    const {useState,useCallback}=React;
+    const App=props=>{
+        const [count,setCount]=useState(0);
+        const clickHandle=useCallback(e=>{
+            setCount(count+1);
+        },[count]);
+        return(
+            <p onClick={clickHandle}>{count}</p>
+        )
     }
     ReactDOM.render(<App />,document.body);
 </script>

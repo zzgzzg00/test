@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {useEffect,useState,useRef,useCallback}=React;
+    const useInterval=(callback,delay)=>{
+        const ref=useRef(null);
+        /**
+         * 每次setCount后callback都会更新
+         * 此时是用来更新内部的count值
+         * 否则callback内的count一直为0
+         *
+         * 所以useEffect需要更新来时ref指向更新后的callback
+         * 使用_callback则不需要
+         * */
+        useEffect(()=>{
+            ref.current=callback;
+        });
+        useEffect(()=>{
+            function tick() {
+                ref.current();
+            }
+            const id=setInterval(tick,delay);
+            return ()=>clearInterval(id);
+        },[delay]);
+    }
+    const App=props=>{
+        const [count,setCount]=useState(0);
+        const [delay,setDelay]=useState(1000);
+        const callback=()=>setCount(count+1);
+        const _callback=useCallback(()=>setCount(c=>c+1),[])
+        useInterval(callback,delay);
+        return(
+            <div>
+                <p>{count}</p>
+                <button onClick={()=>setDelay(delay+1000)}>add</button>
+                <button onClick={()=>setDelay(delay-1000)}>min</button>
+            </div>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
