@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function toBasee64(str){
+        return new Promise((resolve,reject)=>{
+            const f=new FileReader();
+            const blob=new Blob([str]);
+            f.onload=function(e){
+                resolve(e.target.result.replace('data:application/octet-stream;base64,',''));
+            }
+            f.onerror=function(e){
+                reject(e);
+            }
+            f.readAsDataURL(blob);
+        });
+    }
+    /**
+     * atob需对汉字encode 此时转换的是encode后的结果 而不是原始的汉字
+     * */
+    toBasee64('汉字测试')
+        .then(console.log);
+</script>
+</body>
+</html>

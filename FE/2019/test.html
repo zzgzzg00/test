@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        input{
+            height: 34px;
+        }
+    </style>
 </head>
 <body>
+<input placeholder="出发占"/>
 <script src="../common/JSXTransformer.js"></script>
 <script src="../common/react@16.8.5.js"></script>
 <script src="../common/react-dom@16.8.4.js"></script>
 <script type="text/jsx">
-    const {useState,useCallback}=React;
-    const App=props=>{
-        const [count,setCount]=useState(0);
-        const clickHandle=useCallback(e=>{
-            setCount(count+1);
-        },[count]);
-        return(
-            <p onClick={clickHandle}>{count}</p>
-        )
-    }
-    ReactDOM.render(<App />,document.body);
+
 </script>
 <script>
 </script>

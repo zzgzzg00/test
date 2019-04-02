@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        #container{
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.13&key=5271f9b22d77e5cb728c68874756ebfc"></script>
+<script type="text/jsx">
+    const {useEffect}=React;
+    const useMap=()=>{
+        const pos=[116.357652,40.042996]
+        useEffect(()=>{
+            const map = new AMap.Map('container',{
+                zoom:20,
+                center: pos,
+//                layers: [
+//                    new AMap.TileLayer.Satellite(),
+//                    new AMap.TileLayer.RoadNet()
+//                ],
+//                zooms: [4,18],
+                viewMode:'3D',
+                resizeEnable: true
+            });
+            const path = [ [116.357657,40.042996], [116.357650,40.042990], [116.357662,40.042900] ]; //简写
+
+            const polyline = new AMap.Polyline({
+                path : path,
+            })
+            map.add(polyline);
+            const marker = new AMap.Marker({
+                position:pos//位置
+            });
+            map.add(marker);
+        },[])
+    }
+    const App=props=>{
+        useMap();
+        return(
+            <div id="container"></div>
+        )
+    }
+    ReactDOM.render(<App/>,document.body);
+</script>
+</body>
+</html>
