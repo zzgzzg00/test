@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {useState,useEffect,useCallback}=React;
+    const Inner=props=>{
+        const [count,setCount]=useState(0);
+        /**
+         * 组件卸载时应取消对组件未完成的操作 如set*
+         * */
+        useEffect(()=>{
+            let willUnmount=false;
+            new Promise(resolve=>{
+                setTimeout(resolve,2000,10);
+            })
+            .then(data=>{
+                if(willUnmount){
+                    return;
+                }
+                setCount(data);
+            });
+            return ()=>{
+                willUnmount=true;
+            }
+        },[]);
+        return(
+            <p>{count}</p>
+        )
+    }
+    const App=props=>{
+        const [hasInner,setHasInner]=useState(true);
+        const clickHandle=useCallback(()=>{
+            setHasInner(false);
+        },[]);
+        return(
+            <div>
+                {hasInner && <Inner />}
+                <p onClick={clickHandle}>hide</p>
+            </div>
+        )
+    }
+    ReactDOM.render(<App/>,document.body);
+</script>
+</body>
+</html>

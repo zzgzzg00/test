@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class SetterTest{
+        _name='';
+        set name(v){
+            console.log(`setter ${v}`);
+            this._name=v;
+        }
+        get name(){
+            console.log('getter');
+            return this._name;
+        }
+    }
+
+    /**
+     * 如若在构造函数里定义name则添加自己的name属性
+     * 否则调用父类的settter
+     * setter的属性在原型上
+     *
+     * */
+    class SubSetterTest extends SetterTest{
+        name='sub';
+        setName(){
+            this.name='subSetName'
+        }
+    }
+
+    const s=new SetterTest();
+    s.name='fatherSet';
+    console.log(s.hasOwnProperty('name'),s.hasOwnProperty('_name'));//false true
+
+    const subs=new SubSetterTest();
+    subs.setName();
+    subs.name='sub';
+    console.log(subs.hasOwnProperty('name'),subs.hasOwnProperty('_name'));
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {useState,useEffect,useCallback}=React;
+    const useCustomEffect=initState=>{
+        const [state,setState]=useState(initState);
+        useEffect(()=>{
+            setState('set')
+        },[state]);
+        return state;
+    }
+    const App=props=>{
+        const [count,setCount]=useState(0);
+        const state=useCustomEffect('');
+        const clickCallback=useCallback(()=>{
+           setCount(1);
+        },[])
+        console.log(state,count);
+        return(
+            <div onClick={clickCallback}>
+                {state}-{Math.random()}
+            </div>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>
