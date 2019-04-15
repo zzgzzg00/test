@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function test(name){
+        console.log(this.name);
+    }
+    const o1={
+        name:'o1'
+    };
+    const o2={
+        name:'o2'
+    }
+    var name='window';
+
+    //bind一次后的context除非new 否则再次bind不再生效
+    const t1=test.bind(o1);
+    const t2=test.bind(o1).bind(o2);
+    const t3=test.bind(null).bind(o2);
+    t1();//o1
+    t2();//o1
+    t3();//window
+
+    const i=new t2();//undefined
+</script>
+</body>
+</html>

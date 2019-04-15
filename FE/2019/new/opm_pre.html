@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--preload预加载当前页面资源 prefetch预加载之后页面可能用到的资源-->
+<link rel="prefetch" href="http://q.qunarzz.com/trainapp_intl/prd/lib@581e04d7f75879d7b29fa8a6a230996c.js"/>
+<link rel="preload" as="script" href="http://q.qunarzz.com/train_touch/prd/lib@7e8db8cb3f279a21e415287d00e46c51.js"/>
+<div>123</div>
+<script>
+    setTimeout(function load(){
+        const script=document.createElement('script');
+        script.onload=function(){
+            alert('load');
+        }
+        script.src='http://q.qunarzz.com/train_touch/prd/lib@7e8db8cb3f279a21e415287d00e46c51.js';
+        document.body.appendChild(script);
+    },3000);
+</script>
+<a href="http://touch.train.qunar.com/index_intl.html">intl</a>
+</body>
+</html>

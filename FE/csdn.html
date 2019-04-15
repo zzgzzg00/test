@@ -8,20 +8,23 @@
     </style>
 </head>
 <body>
-11
 <script>
-    function tt(){
-        function f(){};
-        function s(){
-            if(this instanceof f){
-                alert(1);
-            }
-        }
-        s.prototype=new f();
-        return s;
+    const arr=['+5','0','+7','+4','03','02','1','2','12','30','+11','+20','+33','+33(测试1)','+2(测试2)'];
+    function isNumber(str){
+        return /^\d+(?:\.\d+)?$/.test(str);
     }
-    var m=tt();
-    new m();
+    arr.sort(function sort(a,b){
+        if(isNumber(a) && isNumber(b)) {
+            return a - b;
+        }else if(!isNumber(a) && !isNumber(b)){
+            return parseInt(a)-parseInt(b);
+        }else if(!isNumber(a)){
+            return 1;
+        }else if(!isNumber(b)){
+            return -1;
+        }
+    });
+    console.log(arr);
 </script>
 </body>
 </html>

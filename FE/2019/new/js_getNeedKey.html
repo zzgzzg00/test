@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const obj=new Proxy({},{
+       get(target,key){
+           console.log(key);
+           return Reflect.get(target,key);
+       }
+    });
+    document.body.addEventListener('click',function(){
+        console.log(1);
+    },obj);
+</script>
+</body>
+</html>
