@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {useState,useCallback,useRef,useEffect}=React;
+    const useObjectState=initState=>{
+        const dataRef=useRef(null);
+        const [state,setState]=useState(initState);
+        const setObjectState=partialObj=>{
+            setState(typeof partialObj == 'object'?
+                {...state,...partialObj} :
+                {...state,...preState=>partialObj(preState)}
+            );
+        }
+        useEffect(()=>{
+            dataRef.current=state;
+        });
+        return [state,setObjectState,dataRef];
+    }
+    const App=props=>{
+        const [state,setObjectState,dataRef]=useObjectState({name:'gjj',age:30});
+        const nameHandle=useCallback(e=>{
+            setObjectState({name:'lm'});
+        },[state]);
+        const ageHandle=useCallback(e=>{
+            setObjectState({age:state.age+1});
+        },[state]);
+        const ageHandleRef=useCallback(e=>{
+            setObjectState({age:dataRef.current.age+1});
+        },[]);
+        const ageHandleFun=useCallback(e=>{
+            setObjectState(preState=>({age:preState.age+1}));
+        },[]);
+        return(
+            <div>
+                <p onClick={nameHandle}>{state.name}</p>
+                <p onClick={ageHandle}>dep:{state.age}</p>
+                <p onClick={ageHandleRef}>ref:{state.age}</p>
+                <p onClick={ageHandleRef}>fun:{state.age}</p>
+            </div>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

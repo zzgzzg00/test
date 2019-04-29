@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    const ab=new AbortController();
+    const {signal}=ab;
+    fetch('./csdn.html',{signal})
+        .then(response=>{
+            return response.text();
+        })
+        .then(console.log)
+        .catch(e=>alert(e));
+    setTimeout(()=>ab.abort(),0);
+</script>
+</body>
+</html>

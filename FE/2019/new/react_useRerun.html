@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {useState,useCallback,useRef,useEffect}=React;
+    const useReRender=(maxTime=3,fn=Function.prototype)=>{
+        const [nowTime,setNowTime]=useState(0);
+        const [runResult,setRunResult]=useState(null);
+        const nowTimeRef=useRef(null);
+        const reRender=useCallback(()=>{
+            if(nowTimeRef.current < maxTime){
+                const result=fn(nowTimeRef.current+1);
+                setNowTime(nowTimeRef.current+1);
+                setRunResult(result);
+            }
+        },[nowTimeRef]);
+        useEffect(()=>{
+            nowTimeRef.current=nowTime;
+        });
+        return [nowTime,reRender,runResult];
+    };
+    const App=props=>{
+        const [nowTime,reRender,runResult]=useReRender(4,num=>`log${num}`);
+        return(
+            <div>
+                <p>{Math.random()}-{runResult}</p>
+                <button onClick={reRender}>rerender</button>
+            </div>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

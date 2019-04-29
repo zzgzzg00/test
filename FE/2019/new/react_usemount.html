@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="../../common/JSXTransformer.js"></script>
+<script src="../../common/react@16.8.5.js"></script>
+<script src="../../common/react-dom@16.8.4.js"></script>
+<script type="text/jsx">
+    const {useState,useRef,useEffect,useCallback}=React;
+    const useMount=()=>{
+        const mountRef=useRef(true);
+        useEffect(()=>{
+            mountRef.current=true;
+            return()=>{
+                /**
+                 * useMount只有在组件加载/变化的时候会执行
+                 * 卸载的时候不再执行useMount的return方法
+                 * 所以需返回对象
+                 * */
+                mountRef.current=false;
+            }
+        });
+        return mountRef;
+    }
+    const Test1=props=>{
+        const isMount=useMount();
+        setTimeout(()=>{
+            /**
+             * 2s前卸载组件
+             * */
+            console.log(isMount.current);
+        },2000);
+        return(
+            <p>{`${isMount.current}`}-{props.data}</p>
+        )
+    }
+    const App=props=>{
+        const [tstate,setTstate]=useState(true);
+        const change=useCallback(()=>{
+            setTstate(preState=>!preState);
+        },[])
+        return(
+            <div>
+                <Test1 key={`${tstate}`} data={`${tstate}`}/>
+                <button onClick={change}>change</button>
+            </div>
+        )
+    }
+    ReactDOM.render(<App />,document.body);
+</script>
+</body>
+</html>

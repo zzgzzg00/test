@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        @font-face {
+            font-family: 'iconfont';
+            src: url('//s.qunarzz.com/open_m_train/font/0.0.48/open_m_train.eot'); /* IE9*/
+            src: url('//s.qunarzz.com/open_m_train/font/0.0.48/open_m_train.woff') format('woff'), /* chrome、firefox */
+            url('//s.qunarzz.com/open_m_train/font/0.0.48/open_m_train.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+            url('//s.qunarzz.com/open_m_train/font/0.0.48/open_m_train.svg#iconfont') format('svg'); /* iOS 4.1- */
+        }
+        input{
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            position: relative;
+            border: 1px solid gray;
+            border-radius: 50%;
+            outline: none;
+        }
+        input:checked:after{
+            content:'\f056';
+            font-family: iconfont;
+            color: #00C9E2;
+            position: absolute;
+            left: 2px;
+            top: -1px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<input type="checkbox" />
+</body>
+</html>

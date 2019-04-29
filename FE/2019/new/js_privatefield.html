@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    class Test{
+        #age=32;
+        name='gjj';
+        showAge(){
+            return this.#age;
+        }
+        add(other){
+            return this.#age+other.#age;
+        }
+    }
+    class Test2 extends Test{
+        showAge(){
+            return super.showAge();
+//            return this.#age;
+        }
+    }
+    const t=new Test();
+    console.log(t.name,t.showAge(),t.add(t));
+
+    const t2=new Test();
+    console.log(t2.name,t2.showAge());
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        .outer{
+            width: 50vw;
+            height: 30vh;
+            background-color: red;
+            margin: 30vh auto;
+            overflow: auto;
+        }
+        .s1,.s2{
+            width: 10vw;
+            height: 30vh;
+            background-color: yellow;
+            position: sticky;
+            top:0px;
+        }
+        .s1{
+            float: left;
+            clip-path:polygon(0% 0%,0% 100%,100% 0%);
+            shape-outside: polygon(0% 0%,0% 100%,100% 0%);
+        }
+        .s2{
+            float: right;
+            clip-path:polygon(0% 100%,100% 0%,100% 100%);
+            shape-outside: polygon(0% 100%,100% 0%,100% 100%);
+        }
+        .content{
+            max-height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="outer">
+    <div class="s1"></div>
+    <div class="s2"></div>
+    <div class="content">
+        测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十
+        测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十
+        测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十测试是是和斯一世逝世四十是四十
+    </div>
+</div>
+</body>
+</html>
