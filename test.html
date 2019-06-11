@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui" />
+    <title></title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        .outer{
+            display: flex;
+            justify-content: center;
+            width: 100vw;
+            border: 1px solid black;
+            flex-wrap: wrap;
+        }
+        .outer div{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            margin: 10px 10px;
+            flex: none;
+        }
+        .empty{
+            height: 0px !important;
+            background-color: transparent !important;
+            margin-top: 0px !important;
+            margin-bottom: 0px !important;
+        }
+    </style>
+</head>
+<body>
+<div class="outer">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div class="empty"></div>
+    <div class="empty"></div>
+    <div class="empty"></div>
+    <div class="empty"></div>
+    <div class="empty"></div>
+    <div class="empty"></div>
+</div>
+<input type="range" max="100" min="0" step="1" onchange="change"/>
+<script>
+    document.querySelector('[type="range"]').addEventListener('input',change);
+    const outer=document.querySelector('.outer');
+    function change(e){
+        outer.style.width=e.target.value+'vw';
+    }
+</script>
+</body>
+</html>
